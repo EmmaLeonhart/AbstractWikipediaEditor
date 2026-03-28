@@ -142,25 +142,45 @@ def create_article(session, csrf_token, qid, dry_run=True):
         print(f"  DRY RUN: Would create {qid}")
         return "dry_run"
 
+    # Abstract Wikipedia uses wikilambda_edit for page creation
     r = session.post(API_URL, data={
-        "action": "edit",
-        "title": title,
-        "text": content,
+        "action": "wikilambda_edit",
+        "zobject": content,
+        "zid": qid,
         "summary": "Creating Shinto shrine article (copied from Q11581011 template)",
-        "contentmodel": "zobject",
-        "createonly": "1",
-        "bot": "1",
         "token": csrf_token,
         "format": "json",
     })
-    r.raise_for_status()
     result = r.json()
 
-    if "edit" in result and result["edit"].get("result") == "Success":
+    if "wikilambda_edit" in result and result["wikilambda_edit"].get("success"):
         print(f"  CREATED {qid}")
         return "created"
     elif "error" in result:
-        print(f"  ERROR {qid}: {result['error']}")
+        error = result["error"]
+        print(f"  ERROR {qid}: {json.dumps(error, indent=2)}")
+        # Fallback: try standard edit with abstractwiki content model
+        if error.get("code") in ("no-direct-editing", "unknown_error"):
+            print(f"  Trying fallback (action=edit with contentmodel=abstractwiki)...")
+            r2 = session.post(API_URL, data={
+                "action": "edit",
+                "title": qid,
+                "text": content,
+                "summary": "Creating Shinto shrine article (copied from Q11581011 template)",
+                "contentmodel": "abstractwiki",
+                "createonly": "1",
+                "bot": "1",
+                "token": csrf_token,
+                "format": "json",
+            })
+            r2.raise_for_status()
+            result2 = r2.json()
+            if "edit" in result2 and result2["edit"].get("result") == "Success":
+                print(f"  CREATED {qid} (via fallback)")
+                return "created"
+            elif "error" in result2:
+                print(f"  FALLBACK ERROR {qid}: {result2['error']}")
+                return "error"
         return "error"
     else:
         print(f"  UNEXPECTED {qid}: {result}")

@@ -31,3 +31,16 @@ shrine_qids.json
 
 # Credentials (DO NOT commit)
 password.md
+
+# Debug/scout files from development
+debug_*.png
+scout_*.png
+scout_*.py
+paste_*.png
+copypaste_*.png
+recon_*.png
+editor_*.html
+clipboard_*.html
+test_*.py
+check_*.py
+browser_recon.py

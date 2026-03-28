@@ -1,31 +1,41 @@
 # AbstractTestBot
 
-Bot for creating test articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).
+Bot for creating Shinto shrine articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) via browser automation.
 
 ## What it does
 
-Creates Shinto shrine articles on Abstract Wikipedia by copying the article template from [Q11581011](https://abstract.wikipedia.org/wiki/Q11581011) (Kotai Jingu). The template uses Wikifunctions calls that dynamically generate text like "[Name] is a Shinto shrine in [Location], Japan." for any Shinto shrine entity.
+Creates articles by copying the Wikifunctions template from [Q11581011](https://abstract.wikipedia.org/wiki/Q11581011) (Kotai Jingu) and pasting it into new shrine pages. The template dynamically generates text like "[Name] is a Shinto shrine in [Location], Japan." for any shrine entity.
 
-## How it works
+## Why browser automation?
 
-1. **`fetch_shinto_shrines.py`** — Queries Wikidata SPARQL for 100 items with P31 (instance of) = Q845945 (Shinto shrine)
-2. **`create_shrine_articles.py`** — Creates Abstract Wikipedia articles for each QID using the template
+Abstract Wikipedia's API **does not support creating articles** (as of March 2026). The `abstractwiki` content model requires `wikilambda-abstract-create` rights, which bot passwords cannot access. See [DOCUMENTATION.md](DOCUMENTATION.md) for the full story of what we tried and why.
+
+## Scripts
+
+| Script | Purpose |
+|--------|---------|
+| `fetch_shinto_shrines.py` | SPARQL query for 100 Shinto shrine QIDs |
+| `create_via_browser.py` | Browser automation to create articles (the one that works) |
+| `create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
 
 ## Usage
 
-### Via GitHub Actions (recommended)
-Go to Actions → "Create Shinto Shrine Articles" → Run workflow. Set `apply` to `true` to actually create articles.
-
-### Locally
 ```bash
-pip install -r requirements.txt
+pip install requests python-dotenv playwright
+python -m playwright install chromium
 python fetch_shinto_shrines.py
-python create_shrine_articles.py          # dry run
-python create_shrine_articles.py --apply  # actually create
+python create_via_browser.py --apply --max-edits 10 --headed
 ```
 
 ## Configuration
 
-Set these in your GitHub repo:
-- **Secret** `WIKI_PASSWORD`: Bot password
-- **Variable** `WIKI_USERNAME`: Bot username (e.g., `Immanuelle@AbstractTest`)
+Create a `.env` file:
+```
+WIKI_USERNAME=YourUsername@BotName
+WIKI_PASSWORD=bot_password
+WIKI_MAIN_PASSWORD=main_account_password
+```
+
+## Documentation
+
+See [DOCUMENTATION.md](DOCUMENTATION.md) for extensive documentation on Abstract Wikipedia's API, what works, what doesn't, and all the problems we ran into.

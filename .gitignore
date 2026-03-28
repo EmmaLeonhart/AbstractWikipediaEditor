@@ -25,3 +25,9 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Generated data
+shrine_qids.json
+
+# Credentials (DO NOT commit)
+password.md

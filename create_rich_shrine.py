@@ -24,9 +24,9 @@ WIKI_URL = "https://abstract.wikipedia.org"
 API_URL = f"{WIKI_URL}/w/api.php"
 
 SOURCE_QID = "Q11259219"       # Enoshima Shrine (has both fragments)
-TARGET_QID = "Q11258505"       # Ayameike Shrine (already has pass 1, needs deity fix)
+TARGET_QID = "Q11261436"       # Ogami Shrine
 OLD_DEITY_QID = "Q10948069"    # Three Goddesses (Enoshima's deity)
-NEW_DEITY_QID = "Q11059454"    # Ichikishimahime (Ayameike's deity)
+NEW_DEITY_QID = "Q644201"     # Kuraokami
 
 
 def api_login_cookies():
@@ -50,7 +50,7 @@ def api_login_cookies():
 
 
 def publish_page(page):
-    """Force-enable Publish, click it, fill summary, confirm — all via JS."""
+    """Force-enable Publish, click it, fill summary, confirm."""
     page.evaluate("""
         const btn = document.querySelector('button.ext-wikilambda-app-abstract-publish__publish');
         if (btn) { btn.removeAttribute('disabled'); btn.disabled = false; }
@@ -60,29 +60,37 @@ def publish_page(page):
         document.querySelector('button.ext-wikilambda-app-abstract-publish__publish')?.click();
     """)
     time.sleep(3)
+
+    # Fill summary using native setter to trigger Vue reactivity
     page.evaluate("""
         const inputs = document.querySelectorAll('.cdx-dialog input');
         for (const inp of inputs) {
             if (inp.offsetParent !== null) {
-                inp.value = 'created page';
-                inp.dispatchEvent(new Event('input'));
+                const nativeSetter = Object.getOwnPropertyDescriptor(
+                    window.HTMLInputElement.prototype, 'value'
+                ).set;
+                nativeSetter.call(inp, 'created page');
+                inp.dispatchEvent(new Event('input', { bubbles: true }));
+                inp.dispatchEvent(new Event('change', { bubbles: true }));
                 break;
             }
         }
     """)
-    time.sleep(0.5)
+    time.sleep(1)
+
+    # Click the publish button in the dialog
     page.evaluate("""
         const dialogs = document.querySelectorAll('.cdx-dialog');
         for (const d of dialogs) {
             if (d.offsetParent !== null) {
                 const btns = d.querySelectorAll('button.cdx-button--action-progressive');
                 for (const b of btns) {
-                    if (b.offsetParent !== null) { b.click(); break; }
+                    if (b.offsetParent !== null && !b.disabled) { b.click(); break; }
                 }
             }
         }
     """)
-    time.sleep(10)
+    time.sleep(15)
 
 
 def swap_deity_in_clipboard(page, old_qid, new_qid):
@@ -137,27 +145,68 @@ def main():
         time.sleep(6)
 
         dots = page.locator("button[aria-label*='fragment-actions-menu']")
-        print(f"Enoshima fragments: {dots.count()}", flush=True)
+        print(f"  Enoshima fragments: {dots.count()}", flush=True)
 
         # Copy location (fragment 0)
         dots.nth(0).click()
         time.sleep(1)
         page.get_by_role("option", name="Copy to clipboard").click()
         time.sleep(2)
-        print("  Location copied", flush=True)
+        print("  Location copied (clipboard index will be 1)", flush=True)
 
         # Copy deity (fragment 1)
         dots.nth(1).click()
         time.sleep(1)
         page.get_by_role("option", name="Copy to clipboard").click()
         time.sleep(2)
-        print("  Deity copied", flush=True)
+        print("  Deity copied (clipboard index will be 0)", flush=True)
 
         # =============================================
-        # Edit Q11258505 — delete the old deity fragment, paste swapped one
-        # (Page already exists with location + unswapped deity from previous run)
+        # Pass 1: Create page with location fragment
         # =============================================
-        print(f"\nEditing {TARGET_QID}...", flush=True)
+        print(f"\nPass 1: Creating {TARGET_QID} with location sentence...", flush=True)
+
+        page.goto(f"{WIKI_URL}/w/index.php?title={TARGET_QID}&action=edit")
+        page.wait_for_load_state("networkidle")
+        time.sleep(5)
+
+        # Add empty fragment, paste location
+        page.locator("button[aria-label='Menu for selecting and adding a new fragment']").click()
+        time.sleep(1)
+        page.get_by_role("option", name="Add empty fragment").click()
+        time.sleep(2)
+        page.locator("button[aria-label*='fragment-actions-menu']").first.click()
+        time.sleep(1)
+        page.get_by_role("option", name="Paste from clipboard").click()
+        time.sleep(2)
+
+        # Clipboard: [deity(0), location(1)] — paste location
+        dialog = page.locator(".cdx-dialog").first
+        items = dialog.locator("div.ext-wikilambda-app-clipboard__item-head")
+        print(f"  Clipboard items: {items.count()}", flush=True)
+        # Location = last copied first = index 1. But if only 2 items, let's be safe
+        # and click the one that has "Z26570" (location) not "Z28016" (deity)
+        # For now just use index 1
+        items.nth(1).click()
+        time.sleep(2)
+
+        print("  Location pasted, publishing...", flush=True)
+        publish_page(page)
+        print(f"  After publish URL: {page.url}", flush=True)
+
+        # Verify
+        page.goto(f"{WIKI_URL}/wiki/{TARGET_QID}")
+        page.wait_for_load_state("networkidle")
+        if "There is currently no text in this page" in page.locator("body").inner_text():
+            print("  ERROR: Pass 1 failed", flush=True)
+            browser.close()
+            return
+        print("  Pass 1 done — page created", flush=True)
+
+        # =============================================
+        # Pass 2: Edit to add deity fragment with swapped QID
+        # =============================================
+        print(f"\nPass 2: Adding deity sentence...", flush=True)
         page.goto(f"{WIKI_URL}/w/index.php?title={TARGET_QID}&action=edit")
         page.wait_for_load_state("networkidle")
         time.sleep(6)
@@ -192,7 +241,7 @@ def main():
         time.sleep(2)
 
         dialog = page.locator(".cdx-dialog").first
-        items = dialog.locator("div.ext-wikilambda-app-clipboard__item")
+        items = dialog.locator("div.ext-wikilambda-app-clipboard__item-head")
         print(f"  Clipboard items: {items.count()}", flush=True)
         # Deity should be index 0 (last copied)
         items.nth(0).click()

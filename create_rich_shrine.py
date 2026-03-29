@@ -24,9 +24,9 @@ WIKI_URL = "https://abstract.wikipedia.org"
 API_URL = f"{WIKI_URL}/w/api.php"
 
 SOURCE_QID = "Q11259219"       # Enoshima Shrine (has both fragments)
-TARGET_QID = "Q11261436"       # Ogami Shrine
+TARGET_QID = "Q11305182"       # Samuhara Shrine
 OLD_DEITY_QID = "Q10948069"    # Three Goddesses (Enoshima's deity)
-NEW_DEITY_QID = "Q644201"     # Kuraokami
+NEW_DEITY_QID = "Q2842779"    # Ame-no-Minakanushi
 
 
 def api_login_cookies():
@@ -61,21 +61,7 @@ def publish_page(page):
     """)
     time.sleep(3)
 
-    # Fill summary using native setter to trigger Vue reactivity
-    page.evaluate("""
-        const inputs = document.querySelectorAll('.cdx-dialog input');
-        for (const inp of inputs) {
-            if (inp.offsetParent !== null) {
-                const nativeSetter = Object.getOwnPropertyDescriptor(
-                    window.HTMLInputElement.prototype, 'value'
-                ).set;
-                nativeSetter.call(inp, 'created page');
-                inp.dispatchEvent(new Event('input', { bubbles: true }));
-                inp.dispatchEvent(new Event('change', { bubbles: true }));
-                break;
-            }
-        }
-    """)
+    # No edit summary — just proceed to confirm
     time.sleep(1)
 
     # Click the publish button in the dialog

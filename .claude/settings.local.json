@@ -54,7 +54,20 @@
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python test_copy_paste.py 2>&1)",
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python test_copy_paste2.py 2>&1)",
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python create_via_browser.py --apply --max-edits 3 --headed 2>&1)",
-      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python create_via_browser.py --apply --max-edits 10 --headed 2>&1)"
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python create_via_browser.py --apply --max-edits 10 --headed 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python create_via_browser.py --apply --max-edits 10 --delay 600 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python create_rich_shrine.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python scout_store.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python scout_store2.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python inspect_clipboard.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/api.php', params={'action':'query','titles':'Q11367549','format':'json'}, headers={'User-Agent':'test'}\\)\nprint\\(r.json\\(\\)\\)\n\")",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://query.wikidata.org/sparql', params={'query': 'SELECT ?d WHERE { wd:Q11261436 wdt:P825 ?d } LIMIT 1', 'format': 'json'}, headers={'User-Agent': 'test'}\\)\nprint\\(r.json\\(\\)['results']['bindings'][0]['d']['value'].split\\('/'\\)[-1]\\)\n\")",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests, urllib.parse\nq = 'SELECT ?d WHERE { wd:Q11261436 wdt:P825 ?d } LIMIT 1'\nr = requests.get\\('https://query.wikidata.org/sparql', params={'query': q, 'format': 'json'}, headers={'User-Agent': 'AbstractTestBot/1.0 test', 'Accept': 'application/sparql-results+json'}\\)\nprint\\(r.status_code, r.text[:200]\\)\n\")",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python debug_clipboard_click.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python debug_clipboard_click2.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python debug_clipboard_click3.py 2>&1)",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/api.php', params={'action':'query','titles':'Q11261436','format':'json'}, headers={'User-Agent':'test','Accept':'application/json'}\\)\nprint\\(r.json\\(\\)\\)\n\")",
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/index.php', params={'title':'Q11305182','action':'raw'}, headers={'User-Agent':'test'}\\)\nimport json\ndata = json.loads\\(r.text\\)\ndeity = data['sections']['Q8776414']['fragments'][2]['Z29749K1']['Z28016K1']['Z6091K1']\nprint\\(f'Deity QID: {deity}'\\)\nprint\\(f'Fragments: {len\\(data[\\\\\"sections\\\\\"][\\\\\"Q8776414\\\\\"][\\\\\"fragments\\\\\"]\\)}'\\)\nprint\\('OK' if deity == 'Q2842779' else 'WRONG'\\)\n\")"
     ]
   }
 }

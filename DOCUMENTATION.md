@@ -307,7 +307,7 @@ AbstractTestBot/
 
 **Run 1 (2026-03-28, rapid):** Q29682, Q32422, Q48744, Q60581, Q63471, Q65320, Q84008, Q94057, Q94317, Q94760, Q115768, Q116140, Q133753, Q135732, Q137707 (15 articles)
 
-**Run 2 (2026-03-28, 10-min intervals):** 10 more articles in progress, spaced 10 minutes apart to avoid drawing attention. Uses "created page" as edit summary.
+**Run 2 (2026-03-28, 10-min intervals):** Q164895, Q167136, Q172253, Q172382, Q172417, Q191763, Q195684, Q195714, Q199699, Q211522 (10 articles, 0 errors)
 
 ### Edit pacing
 

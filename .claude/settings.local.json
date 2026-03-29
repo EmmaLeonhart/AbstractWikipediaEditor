@@ -67,7 +67,9 @@
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python debug_clipboard_click2.py 2>&1)",
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python debug_clipboard_click3.py 2>&1)",
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/api.php', params={'action':'query','titles':'Q11261436','format':'json'}, headers={'User-Agent':'test','Accept':'application/json'}\\)\nprint\\(r.json\\(\\)\\)\n\")",
-      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/index.php', params={'title':'Q11305182','action':'raw'}, headers={'User-Agent':'test'}\\)\nimport json\ndata = json.loads\\(r.text\\)\ndeity = data['sections']['Q8776414']['fragments'][2]['Z29749K1']['Z28016K1']['Z6091K1']\nprint\\(f'Deity QID: {deity}'\\)\nprint\\(f'Fragments: {len\\(data[\\\\\"sections\\\\\"][\\\\\"Q8776414\\\\\"][\\\\\"fragments\\\\\"]\\)}'\\)\nprint\\('OK' if deity == 'Q2842779' else 'WRONG'\\)\n\")"
+      "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/index.php', params={'title':'Q11305182','action':'raw'}, headers={'User-Agent':'test'}\\)\nimport json\ndata = json.loads\\(r.text\\)\ndeity = data['sections']['Q8776414']['fragments'][2]['Z29749K1']['Z28016K1']['Z6091K1']\nprint\\(f'Deity QID: {deity}'\\)\nprint\\(f'Fragments: {len\\(data[\\\\\"sections\\\\\"][\\\\\"Q8776414\\\\\"][\\\\\"fragments\\\\\"]\\)}'\\)\nprint\\('OK' if deity == 'Q2842779' else 'WRONG'\\)\n\")",
+      "Bash(mv *.png screenshots/)",
+      "Bash(ls *.png)"
     ]
   }
 }

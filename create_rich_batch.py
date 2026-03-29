@@ -144,6 +144,41 @@ def swap_deity_in_clipboard(page, old_qid, new_qid):
     return result
 
 
+def dump_clipboard_cache(page, filename):
+    """Dump the full Pinia clipboard store to a JSON file."""
+    cache = page.evaluate("""() => {
+        const app = document.querySelector('.ext-wikilambda-app')?.__vue_app__
+            || document.querySelector('#ext-wikilambda-app')?.__vue_app__;
+        if (!app) return null;
+        const pinia = app.config.globalProperties.$pinia;
+        const store = pinia._s.get('main');
+        // Grab clipboard items and any other clipboard-related state
+        const dump = {
+            clipboardItems: store.clipboardItems,
+            // Also grab localStorage clipboard key if it exists
+            localStorage: {}
+        };
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.toLowerCase().includes('clipboard') || key.toLowerCase().includes('wikilambda')) {
+                try {
+                    dump.localStorage[key] = JSON.parse(localStorage.getItem(key));
+                } catch(e) {
+                    dump.localStorage[key] = localStorage.getItem(key);
+                }
+            }
+        }
+        return dump;
+    }""")
+    if cache:
+        with open(filename, "w", encoding="utf-8") as f:
+            json.dump(cache, f, indent=2, ensure_ascii=False)
+        print(f"  Cache dumped to {filename}", flush=True)
+    else:
+        print("  WARNING: Could not access clipboard store", flush=True)
+    return cache
+
+
 def copy_both_fragments(page):
     """Copy both fragments (location + deity) from Enoshima Shrine."""
     print(f"Copying both fragments from {SOURCE_QID}...", flush=True)
@@ -167,6 +202,9 @@ def copy_both_fragments(page):
     page.get_by_role("option", name="Copy to clipboard").click()
     time.sleep(2)
     print("  Deity copied", flush=True)
+
+    # Dump the clipboard cache after copying both fragments
+    dump_clipboard_cache(page, "clipboard_cache_template.json")
 
 
 def create_rich_article(page, shrine_qid, deity_qid):
@@ -214,6 +252,9 @@ def create_rich_article(page, shrine_qid, deity_qid):
 
     swaps = swap_deity_in_clipboard(page, OLD_DEITY_QID, deity_qid)
     print(f"  Swapped {swaps} QID occurrences", flush=True)
+
+    # Dump cache after swap for the first shrine (for study)
+    dump_clipboard_cache(page, f"clipboard_cache_{shrine_qid}.json")
 
     dots2 = page.locator("button[aria-label*='fragment-actions-menu']")
     if dots2.count() >= 2:

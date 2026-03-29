@@ -6,13 +6,14 @@ Workflow:
 3. For each target QID:
    a. Open editor, add empty fragment
    b. Paste from clipboard
-   c. Publish (no edit summary)
+   c. Publish with summary "created page"
 
 Usage:
     python create_via_browser.py                          # Dry run
     python create_via_browser.py --apply                  # Create articles
     python create_via_browser.py --apply --max-edits 10   # Limit
     python create_via_browser.py --apply --headed         # See the browser
+    python create_via_browser.py --apply --delay 600      # 10 min between edits
 """
 
 import io
@@ -29,7 +30,7 @@ load_dotenv()
 
 WIKI_URL = "https://abstract.wikipedia.org"
 API_URL = f"{WIKI_URL}/w/api.php"
-EDIT_DELAY = 3
+DEFAULT_DELAY = 3
 SOURCE_QID = "Q11581011"
 
 
@@ -116,7 +117,13 @@ def create_article(page, qid):
     # Handle publish dialog
     pub_dialog = page.locator(".cdx-dialog, [role='dialog']")
     if pub_dialog.count() > 0 and pub_dialog.first.is_visible():
-        # Click Publish in the dialog (no summary)
+        # Fill in edit summary
+        summary_input = pub_dialog.locator("input").first
+        if summary_input.is_visible():
+            summary_input.fill("created page")
+        time.sleep(0.5)
+
+        # Click Publish in the dialog
         pub_dialog.locator("button:has-text('Publish')").last.click()
 
         try:
@@ -139,6 +146,7 @@ def main():
     parser.add_argument("--run-tag", type=str, default="", help="Run tag (for workflow compat)")
     parser.add_argument("--qids-file", type=str, default="shrine_qids.json", help="JSON file with QIDs")
     parser.add_argument("--headed", action="store_true", help="Show the browser window")
+    parser.add_argument("--delay", type=int, default=DEFAULT_DELAY, help="Seconds between edits (default: 3)")
     args = parser.parse_args()
 
     if not os.path.exists(args.qids_file):
@@ -192,7 +200,11 @@ def main():
                 print(result.upper(), flush=True)
 
                 if result == "created":
-                    time.sleep(EDIT_DELAY)
+                    if args.delay > 60:
+                        mins = args.delay // 60
+                        secs = args.delay % 60
+                        print(f"  Waiting {mins}m{secs}s before next edit...", flush=True)
+                    time.sleep(args.delay)
 
             except Exception as e:
                 print(f"ERROR: {e}", flush=True)

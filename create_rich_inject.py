@@ -295,11 +295,15 @@ def create_article_inject(page, shrine_qid, deity_qid):
     print("  Publishing pass 2...", flush=True)
     publish_page(page)
 
-    if "action=edit" not in page.url:
+    # Verify by loading the page and checking content
+    page.goto(f"{WIKI_URL}/wiki/{shrine_qid}")
+    page.wait_for_load_state("networkidle")
+    body = page.locator("body").inner_text()
+    if "There is currently no text in this page" not in body:
         print(f"  SUCCESS: {page.url}", flush=True)
         return "created"
     else:
-        print("  May have failed — still on edit page", flush=True)
+        print("  ERROR: Page has no content after pass 2", flush=True)
         return "error"
 
 

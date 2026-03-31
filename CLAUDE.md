@@ -15,9 +15,10 @@
 Bot that creates Shinto shrine articles on Abstract Wikipedia using Playwright browser automation. The API doesn't support creating `abstractwiki` content (bot passwords lack `wikilambda-abstract-create` rights), so we automate the visual editor's copy-paste workflow instead.
 
 ## Architecture and Conventions
-- **`create_via_browser.py`** is the main working script. It uses Playwright to automate the Abstract Wikipedia visual editor.
+- **`create_rich_onepass.py`** is the main working script. It uses Playwright to automate the Abstract Wikipedia visual editor via direct clipboard injection.
+- **`runcreate.bat`** is a quick launcher that creates 10 shrines in headed mode.
 - **`create_shrine_articles.py`** is the API-based approach that doesn't work due to permission issues. Kept for reference.
-- The bot copies a Wikifunctions fragment from Q11581011 into the editor's internal clipboard, then pastes it into each new article.
+- The bot queries Wikidata for shrines with deities, checks which already have Abstract Wikipedia articles, then injects both location and deity fragments into the editor clipboard and publishes in a single pass.
 - Main account credentials are required (bot passwords cannot create articles). Stored in `.env` as `WIKI_MAIN_PASSWORD`.
 - See `DOCUMENTATION.md` for extensive notes on all the API dead ends and workarounds.
 - No edit summary is added when publishing articles.

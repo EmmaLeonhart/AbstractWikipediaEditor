@@ -285,10 +285,9 @@ AbstractTestBot/
   requirements.txt              # Python dependencies
   password.md                   # Bot password reference (gitignored)
   runclaude.bat                 # Launch Claude Code
-  fetch_shinto_shrines.py       # SPARQL query to get 100 shrine QIDs
+  create_rich_onepass.py        # Single-pass shrine creation via clipboard injection (THIS IS WHAT WORKS)
   create_shrine_articles.py     # API-based approach (blocked, kept for reference)
-  create_via_browser.py         # Browser automation approach (THIS IS WHAT WORKS)
-  shrine_qids.json              # Generated list of QIDs (gitignored)
+  runcreate.bat                 # Quick launcher: creates 10 shrines headed
   .github/workflows/
     create-shrine-articles.yml  # GitHub Actions workflow (uses API approach)
 ```
@@ -356,23 +355,18 @@ WIKI_PASSWORD=your_bot_password
 WIKI_MAIN_PASSWORD=your_main_account_password
 ```
 
-### Fetch shrine QIDs
-
-```bash
-python fetch_shinto_shrines.py
-```
-
 ### Create articles
+
+The current script (`create_rich_onepass.py`) queries Wikidata via SPARQL for shrines with deities, checks which ones already have Abstract Wikipedia articles, and creates them with both location and deity fragments in a single editor session.
 
 ```bash
 # Dry run
-python create_via_browser.py
+python create_rich_onepass.py
 
 # Create 10 articles (headed, so you can watch)
-python create_via_browser.py --apply --max-edits 10 --headed
+python create_rich_onepass.py --apply --max-edits 10 --headed
 
-# Create all 100 (headless)
-python create_via_browser.py --apply --max-edits 100
+# Or just double-click runcreate.bat to create 10 headed
 ```
 
 ### Important notes for Windows

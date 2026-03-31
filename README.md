@@ -4,7 +4,7 @@ Bot for creating Shinto shrine articles on [Abstract Wikipedia](https://abstract
 
 ## What it does
 
-Creates articles by copying the Wikifunctions template from [Q11581011](https://abstract.wikipedia.org/wiki/Q11581011) (Kotai Jingu) and pasting it into new shrine pages. The template dynamically generates text like "[Name] is a Shinto shrine in [Location], Japan." for any shrine entity.
+Creates articles by injecting Wikifunctions fragments directly into the editor's clipboard, then pasting both a location and deity fragment in a single editor session. The script queries Wikidata via SPARQL for shrines with deities, checks which already have articles, and creates the missing ones.
 
 ## Why browser automation?
 
@@ -14,8 +14,8 @@ Abstract Wikipedia's API **does not support creating articles** (as of March 202
 
 | Script | Purpose |
 |--------|---------|
-| `fetch_shinto_shrines.py` | SPARQL query for 100 Shinto shrine QIDs |
-| `create_via_browser.py` | Browser automation to create articles (the one that works) |
+| `create_rich_onepass.py` | Single-pass shrine creation via clipboard injection (current standard) |
+| `runcreate.bat` | Quick launcher: creates 10 shrines in headed mode |
 | `create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
 
 ## Usage
@@ -23,8 +23,14 @@ Abstract Wikipedia's API **does not support creating articles** (as of March 202
 ```bash
 pip install requests python-dotenv playwright
 python -m playwright install chromium
-python fetch_shinto_shrines.py
-python create_via_browser.py --apply --max-edits 10 --headed
+
+# Dry run
+python create_rich_onepass.py
+
+# Create 10 articles
+python create_rich_onepass.py --apply --max-edits 10 --headed
+
+# Or just double-click runcreate.bat
 ```
 
 ## Configuration

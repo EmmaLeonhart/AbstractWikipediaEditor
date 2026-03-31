@@ -69,7 +69,13 @@
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/api.php', params={'action':'query','titles':'Q11261436','format':'json'}, headers={'User-Agent':'test','Accept':'application/json'}\\)\nprint\\(r.json\\(\\)\\)\n\")",
       "Bash(/c/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python -c \"\nimport requests\nr = requests.get\\('https://abstract.wikipedia.org/w/index.php', params={'title':'Q11305182','action':'raw'}, headers={'User-Agent':'test'}\\)\nimport json\ndata = json.loads\\(r.text\\)\ndeity = data['sections']['Q8776414']['fragments'][2]['Z29749K1']['Z28016K1']['Z6091K1']\nprint\\(f'Deity QID: {deity}'\\)\nprint\\(f'Fragments: {len\\(data[\\\\\"sections\\\\\"][\\\\\"Q8776414\\\\\"][\\\\\"fragments\\\\\"]\\)}'\\)\nprint\\('OK' if deity == 'Q2842779' else 'WRONG'\\)\n\")",
       "Bash(mv *.png screenshots/)",
-      "Bash(ls *.png)"
+      "Bash(ls *.png)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_batch.py --max-edits 10)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_batch.py --apply --max-edits 10 --headed)",
+      "Bash(ls clipboard_cache_*.json)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_inject.py --apply --max-edits 5 --headed)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -c \"\nimport requests\nfor qid in ['Q704962','Q704967','Q705035','Q705126','Q705151']:\n    r = requests.get\\(f'https://abstract.wikipedia.org/wiki/{qid}', headers={'User-Agent':'AbstractTestBot/1.0'}\\)\n    has_content = 'There is currently no text in this page' not in r.text\n    print\\(f'{qid}: {\\\\\"HAS CONTENT\\\\\" if has_content else \\\\\"EMPTY\\\\\"}'\\)\n\" 2>&1)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_onepass.py --apply --max-edits 5 --headed)"
     ]
   }
 }

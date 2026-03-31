@@ -76,7 +76,9 @@
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_inject.py --apply --max-edits 5 --headed)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -c \"\nimport requests\nfor qid in ['Q704962','Q704967','Q705035','Q705126','Q705151']:\n    r = requests.get\\(f'https://abstract.wikipedia.org/wiki/{qid}', headers={'User-Agent':'AbstractTestBot/1.0'}\\)\n    has_content = 'There is currently no text in this page' not in r.text\n    print\\(f'{qid}: {\\\\\"HAS CONTENT\\\\\" if has_content else \\\\\"EMPTY\\\\\"}'\\)\n\" 2>&1)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_onepass.py --apply --max-edits 5 --headed)",
-      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_via_browser.py --apply --max-edits 10 --headed 2>&1)"
+      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_via_browser.py --apply --max-edits 10 --headed 2>&1)",
+      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe fetch_shinto_shrines.py 2>&1)",
+      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_rich_onepass.py --apply --max-edits 10 --headed 2>&1)"
     ]
   }
 }

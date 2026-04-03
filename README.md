@@ -10,13 +10,24 @@ Creates articles by injecting Wikifunctions fragments directly into the editor's
 
 Abstract Wikipedia's API **does not support creating articles** (as of March 2026). The `abstractwiki` content model requires `wikilambda-abstract-create` rights, which bot passwords cannot access. See [DOCUMENTATION.md](DOCUMENTATION.md) for the full story of what we tried and why.
 
+## Project Structure
+
+| Directory | Contents |
+|-----------|----------|
+| `/` (root) | Runtime scripts and launchers |
+| `research/` | Exploration, debugging, and test scripts |
+| `archive/` | Superseded script versions kept for reference |
+| `data/` | Generated data files, cached JSON, HTML artifacts |
+| `screenshots/` | Debug and documentation screenshots |
+| `credentials/` | Passwords and secrets (gitignored) |
+
 ## Scripts
 
 | Script | Purpose |
 |--------|---------|
 | `create_rich_onepass.py` | Single-pass shrine creation via clipboard injection (current standard) |
 | `runcreate.bat` | Quick launcher: creates 10 shrines in headed mode |
-| `create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
+| `archive/create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
 
 ## Usage
 

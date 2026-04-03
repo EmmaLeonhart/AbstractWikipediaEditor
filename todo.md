@@ -10,12 +10,15 @@
 
 ## In Progress
 
-- [ ] **Markdown-to-article system**: Build a system that translates a simple markdown file
-  into Abstract Wikipedia article content using Wikifunctions Z-objects.
-  - The markdown would describe an article in human-readable terms
-  - The system converts each section/sentence into the appropriate nested Z-object JSON
-  - Fragments are injected into the editor clipboard and published via Playwright
-  - This decouples "what the article says" from the complex Z-object nesting format
+- [x] **Wiki text template parser** (`wikitext_parser.py`): MediaWiki-inspired template syntax
+  that converts human-readable `{{Z26570 | $subject | Q845945 | Q17}}` into clipboard JSON.
+  - 13 sentence generators in the function registry
+  - Auto-wrapping (Z11 -> Z29749, Z6 -> Z27868, Z89 -> passthrough)
+  - YAML frontmatter for metadata and variable declarations
+  - Example templates: shrine, city, mountain in `data/templates/`
+  - 48 unit tests in `tests/test_wikitext_parser.py`
+- [ ] **Chrome extension**: Package the template parser + clipboard injection as a
+  browser extension anyone can use to create Abstract Wikipedia pages
 
 ## Next Steps
 

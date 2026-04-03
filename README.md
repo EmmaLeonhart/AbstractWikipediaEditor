@@ -28,8 +28,46 @@ Abstract Wikipedia's API **does not support creating articles** (as of March 202
 | Script | Purpose |
 |--------|---------|
 | `create_rich_onepass.py` | Single-pass shrine creation via clipboard injection (current standard) |
+| `create_rich_threepass.py` | Three-fragment version with administrative territory |
+| `wikitext_parser.py` | Wiki text template parser: converts human-readable templates to clipboard JSON |
 | `runcreate.bat` | Quick launcher: creates 10 shrines in headed mode |
 | `archive/create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
+
+## Wiki Text Templates
+
+The `wikitext_parser.py` module provides a MediaWiki-inspired template syntax for defining Abstract Wikipedia articles without hand-crafting nested Z-object JSON.
+
+**Template syntax:**
+```
+---
+title: Shinto Shrine
+variables:
+  deity: Q-item
+---
+{{Z26570 | $subject | Q845945 | Q17}}
+{{Z28016 | $deity | Q11591100 | $subject}}
+```
+
+Each `{{...}}` block becomes one clipboard fragment. The parser handles:
+- **Z-function calls** with positional or named arguments
+- **`$subject` / `$lang`** as implicit article entity/language references
+- **Q-items** automatically wrapped as Wikidata item references (Z6091)
+- **`$variables`** filled in at render time from the frontmatter or caller
+- **Auto-wrapping**: Z11-returning functions get Z29749, Z6-returning get Z27868
+
+**CLI usage:**
+```bash
+python wikitext_parser.py data/templates/shinto_shrine.wikitext deity=Q12345
+python wikitext_parser.py --list-functions
+```
+
+**Python usage:**
+```python
+from wikitext_parser import compile_template
+clipboard = compile_template(template_text, {"deity": "Q12345", "subject": "Q67890"})
+```
+
+Example templates in `data/templates/`: shrine, city, mountain, and more.
 
 ## Usage
 

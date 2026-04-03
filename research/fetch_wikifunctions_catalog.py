@@ -1,7 +1,13 @@
 """
-Fetch all Wikifunctions (Z8) functions and their documentation.
-Outputs a comprehensive catalog to data/wikifunctions_catalog.json
-and a human-readable markdown to WIKIFUNCTIONS_CATALOG.md
+Fetch ALL Wikifunctions Z8 (Function) and Z4 (Type) objects and document them.
+
+Uses two approaches to ensure completeness:
+1. wikilambdasearch_labels (search API) - fast but incomplete (~818 results)
+2. allpages enumeration + batch wikilambda_fetch - slow but catches everything
+
+Outputs:
+- data/wikifunctions_catalog.json (machine-readable)
+- WIKIFUNCTIONS_CATALOG.md (human-readable with implementation notes)
 """
 import requests
 import json
@@ -17,34 +23,38 @@ API = "https://wikifunctions.org/w/api.php"
 SESSION = requests.Session()
 SESSION.headers.update({"User-Agent": "AbstractTestBot/1.0 (Shinto shrine article creator)"})
 
-def fetch_all_function_ids():
-    """Enumerate all Z8 (Function) objects via wikilambdasearch_labels."""
-    functions = []
+# Z-IDs we have successfully used in article creation
+USED_IN_BOT = {
+    "Z6091": "Type used as Wikidata item reference wrapper in both location and deity fragments",
+    "Z14396": "Used to wrap monolingual text strings inside article fragments",
+    "Z26570": "Core function: generates 'located in [entity], [class]' text for shrine location fragments",
+    "Z27868": "Converts a plain string into an HTML fragment for the visual editor clipboard",
+    "Z28016": "Core function: generates 'The deity of [shrine] is [deity]' sentences for deity fragments",
+    "Z29749": "Wraps monolingual text as an HTML fragment with automatic language code detection",
+}
+
+
+def fetch_all_zids_via_allpages():
+    """Get every Z-ID on wikifunctions.org via the allpages API."""
+    all_zids = []
     params = {
-        "action": "query",
-        "list": "wikilambdasearch_labels",
-        "wikilambdasearch_search": "",
-        "wikilambdasearch_type": "Z8",
-        "wikilambdasearch_language": "en",
-        "wikilambdasearch_limit": 500,
-        "format": "json",
+        "action": "query", "list": "allpages",
+        "apnamespace": 0, "aplimit": 500, "format": "json",
     }
     page = 1
     while True:
-        print(f"  Fetching function list page {page}...")
+        print(f"  allpages page {page}...")
         r = SESSION.get(API, params=params)
         r.raise_for_status()
         data = r.json()
-        batch = data.get("query", {}).get("wikilambdasearch_labels", [])
-        functions.extend(batch)
-        print(f"    Got {len(batch)} functions (total: {len(functions)})")
+        batch = [p["title"] for p in data["query"]["allpages"]]
+        all_zids.extend(batch)
         if "continue" not in data:
             break
-        params["wikilambdasearch_continue"] = data["continue"]["wikilambdasearch_continue"]
-        params["continue"] = data["continue"]["continue"]
+        params["apcontinue"] = data["continue"]["apcontinue"]
         page += 1
-        time.sleep(0.5)
-    return functions
+        time.sleep(0.3)
+    return all_zids
 
 
 def extract_multilingual_text(z12_obj):
@@ -72,13 +82,10 @@ def resolve_type_ref(type_obj):
     if isinstance(type_obj, str):
         return type_obj
     if isinstance(type_obj, dict):
-        # Could be a Z9 (Reference) or a Z7 (Function call / generic type)
         if "Z9K1" in type_obj:
             return type_obj["Z9K1"]
         if "Z7K1" in type_obj:
-            # Generic type like Z881(Z6) = Typed list of strings
             base = resolve_type_ref(type_obj["Z7K1"])
-            # Collect generic args
             args = []
             for key, val in sorted(type_obj.items()):
                 if key.startswith("Z") and key != "Z7K1" and key != "Z1K1":
@@ -95,51 +102,44 @@ def resolve_type_ref(type_obj):
     return str(type_obj)
 
 
-def parse_function_detail(zid, raw_json):
-    """Parse the full Z-object JSON into a clean function descriptor."""
-    try:
-        obj = json.loads(raw_json) if isinstance(raw_json, str) else raw_json
-    except (json.JSONDecodeError, TypeError):
-        return None
+def get_object_type(obj):
+    """Get the Z-type of a Z2 persistent object's value."""
+    z2_value = obj.get("Z2K2", {})
+    if isinstance(z2_value, dict):
+        t = z2_value.get("Z1K1", "")
+        if isinstance(t, str):
+            return t
+        if isinstance(t, dict):
+            return t.get("Z9K1", "")
+    return ""
 
+
+def parse_function_detail(zid, obj):
+    """Parse a Z8 function object into a clean descriptor."""
     z2_value = obj.get("Z2K2", {})
     if not isinstance(z2_value, dict):
         return None
 
-    # Labels
-    labels_obj = obj.get("Z2K3", {})
-    label = extract_multilingual_text(labels_obj)
+    label = extract_multilingual_text(obj.get("Z2K3", {}))
+    description = extract_multilingual_text(obj.get("Z2K5", {}))
 
-    # Description
-    desc_obj = obj.get("Z2K5", {})
-    description = extract_multilingual_text(desc_obj)
-
-    # Arguments
     args_list = z2_value.get("Z8K1", [])
     arguments = []
     if isinstance(args_list, list):
         for arg in args_list:
-            if not isinstance(arg, dict) or arg.get("Z1K1") == "Z17":
-                pass  # valid
             if isinstance(arg, dict) and "Z17K2" in arg:
-                arg_info = {
+                arguments.append({
                     "key": arg.get("Z17K2", ""),
                     "type": resolve_type_ref(arg.get("Z17K1", "")),
                     "label": extract_multilingual_text(arg.get("Z17K3", {})),
-                }
-                arguments.append(arg_info)
+                })
 
-    # Return type
     return_type = resolve_type_ref(z2_value.get("Z8K2", ""))
 
-    # Count tests and implementations
     tests = z2_value.get("Z8K3", [])
     impls = z2_value.get("Z8K4", [])
     num_tests = len([t for t in tests if isinstance(t, dict)]) if isinstance(tests, list) else 0
     num_impls = len([i for i in impls if isinstance(i, dict)]) if isinstance(impls, list) else 0
-
-    # Input types (collect unique arg types for the Z7 composition signature)
-    input_types = [a.get("type", "") for a in arguments]
 
     return {
         "zid": zid,
@@ -147,34 +147,104 @@ def parse_function_detail(zid, raw_json):
         "description": description,
         "arguments": arguments,
         "return_type": return_type,
-        "input_types": input_types,
+        "input_types": [a.get("type", "") for a in arguments],
         "num_tests": num_tests,
         "num_implementations": num_impls,
+        "used_in_bot": zid in USED_IN_BOT,
+        "bot_usage_note": USED_IN_BOT.get(zid, ""),
     }
 
 
-def fetch_function_details(zids):
-    """Fetch full Z-object data for a batch of ZIDs (max 50 at a time)."""
-    results = {}
-    for i in range(0, len(zids), 50):
-        batch = zids[i:i+50]
+def parse_type_detail(zid, obj):
+    """Parse a Z4 type object into a clean descriptor."""
+    label = extract_multilingual_text(obj.get("Z2K3", {}))
+    description = extract_multilingual_text(obj.get("Z2K5", {}))
+
+    z2_value = obj.get("Z2K2", {})
+    # Z4 types have Z4K2 (keys) and Z4K3 (validator)
+    keys = []
+    keys_list = z2_value.get("Z4K2", [])
+    if isinstance(keys_list, list):
+        for k in keys_list:
+            if isinstance(k, dict) and "Z3K2" in k:
+                keys.append({
+                    "key": k.get("Z3K2", ""),
+                    "type": resolve_type_ref(k.get("Z3K1", "")),
+                    "label": extract_multilingual_text(k.get("Z3K3", {})),
+                })
+
+    return {
+        "zid": zid,
+        "label": label,
+        "description": description,
+        "keys": keys,
+        "used_in_bot": zid in USED_IN_BOT,
+        "bot_usage_note": USED_IN_BOT.get(zid, ""),
+    }
+
+
+def batch_fetch_and_classify(all_zids):
+    """Fetch all Z-objects in batches and classify them by type."""
+    functions = {}
+    types = {}
+    other_counts = {}
+
+    for i in range(0, len(all_zids), 50):
+        batch = all_zids[i:i+50]
         batch_str = "|".join(batch)
-        print(f"  Fetching details {i+1}-{i+len(batch)} of {len(zids)}...")
-        r = SESSION.get(API, params={
-            "action": "wikilambda_fetch",
-            "zids": batch_str,
-            "format": "json",
-        })
-        r.raise_for_status()
-        data = r.json()
+        progress = f"{i+1}-{i+len(batch)}/{len(all_zids)}"
+        print(f"  Fetching {progress}...", end="")
+        data = None
+        for attempt in range(5):
+            try:
+                r = SESSION.get(API, params={
+                    "action": "wikilambda_fetch",
+                    "zids": batch_str,
+                    "format": "json",
+                })
+                if r.status_code == 429:
+                    wait = 5 * (attempt + 1)
+                    print(f" rate limited, waiting {wait}s...", end="")
+                    time.sleep(wait)
+                    continue
+                r.raise_for_status()
+                data = r.json()
+                break
+            except Exception as e:
+                print(f" ERROR: {e}", end="")
+                time.sleep(3 * (attempt + 1))
+        if data is None:
+            print(" SKIPPED")
+            continue
+
+        fn_count = 0
+        type_count = 0
         for zid in batch:
-            if zid in data:
-                raw = data[zid].get("wikilambda_fetch", "{}")
-                parsed = parse_function_detail(zid, raw)
+            if zid not in data:
+                continue
+            try:
+                obj = json.loads(data[zid].get("wikilambda_fetch", "{}"))
+            except (json.JSONDecodeError, TypeError):
+                continue
+
+            obj_type = get_object_type(obj)
+            if obj_type == "Z8":
+                parsed = parse_function_detail(zid, obj)
                 if parsed:
-                    results[zid] = parsed
-        time.sleep(1.0)
-    return results
+                    functions[zid] = parsed
+                    fn_count += 1
+            elif obj_type == "Z4":
+                parsed = parse_type_detail(zid, obj)
+                if parsed:
+                    types[zid] = parsed
+                    type_count += 1
+            else:
+                other_counts[obj_type] = other_counts.get(obj_type, 0) + 1
+
+        print(f" {fn_count} functions, {type_count} types")
+        time.sleep(1.5)
+
+    return functions, types, other_counts
 
 
 # Known Z-type labels for human-readable output
@@ -190,35 +260,41 @@ def fetch_type_labels(type_zids):
         batch = unique[i:i+50]
         batch_str = "|".join(batch)
         print(f"  Fetching type labels {i+1}-{i+len(batch)}...")
-        r = SESSION.get(API, params={
-            "action": "wikilambda_fetch",
-            "zids": batch_str,
-            "format": "json",
-        })
-        r.raise_for_status()
-        data = r.json()
-        for zid in batch:
-            if zid in data:
-                try:
-                    obj = json.loads(data[zid].get("wikilambda_fetch", "{}"))
-                    label = extract_multilingual_text(obj.get("Z2K3", {}))
-                    if label:
-                        TYPE_LABELS[zid] = label
-                except Exception:
-                    pass
-        time.sleep(0.5)
+        for attempt in range(5):
+            try:
+                r = SESSION.get(API, params={
+                    "action": "wikilambda_fetch",
+                    "zids": batch_str,
+                    "format": "json",
+                })
+                if r.status_code == 429:
+                    time.sleep(5 * (attempt + 1))
+                    continue
+                r.raise_for_status()
+                data = r.json()
+                for zid in batch:
+                    if zid in data:
+                        try:
+                            obj = json.loads(data[zid].get("wikilambda_fetch", "{}"))
+                            label = extract_multilingual_text(obj.get("Z2K3", {}))
+                            if label:
+                                TYPE_LABELS[zid] = label
+                        except Exception:
+                            pass
+                break
+            except Exception:
+                time.sleep(3 * (attempt + 1))
+        time.sleep(1.5)
 
 
 def human_type(type_str):
     """Convert a type reference like Z6 to 'String (Z6)'."""
     if not type_str:
         return "Unknown"
-    # Handle generic types like Z881(Z6)
     if "(" in type_str:
         base = type_str.split("(")[0]
         inner = type_str[len(base):]
         base_label = TYPE_LABELS.get(base, base)
-        # Resolve inner types too
         inner_clean = inner.strip("()")
         parts = [TYPE_LABELS.get(p.strip(), p.strip()) for p in inner_clean.split(",")]
         return f"{base_label} ({base})({', '.join(parts)})"
@@ -228,11 +304,15 @@ def human_type(type_str):
     return type_str
 
 
-def generate_markdown(functions_by_id):
+def generate_markdown(functions_by_id, types_by_id, other_counts):
     """Generate a comprehensive markdown catalog."""
     sorted_funcs = sorted(functions_by_id.values(), key=lambda f: int(f["zid"][1:]))
+    sorted_types = sorted(types_by_id.values(), key=lambda t: int(t["zid"][1:]))
 
-    # Group by return type for a summary section
+    used_funcs = [f for f in sorted_funcs if f["used_in_bot"]]
+    used_types = [t for t in sorted_types if t["used_in_bot"]]
+
+    # Group functions by return type
     by_return = {}
     for f in sorted_funcs:
         rt = human_type(f["return_type"])
@@ -241,14 +321,124 @@ def generate_markdown(functions_by_id):
     lines = []
     lines.append("# Wikifunctions Catalog")
     lines.append("")
-    lines.append(f"Complete catalog of all **{len(sorted_funcs)}** functions available on")
+    lines.append(f"Complete catalog of all **{len(sorted_funcs)}** functions and **{len(sorted_types)}** types on")
     lines.append("[Wikifunctions](https://www.wikifunctions.org/) as used by Abstract Wikipedia.")
     lines.append("")
     lines.append(f"*Auto-generated by `research/fetch_wikifunctions_catalog.py`*")
     lines.append("")
 
-    # Table of contents by return type
-    lines.append("## Summary by Return Type")
+    # ============================================================
+    # USED IN BOT section - the most important part
+    # ============================================================
+    lines.append("## Currently Used in AbstractTestBot")
+    lines.append("")
+    lines.append("These are the functions and types we have **successfully implemented** in our shrine article")
+    lines.append("creation workflow (`create_rich_onepass.py`). They are injected into the Abstract Wikipedia")
+    lines.append("visual editor clipboard as nested Z-object JSON.")
+    lines.append("")
+
+    if used_funcs:
+        lines.append("### Functions We Use")
+        lines.append("")
+        for f in used_funcs:
+            zid = f["zid"]
+            label = f["label"] or "(unnamed)"
+            rt = human_type(f["return_type"])
+            lines.append(f"#### {zid}: {label} ✅ IMPLEMENTED")
+            lines.append("")
+            lines.append(f"**Bot usage:** {f['bot_usage_note']}")
+            lines.append("")
+            if f["description"]:
+                lines.append(f"> {f['description']}")
+                lines.append("")
+            arg_strs = []
+            for a in f["arguments"]:
+                atype = human_type(a["type"])
+                alabel = a["label"] or a["key"]
+                arg_strs.append(f"{alabel}: {atype}")
+            sig = ", ".join(arg_strs) if arg_strs else "(no arguments)"
+            lines.append(f"**Signature:** `{label}({sig})` -> `{rt}`")
+            lines.append("")
+            if f["arguments"]:
+                lines.append("| Argument | Key | Type |")
+                lines.append("|----------|-----|------|")
+                for a in f["arguments"]:
+                    lines.append(f"| {a['label'] or '—'} | `{a['key']}` | {human_type(a['type'])} |")
+                lines.append("")
+            lines.append(f"**Returns:** {rt}  ")
+            lines.append(f"**Link:** [View on Wikifunctions](https://www.wikifunctions.org/view/en/{zid})")
+            lines.append("")
+            lines.append("---")
+            lines.append("")
+
+    if used_types:
+        lines.append("### Types We Use")
+        lines.append("")
+        for t in used_types:
+            zid = t["zid"]
+            label = t["label"] or "(unnamed)"
+            lines.append(f"#### {zid}: {label} ✅ IMPLEMENTED")
+            lines.append("")
+            lines.append(f"**Bot usage:** {t['bot_usage_note']}")
+            lines.append("")
+            if t["description"]:
+                lines.append(f"> {t['description']}")
+                lines.append("")
+            if t["keys"]:
+                lines.append("| Key | ID | Type |")
+                lines.append("|-----|-----|------|")
+                for k in t["keys"]:
+                    lines.append(f"| {k['label'] or '—'} | `{k['key']}` | {human_type(k['type'])} |")
+                lines.append("")
+            lines.append(f"**Link:** [View on Wikifunctions](https://www.wikifunctions.org/view/en/{zid})")
+            lines.append("")
+            lines.append("---")
+            lines.append("")
+
+    # Nesting diagram
+    lines.append("### How They Nest Together")
+    lines.append("")
+    lines.append("Each article has two clipboard fragments. Here's how the functions compose:")
+    lines.append("")
+    lines.append("```")
+    lines.append("Fragment 1: Location")
+    lines.append("  Z27868 (string to HTML fragment)")
+    lines.append("    └─ Z14396 (string of monolingual text)")
+    lines.append("         └─ Z26570 (State location using entity and class)")
+    lines.append("              ├─ Z26570K1: argument key reference")
+    lines.append("              ├─ Z26570K2: Z6091 (Wikidata item ref) → Q845945 (shrine QID)")
+    lines.append("              ├─ Z26570K3: Z6091 (Wikidata item ref) → Q17 (country: Japan)")
+    lines.append("              └─ Z26570K4: argument key reference")
+    lines.append("")
+    lines.append("Fragment 2: Deity")
+    lines.append("  Z29749 (monolingual text as HTML fragment w/ auto-langcode)")
+    lines.append("    ├─ Z29749K1:")
+    lines.append("    │   └─ Z28016 (defining role sentence)")
+    lines.append("    │        ├─ Z28016K1: Z6091 (Wikidata item ref) → deity QID")
+    lines.append("    │        ├─ Z28016K2: Z6091 (Wikidata item ref) → Q11591100 (Shinto shrine)")
+    lines.append("    │        ├─ Z28016K3: argument key reference")
+    lines.append("    │        └─ Z28016K4: argument key reference")
+    lines.append("    └─ Z29749K2: argument key reference")
+    lines.append("```")
+    lines.append("")
+
+    # ============================================================
+    # Summary tables
+    # ============================================================
+    lines.append("## Summary")
+    lines.append("")
+    lines.append("### Z-Object Type Breakdown")
+    lines.append("")
+    lines.append("| Object Type | Count |")
+    lines.append("|-------------|-------|")
+    lines.append(f"| Z8 (Function) | {len(sorted_funcs)} |")
+    lines.append(f"| Z4 (Type) | {len(sorted_types)} |")
+    for otype, count in sorted(other_counts.items(), key=lambda x: -x[1]):
+        label = TYPE_LABELS.get(otype, otype)
+        lines.append(f"| {label} ({otype}) | {count} |")
+    lines.append("")
+
+    lines.append("### Functions by Return Type")
     lines.append("")
     lines.append("| Return Type | Count |")
     lines.append("|-------------|-------|")
@@ -256,8 +446,43 @@ def generate_markdown(functions_by_id):
         lines.append(f"| {rt} | {len(by_return[rt])} |")
     lines.append("")
 
-    # Full catalog
-    lines.append("## Full Catalog")
+    # ============================================================
+    # Types catalog
+    # ============================================================
+    lines.append("## Types Catalog")
+    lines.append("")
+    lines.append(f"All **{len(sorted_types)}** types available on Wikifunctions.")
+    lines.append("")
+
+    for t in sorted_types:
+        zid = t["zid"]
+        label = t["label"] or "(unnamed)"
+        used_marker = " ✅ USED IN BOT" if t["used_in_bot"] else ""
+        lines.append(f"### {zid}: {label}{used_marker}")
+        lines.append("")
+        if t["used_in_bot"]:
+            lines.append(f"**Bot usage:** {t['bot_usage_note']}")
+            lines.append("")
+        if t["description"]:
+            lines.append(f"> {t['description']}")
+            lines.append("")
+        if t["keys"]:
+            lines.append("| Key | ID | Type |")
+            lines.append("|-----|-----|------|")
+            for k in t["keys"]:
+                lines.append(f"| {k['label'] or '—'} | `{k['key']}` | {human_type(k['type'])} |")
+            lines.append("")
+        lines.append(f"**Link:** [View on Wikifunctions](https://www.wikifunctions.org/view/en/{zid})")
+        lines.append("")
+        lines.append("---")
+        lines.append("")
+
+    # ============================================================
+    # Full functions catalog
+    # ============================================================
+    lines.append("## Functions Catalog")
+    lines.append("")
+    lines.append(f"All **{len(sorted_funcs)}** functions available on Wikifunctions.")
     lines.append("")
 
     for f in sorted_funcs:
@@ -265,14 +490,17 @@ def generate_markdown(functions_by_id):
         label = f["label"] or "(unnamed)"
         desc = f["description"] or ""
         rt = human_type(f["return_type"])
+        used_marker = " ✅ USED IN BOT" if f["used_in_bot"] else ""
 
-        lines.append(f"### {zid}: {label}")
+        lines.append(f"### {zid}: {label}{used_marker}")
         lines.append("")
+        if f["used_in_bot"]:
+            lines.append(f"**Bot usage:** {f['bot_usage_note']}")
+            lines.append("")
         if desc:
             lines.append(f"> {desc}")
             lines.append("")
 
-        # Signature
         arg_strs = []
         for a in f["arguments"]:
             atype = human_type(a["type"])
@@ -303,56 +531,66 @@ def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))
     repo_root = os.path.dirname(script_dir)
 
-    print("=== Wikifunctions Catalog Builder ===")
+    print("=== Wikifunctions Complete Catalog Builder ===")
     print()
 
-    # Step 1: Get all function IDs
-    print("[1/4] Fetching function list...")
-    func_list = fetch_all_function_ids()
-    print(f"  Found {len(func_list)} functions")
+    # Step 1: Enumerate ALL Z-objects
+    print("[1/4] Enumerating all Z-objects via allpages...")
+    all_zids = fetch_all_zids_via_allpages()
+    print(f"  Found {len(all_zids)} total Z-objects")
     print()
 
-    # Step 2: Fetch full details
-    print("[2/4] Fetching function details...")
-    zids = [f["page_title"] for f in func_list]
-    functions = fetch_function_details(zids)
-    print(f"  Successfully parsed {len(functions)} functions")
+    # Step 2: Fetch and classify everything
+    print("[2/4] Fetching and classifying all Z-objects...")
+    functions, types, other_counts = batch_fetch_and_classify(all_zids)
+    print(f"  Found {len(functions)} functions, {len(types)} types")
+    used = [z for z in USED_IN_BOT if z in functions or z in types]
+    print(f"  {len(used)}/{len(USED_IN_BOT)} bot-used Z-objects found in catalog")
     print()
 
     # Step 3: Resolve type labels
     print("[3/4] Resolving type labels...")
-    all_types = set()
+    all_type_refs = set()
     for f in functions.values():
-        all_types.add(f["return_type"].split("(")[0] if "(" in f["return_type"] else f["return_type"])
+        rt = f["return_type"]
+        all_type_refs.add(rt.split("(")[0] if "(" in rt else rt)
         for a in f["arguments"]:
             t = a["type"]
-            all_types.add(t.split("(")[0] if "(" in t else t)
-    fetch_type_labels(list(all_types))
+            all_type_refs.add(t.split("(")[0] if "(" in t else t)
+    for t in types.values():
+        for k in t["keys"]:
+            kt = k["type"]
+            all_type_refs.add(kt.split("(")[0] if "(" in kt else kt)
+    for otype in other_counts:
+        all_type_refs.add(otype)
+    fetch_type_labels(list(all_type_refs))
     print(f"  Resolved {len(TYPE_LABELS)} type labels")
     print()
 
     # Step 4: Write outputs
     print("[4/4] Writing output files...")
 
-    # JSON catalog
     json_path = os.path.join(repo_root, "data", "wikifunctions_catalog.json")
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump({
             "total_functions": len(functions),
+            "total_types": len(types),
+            "used_in_bot": USED_IN_BOT,
             "type_labels": TYPE_LABELS,
             "functions": {k: v for k, v in sorted(functions.items(), key=lambda x: int(x[0][1:]))},
+            "types": {k: v for k, v in sorted(types.items(), key=lambda x: int(x[0][1:]))},
         }, f, indent=2, ensure_ascii=False)
     print(f"  Wrote {json_path}")
 
-    # Markdown catalog
     md_path = os.path.join(repo_root, "WIKIFUNCTIONS_CATALOG.md")
-    md = generate_markdown(functions)
+    md = generate_markdown(functions, types, other_counts)
     with open(md_path, "w", encoding="utf-8") as f:
         f.write(md)
     print(f"  Wrote {md_path}")
 
     print()
-    print(f"Done! {len(functions)} functions documented.")
+    print(f"Done! {len(functions)} functions + {len(types)} types documented.")
+    print(f"Bot-used objects annotated: {', '.join(sorted(used))}")
 
 
 if __name__ == "__main__":

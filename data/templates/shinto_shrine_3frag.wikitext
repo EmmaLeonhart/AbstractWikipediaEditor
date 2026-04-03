@@ -1,0 +1,15 @@
+---
+title: Shinto Shrine (3-fragment)
+description: >
+  Three-fragment version with administrative territory.
+  Equivalent to create_rich_threepass.py.
+variables:
+  deity: Q-item    # Wikidata QID for the shrine's deity
+  admin: Q-item    # Administrative territory (prefecture/city)
+---
+
+# Lead section
+
+{{Z26570 | $subject | Q845945 | Q17}}
+{{Z28016 | $deity | Q11591100 | $subject}}
+{{Z26570 | $subject | Q845945 | $admin}}

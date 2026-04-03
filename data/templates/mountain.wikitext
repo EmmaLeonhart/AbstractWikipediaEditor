@@ -1,0 +1,12 @@
+---
+title: Mountain (superlative)
+description: >
+  Mountain article using superlative definition.
+  Example: "Mount Everest is the tallest mountain in Asia."
+variables:
+  adjective: Q-item   # e.g. Q1151067 (tall)
+  class: Q-item        # e.g. Q8502 (mountain)
+  location: Q-item     # e.g. Q48 (Asia)
+---
+
+{{Z27243 | $subject | $adjective | $class | $location}}

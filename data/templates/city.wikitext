@@ -1,0 +1,10 @@
+---
+title: City
+description: >
+  Basic city article: location statement + class membership.
+variables:
+  country: Q-item   # Country the city is in
+  class: Q-item     # e.g. Q515 (city), Q1549591 (big city)
+---
+
+{{Z26570 | $subject | $class | $country}}

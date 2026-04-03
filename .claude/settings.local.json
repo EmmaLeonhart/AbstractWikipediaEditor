@@ -78,7 +78,10 @@
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_onepass.py --apply --max-edits 5 --headed)",
       "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_via_browser.py --apply --max-edits 10 --headed 2>&1)",
       "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe fetch_shinto_shrines.py 2>&1)",
-      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_rich_onepass.py --apply --max-edits 10 --headed 2>&1)"
+      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_rich_onepass.py --apply --max-edits 10 --headed 2>&1)",
+      "Bash(git mv:*)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_onepass.py)",
+      "Bash(C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe:*)"
     ]
   }
 }

@@ -81,7 +81,8 @@
       "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe create_rich_onepass.py --apply --max-edits 10 --headed 2>&1)",
       "Bash(git mv:*)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_rich_onepass.py)",
-      "Bash(C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe:*)"
+      "Bash(C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe:*)",
+      "Bash(tasklist)"
     ]
   }
 }

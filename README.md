@@ -1,5 +1,7 @@
 # AbstractTestBot
 
+**[Wikifunctions Shortlist](WIKIFUNCTIONS_SHORTLIST.md)** — curated list of functions for building articles | [Full catalog](WIKIFUNCTIONS_CATALOG.md) (3,911 functions) | [Roadmap](todo.md)
+
 Bot for creating Shinto shrine articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) via browser automation.
 
 ## What it does

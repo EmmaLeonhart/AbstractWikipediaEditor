@@ -2,7 +2,7 @@
 
 Bot that creates articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) from any Wikidata item using Playwright browser automation.
 
-**[Article Catalog](https://emmaleonhart.github.io/AbstractTestBot/)** -- browse all created articles with language-neutral and English views
+**[Article Catalog](https://emmaleonhart.github.io/AbstractEditing/)** -- browse all created articles with language-neutral and English views
 
 **[Wikifunctions Shortlist](WIKIFUNCTIONS_SHORTLIST.md)** -- curated list of functions for building articles | [Full catalog](WIKIFUNCTIONS_CATALOG.md) (3,911 functions)
 
@@ -63,7 +63,7 @@ Each `{{...}}` block becomes one clipboard fragment. Supports Z-function calls, 
 
 | Workflow | Purpose |
 |----------|---------|
-| `pages.yml` | Builds the [article catalog](https://emmaleonhart.github.io/AbstractTestBot/) daily, archives pages on the Wayback Machine |
+| `pages.yml` | Builds the [article catalog](https://emmaleonhart.github.io/AbstractEditing/) daily, archives pages on the Wayback Machine |
 | `ci.yml` | Runs tests on push/PR |
 
 ## Configuration

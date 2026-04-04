@@ -1,0 +1,10 @@
+---
+title: Smith Islands National Park
+description: "national park in Australia"
+# Auto-generated from Wikidata Q499550
+# Properties used: P131, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q18618819 | Q36074}}
+{{Z26570 | $subject | Q18618819 | Q408}}

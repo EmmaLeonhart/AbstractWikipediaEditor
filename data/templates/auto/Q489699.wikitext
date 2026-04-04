@@ -1,0 +1,11 @@
+---
+title: Miyagi Baseball Stadium
+description: "baseball stadium in Sendai, Japan"
+# Auto-generated from Wikidata Q489699
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q483110 | Q130732538}}
+{{Z26570 | $subject | Q483110 | Q17}}
+{{Z26955 | Q15292583 | $subject | Q11454012}}

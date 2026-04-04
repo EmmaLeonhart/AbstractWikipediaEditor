@@ -89,7 +89,11 @@
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" generate_wikitext.py Q36600)",
       "Bash(ls:*)",
       "Bash(gh workflow:*)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "Bash(taskkill /F /FI \"WINDOWTITLE eq *archive_pages*\")",
+      "Bash(pkill -f archive_pages.py)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:emmaleonhart.github.io)"
     ]
   }
 }

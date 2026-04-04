@@ -1,0 +1,11 @@
+---
+title: Rizal Memorial Stadium
+description: "stadium"
+# Auto-generated from Wikidata Q210710
+# Properties used: P131, P138, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q483110 | Q1461}}
+{{Z26570 | $subject | Q483110 | Q928}}
+{{Z28016 | $subject | Q28831311 | Q1500}}

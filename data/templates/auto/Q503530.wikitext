@@ -1,0 +1,9 @@
+---
+title: Sioma Ngwezi National Park
+description: "national park of Zambia"
+# Auto-generated from Wikidata Q503530
+# Properties used: P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q46169 | Q953}}

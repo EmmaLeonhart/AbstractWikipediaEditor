@@ -1,0 +1,10 @@
+---
+title: Lower Zambezi National Park
+description: "national park of Zambia"
+# Auto-generated from Wikidata Q503518
+# Properties used: P131, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q46169 | Q819998}}
+{{Z26570 | $subject | Q46169 | Q953}}

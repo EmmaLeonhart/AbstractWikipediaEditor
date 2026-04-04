@@ -1,0 +1,11 @@
+---
+title: Ozone Falls
+description: "waterfall in Tennessee, United States"
+# Auto-generated from Wikidata Q37441
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q34038 | Q489056}}
+{{Z26570 | $subject | Q34038 | Q30}}
+{{Z26955 | Q15292583 | $subject | Q548464}}

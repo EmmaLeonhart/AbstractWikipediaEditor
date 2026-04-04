@@ -1,0 +1,10 @@
+---
+title: French
+description: "Romance language"
+# Auto-generated from Wikidata Q150
+# Properties used: P17, P279, P31
+variables: {}
+---
+
+{{Z26095 | $subject | Q37351}}
+{{Z26570 | $subject | Q1288568 | Q142}}

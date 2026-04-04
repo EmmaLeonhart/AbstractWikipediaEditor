@@ -1,0 +1,11 @@
+---
+title: Stadsparksvallen
+description: "Sports ground in Jönköping, Sweden"
+# Auto-generated from Wikidata Q501184
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q483110 | Q504689}}
+{{Z26570 | $subject | Q483110 | Q34}}
+{{Z26955 | Q15292583 | $subject | Q10542134}}

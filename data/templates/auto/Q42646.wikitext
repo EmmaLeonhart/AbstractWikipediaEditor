@@ -1,0 +1,13 @@
+---
+title: Windsor Castle
+description: "royal residence at Windsor in Berkshire, England, UK"
+# Auto-generated from Wikidata Q42646
+# Properties used: P131, P138, P17, P31, P361, P527
+variables: {}
+---
+
+{{Z26570 | $subject | Q53536964 | Q1368496}}
+{{Z26570 | $subject | Q53536964 | Q145}}
+{{Z28016 | $subject | Q28831311 | Q464955}}
+{{Z26955 | Q15292583 | $subject | Q1459037}}
+{{Z26955 | Q15292583 | Q136532003 | $subject}}

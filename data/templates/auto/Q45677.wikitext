@@ -1,0 +1,10 @@
+---
+title: Château de Choisy
+description: "castle"
+# Auto-generated from Wikidata Q45677
+# Properties used: P131, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q23413 | Q212987}}
+{{Z26570 | $subject | Q23413 | Q142}}

@@ -1,0 +1,77 @@
+name: Build Article Catalog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 6 AM UTC
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4
+
+      - name: Build site and archive pages
+        run: python build_pages.py
+
+      - name: Retry previous archive failures
+        run: |
+          if [ -f data/archive_failures.json ]; then
+            python -c "
+          import json, requests, time, sys
+          with open('data/archive_failures.json') as f:
+              failures = json.load(f)
+          if not failures:
+              print('No failures to retry')
+              sys.exit(0)
+          print(f'Retrying {len(failures)} failed archives...')
+          session = requests.Session()
+          session.headers.update({'User-Agent': 'AbstractTestBot/1.0'})
+          still_failed = []
+          for qid in failures:
+              url = f'https://abstract.wikipedia.org/wiki/{qid}'
+              try:
+                  r = session.post('https://web.archive.org/save/', data={'url': url}, timeout=120)
+                  if r.status_code in (200, 302):
+                      print(f'  {qid}: OK')
+                  else:
+                      print(f'  {qid}: {r.status_code}')
+                      still_failed.append(qid)
+              except Exception as e:
+                  print(f'  {qid}: {e}')
+                  still_failed.append(qid)
+              time.sleep(15)
+          with open('data/archive_failures.json', 'w') as f:
+              json.dump(still_failed, f, indent=2)
+          print(f'Done. {len(still_failed)} still failing.')
+          "
+          fi
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

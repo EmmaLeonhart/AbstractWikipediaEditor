@@ -1,98 +1,77 @@
 # AbstractTestBot
 
-**[Wikifunctions Shortlist](WIKIFUNCTIONS_SHORTLIST.md)** — curated list of functions for building articles | [Full catalog](WIKIFUNCTIONS_CATALOG.md) (3,911 functions) | [Roadmap](todo.md)
+Bot that creates articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) from any Wikidata item using Playwright browser automation.
 
-Bot for creating Shinto shrine articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) via browser automation.
+**[Article Catalog](https://emmaleonhart.github.io/AbstractTestBot/)** -- browse all created articles with language-neutral and English views
 
-## What it does
+**[Wikifunctions Shortlist](WIKIFUNCTIONS_SHORTLIST.md)** -- curated list of functions for building articles | [Full catalog](WIKIFUNCTIONS_CATALOG.md) (3,911 functions)
 
-Creates articles by injecting Wikifunctions fragments directly into the editor's clipboard, then pasting both a location and deity fragment in a single editor session. The script queries Wikidata via SPARQL for shrines with deities, checks which already have articles, and creates the missing ones.
+## How it works
 
-## Why browser automation?
+1. **`generate_wikitext.py`** takes a Wikidata QID, fetches its properties, and produces a wikitext template using a property-to-function mapping
+2. **`wikitext_parser.py`** compiles the wikitext into clipboard-ready Z-object JSON
+3. **`create_from_qid.py`** injects the clipboard data into the Abstract Wikipedia visual editor via Playwright and publishes
 
-Abstract Wikipedia's API **does not support creating articles** (as of March 2026). The `abstractwiki` content model requires `wikilambda-abstract-create` rights, which bot passwords cannot access. See [DOCUMENTATION.md](DOCUMENTATION.md) for the full story of what we tried and why.
+Abstract Wikipedia's API does not support creating articles directly -- the `abstractwiki` content model requires `wikilambda-abstract-create` rights, which bot passwords cannot access. See [DOCUMENTATION.md](DOCUMENTATION.md) for the full story.
 
-## Project Structure
+## Quick start
 
-| Directory | Contents |
-|-----------|----------|
-| `/` (root) | Runtime scripts and launchers |
-| `research/` | Exploration, debugging, and test scripts |
-| `archive/` | Superseded script versions kept for reference |
-| `data/` | Generated data files, cached JSON, HTML artifacts |
-| `screenshots/` | Debug and documentation screenshots |
-| `credentials/` | Passwords and secrets (gitignored) |
+```bash
+pip install requests python-dotenv pyyaml playwright
+python -m playwright install chromium
 
-## Scripts
+# Generate wikitext for any Wikidata item
+python generate_wikitext.py Q706499
 
-| Script | Purpose |
-|--------|---------|
-| `create_rich_onepass.py` | Single-pass shrine creation via clipboard injection (current standard) |
-| `create_rich_threepass.py` | Three-fragment version with administrative territory |
-| `wikitext_parser.py` | Wiki text template parser: converts human-readable templates to clipboard JSON |
-| `runcreate.bat` | Quick launcher: creates 10 shrines in headed mode |
-| `archive/create_shrine_articles.py` | API-based approach (blocked by permissions, kept for reference) |
+# Create an article (opens browser)
+python create_from_qid.py Q706499 --apply --headed
 
-## Wiki Text Templates
+# Batch create
+python create_from_qid.py --batch Q60,Q1653,Q602 --apply --headed
+```
 
-The `wikitext_parser.py` module provides a MediaWiki-inspired template syntax for defining Abstract Wikipedia articles without hand-crafting nested Z-object JSON.
+## Chrome extension
 
-**Template syntax:**
+The `extension/` directory contains a Chrome extension that does the same thing from a browser popup -- enter a QID, generate wikitext, and create the article with one click. Load it as an unpacked extension from `chrome://extensions`.
+
+## Wikitext template syntax
+
 ```
 ---
 title: Shinto Shrine
 variables:
   deity: Q-item
 ---
-{{Z26570 | $subject | Q845945 | Q17}}
-{{Z28016 | $deity | Q11591100 | $subject}}
+{{location | $subject | Q845945 | Q17}}
+{{role | $deity | Q11591100 | $subject}}
 ```
 
-Each `{{...}}` block becomes one clipboard fragment. The parser handles:
-- **Z-function calls** with positional or named arguments
-- **`$subject` / `$lang`** as implicit article entity/language references
-- **Q-items** automatically wrapped as Wikidata item references (Z6091)
-- **`$variables`** filled in at render time from the frontmatter or caller
-- **Auto-wrapping**: Z11-returning functions get Z29749, Z6-returning get Z27868
+Each `{{...}}` block becomes one clipboard fragment. Supports Z-function calls, `$subject`/`$lang` references, Q-item auto-wrapping, variables, and human-readable function aliases.
 
-**CLI usage:**
-```bash
-python wikitext_parser.py data/templates/shinto_shrine.wikitext deity=Q12345
-python wikitext_parser.py --list-functions
-```
+## Project structure
 
-**Python usage:**
-```python
-from wikitext_parser import compile_template
-clipboard = compile_template(template_text, {"deity": "Q12345", "subject": "Q67890"})
-```
+| Directory | Contents |
+|-----------|----------|
+| `/` | Runtime scripts: `create_from_qid.py`, `generate_wikitext.py`, `wikitext_parser.py` |
+| `extension/` | Chrome extension for manual article creation |
+| `data/` | Property mappings, function aliases, generated templates |
+| `site/` | GitHub Pages article catalog (auto-generated) |
+| `research/` | Exploration and debugging scripts |
+| `archive/` | Superseded scripts (old shrine-only approach, batch launchers) |
 
-Example templates in `data/templates/`: shrine, city, mountain, and more.
+## GitHub Actions
 
-## Usage
-
-```bash
-pip install requests python-dotenv playwright
-python -m playwright install chromium
-
-# Dry run
-python create_rich_onepass.py
-
-# Create 10 articles
-python create_rich_onepass.py --apply --max-edits 10 --headed
-
-# Or just double-click runcreate.bat
-```
+| Workflow | Purpose |
+|----------|---------|
+| `pages.yml` | Builds the [article catalog](https://emmaleonhart.github.io/AbstractTestBot/) daily, archives pages on the Wayback Machine |
+| `ci.yml` | Runs tests on push/PR |
 
 ## Configuration
 
 Create a `.env` file:
 ```
 WIKI_USERNAME=YourUsername@BotName
-WIKI_PASSWORD=bot_password
 WIKI_MAIN_PASSWORD=main_account_password
 ```
 
-## Documentation
-
-See [DOCUMENTATION.md](DOCUMENTATION.md) for extensive documentation on Abstract Wikipedia's API, what works, what doesn't, and all the problems we ran into.
+Main account credentials are required -- bot passwords cannot create articles.

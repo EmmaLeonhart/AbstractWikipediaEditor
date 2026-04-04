@@ -259,16 +259,21 @@ def extract_value(obj):
     if z1k1 == "Z9":
         return obj.get("Z9K1", "?")
 
-    # Nested function call - recurse
+    # Nested function call - show just the function name
     fid = get_func_id(obj)
     if fid:
-        return format_as_wikitext(obj)
+        alias = FUNCTION_NAMES.get(fid, fid)
+        return alias
 
+    # Unknown structure - just show type
     return "?"
 
 
 def format_as_wikitext(obj):
-    """Format a Z-object as wikitext template syntax: {{func | arg1 | arg2}}."""
+    """Format a Z-object as wikitext template syntax.
+
+    Uses raw tags to prevent Jekyll/Liquid from interpreting the braces.
+    """
     if isinstance(obj, str):
         if obj == "Z89":
             return "Z89"
@@ -292,7 +297,8 @@ def format_as_wikitext(obj):
         args.append(extracted)
 
     parts = [alias] + args
-    return "{{" + " | ".join(parts) + "}}"
+    inner = " | ".join(parts)
+    return "{{" + inner + "}}"
 
 
 def format_fragment_neutral(fragment):
@@ -341,6 +347,11 @@ def build_article_page(article, content):
     sections = content.get("sections", {})
 
     lines = [
+        "---",
+        f"title: \"{label}\"",
+        "render_with_liquid: false",
+        "---",
+        "",
         f"# {label}",
         "",
         f"**Wikidata:** [{title}](https://www.wikidata.org/wiki/{title})",

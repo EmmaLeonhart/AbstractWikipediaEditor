@@ -1,0 +1,15 @@
+---
+title: New York City
+description: "most populous city in the United States"
+# Auto-generated from Wikidata Q60
+# Properties used: P131, P1376, P138, P17, P30, P31, P37, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q208511 | Q1384}}
+{{Z26570 | $subject | Q208511 | Q30}}
+{{Z28016 | Q4911497 | Q2285706 | $subject}}
+{{Z28016 | $subject | Q28831311 | Q126188}}
+{{Z26570 | $subject | Q208511 | Q49}}
+{{Z28016 | $subject | Q5119 | Q30}}
+{{Z26955 | Q787 | Q1860 | $subject}}

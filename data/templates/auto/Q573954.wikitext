@@ -1,0 +1,11 @@
+---
+title: University of Limerick
+description: "university in Ireland"
+# Auto-generated from Wikidata Q573954
+# Properties used: P131, P17, P31, P527
+variables: {}
+---
+
+{{Z26570 | $subject | Q3918 | Q133315}}
+{{Z26570 | $subject | Q3918 | Q27}}
+{{Z26955 | Q15292583 | Q64605256 | $subject}}

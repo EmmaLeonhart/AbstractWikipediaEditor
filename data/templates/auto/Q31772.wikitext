@@ -1,0 +1,11 @@
+---
+title: Moresby Island
+description: "island in North Coast Regional District, British Columbia, Canada"
+# Auto-generated from Wikidata Q31772
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q23442 | Q1973}}
+{{Z26570 | $subject | Q23442 | Q16}}
+{{Z26955 | Q15292583 | $subject | Q210907}}

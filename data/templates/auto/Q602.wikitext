@@ -1,0 +1,11 @@
+---
+title: Rhône
+description: "river in Switzerland and France"
+# Auto-generated from Wikidata Q602
+# Properties used: P131, P17, P30, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q4022 | Q12771}}
+{{Z26570 | $subject | Q4022 | Q39}}
+{{Z26570 | $subject | Q4022 | Q46}}

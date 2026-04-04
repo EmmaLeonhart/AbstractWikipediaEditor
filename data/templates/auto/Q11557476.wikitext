@@ -1,0 +1,12 @@
+---
+title: Ichinomiya Asama Shrine
+description: "Shinto shrine in Fuefuki, Yamanashi prefecture, Japan"
+# Auto-generated from Wikidata Q11557476
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q3471785 | Q849434}}
+{{Z26570 | $subject | Q3471785 | Q17}}
+{{Z28016 | Q1781862 | Q11591100 | $subject}}
+{{Z26955 | Q15292583 | $subject | Q11577868}}

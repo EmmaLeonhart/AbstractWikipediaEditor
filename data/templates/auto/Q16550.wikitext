@@ -1,0 +1,10 @@
+---
+title: Breithorn
+description: "mountain"
+# Auto-generated from Wikidata Q16550
+# Properties used: P131, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q8502 | Q11911}}
+{{Z26570 | $subject | Q8502 | Q39}}

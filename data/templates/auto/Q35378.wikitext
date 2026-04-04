@@ -1,0 +1,11 @@
+---
+title: Bac Mòr
+description: "island in Argyll and Bute, Scotland, UK, one of the Treshnish Isles"
+# Auto-generated from Wikidata Q35378
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q23442 | Q202174}}
+{{Z26570 | $subject | Q23442 | Q145}}
+{{Z26955 | Q15292583 | $subject | Q1329507}}

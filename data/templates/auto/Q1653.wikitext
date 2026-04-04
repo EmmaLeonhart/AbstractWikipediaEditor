@@ -1,0 +1,12 @@
+---
+title: Danube
+description: "second-longest river in Europe"
+# Auto-generated from Wikidata Q1653
+# Properties used: P131, P17, P30, P31, P527
+variables: {}
+---
+
+{{Z26570 | $subject | Q4022 | Q985}}
+{{Z26570 | $subject | Q4022 | Q183}}
+{{Z26955 | Q15292583 | Q763066 | $subject}}
+{{Z26570 | $subject | Q4022 | Q46}}

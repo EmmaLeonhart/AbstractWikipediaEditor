@@ -1,0 +1,11 @@
+---
+title: Velenje
+description: "city in Slovenia"
+# Auto-generated from Wikidata Q15928
+# Properties used: P131, P1376, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q515 | Q3441849}}
+{{Z26570 | $subject | Q515 | Q215}}
+{{Z28016 | $subject | Q5119 | Q3441849}}

@@ -1,0 +1,10 @@
+---
+title: Universiti Brunei Darussalam
+description: "national university in Brunei"
+# Auto-generated from Wikidata Q569243
+# Properties used: P131, P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q811430 | Q9279}}
+{{Z26570 | $subject | Q811430 | Q921}}

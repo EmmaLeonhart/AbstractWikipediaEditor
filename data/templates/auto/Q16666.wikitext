@@ -1,0 +1,15 @@
+---
+title: Nanjing
+description: "capital city of Jiangsu Province, China, former capital of the Republic of China and China's Ming dynasty"
+# Auto-generated from Wikidata Q16666
+# Properties used: P131, P1376, P138, P17, P30, P31, P36, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q1549591 | Q16963}}
+{{Z26570 | $subject | Q1549591 | Q148}}
+{{Z28016 | Q589343 | Q5119 | $subject}}
+{{Z28016 | Q9336731 | Q2285706 | $subject}}
+{{Z28016 | $subject | Q28831311 | Q5119}}
+{{Z26570 | $subject | Q1549591 | Q48}}
+{{Z28016 | $subject | Q5119 | Q13426199}}

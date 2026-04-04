@@ -1,0 +1,15 @@
+---
+title: Madrid
+description: "capital of Spain"
+# Auto-generated from Wikidata Q2807
+# Properties used: P131, P1376, P17, P30, P31, P36, P361, P6
+variables: {}
+---
+
+{{location | $subject | Q2074737 | Q5756}}
+{{location | $subject | Q2074737 | Q29}}
+{{role | Q116170766 | Q5119 | $subject}}
+{{role | Q29636954 | Q2285706 | $subject}}
+{{spo | Q15292583 | $subject | Q111805205}}
+{{location | $subject | Q2074737 | Q46}}
+{{role | $subject | Q5119 | Q29}}

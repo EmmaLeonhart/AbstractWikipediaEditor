@@ -89,9 +89,16 @@ def generate_wikitext(qid):
     fragments = []
     used_props = set()
 
-    # Always start with P31 (instance of) if available
+    # Check if any location properties (P131, P17, P30, P27, P495) are present
+    # If so, skip standalone "is a" since location already contains it
+    location_props = {"P131", "P17", "P30", "P27", "P495"}
+    has_location = any(pid in claims for pid in location_props if pid in mapping)
+
+    # Start with P31 (instance of) only if no location property will cover it
     if "P31" in mapping and p31_value:
-        fragments.append(f"{{{{Z26039 | $subject | {p31_value}}}}}")
+        if not has_location:
+            fragments.append(f"{{{{Z26039 | $subject | {p31_value}}}}}")
+        # Mark P31 as used either way so it doesn't repeat in the loop
         used_props.add("P31")
 
     # Process other mapped properties

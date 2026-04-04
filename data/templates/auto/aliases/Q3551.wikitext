@@ -1,0 +1,14 @@
+---
+title: Rabat
+description: "capital city of Morocco"
+# Auto-generated from Wikidata Q3551
+# Properties used: P131, P1376, P17, P31, P361, P37, P6
+variables: {}
+---
+
+{{location | $subject | Q515 | Q966104}}
+{{location | $subject | Q515 | Q1028}}
+{{role | Q3067186 | Q2285706 | $subject}}
+{{spo | Q15292583 | $subject | Q720077}}
+{{role | $subject | Q5119 | Q1028}}
+{{spo | Q787 | Q13955 | $subject}}

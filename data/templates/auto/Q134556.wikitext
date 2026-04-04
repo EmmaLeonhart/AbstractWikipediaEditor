@@ -1,0 +1,11 @@
+---
+title: single
+description: "type of music release"
+# Auto-generated from Wikidata Q134556
+# Properties used: P279, P31, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q106043376}}
+{{Z26095 | $subject | Q108346082}}
+{{Z26955 | Q15292583 | Q108352496 | $subject}}

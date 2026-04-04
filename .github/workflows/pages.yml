@@ -62,16 +62,45 @@ jobs:
           "
           fi
 
-      - name: Build with Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: site/
-          destination: ./_site
+      - name: Convert markdown to HTML
+        run: |
+          pip install markdown
+          python -c "
+          import markdown, glob, os
+          md = markdown.Markdown(extensions=['tables', 'fenced_code'])
+          css = '''<style>
+          body{font-family:system-ui,sans-serif;max-width:900px;margin:2em auto;padding:0 1em;line-height:1.6;color:#333}
+          h1{border-bottom:2px solid #3366cc;padding-bottom:.3em}
+          h2{color:#3366cc;margin-top:1.5em}
+          table{border-collapse:collapse;width:100%}
+          th,td{border:1px solid #ddd;padding:8px;text-align:left}
+          th{background:#f5f5f5}
+          tr:hover{background:#f9f9f9}
+          pre{background:#f5f5f5;padding:1em;border-radius:4px;overflow-x:auto}
+          code{background:#f0f0f0;padding:2px 4px;border-radius:3px}
+          a{color:#3366cc}
+          </style>'''
+          for mdfile in glob.glob('site/**/*.md', recursive=True):
+              with open(mdfile, 'r', encoding='utf-8') as f:
+                  text = f.read()
+              # Strip YAML frontmatter
+              if text.startswith('---'):
+                  parts = text.split('---', 2)
+                  if len(parts) >= 3:
+                      text = parts[2]
+              md.reset()
+              html = md.convert(text)
+              outpath = mdfile.replace('.md', '.html')
+              with open(outpath, 'w', encoding='utf-8') as f:
+                  f.write(f'<!DOCTYPE html><html><head><meta charset=\"utf-8\">{css}</head><body>{html}</body></html>')
+              os.remove(mdfile)
+          print(f'Converted {len(glob.glob(\"site/**/*.html\", recursive=True))} files')
+          "
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site/
+          path: site/
 
   deploy:
     needs: build

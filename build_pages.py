@@ -16,6 +16,7 @@ import io
 import sys
 import os
 import json
+import re
 import time
 import argparse
 import requests
@@ -191,139 +192,133 @@ def extract_function_ids(obj, funcs=None):
     return funcs
 
 
-def format_fragment_neutral(fragment, indent=0):
-    """Format a Z-object fragment as language-neutral pseudocode."""
-    prefix = "  " * indent
-    if isinstance(fragment, str):
-        if fragment.startswith("Z"):
-            name = FUNCTION_NAMES.get(fragment, fragment)
-            return f"{prefix}{fragment} ({name})" if name != fragment else f"{prefix}{fragment}"
-        return f"{prefix}{fragment}"
+# Wrapper functions that should be stripped to show the inner call
+WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396"}
 
-    if not isinstance(fragment, dict):
-        return f"{prefix}{fragment}"
 
-    z1k1 = fragment.get("Z1K1", "")
+def get_func_id(obj):
+    """Extract function ID from a Z7 call."""
+    if not isinstance(obj, dict):
+        return None
+    z1k1 = obj.get("Z1K1", "")
+    if isinstance(z1k1, dict):
+        z1k1 = z1k1.get("Z9K1", "")
+    if z1k1 != "Z7":
+        return None
+    func_ref = obj.get("Z7K1", {})
+    if isinstance(func_ref, dict):
+        return func_ref.get("Z9K1")
+    return func_ref if isinstance(func_ref, str) else None
+
+
+def unwrap_fragment(obj):
+    """Strip wrapper functions (Z27868, Z29749, Z14396) to get the core call."""
+    if not isinstance(obj, dict):
+        return obj
+    fid = get_func_id(obj)
+    if fid in WRAPPER_FUNCS:
+        # Find the first argument that's itself a function call
+        for key, val in sorted(obj.items()):
+            if key in ("Z1K1", "Z7K1"):
+                continue
+            if isinstance(val, dict) and get_func_id(val):
+                return unwrap_fragment(val)
+    return obj
+
+
+def extract_value(obj):
+    """Extract a clean value string from a Z-object node."""
+    if isinstance(obj, str):
+        return obj
+    if not isinstance(obj, dict):
+        return str(obj)
+
+    z1k1 = obj.get("Z1K1", "")
     if isinstance(z1k1, dict):
         z1k1 = z1k1.get("Z9K1", "")
 
-    # Z6091 = Wikidata item reference
     if z1k1 == "Z6091":
-        qid = fragment.get("Z6091K1", {})
+        qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
-        return f"{prefix}**{qid}**"
+        return qid
 
-    # Z18 = argument reference
     if z1k1 == "Z18":
-        arg = fragment.get("Z18K1", {})
+        arg = obj.get("Z18K1", {})
         if isinstance(arg, dict):
             arg = arg.get("Z6K1", "?")
         if arg == "Z825K1":
-            return f"{prefix}`$subject`"
+            return "$subject"
         if arg == "Z825K2":
-            return f"{prefix}`$lang`"
-        return f"{prefix}`${arg}`"
+            return "$lang"
+        return f"${arg}"
 
-    # Z6 = string
     if z1k1 == "Z6":
-        return f'{prefix}"{fragment.get("Z6K1", "")}"'
+        return obj.get("Z6K1", "")
 
-    # Z9 = reference
     if z1k1 == "Z9":
-        ref = fragment.get("Z9K1", "?")
-        name = FUNCTION_NAMES.get(ref, ref)
-        return f"{prefix}{ref}" if name == ref else f"{prefix}{ref} ({name})"
+        return obj.get("Z9K1", "?")
 
-    # Z7 = function call
-    if z1k1 == "Z7":
-        func_ref = fragment.get("Z7K1", {})
-        if isinstance(func_ref, dict):
-            func_id = func_ref.get("Z9K1", "?")
-        else:
-            func_id = func_ref
-        func_name = FUNCTION_NAMES.get(func_id, func_id)
-        display = f"{func_id} ({func_name})" if func_name != func_id else func_id
+    # Nested function call - recurse
+    fid = get_func_id(obj)
+    if fid:
+        return format_as_wikitext(obj)
 
-        args = []
-        for key, val in sorted(fragment.items()):
-            if key in ("Z1K1", "Z7K1"):
-                continue
-            arg_str = format_fragment_neutral(val, 0)
-            args.append(arg_str.strip())
+    return "?"
 
-        if all(len(a) < 40 for a in args) and len(args) <= 4:
-            return f"{prefix}{display}({', '.join(args)})"
-        else:
-            lines = [f"{prefix}{display}("]
-            for a in args:
-                lines.append(f"{prefix}  {a},")
-            lines.append(f"{prefix})")
-            return "\n".join(lines)
 
-    # Generic dict
-    return f"{prefix}{json.dumps(fragment, indent=2)[:200]}"
+def format_as_wikitext(obj):
+    """Format a Z-object as wikitext template syntax: {{func | arg1 | arg2}}."""
+    if isinstance(obj, str):
+        if obj == "Z89":
+            return "Z89"
+        return obj
+
+    fid = get_func_id(obj)
+    if not fid:
+        return str(obj)[:100]
+
+    alias = FUNCTION_NAMES.get(fid, fid)
+
+    args = []
+    for key in sorted(obj.keys()):
+        if key in ("Z1K1", "Z7K1"):
+            continue
+        val = obj[key]
+        extracted = extract_value(val)
+        # Skip $lang args (auto-filled)
+        if extracted == "$lang":
+            continue
+        args.append(extracted)
+
+    parts = [alias] + args
+    return "{{" + " | ".join(parts) + "}}"
+
+
+def format_fragment_neutral(fragment):
+    """Format a Z-object fragment as wikitext template syntax."""
+    if isinstance(fragment, str):
+        return fragment
+
+    core = unwrap_fragment(fragment)
+    return format_as_wikitext(core)
 
 
 def format_fragment_english(fragment, labels):
-    """Format a Z-object fragment with English labels for QIDs."""
+    """Format a Z-object fragment with English labels replacing QIDs."""
     if isinstance(fragment, str):
-        if fragment.startswith("Q"):
-            return f"**{labels.get(fragment, fragment)}** ({fragment})"
-        if fragment.startswith("Z"):
-            name = FUNCTION_NAMES.get(fragment, fragment)
-            return name if name != fragment else fragment
         return fragment
 
-    if not isinstance(fragment, dict):
-        return str(fragment)
+    core = unwrap_fragment(fragment)
+    wikitext = format_as_wikitext(core)
 
-    z1k1 = fragment.get("Z1K1", "")
-    if isinstance(z1k1, dict):
-        z1k1 = z1k1.get("Z9K1", "")
-
-    if z1k1 == "Z6091":
-        qid = fragment.get("Z6091K1", {})
-        if isinstance(qid, dict):
-            qid = qid.get("Z6K1", "?")
-        label = labels.get(qid, qid) if qid.startswith("Q") else qid
+    # Replace QIDs with labels
+    def replace_qid(match):
+        qid = match.group(0)
+        label = labels.get(qid, qid)
         return f"**{label}** ({qid})"
 
-    if z1k1 == "Z18":
-        arg = fragment.get("Z18K1", {})
-        if isinstance(arg, dict):
-            arg = arg.get("Z6K1", "?")
-        if arg == "Z825K1":
-            return "*the subject*"
-        if arg == "Z825K2":
-            return "*the language*"
-        return f"*{arg}*"
-
-    if z1k1 == "Z6":
-        return f'"{fragment.get("Z6K1", "")}"'
-
-    if z1k1 == "Z9":
-        ref = fragment.get("Z9K1", "?")
-        name = FUNCTION_NAMES.get(ref, ref)
-        return name
-
-    if z1k1 == "Z7":
-        func_ref = fragment.get("Z7K1", {})
-        if isinstance(func_ref, dict):
-            func_id = func_ref.get("Z9K1", "?")
-        else:
-            func_id = func_ref
-        func_name = FUNCTION_NAMES.get(func_id, func_id)
-
-        args = []
-        for key, val in sorted(fragment.items()):
-            if key in ("Z1K1", "Z7K1"):
-                continue
-            args.append(format_fragment_english(val, labels))
-
-        return f"{func_name}({', '.join(args)})"
-
-    return str(fragment)[:200]
+    return re.sub(r'Q\d+', replace_qid, wikitext)
 
 
 def build_article_page(article, content):
@@ -368,23 +363,28 @@ def build_article_page(article, content):
     lines.append("## Language-neutral representation")
     lines.append("")
     lines.append("```")
+    frag_num = 0
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
-        for i, frag in enumerate(fragments):
-            lines.append(f"Fragment {i+1}:")
-            lines.append(format_fragment_neutral(frag, indent=1))
-            lines.append("")
+        for frag in fragments:
+            frag_num += 1
+            wt = format_fragment_neutral(frag)
+            if wt and wt != "Z89":  # skip bare Z89 placeholder
+                lines.append(wt)
     lines.append("```")
     lines.append("")
 
     # English aliases view
     lines.append("## English aliases")
     lines.append("")
+    en_num = 0
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
-        for i, frag in enumerate(fragments):
+        for frag in fragments:
             english = format_fragment_english(frag, labels)
-            lines.append(f"{i+1}. {english}")
+            if english and english != "Z89":
+                en_num += 1
+                lines.append(f"{en_num}. {english}")
     lines.append("")
 
     # QID reference table

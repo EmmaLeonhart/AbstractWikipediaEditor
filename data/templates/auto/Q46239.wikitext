@@ -1,0 +1,11 @@
+---
+title: Statue of Zeus at Olympia
+description: "one of The Seven Wonders of the World"
+# Auto-generated from Wikidata Q46239
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q26883973 | Q3252409}}
+{{Z26570 | $subject | Q26883973 | Q41}}
+{{Z26955 | Q15292583 | $subject | Q489772}}

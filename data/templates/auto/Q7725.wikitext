@@ -1,0 +1,10 @@
+---
+title: evening
+description: "period of the day between afternoon and nighttime"
+# Auto-generated from Wikidata Q7725
+# Properties used: P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q1260524}}
+{{Z26955 | Q15292583 | $subject | Q573}}

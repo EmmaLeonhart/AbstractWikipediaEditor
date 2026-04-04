@@ -1,0 +1,11 @@
+---
+title: Museum of Modern Art
+description: "art museum in Manhattan in New York City, New York, United States"
+# Auto-generated from Wikidata Q188740
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q33506 | Q11299}}
+{{Z26570 | $subject | Q33506 | Q30}}
+{{Z26955 | Q15292583 | $subject | Q17148329}}

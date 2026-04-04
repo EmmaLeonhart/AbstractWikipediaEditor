@@ -1,0 +1,10 @@
+---
+title: Cuban Revolution
+description: "revolution in Cuba culminating in 1959"
+# Auto-generated from Wikidata Q11264
+# Properties used: P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q10931 | Q241}}
+{{Z26955 | Q15292583 | $subject | Q473130}}

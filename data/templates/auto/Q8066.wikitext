@@ -1,0 +1,11 @@
+---
+title: amino acid
+description: "organic compound containing both amino and acidic functional groups, important in biology"
+# Auto-generated from Wikidata Q8066
+# Properties used: P279, P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q47154513}}
+{{Z26095 | $subject | Q167198}}
+{{Z26955 | Q15292583 | $subject | Q14860834}}

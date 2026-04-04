@@ -1,0 +1,12 @@
+---
+title: Metropolitan Museum of Art
+description: "art museum in New York City, United States"
+# Auto-generated from Wikidata Q160236
+# Properties used: P131, P17, P27, P31, P527
+variables: {}
+---
+
+{{Z26570 | $subject | Q207694 | Q11299}}
+{{Z26570 | $subject | Q207694 | Q30}}
+{{Z26955 | Q15292583 | Q23011166 | $subject}}
+{{Z26570 | $subject | Q207694 | Q30}}

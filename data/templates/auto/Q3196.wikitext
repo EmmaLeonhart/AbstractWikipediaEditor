@@ -1,0 +1,10 @@
+---
+title: fire
+description: "rapid oxidation of a material; phenomenon that emits light and heat"
+# Auto-generated from Wikidata Q3196
+# Properties used: P279, P527
+variables: {}
+---
+
+{{Z26095 | $subject | Q1293220}}
+{{Z26955 | Q15292583 | Q235544 | $subject}}

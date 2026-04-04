@@ -1,0 +1,9 @@
+---
+title: Google Earth
+description: "virtual map program developed by Google"
+# Auto-generated from Wikidata Q42274
+# Properties used: P31, P495
+variables: {}
+---
+
+{{Z26570 | $subject | Q483130 | Q30}}

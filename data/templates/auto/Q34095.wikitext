@@ -1,0 +1,11 @@
+---
+title: bronze
+description: "metal alloy"
+# Auto-generated from Wikidata Q34095
+# Properties used: P279, P31, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q214609}}
+{{Z26095 | $subject | Q518350}}
+{{Z26955 | Q15292583 | Q753 | $subject}}

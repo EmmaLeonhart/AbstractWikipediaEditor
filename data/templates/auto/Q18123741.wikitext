@@ -1,0 +1,10 @@
+---
+title: infectious disease
+description: "disease caused by infection of pathogenic biological agents in a host organism"
+# Auto-generated from Wikidata Q18123741
+# Properties used: P279, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q112193867}}
+{{Z26095 | $subject | Q12136}}

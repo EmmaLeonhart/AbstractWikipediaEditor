@@ -1,0 +1,11 @@
+---
+title: Vladimir Lenin
+description: "founding leader of the Soviet Union from 1922 to 1924 (1870–1924)"
+# Auto-generated from Wikidata Q1394
+# Properties used: P106, P27, P31, P527
+variables: {}
+---
+
+{{Z26955 | Q15292583 | Q58330128 | $subject}}
+{{Z26039 | $subject | Q82955}}
+{{Z26570 | $subject | Q5 | Q34266}}

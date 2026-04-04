@@ -1,0 +1,9 @@
+---
+title: entertainment
+description: "activity that holds attention or gives pleasure"
+# Auto-generated from Wikidata Q173799
+# Properties used: P279
+variables: {}
+---
+
+{{Z26095 | $subject | Q1914636}}

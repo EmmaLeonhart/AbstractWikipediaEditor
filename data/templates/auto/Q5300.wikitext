@@ -1,0 +1,12 @@
+---
+title: central processing unit
+description: "central computer component that executes instructions"
+# Auto-generated from Wikidata Q5300
+# Properties used: P279, P31, P361, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q124996351}}
+{{Z26095 | $subject | Q1466064}}
+{{Z26955 | Q15292583 | $subject | Q68}}
+{{Z26955 | Q15292583 | Q1303814 | $subject}}

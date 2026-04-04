@@ -1,0 +1,9 @@
+---
+title: bottle
+description: "closable cylindrical container for transport and storage of liquids and gases"
+# Auto-generated from Wikidata Q80228
+# Properties used: P279
+variables: {}
+---
+
+{{Z26095 | $subject | Q96952903}}

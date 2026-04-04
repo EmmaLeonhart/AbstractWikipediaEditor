@@ -1,0 +1,11 @@
+---
+title: organization
+description: "social entity established to meet needs or pursue goals"
+# Auto-generated from Wikidata Q43229
+# Properties used: P279, P31, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q131362181}}
+{{Z26095 | $subject | Q106559804}}
+{{Z26955 | Q15292583 | Q10756188 | $subject}}

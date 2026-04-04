@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { width: 420px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 16px; background: #f8f9fa; }
+    h1 { font-size: 16px; margin-bottom: 12px; color: #202122; }
+    .section { margin-bottom: 12px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; color: #54595d; }
+    input, textarea, select { width: 100%; padding: 8px; border: 1px solid #a2a9b1; border-radius: 4px; font-size: 13px; font-family: inherit; }
+    textarea { height: 180px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; resize: vertical; }
+    button { padding: 8px 16px; border: none; border-radius: 4px; font-size: 13px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: #3366cc; color: white; width: 100%; margin-top: 8px; }
+    .btn-primary:hover { background: #2a4b8d; }
+    .btn-primary:disabled { background: #a2a9b1; cursor: not-allowed; }
+    .btn-secondary { background: #eaecf0; color: #202122; margin-top: 4px; width: 100%; }
+    .btn-secondary:hover { background: #c8ccd1; }
+    #status { margin-top: 8px; padding: 8px; border-radius: 4px; font-size: 12px; display: none; }
+    #status.success { display: block; background: #d5fdf4; color: #14866d; }
+    #status.error { display: block; background: #fee7e6; color: #d33; }
+    #status.info { display: block; background: #eaf3ff; color: #3366cc; }
+    .tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+    .tab { padding: 6px 12px; border: 1px solid #a2a9b1; border-radius: 4px 4px 0 0; background: #eaecf0; cursor: pointer; font-size: 12px; }
+    .tab.active { background: white; border-bottom-color: white; font-weight: 600; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .preview { background: white; border: 1px solid #a2a9b1; border-radius: 4px; padding: 8px; font-family: monospace; font-size: 11px; max-height: 120px; overflow-y: auto; white-space: pre-wrap; margin-top: 8px; }
+    .fragment-count { font-size: 11px; color: #72777d; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Abstract Wikipedia Creator</h1>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="qid">From QID</div>
+    <div class="tab" data-tab="wikitext">From Wikitext</div>
+  </div>
+
+  <div id="tab-qid" class="tab-content active">
+    <div class="section">
+      <label>Wikidata QID</label>
+      <input type="text" id="qid" placeholder="Q706499" />
+    </div>
+    <button class="btn-secondary" id="btn-generate">Generate Wikitext</button>
+    <div id="preview-wikitext" class="preview" style="display:none"></div>
+    <div id="preview-count" class="fragment-count"></div>
+  </div>
+
+  <div id="tab-wikitext" class="tab-content">
+    <div class="section">
+      <label>Wikitext Template</label>
+      <textarea id="wikitext" placeholder="---
+title: My Article
+variables: {}
+---
+
+{{location | $subject | Q845945 | Q17}}
+{{role | Q12345 | Q11591100 | $subject}}"></textarea>
+    </div>
+    <div class="section">
+      <label>Subject QID</label>
+      <input type="text" id="subject-qid" placeholder="Q706499 (auto-detected from URL if on edit page)" />
+    </div>
+  </div>
+
+  <button class="btn-primary" id="btn-inject">Inject Fragments into Editor</button>
+  <div id="status"></div>
+
+  <script src="data.js"></script>
+  <script src="parser.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

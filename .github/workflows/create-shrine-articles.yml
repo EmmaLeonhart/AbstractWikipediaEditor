@@ -1,12 +1,11 @@
-name: Create Shinto Shrine Articles
+name: Create Abstract Wikipedia Articles
 
 on:
   workflow_dispatch:
     inputs:
-      max_edits:
-        description: 'Maximum number of articles to create'
-        required: false
-        default: '100'
+      qids:
+        description: 'Comma-separated QIDs to create (e.g. Q60,Q1653,Q602)'
+        required: true
       apply:
         description: 'Actually create articles (true/false)'
         required: false
@@ -24,24 +23,19 @@ jobs:
           python-version: '3.13'
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install playwright
+          playwright install chromium
+          playwright install-deps chromium
 
-      - name: Fetch Shinto shrine QIDs
-        run: python fetch_shinto_shrines.py
-
-      - name: Create shrine articles
+      - name: Create articles
         env:
           WIKI_USERNAME: ${{ vars.WIKI_USERNAME }}
-          WIKI_PASSWORD: ${{ secrets.WIKI_PASSWORD }}
+          WIKI_MAIN_PASSWORD: ${{ secrets.WIKI_MAIN_PASSWORD }}
         run: |
           if [ "${{ github.event.inputs.apply }}" = "true" ]; then
-            python create_shrine_articles.py --apply --max-edits ${{ github.event.inputs.max_edits }}
+            python create_from_qid.py --batch "${{ github.event.inputs.qids }}" --apply --delay 10
           else
-            python create_shrine_articles.py --max-edits ${{ github.event.inputs.max_edits }}
+            python create_from_qid.py --batch "${{ github.event.inputs.qids }}"
           fi
-
-      - name: Upload QIDs artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: shrine-qids
-          path: shrine_qids.json

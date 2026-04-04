@@ -87,7 +87,9 @@
       "Bash(git fetch:*)",
       "Bash(git pull:*)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" generate_wikitext.py Q36600)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(gh workflow:*)",
+      "Bash(gh run:*)"
     ]
   }
 }

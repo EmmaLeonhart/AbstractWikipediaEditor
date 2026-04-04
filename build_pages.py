@@ -115,15 +115,17 @@ def fetch_all_articles():
     return articles
 
 
-def fetch_article_content(title):
-    """Fetch the raw Z-object content for an article."""
+def fetch_articles_batch(titles):
+    """Fetch raw Z-object content for a batch of articles (up to 50).
+    Returns dict mapping title -> parsed JSON content."""
+    results = {}
     for attempt in range(3):
         try:
             r = SESSION.get(API_URL, params={
-                "action": "query", "titles": title,
+                "action": "query", "titles": "|".join(titles),
                 "prop": "revisions", "rvprop": "content",
                 "rvslots": "main", "format": "json",
-            }, timeout=30)
+            }, timeout=60)
             if r.status_code == 429:
                 wait = 30 * (attempt + 1)
                 print(f"rate-limited, waiting {wait}s... ", end="", flush=True)
@@ -132,21 +134,22 @@ def fetch_article_content(title):
             r.raise_for_status()
             pages = r.json()["query"]["pages"]
             for page in pages.values():
+                page_title = page.get("title", "")
                 revisions = page.get("revisions", [])
                 if revisions:
                     content = revisions[0].get("slots", {}).get("main", {}).get("*", "")
                     if content:
                         try:
-                            return json.loads(content)
+                            results[page_title] = json.loads(content)
                         except json.JSONDecodeError:
-                            return None
-            return None
+                            pass
+            return results
         except requests.exceptions.HTTPError as e:
             if "429" in str(e) and attempt < 2:
                 time.sleep(30 * (attempt + 1))
                 continue
             raise
-    return None
+    return results
 
 
 def extract_qids_from_zobject(obj, qids=None):
@@ -506,13 +509,24 @@ def main():
     total = len(articles)
     print(f"\nProcessing {total} articles...", flush=True)
 
+    # Batch fetch content (50 at a time to reduce API calls)
+    content_cache = {}
+    for batch_start in range(0, total, 50):
+        batch = articles[batch_start:batch_start + 50]
+        batch_titles = [a["title"] for a in batch]
+        print(f"  Fetching content batch {batch_start//50 + 1} ({len(batch_titles)} pages)...", flush=True)
+        batch_content = fetch_articles_batch(batch_titles)
+        content_cache.update(batch_content)
+        time.sleep(3)
+
+    print(f"  Fetched content for {len(content_cache)}/{total} articles\n", flush=True)
+
     for i, article in enumerate(articles):
         title = article["title"]
         label = _label_cache.get(title, title)
         print(f"[{i+1}/{total}] {title} ({label}) ... ", end="", flush=True)
 
-        # Fetch content
-        content = fetch_article_content(title)
+        content = content_cache.get(title)
         if not content:
             print("no content, skipping", flush=True)
             continue
@@ -532,22 +546,15 @@ def main():
 
         # Archive
         if not args.no_archive:
-            should_archive = title in prev_failures or True  # always try
-            if should_archive:
-                print("archive:", end="", flush=True)
-                if try_archive(title):
-                    print("ok ", end="", flush=True)
-                else:
-                    new_failures.add(title)
-                    print("fail ", end="", flush=True)
-                time.sleep(8)
+            print("archive:", end="", flush=True)
+            if try_archive(title):
+                print("ok ", end="", flush=True)
+            else:
+                new_failures.add(title)
+                print("fail ", end="", flush=True)
+            time.sleep(8)
 
         print("done", flush=True)
-        # Small delay to avoid wiki API rate limits
-        if (i + 1) % 50 == 0:
-            time.sleep(5)
-        else:
-            time.sleep(0.5)
 
     # Re-reverse to newest first for the index
     articles.reverse()

@@ -1,0 +1,11 @@
+---
+title: human settlement
+description: "place of any size, in which people permanently live"
+# Auto-generated from Wikidata Q486972
+# Properties used: P279, P31, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q104086571}}
+{{Z26095 | $subject | Q123964505}}
+{{Z26955 | Q15292583 | Q177634 | $subject}}

@@ -1,0 +1,11 @@
+---
+title: National Aeronautics and Space Administration
+description: "American space and aeronautics agency"
+# Auto-generated from Wikidata Q23548
+# Properties used: P106, P17, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q17505024}}
+{{Z26570 | $subject | Q17505024 | Q30}}
+{{Z26039 | $subject | Q483501}}

@@ -1,0 +1,15 @@
+---
+title: The Hague
+description: "city and municipality in the Netherlands, seat of the Dutch government"
+# Auto-generated from Wikidata Q36600
+# Properties used: P131, P1376, P17, P30, P31, P527, P6
+variables: {}
+---
+
+{{Z26039 | $subject | Q2039348}}
+{{Z26570 | $subject | Q2039348 | Q762943}}
+{{Z26570 | $subject | Q2039348 | Q55}}
+{{Z28016 | Q1366279 | Q2285706 | $subject}}
+{{Z26955 | Q15292583 | Q3229492 | $subject}}
+{{Z26570 | $subject | Q2039348 | Q46}}
+{{Z28016 | $subject | Q5119 | Q694}}

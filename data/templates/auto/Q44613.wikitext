@@ -1,0 +1,11 @@
+---
+title: monastery
+description: "complex of buildings comprising the domestic quarters and workplace(s) of monks or nuns"
+# Auto-generated from Wikidata Q44613
+# Properties used: P279, P31, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q811102}}
+{{Z26095 | $subject | Q1370598}}
+{{Z26955 | Q15292583 | Q98094402 | $subject}}

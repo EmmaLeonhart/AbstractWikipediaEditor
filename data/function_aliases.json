@@ -1,0 +1,78 @@
+{
+  "_description": "Human-readable aliases for Wikifunctions Z-IDs. Use these in wikitext templates instead of Z-numbers. At compile time, aliases are resolved to their Z-IDs.",
+  "aliases": {
+    "location": "Z26570",
+    "located in": "Z26570",
+    "state location": "Z26570",
+
+    "is a": "Z26039",
+    "instance of": "Z26039",
+    "instantiate": "Z26039",
+
+    "is an": "Z26095",
+    "subclass of": "Z26095",
+    "classify": "Z26095",
+
+    "role": "Z28016",
+    "defining role": "Z28016",
+    "is the X of": "Z28016",
+
+    "describe": "Z29591",
+    "adjective class": "Z29591",
+    "entity with adj": "Z29591",
+
+    "class of class": "Z27173",
+    "describe class": "Z27173",
+
+    "class with adj": "Z29743",
+    "adj superclass": "Z29743",
+
+    "superlative": "Z27243",
+    "most": "Z27243",
+
+    "spo": "Z26955",
+    "subject predicate object": "Z26955",
+
+    "classify nouns": "Z26627",
+    "are": "Z26627",
+
+    "album": "Z28803",
+    "album description": "Z28803",
+
+    "sunset": "Z30000",
+
+    "begins": "Z31405",
+    "start": "Z31405",
+
+    "auto article": "Z29822",
+    "article placeholder": "Z29822",
+
+    "to html": "Z27868",
+    "string to html": "Z27868",
+
+    "text to html": "Z29749",
+    "mono to html": "Z29749",
+
+    "string of": "Z14396",
+    "unwrap text": "Z14396"
+  },
+  "reverse": {
+    "Z26570": ["location", "located in", "state location"],
+    "Z26039": ["is a", "instance of", "instantiate"],
+    "Z26095": ["is an", "subclass of", "classify"],
+    "Z28016": ["role", "defining role", "is the X of"],
+    "Z29591": ["describe", "adjective class", "entity with adj"],
+    "Z27173": ["class of class", "describe class"],
+    "Z29743": ["class with adj", "adj superclass"],
+    "Z27243": ["superlative", "most"],
+    "Z26955": ["spo", "subject predicate object"],
+    "Z26627": ["classify nouns", "are"],
+    "Z28803": ["album", "album description"],
+    "Z30000": ["sunset"],
+    "Z31405": ["begins", "start"],
+    "Z29822": ["auto article", "article placeholder"],
+    "Z27868": ["to html", "string to html"],
+    "Z29749": ["text to html", "mono to html"],
+    "Z14396": ["string of", "unwrap text"]
+  }
+}

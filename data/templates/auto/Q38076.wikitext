@@ -1,0 +1,12 @@
+---
+title: McDonald's
+description: "American fast food restaurant chain"
+# Auto-generated from Wikidata Q38076
+# Properties used: P138, P17, P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q18509232}}
+{{Z26570 | $subject | Q18509232 | Q30}}
+{{Z28016 | $subject | Q28831311 | Q1029178}}
+{{Z26955 | Q15292583 | $subject | Q242345}}

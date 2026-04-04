@@ -33,6 +33,8 @@ Usage:
 
 import re
 import copy
+import os
+import json
 import yaml
 
 
@@ -372,6 +374,32 @@ def parse_frontmatter(text):
     return {}, text
 
 
+def _load_aliases():
+    """Load function aliases from data/function_aliases.json."""
+    aliases_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "function_aliases.json")
+    try:
+        with open(aliases_path, "r", encoding="utf-8") as f:
+            return json.load(f).get("aliases", {})
+    except (FileNotFoundError, json.JSONDecodeError):
+        return {}
+
+_FUNCTION_ALIASES = _load_aliases()
+
+
+def resolve_function_name(name):
+    """Resolve a function name or alias to a Z-ID.
+
+    Accepts Z-IDs directly (e.g. "Z26570") or English aliases
+    (e.g. "location", "is a", "role"). Case-insensitive for aliases.
+    """
+    name = name.strip()
+    # Already a Z-ID
+    if re.match(r'^Z\d+$', name):
+        return name
+    # Try alias lookup (case-insensitive)
+    return _FUNCTION_ALIASES.get(name.lower(), _FUNCTION_ALIASES.get(name, name))
+
+
 def parse_template_calls(body):
     """Extract all {{...}} template calls from the body text.
 
@@ -380,6 +408,7 @@ def parse_template_calls(body):
 
     Supports both positional and named arguments:
         {{Z26570 | $subject | Q845945 | Q17}}
+        {{location | $subject | Q845945 | Q17}}
         {{Z26570 | entity=$subject | class=Q845945 | location=Q17}}
     """
     fragments = []
@@ -395,7 +424,7 @@ def parse_template_calls(body):
         if not parts:
             continue
 
-        func_id = parts[0].strip()
+        func_id = resolve_function_name(parts[0])
         positional_args = []
         named_args = {}
 

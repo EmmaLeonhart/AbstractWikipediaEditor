@@ -1,0 +1,13 @@
+---
+title: University of California, San Diego
+description: "public university in La Jolla, California, United States"
+# Auto-generated from Wikidata Q622664
+# Properties used: P131, P17, P31, P361, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q875538}}
+{{Z26570 | $subject | Q875538 | Q840668}}
+{{Z26570 | $subject | Q875538 | Q30}}
+{{Z26955 | Q15292583 | $subject | Q184478}}
+{{Z26955 | Q15292583 | Q7895182 | $subject}}

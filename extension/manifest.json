@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Abstract Wikipedia Article Creator",
+  "version": "1.0.0",
+  "description": "Create Abstract Wikipedia articles from Wikidata items using wikitext templates",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://abstract.wikipedia.org/*",
+    "https://www.wikidata.org/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://abstract.wikipedia.org/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

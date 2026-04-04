@@ -41,21 +41,42 @@ def check_article_exists(qid):
 def api_login_cookies():
     session = requests.Session()
     session.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+    username = os.environ.get("WIKI_USERNAME", "").split("@")[0]
+    password = os.environ.get("WIKI_MAIN_PASSWORD", "")
+
+    # Try action=login first (works locally), fall back to clientlogin (needed in CI)
     r = session.get(API_URL, params={
         "action": "query", "meta": "tokens", "type": "login", "format": "json"
     })
     login_token = r.json()["query"]["tokens"]["logintoken"]
-    username = os.environ.get("WIKI_USERNAME", "").split("@")[0]
-    password = os.environ.get("WIKI_MAIN_PASSWORD", "")
     r = session.post(API_URL, data={
         "action": "login", "lgname": username, "lgpassword": password,
         "lgtoken": login_token, "format": "json",
     })
     result = r.json()["login"]
-    if result["result"] != "Success":
-        raise RuntimeError(f"Login failed: {result}")
-    print(f"Logged in as {result['lgusername']}", flush=True)
-    return session.cookies.get_dict()
+    if result["result"] == "Success":
+        print(f"Logged in as {result['lgusername']}", flush=True)
+        return session.cookies.get_dict()
+
+    # Fallback: clientlogin for main account passwords
+    print("action=login failed, trying clientlogin...", flush=True)
+    session2 = requests.Session()
+    session2.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+    r = session2.get(API_URL, params={
+        "action": "query", "meta": "tokens", "type": "login", "format": "json"
+    })
+    login_token = r.json()["query"]["tokens"]["logintoken"]
+    r = session2.post(API_URL, data={
+        "action": "clientlogin", "username": username, "password": password,
+        "loginreturnurl": "https://abstract.wikipedia.org/",
+        "logintoken": login_token, "format": "json",
+    })
+    result = r.json().get("clientlogin", {})
+    if result.get("status") == "PASS":
+        print(f"Logged in as {result['username']} (via clientlogin)", flush=True)
+        return session2.cookies.get_dict()
+
+    raise RuntimeError(f"Login failed: {result}")
 
 
 def inject_clipboard(page, clipboard_data):

@@ -1,0 +1,13 @@
+---
+title: NATO
+description: "intergovernmental military alliance between 32 member states"
+# Auto-generated from Wikidata Q7184
+# Properties used: P138, P17, P31, P37, P527
+variables: {}
+---
+
+{{is a | $subject | Q1127126}}
+{{location | $subject | Q1127126 | Q31}}
+{{role | $subject | Q28831311 | Q877399}}
+{{spo | Q15292583 | Q573044 | $subject}}
+{{spo | Q787 | Q1860 | $subject}}

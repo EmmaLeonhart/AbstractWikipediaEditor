@@ -410,7 +410,7 @@ def build_article_page(article, content):
         lines.append("")
 
     lines.append(f"---")
-    lines.append(f"[Back to index](../index.md)")
+    lines.append(f"[Back to index](../index.html)")
 
     return "\n".join(lines)
 
@@ -433,7 +433,7 @@ def build_index(articles, labels):
         label = labels.get(title, title)
         ts = a["timestamp"][:10]
         frag_count = a.get("fragment_count", "?")
-        lines.append(f"| {i} | [{label}](pages/{title}.md) | [{title}]({ABSTRACT_WIKI_BASE}{title}) | {ts} | {frag_count} |")
+        lines.append(f"| {i} | [{label}](pages/{title}.html) | [{title}]({ABSTRACT_WIKI_BASE}{title}) | {ts} | {frag_count} |")
 
     lines.append("")
     lines.append("---")

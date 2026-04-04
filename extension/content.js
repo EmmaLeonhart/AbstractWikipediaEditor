@@ -21,7 +21,24 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   return true;
 });
 
+function clearClipboard() {
+  localStorage.removeItem("ext-wikilambda-app-clipboard");
+  const app = document.querySelector(".ext-wikilambda-app")?.__vue_app__
+    || document.querySelector("#ext-wikilambda-app")?.__vue_app__;
+  if (app) {
+    const pinia = app.config.globalProperties.$pinia;
+    if (pinia) {
+      const store = pinia._s.get("main");
+      if (store) {
+        store.clipboardItems = [];
+      }
+    }
+  }
+}
+
 function injectClipboard(clipboard) {
+  // Always clear stale data first to prevent leftover fragments from interfering
+  clearClipboard();
   localStorage.setItem("ext-wikilambda-app-clipboard", JSON.stringify(clipboard));
   const app = document.querySelector(".ext-wikilambda-app")?.__vue_app__
     || document.querySelector("#ext-wikilambda-app")?.__vue_app__;
@@ -49,6 +66,10 @@ function click(el) {
 
 async function runFullAutomation(clipboard, qid) {
   try {
+    updateStatus("Clearing old clipboard data...");
+    clearClipboard();
+    await sleep(500);
+
     updateStatus("Injecting clipboard...");
     injectClipboard(clipboard);
     await sleep(1000);

@@ -310,21 +310,20 @@ def format_fragment_neutral(fragment):
     return format_as_wikitext(core)
 
 
-def format_fragment_english(fragment, labels):
-    """Format a Z-object fragment with English labels replacing QIDs."""
+def format_fragment_linked(fragment):
+    """Format a Z-object fragment with QIDs as clickable links."""
     if isinstance(fragment, str):
         return fragment
 
     core = unwrap_fragment(fragment)
     wikitext = format_as_wikitext(core)
 
-    # Replace QIDs with labels
-    def replace_qid(match):
+    # Make QIDs clickable with HTML links
+    def link_qid(match):
         qid = match.group(0)
-        label = labels.get(qid, qid)
-        return f"**{label}** ({qid})"
+        return f'<a href="https://www.wikidata.org/wiki/{qid}">{qid}</a>'
 
-    return re.sub(r'Q\d+', replace_qid, wikitext)
+    return re.sub(r'Q\d+', link_qid, wikitext)
 
 
 def build_article_page(article, content):
@@ -335,10 +334,8 @@ def build_article_page(article, content):
     # Get label for the article's QID
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract all QIDs and fetch labels
+    # Extract all QIDs
     qids = extract_qids_from_zobject(content)
-    qids.add(title)
-    labels = get_wikidata_labels(list(qids))
 
     # Extract function IDs
     func_ids = extract_function_ids(content)
@@ -385,28 +382,26 @@ def build_article_page(article, content):
     lines.append("```")
     lines.append("")
 
-    # English aliases view
-    lines.append("## English aliases")
+    # Linked view (QIDs are clickable)
+    lines.append("## With links")
     lines.append("")
     en_num = 0
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
-            english = format_fragment_english(frag, labels)
+            english = format_fragment_linked(frag)
             if english and english != "Z89":
                 en_num += 1
                 lines.append(f"{en_num}. {english}")
     lines.append("")
 
-    # QID reference table
+    # QID reference list
     article_qids = {q for q in qids if q.startswith("Q") and q != title}
     if article_qids:
         lines.append("## Referenced items")
         lines.append("")
-        lines.append("| QID | Label |")
-        lines.append("|-----|-------|")
         for qid in sorted(article_qids):
-            lines.append(f"| [{qid}](https://www.wikidata.org/wiki/{qid}) | {labels.get(qid, '?')} |")
+            lines.append(f'- <a href="https://www.wikidata.org/wiki/{qid}">{qid}</a>')
         lines.append("")
 
     lines.append(f"---")

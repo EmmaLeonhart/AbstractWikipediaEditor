@@ -26,8 +26,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests beautifulsoup4
 
-      - name: Build site and archive pages
-        run: python build_pages.py
+      - name: Build site (skip archiving - handled separately)
+        run: python build_pages.py --no-archive
 
       - name: Retry previous archive failures
         run: |

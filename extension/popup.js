@@ -62,7 +62,7 @@ $("#btn-generate").addEventListener("click", async () => {
   }
 });
 
-// Inject fragments into editor
+// Create article - full automation
 $("#btn-inject").addEventListener("click", async () => {
   const wikitextSource = currentWikitext || $("#wikitext").value;
   const subjectQid = currentQid || $("#subject-qid").value.trim().toUpperCase();
@@ -86,34 +86,26 @@ $("#btn-inject").addEventListener("click", async () => {
       return;
     }
 
-    setStatus(`Injecting ${clipboard.length} fragments...`, "info");
+    setStatus(`Creating article with ${clipboard.length} fragments...`, "info");
 
-    // Get the active tab
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-    if (!tab.url || !tab.url.includes("abstract.wikipedia.org")) {
-      setStatus("Navigate to abstract.wikipedia.org edit page first", "error");
-      return;
-    }
-
-    // Send clipboard data to content script
-    const response = await chrome.tabs.sendMessage(tab.id, {
-      action: "injectClipboard",
-      clipboard: clipboard,
+    // Send to background script to open new tab and run full automation
+    chrome.runtime.sendMessage({
+      action: "createArticle",
       qid: subjectQid,
+      clipboard: clipboard,
+    }, (response) => {
+      if (response && response.started) {
+        setStatus(`Opening editor for ${subjectQid}... Check the new tab!`, "success");
+      } else {
+        setStatus("Failed to start automation", "error");
+      }
     });
-
-    if (response && response.success) {
-      setStatus(`Injected ${clipboard.length} fragments! Now paste them from the fragment menu.`, "success");
-    } else {
-      setStatus(response?.error || "Injection failed - are you on the edit page?", "error");
-    }
   } catch (e) {
     setStatus(`Error: ${e.message}`, "error");
   }
 });
 
-// Auto-detect QID from current tab
+// Auto-detect QID from current tab URL
 (async () => {
   try {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });

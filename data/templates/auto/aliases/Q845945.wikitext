@@ -1,0 +1,9 @@
+---
+title: Shinto shrine
+description: "Japanese shrine of the Shinto religion"
+# Auto-generated from Wikidata Q845945
+# Properties used: P279
+variables: {}
+---
+
+{{kind of | $subject | Q29553}}

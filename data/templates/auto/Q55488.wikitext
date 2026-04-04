@@ -1,0 +1,12 @@
+---
+title: railway station
+description: "railway facility where trains regularly stop to load or unload passengers and/or freight"
+# Auto-generated from Wikidata Q55488
+# Properties used: P279, P31, P361, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q11668217}}
+{{Z26095 | $subject | Q124673697}}
+{{Z26955 | Q15292583 | $subject | Q1311670}}
+{{Z26955 | Q15292583 | Q82818 | $subject}}

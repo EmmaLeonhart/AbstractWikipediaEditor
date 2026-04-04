@@ -1,0 +1,10 @@
+---
+title: The Beatles
+description: "English pop rock band (1960–1970)"
+# Auto-generated from Wikidata Q1299
+# Properties used: P31, P495, P527
+variables: {}
+---
+
+{{spo | Q15292583 | Q1203 | $subject}}
+{{location | $subject | Q215380 | Q145}}

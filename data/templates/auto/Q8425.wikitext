@@ -1,0 +1,12 @@
+---
+title: society
+description: "group of people connected to each other"
+# Auto-generated from Wikidata Q8425
+# Properties used: P279, P31, P361, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q151885}}
+{{Z26095 | $subject | Q16334295}}
+{{Z26955 | Q15292583 | $subject | Q1156970}}
+{{Z26955 | Q15292583 | Q874405 | $subject}}

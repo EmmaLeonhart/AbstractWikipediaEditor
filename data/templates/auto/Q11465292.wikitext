@@ -1,0 +1,10 @@
+---
+title: List of Shikinaisha in Owari Province
+description: "The Shrines covered in the Engishiki Jinmyocho in Owari Province"
+# Auto-generated from Wikidata Q11465292
+# Properties used: P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q12139612}}
+{{Z26955 | Q66305721 | $subject | Q11064932}}

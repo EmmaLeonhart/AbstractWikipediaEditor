@@ -1,0 +1,9 @@
+---
+title: Q25703388
+# Auto-generated from Wikidata Q25703388
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q49757}}
+

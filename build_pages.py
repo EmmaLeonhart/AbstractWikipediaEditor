@@ -432,10 +432,13 @@ a {{ color: #3366cc; }}
 #rendered a {{ color: #3366cc; text-decoration: underline; text-decoration-style: dotted; }}
 #rendered a:hover {{ color: #2a4b8d; }}
 pre {{ background: #f5f5f5; padding: 1em; border-radius: 4px; overflow-x: auto; font-size: 13px; }}
+nav {{ background: #f5f5f5; padding: 10px 16px; border-radius: 4px; margin-bottom: 1.5em; font-size: 14px; }}
+nav a {{ margin-right: 8px; }}
 .back {{ margin-top: 2em; border-top: 1px solid #ddd; padding-top: 1em; }}
 </style>
 </head>
 <body>
+<nav><a href="../index.html">Home</a> | <a href="../catalog.html">Article Catalog</a></nav>
 <h1>{label}</h1>
 <div class="meta">
   <a href="https://www.wikidata.org/wiki/{title}">Wikidata: {title}</a>
@@ -462,11 +465,13 @@ renderWikitext(`{wikitext_escaped}`, "{title}", document.getElementById("rendere
 def build_index(articles, labels):
     """Generate the index page."""
     lines = [
+        "[Home](index.html) | Article Catalog",
+        "",
         "# Abstract Wikipedia Article Catalog",
         "",
-        f"**{len(articles)} articles** created on [Abstract Wikipedia](https://abstract.wikipedia.org/)",
+        f"**{len(articles)} articles** on [Abstract Wikipedia](https://abstract.wikipedia.org/) with rendered English previews.",
         "",
-        "Each page shows the language-neutral Z-function representation and English alias view.",
+        "Abstract Wikipedia articles often fail to render in the browser. Click any article below to see a live-rendered English preview.",
         "",
         "| # | Article | QID | Created | Fragments |",
         "|---|---------|-----|---------|-----------|",

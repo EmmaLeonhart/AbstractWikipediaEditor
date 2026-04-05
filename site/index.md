@@ -1,3 +1,5 @@
+Home | [Article Catalog](catalog.html)
+
 # Abstract Wikipedia Editor
 
 A desktop editor and automation toolkit for creating and editing articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).

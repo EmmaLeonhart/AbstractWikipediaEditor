@@ -34,6 +34,14 @@ The end goal is a system where:
 4. Articles are created on Abstract Wikipedia with one command
 5. Any domain with Wikidata coverage can have articles generated automatically
 
+## Urgent
+
+- [ ] **Fix wrong hardcoded QIDs in property_function_mapping.json**
+  - Q15292583 (Sonardi) → Q66305721 (part of) — used as predicate for P361/P527
+  - Q787 (pig) → Q23492 (official language) — used as predicate for P37
+  - Q28831311 (unconfirmed) → Q2607563 (namesake) — used as role for P138
+- [ ] **Edit all pages created by Immanuelle** to fix the errors caused by wrong QIDs
+
 ## Next Steps
 
 - [ ] Test pipeline on 10 random Wikidata items of different types

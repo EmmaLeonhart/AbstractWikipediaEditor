@@ -71,23 +71,23 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Victoria is named after Queen Victoria.",
-      "template": "{{Z28016 | $subject | Q28831311 | $value}}",
-      "notes": "Role=Q28831311 (namesake)."
+      "template": "{{Z28016 | $subject | Q2607563 | $value}}",
+      "notes": "Role=Q2607563 (namesake)."
     },
     "P361": {
       "label": "part of",
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z26955 | Q15292583 | $subject | $value}}",
-      "notes": "Predicate=Q15292583 (part). Subject is the part, object is the whole."
+      "template": "{{Z26955 | Q66305721 | $subject | $value}}",
+      "notes": "Predicate=Q66305721 (part of). Subject is the part, object is the whole."
     },
     "P527": {
       "label": "has part(s)",
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Japan has Honshu.",
-      "template": "{{Z26955 | Q15292583 | $value | $subject}}",
+      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
       "notes": "Inverse of P361."
     },
     "P106": {
@@ -135,8 +135,8 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Japanese is the official language of Japan.",
-      "template": "{{Z26955 | Q787 | $value | $subject}}",
-      "notes": "Predicate=Q787 (official language)."
+      "template": "{{Z26955 | Q23492 | $value | $subject}}",
+      "notes": "Predicate=Q23492 (official language)."
     },
     "P38": {
       "label": "currency",

@@ -116,7 +116,9 @@
       "Bash(grep -ohP 'Z\\\\d+' site/pages/*.html)",
       "Bash(wc -l site/pages/*.html)",
       "Bash(grep -ohP 'Z\\\\d+' site/pages/*.md)",
-      "Bash(grep -oE 'Z[0-9]+. \\\\\\(\\\\?\\\\\\)' site/pages/*.md)"
+      "Bash(grep -oE 'Z[0-9]+. \\\\\\(\\\\?\\\\\\)' site/pages/*.md)",
+      "Bash(grep -oE '\\\\{\\\\{[A-Za-z0-9 ]+ \\\\|' site/pages/*.md)",
+      "Bash(git log:*)"
     ]
   }
 }

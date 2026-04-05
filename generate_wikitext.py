@@ -118,6 +118,10 @@ def generate_wikitext(qid):
         if not value:
             continue
 
+        # Skip properties marked as skipped
+        if pmap.get("skip"):
+            continue
+
         # Build the template line based on the mapping
         func = pmap["function"]
         template = pmap["template"]

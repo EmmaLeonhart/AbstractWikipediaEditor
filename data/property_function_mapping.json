@@ -84,11 +84,8 @@
     },
     "P527": {
       "label": "has part(s)",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
-      "example": "Japan has Honshu.",
-      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
-      "notes": "Inverse of P361."
+      "skip": true,
+      "notes": "Inverse of P361. Skipped because the part's own article should use P361 instead. No Abstract Wikipedia function exists for 'X has Y' phrasing."
     },
     "P106": {
       "label": "occupation",

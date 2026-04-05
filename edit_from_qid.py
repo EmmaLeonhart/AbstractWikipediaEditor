@@ -58,44 +58,27 @@ def find_existing_articles(limit=50):
     return qids
 
 
-def api_login_cookies():
-    session = requests.Session()
-    session.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+def browser_login(page):
+    """Log in via the browser UI so the user can handle email 2FA interactively."""
     username = os.environ.get("WIKI_USERNAME", "").split("@")[0]
     password = os.environ.get("WIKI_MAIN_PASSWORD", "")
 
-    r = session.get(API_URL, params={
-        "action": "query", "meta": "tokens", "type": "login", "format": "json"
-    })
-    login_token = r.json()["query"]["tokens"]["logintoken"]
-    r = session.post(API_URL, data={
-        "action": "login", "lgname": username, "lgpassword": password,
-        "lgtoken": login_token, "format": "json",
-    })
-    result = r.json()["login"]
-    if result["result"] == "Success":
-        print(f"Logged in as {result['lgusername']}", flush=True)
-        return session.cookies.get_dict()
+    page.goto(f"{WIKI_URL}/w/index.php?title=Special:UserLogin")
+    page.wait_for_load_state("networkidle")
 
-    # Fallback: clientlogin
-    print("action=login failed, trying clientlogin...", flush=True)
-    session2 = requests.Session()
-    session2.headers.update({"User-Agent": "AbstractTestBot/1.0"})
-    r = session2.get(API_URL, params={
-        "action": "query", "meta": "tokens", "type": "login", "format": "json"
-    })
-    login_token = r.json()["query"]["tokens"]["logintoken"]
-    r = session2.post(API_URL, data={
-        "action": "clientlogin", "username": username, "password": password,
-        "loginreturnurl": "https://abstract.wikipedia.org/",
-        "logintoken": login_token, "format": "json",
-    })
-    result = r.json().get("clientlogin", {})
-    if result.get("status") == "PASS":
-        print(f"Logged in as {result['username']} (via clientlogin)", flush=True)
-        return session2.cookies.get_dict()
+    # Fill login form
+    page.locator("#wpName1").fill(username)
+    page.locator("#wpPassword1").fill(password)
+    page.locator("#wpLoginAttempt").click()
+    print(f"Submitted login for {username}, waiting for 2FA or redirect...", flush=True)
 
-    raise RuntimeError(f"Login failed: {result}")
+    # Wait for either: successful redirect (user page) or 2FA token field
+    # Give the user up to 5 minutes to enter the email verification code
+    page.wait_for_url(
+        lambda url: "Special:UserLogin" not in url,
+        timeout=300000,
+    )
+    print("Login successful!", flush=True)
 
 
 def inject_clipboard(page, clipboard_data):
@@ -369,12 +352,7 @@ def main():
         context = browser.new_context(viewport={"width": 1400, "height": 900})
         page = context.new_page()
 
-        cookies = api_login_cookies()
-        for name, value in cookies.items():
-            context.add_cookies([{
-                "name": name, "value": value,
-                "domain": ".wikipedia.org", "path": "/",
-            }])
+        browser_login(page)
 
         stats = {"edited": 0, "error": 0, "skipped": 0}
 

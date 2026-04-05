@@ -395,102 +395,68 @@ def render_english_preview(fragment, article_qid):
 
 
 def build_article_page(article, content):
-    """Generate markdown for a single article page."""
+    """Generate an HTML page that uses renderer.js (same as the Electron app) to render the article."""
     title = article["title"]
     timestamp = article["timestamp"]
 
-    # Get label for the article's QID
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract all QIDs
-    qids = extract_qids_from_zobject(content)
-
-    # Extract function IDs
-    func_ids = extract_function_ids(content)
-
-    # Parse sections and fragments
+    # Extract wikitext fragments from the Z-object
     sections = content.get("sections", {})
-
-    lines = [
-        "---",
-        f"title: \"{label}\"",
-        "render_with_liquid: false",
-        "---",
-        "",
-        f"# {label}",
-        "",
-        f"**Wikidata:** [{title}](https://www.wikidata.org/wiki/{title})",
-        f" | **Abstract Wikipedia:** [{title}]({ABSTRACT_WIKI_BASE}{title})",
-        f" | **Created:** {timestamp[:10]}",
-        "",
-    ]
-
-    # Functions used
-    if func_ids:
-        func_list = ", ".join(
-            f"`{fid}` ({FUNCTION_NAMES.get(fid, '?')})" for fid in sorted(func_ids)
-            if fid not in ("Z29749", "Z27868", "Z14396")  # skip wrappers
-        )
-        if func_list:
-            lines.append(f"**Functions used:** {func_list}")
-            lines.append("")
-
-    # English preview (approximate rendering with resolved labels)
-    lines.append("## English preview")
-    lines.append("")
-    preview_num = 0
+    wikitext_lines = []
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
-            sentence = render_english_preview(frag, title)
-            if sentence:
-                preview_num += 1
-                lines.append(f"{preview_num}. {sentence}")
-    if preview_num == 0:
-        lines.append("*No renderable fragments*")
-    lines.append("")
-
-    # Language-neutral view
-    lines.append("## Wikitext")
-    lines.append("")
-    lines.append("```")
-    frag_num = 0
-    for section_id, section in sections.items():
-        fragments = section.get("fragments", [])
-        for frag in fragments:
-            frag_num += 1
             wt = format_fragment_neutral(frag)
             if wt and wt != "Z89":
-                lines.append(wt)
-    lines.append("```")
-    lines.append("")
+                wikitext_lines.append(wt)
+    wikitext = "\n".join(wikitext_lines)
 
-    # Linked view (QIDs are clickable)
-    lines.append("## With links")
-    lines.append("")
-    en_num = 0
-    for section_id, section in sections.items():
-        fragments = section.get("fragments", [])
-        for frag in fragments:
-            english = format_fragment_linked(frag)
-            if english and english != "Z89":
-                en_num += 1
-                lines.append(f"{en_num}. {english}")
-    lines.append("")
+    # Escape for embedding in JS
+    wikitext_escaped = wikitext.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")
 
-    # QID reference list
-    article_qids = {q for q in qids if q.startswith("Q") and q != title}
-    if article_qids:
-        lines.append("## Referenced items")
-        lines.append("")
-        for qid in sorted(article_qids):
-            lines.append(f'- <a href="https://www.wikidata.org/wiki/{qid}">{qid}</a>')
-        lines.append("")
+    return f'''<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>{label}</title>
+<style>
+body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 900px; margin: 2em auto; padding: 0 1em; line-height: 1.6; color: #333; }}
+h1 {{ border-bottom: 2px solid #3366cc; padding-bottom: .3em; }}
+h2 {{ color: #3366cc; margin-top: 1.5em; }}
+a {{ color: #3366cc; }}
+.meta {{ font-size: 14px; color: #555; margin-bottom: 1.5em; }}
+.meta a {{ margin-right: 12px; }}
+#rendered {{ background: #f8f9fa; border: 1px solid #ddd; border-radius: 6px; padding: 20px; margin-bottom: 1.5em; font-size: 16px; line-height: 1.8; }}
+#rendered .sentence {{ margin-bottom: 8px; }}
+#rendered a {{ color: #3366cc; text-decoration: underline; text-decoration-style: dotted; }}
+#rendered a:hover {{ color: #2a4b8d; }}
+pre {{ background: #f5f5f5; padding: 1em; border-radius: 4px; overflow-x: auto; font-size: 13px; }}
+.back {{ margin-top: 2em; border-top: 1px solid #ddd; padding-top: 1em; }}
+</style>
+</head>
+<body>
+<h1>{label}</h1>
+<div class="meta">
+  <a href="https://www.wikidata.org/wiki/{title}">Wikidata: {title}</a>
+  <a href="{ABSTRACT_WIKI_BASE}{title}">Abstract Wikipedia</a>
+  <span>Created: {timestamp[:10]}</span>
+</div>
 
-    lines.append(f"---")
-    lines.append(f"[Back to index](../index.html)")
+<h2>Rendered</h2>
+<div id="rendered"><em>Loading...</em></div>
 
-    return "\n".join(lines)
+<h2>Wikitext</h2>
+<pre>{wikitext}</pre>
+
+<div class="back"><a href="../catalog.html">Back to catalog</a> | <a href="../index.html">Home</a></div>
+
+<script src="../renderer.js"></script>
+<script>
+renderWikitext(`{wikitext_escaped}`, "{title}", document.getElementById("rendered"));
+</script>
+</body>
+</html>'''
 
 
 def build_index(articles, labels):

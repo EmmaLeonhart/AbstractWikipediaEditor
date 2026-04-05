@@ -6,11 +6,12 @@ Abstract Wikipedia stores articles as language-neutral function calls that rende
 
 ## Download
 
-**[Download from GitHub](https://github.com/EmmaLeonhart/AbstractEditing)**
+**[Download ZIP](https://github.com/EmmaLeonhart/AbstractEditing/archive/refs/heads/master.zip)** | [View on GitHub](https://github.com/EmmaLeonhart/AbstractEditing)
+
+After extracting, run the desktop editor:
 
 ```bash
-git clone https://github.com/EmmaLeonhart/AbstractEditing.git
-cd AbstractEditing/editor
+cd editor
 npm install
 npm start
 ```

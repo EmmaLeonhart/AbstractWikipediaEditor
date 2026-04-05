@@ -2,48 +2,34 @@
 
 ## Completed
 
-- [x] Shrine article creation via Playwright clipboard injection (`create_rich_onepass.py`)
+- [x] Shrine article creation via Playwright clipboard injection
 - [x] Location fragment using Z26570 (State location using entity and class)
 - [x] Deity fragment using Z28016 (defining role sentence)
-- [x] Three-fragment articles with admin territory (`create_rich_threepass.py`)
 - [x] Full Wikifunctions catalog (3,911 functions, 71 types)
 - [x] Curated shortlist of promising functions for article building
-- [x] Wiki text template parser (`wikitext_parser.py`)
+- [x] Wikitext template parser (`wikitext_parser.py`)
 - [x] Complete Wikidata properties catalog (13,347 properties)
-- [x] Property-to-function mapping (18 common properties mapped)
+- [x] Property-to-function mapping (17 properties mapped)
 - [x] Auto-generate wikitext from any Wikidata item (`generate_wikitext.py`)
+- [x] General article pipeline: QID -> wikitext -> clipboard -> publish
+- [x] Function aliases (human-readable names in templates)
+- [x] Chrome extension for browser-based article creation
+- [x] Electron desktop editor with live preview
+- [x] Edit existing articles (`edit_from_qid.py`)
+- [x] Convert existing Abstract Wikipedia articles back to wikitext (`convert_article.py`)
+- [x] Fix wrong hardcoded QIDs in property mapping
+- [x] Fix property collision/dedup (location priority, P31 vs P106, inverse pairs)
+- [x] Sync extension data.js with fixed mappings
+- [x] Project website with live renderer (same as Electron app)
+- [x] Website landing page with download link
 
 ## In Progress
 
-- [ ] **General article pipeline**: Take any Wikidata QID, auto-generate wikitext from
-  its properties, compile to clipboard JSON, and create the Abstract Wikipedia article.
-  - `generate_wikitext.py` fetches item properties and produces wikitext
-  - `wikitext_parser.py` compiles wikitext to clipboard JSON
-  - Playwright injects and publishes
-- [ ] **Function aliases**: English name aliases for Z-functions so templates can use
-  human-readable names like `{{location | $subject | Q515 | Q17}}` instead of Z-IDs
-- [ ] **Chrome extension**: Package the template parser + clipboard injection as a
-  browser extension anyone can use to create Abstract Wikipedia pages
-
-## Long-Term Vision
-
-The end goal is a system where:
-1. A user writes a simple markdown/wikitext file describing an article
-2. The system auto-maps Wikidata properties to Wikifunctions
-3. Templates use human-readable function aliases
-4. Articles are created on Abstract Wikipedia with one command
-5. Any domain with Wikidata coverage can have articles generated automatically
-
-## Urgent
-
-- [ ] **Fix wrong hardcoded QIDs in property_function_mapping.json**
-  - Q15292583 (Sonardi) → Q66305721 (part of) — used as predicate for P361/P527
-  - Q787 (pig) → Q23492 (official language) — used as predicate for P37
-  - Q28831311 (unconfirmed) → Q2607563 (namesake) — used as role for P138
-- [ ] **Edit all pages created by Immanuelle** to fix the errors caused by wrong QIDs
+- [ ] Build distributable .exe installer via electron-builder
+- [ ] Edit all previously published articles to fix errors from old wrong QIDs
 
 ## Next Steps
 
-- [ ] Test pipeline on 10 random Wikidata items of different types
+- [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts)
 - [ ] Expand property-to-function mapping as more functions are tested
 - [ ] Explore ArticlePlaceholder functions (Z29822, Z29786) as shortcuts

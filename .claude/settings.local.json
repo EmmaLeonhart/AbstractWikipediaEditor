@@ -103,7 +103,9 @@
       "Bash(npx tsc:*)",
       "Bash(npx electron:*)",
       "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" convert_article.py Q191)",
-      "Bash(grep -l \"Q2607563\" data/templates/auto/*.wikitext)"
+      "Bash(grep -l \"Q2607563\" data/templates/auto/*.wikitext)",
+      "Bash(grep -E \"\\\\.py$|^d\")",
+      "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" generate_wikitext.py Q622664)"
     ]
   }
 }

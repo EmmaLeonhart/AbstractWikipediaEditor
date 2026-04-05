@@ -2,11 +2,10 @@
 title: mountain
 description: "large natural elevation of the Earth's surface"
 # Auto-generated from Wikidata Q8502
-# Properties used: P279, P31, P361, P527
+# Properties used: P279, P31, P361
 variables: {}
 ---
 
 {{Z26039 | $subject | Q12046615}}
 {{Z26095 | $subject | Q106589819}}
 {{Z26955 | Q66305721 | $subject | Q46831}}
-{{Z26955 | Q66305721 | Q3064051 | $subject}}

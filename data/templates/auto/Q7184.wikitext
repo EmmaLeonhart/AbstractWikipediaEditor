@@ -2,11 +2,10 @@
 title: NATO
 description: "intergovernmental military alliance between 32 member states"
 # Auto-generated from Wikidata Q7184
-# Properties used: P138, P17, P31, P37, P527
+# Properties used: P138, P17, P31, P37
 variables: {}
 ---
 
 {{Z26570 | $subject | Q1127126 | Q31}}
 {{Z28016 | Q877399 | Q2607563 | $subject}}
-{{Z26955 | Q66305721 | Q573044 | $subject}}
 {{Z26955 | Q23492 | Q1860 | $subject}}

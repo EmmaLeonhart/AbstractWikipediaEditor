@@ -1,0 +1,9 @@
+---
+title: HTTP 404
+description: "HTTP error response code"
+# Auto-generated from Wikidata Q404
+# Properties used: P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q27949697}}

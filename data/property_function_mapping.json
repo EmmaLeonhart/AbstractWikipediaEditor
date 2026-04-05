@@ -80,16 +80,16 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Meiji Shrine is dedicated to Emperor Meiji.",
-      "template": "{{Z26955 | Q5765080 | $subject | $value}}",
-      "notes": "Predicate=Q5765080 (dedicated to). Subject is the shrine, object is the deity."
+      "template": "{{Z26955 | Q1762010 | $subject | $value}}",
+      "notes": "Predicate=Q1762010 (dedication). Subject is the shrine, object is the deity."
     },
     "P138": {
       "label": "named after",
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Victoria is named after Queen Victoria.",
-      "template": "{{Z26955 | Q66480858 | $subject | $value}}",
-      "notes": "Predicate=Q66480858 (named after). Subject is the thing named, object is the namesake."
+      "template": "{{Z26955 | Q2607563 | $subject | $value}}",
+      "notes": "Predicate=Q2607563 (namesake). Subject is the thing named, object is the namesake."
     },
     "P361": {
       "label": "part of",
@@ -117,16 +117,16 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Marie Curie is a citizen of Poland.",
-      "template": "{{Z26955 | Q1093829 | $subject | $value}}",
-      "notes": "Predicate=Q1093829 (citizen of). Citizenship is a legal relationship, not a location."
+      "template": "{{Z26955 | Q42138 | $subject | $value}}",
+      "notes": "Predicate=Q42138 (citizenship). Citizenship is a legal relationship, not a location."
     },
     "P495": {
       "label": "country of origin",
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Toyota originates from Japan.",
-      "template": "{{Z26955 | Q66480858 | $subject | $value}}",
-      "notes": "Predicate=Q66480858 (named after/originates from). Origin is a provenance relationship, not a location."
+      "template": "{{Z26955 | Q3373417 | $subject | $value}}",
+      "notes": "Predicate=Q3373417 (country of origin). Origin is a provenance relationship, not a location."
     },
     "P1376": {
       "label": "capital of",

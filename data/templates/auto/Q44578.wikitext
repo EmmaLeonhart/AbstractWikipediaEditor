@@ -6,7 +6,6 @@ description: "1997 film by James Cameron"
 variables: {}
 ---
 
-{{Z26039 | $subject | Q11424}}
-{{Z28016 | $subject | Q28831311 | Q25173}}
-{{Z26955 | Q15292583 | $subject | Q392108}}
+{{Z28016 | $subject | Q2607563 | Q25173}}
+{{Z26955 | Q66305721 | $subject | Q392108}}
 {{Z26570 | $subject | Q11424 | Q30}}

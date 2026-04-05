@@ -314,6 +314,18 @@ For sustained runs, use `--delay 600` (10 minutes between edits). This avoids ra
 
 ---
 
+## Authentication: VPN vs 2FA
+
+The email verification prompts during login are **NOT two-factor authentication (2FA)**. They are triggered by **VPN usage**. When Wikimedia detects a login from an unfamiliar IP (as happens with VPN), it sends an email verification code as a security check. Without VPN, login proceeds directly without any verification step.
+
+This distinction matters because:
+- **2FA** would be a permanent account setting requiring a code on every login
+- **VPN-triggered verification** only happens when the IP looks suspicious
+- CI runners (GitHub Actions, etc.) always use unfamiliar IPs, so they always trigger verification — this is why CI-based article creation is disabled
+- Running locally without VPN avoids the verification entirely
+
+---
+
 ## Lessons Learned
 
 1. **Abstract Wikipedia is not a normal wiki.** Don't assume standard MediaWiki API patterns work. The entire editing stack is custom.

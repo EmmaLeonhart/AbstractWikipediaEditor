@@ -39,7 +39,7 @@ def check_article_exists(qid):
 
 
 def browser_login(page):
-    """Log in via the browser UI so the user can handle email 2FA interactively."""
+    """Log in via the browser UI. VPN usage may trigger email verification (not 2FA)."""
     username = os.environ.get("WIKI_USERNAME", "").split("@")[0]
     password = os.environ.get("WIKI_MAIN_PASSWORD", "")
 
@@ -50,10 +50,10 @@ def browser_login(page):
     page.locator("#wpName1").fill(username)
     page.locator("#wpPassword1").fill(password)
     page.locator("#wpLoginAttempt").click()
-    print(f"Submitted login for {username}, waiting for 2FA or redirect...", flush=True)
+    print(f"Submitted login for {username}, waiting for redirect...", flush=True)
 
-    # Wait for either: successful redirect (user page) or 2FA token field
-    # Give the user up to 5 minutes to enter the email verification code
+    # Wait for redirect. VPN usage may trigger email verification (not 2FA).
+    # Give the user up to 5 minutes to handle any verification prompt.
     page.wait_for_url(
         lambda url: "Special:UserLogin" not in url,
         timeout=300000,

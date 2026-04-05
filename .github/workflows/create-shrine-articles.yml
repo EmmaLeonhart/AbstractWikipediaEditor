@@ -1,4 +1,4 @@
-# DISABLED: Cannot authenticate in CI due to email 2FA on the wiki account.
+# DISABLED: Cannot authenticate in CI — VPN usage triggers email verification (not 2FA).
 # Article creation is done locally via: python create_from_qid.py --batch Q1,Q2 --apply --headed
 # Kept for reference in case auth is resolved in the future.
 
@@ -17,7 +17,7 @@ on:
 
 jobs:
   create-articles:
-    if: false  # Disabled - email 2FA blocks CI login
+    if: false  # Disabled - VPN-triggered email verification blocks CI login
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

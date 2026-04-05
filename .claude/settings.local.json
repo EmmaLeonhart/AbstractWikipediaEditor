@@ -105,7 +105,12 @@
       "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" convert_article.py Q191)",
       "Bash(grep -l \"Q2607563\" data/templates/auto/*.wikitext)",
       "Bash(grep -E \"\\\\.py$|^d\")",
-      "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" generate_wikitext.py Q622664)"
+      "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" generate_wikitext.py Q622664)",
+      "Bash(npm run:*)",
+      "Bash(grep -l \"P527\" data/templates/auto/*.wikitext)",
+      "Bash(xargs -I{} basename {} .wikitext)",
+      "Read(//c/Users/IMMANU~1/AppData/Local/Temp/**)",
+      "Read(//c/Users/Immanuelle/AppData/Local/Temp/**)"
     ]
   }
 }

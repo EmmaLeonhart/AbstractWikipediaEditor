@@ -1,0 +1,10 @@
+---
+title: 307 Temporary Redirect
+description: "HTTP response status code"
+# Auto-generated from Wikidata Q42397345
+# Properties used: P279, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q110861089}}
+{{Z26095 | $subject | Q17080144}}

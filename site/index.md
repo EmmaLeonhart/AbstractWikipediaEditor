@@ -2,9 +2,19 @@ Home | [Article Catalog](catalog.html)
 
 # Abstract Wikipedia Editor
 
-A desktop editor and automation toolkit for creating and editing articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).
+## Why this exists
 
-Abstract Wikipedia stores articles as language-neutral function calls that render into every language automatically. This project provides an Electron desktop app for writing and previewing articles, plus command-line tools for batch creation.
+[Abstract Wikipedia](https://abstract.wikipedia.org/) is a Wikimedia project where articles are written as language-neutral function calls that can be rendered into any language automatically. It's a powerful idea, but right now it is extremely difficult to actually edit. There is no source editor, no wikitext mode, and no way to see what you're writing until you publish. The visual editor is a custom Vue.js app that works nothing like a traditional wiki, and articles frequently fail to render in the browser at all.
+
+This project exists to make editing Abstract Wikipedia feel more like editing a traditional Wikipedia. You write human-readable wikitext templates, see a live English preview of what the article will say, and publish with one click.
+
+## The API problem
+
+Abstract Wikipedia's API does not currently support creating or editing articles. The `abstractwiki` content model requires a special permission (`wikilambda-abstract-create`) that bot passwords cannot access. This means there is no way to programmatically publish articles through the standard MediaWiki API.
+
+To work around this, the editor uses [Playwright](https://playwright.dev/) browser automation to inject article content into the visual editor's internal clipboard and click through the publish flow. This is fragile and slower than API access, but it works.
+
+The hope is that Abstract Wikipedia will eventually open up direct API access for article creation, or that the editing experience will become more regularized. When that happens, this tool can drop the browser automation and publish directly.
 
 ## Download
 
@@ -18,28 +28,32 @@ npm install
 npm start
 ```
 
-The desktop editor lets you:
-- Enter any Wikidata QID and pull its properties
-- Auto-generate wikitext templates from Wikidata
-- Live preview with resolved English labels (same renderer used on this site)
-- Pull existing articles from Abstract Wikipedia
-- Push edits back to Abstract Wikipedia
+## What the editor does
 
-## How it works
+- Enter any Wikidata QID and auto-generate article content from its properties
+- Write and edit wikitext templates with human-readable function names
+- Live English preview that resolves Wikidata QIDs to labels as you type
+- Pull existing articles from Abstract Wikipedia to edit them
+- Push articles back to Abstract Wikipedia via browser automation
+- Built-in login screen for Wikimedia credentials
 
-1. **Wikitext templates** map Wikidata properties to Wikifunctions sentence generators
-2. Each `{{function | arg1 | arg2}}` block becomes one article fragment
-3. The renderer resolves QIDs to labels and renders English sentences
-4. Articles are published via Playwright browser automation (the API doesn't support it)
+### Example
 
-### Example template
+A wikitext template like this:
 
 ```
 {{location | $subject | Q845945 | Q17}}
 {{spo | Q1762010 | $subject | Q3080728}}
 ```
 
-Renders as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrine is dedication of Inari."
+Renders in the preview as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrine is dedicated to Inari."
+
+## Planned features
+
+- **Multilingual preview** -- render articles in languages other than English, matching Abstract Wikipedia's core promise of language-neutral content
+- **Direct API publishing** -- replace browser automation when Abstract Wikipedia opens API access
+- **Expanded property coverage** -- map more Wikidata properties to Wikifunctions sentence generators beyond the current 17
+- **Installable .exe** -- one-click Windows installer instead of requiring Node.js
 
 ## Article catalog
 

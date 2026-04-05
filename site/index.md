@@ -14,7 +14,11 @@ Abstract Wikipedia's API does not currently support creating or editing articles
 
 To work around this, the editor uses [Playwright](https://playwright.dev/) browser automation to inject article content into the visual editor's internal clipboard and click through the publish flow. This is fragile and slower than API access, but it works.
 
-The hope is that Abstract Wikipedia will eventually open up direct API access for article creation, or that the editing experience will become more regularized. When that happens, this tool can drop the browser automation and publish directly.
+Our hope is that this style of editing -- writing human-readable wikitext that compiles to Abstract Wikipedia's Z-objects -- could eventually become a normal mode of editing on Abstract Wikipedia itself, similar to how traditional Wikipedia offers both a visual editor and a source/code editor. The wikitext roundtrip (wikitext to Z-objects and back) could serve as the basis for a code editor view that sits alongside the existing visual editor.
+
+We also envision this rendering approach being used as a default page for Wikidata items that don't yet have an Abstract Wikipedia article. Instead of showing a blank "this page does not exist" message, Abstract Wikipedia could auto-generate a preview from Wikidata properties, giving users a starting point to edit from rather than a blank page.
+
+In the shorter term, we hope Abstract Wikipedia will open up direct API access for article creation so the browser automation can be replaced with straightforward API calls.
 
 ## Download
 

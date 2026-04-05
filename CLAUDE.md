@@ -28,6 +28,9 @@ Keep the repo organized as follows. **Only runtime scripts belong in root.** Eve
 
 When adding new files, place them in the appropriate directory. Do not add research, debug, or experimental scripts to root.
 
+## Critical Rules
+- **NEVER hardcode Wikidata QIDs without explicitly asking the user first.** Every QID must be verified against the Wikidata API before use. Wrong QIDs (e.g. Q15292583 "Sonardi" instead of "part of", Q787 "pig" instead of "official language") were silently embedded in mappings and propagated into published articles, causing real damage.
+
 ## Architecture and Conventions
 - **`create_rich_onepass.py`** is the main working script. It uses Playwright to automate the Abstract Wikipedia visual editor via direct clipboard injection.
 - **`runcreate.bat`** is a quick launcher that creates 10 shrines in headed mode.

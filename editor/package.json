@@ -1,18 +1,62 @@
 {
   "name": "abstract-wiki-editor",
   "version": "1.0.0",
-  "description": "Wikitext editor for Abstract Wikipedia articles with live preview",
+  "description": "Desktop editor for Abstract Wikipedia articles with live preview",
   "main": "dist/main.js",
   "scripts": {
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json",
     "start": "npm run build && electron .",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "dist": "npm run build && electron-builder"
+  },
+  "build": {
+    "appId": "org.abstractwiki.editor",
+    "productName": "Abstract Wikipedia Editor",
+    "files": [
+      "dist/**/*",
+      "index.html",
+      "node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../generate_wikitext.py",
+        "to": "scripts/generate_wikitext.py"
+      },
+      {
+        "from": "../wikitext_parser.py",
+        "to": "scripts/wikitext_parser.py"
+      },
+      {
+        "from": "../convert_article.py",
+        "to": "scripts/convert_article.py"
+      },
+      {
+        "from": "../create_from_qid.py",
+        "to": "scripts/create_from_qid.py"
+      },
+      {
+        "from": "../edit_from_qid.py",
+        "to": "scripts/edit_from_qid.py"
+      },
+      {
+        "from": "../data",
+        "to": "scripts/data"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false
+    }
   },
   "dependencies": {
     "electron": "^33.0.0"
   },
   "devDependencies": {
-    "typescript": "^5.7.0",
-    "@types/node": "^22.0.0"
+    "@types/node": "^22.0.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.7.0"
   }
 }

@@ -147,26 +147,26 @@ const FUNCTION_REGISTRY = {
   },
 };
 
-// Property-to-function mapping
+// Property-to-function mapping (synced with data/property_function_mapping.json)
 const PROPERTY_MAPPING = {
-  "P31":   { function: "Z26039", template: "{{Z26039 | $subject | $value}}" },
+  "P31":   { function: "Z26039", template: "{{Z26039 | $subject | $value}}", skip_if: ["P106"] },
   "P279":  { function: "Z26095", template: "{{Z26095 | $subject | $value}}" },
-  "P131":  { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}" },
-  "P17":   { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}" },
+  "P131":  { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}", location_priority: 1 },
+  "P17":   { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}", location_priority: 2 },
+  "P30":   { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}", location_priority: 3 },
   "P36":   { function: "Z28016", template: "{{Z28016 | $value | Q5119 | $subject}}" },
   "P6":    { function: "Z28016", template: "{{Z28016 | $value | Q2285706 | $subject}}" },
   "P35":   { function: "Z28016", template: "{{Z28016 | $value | Q48352 | $subject}}" },
-  "P825":  { function: "Z28016", template: "{{Z28016 | $value | Q11591100 | $subject}}" },
-  "P138":  { function: "Z28016", template: "{{Z28016 | $subject | Q28831311 | $value}}" },
-  "P361":  { function: "Z26955", template: "{{Z26955 | Q15292583 | $subject | $value}}" },
-  "P527":  { function: "Z26955", template: "{{Z26955 | Q15292583 | $value | $subject}}" },
+  "P825":  { function: "Z26955", template: "{{Z26955 | Q1762010 | $subject | $value}}" },
+  "P138":  { function: "Z26955", template: "{{Z26955 | Q2607563 | $subject | $value}}" },
+  "P361":  { function: "Z26955", template: "{{Z26955 | Q66305721 | $subject | $value}}" },
   "P106":  { function: "Z26039", template: "{{Z26039 | $subject | $value}}" },
-  "P27":   { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}" },
-  "P495":  { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}" },
-  "P30":   { function: "Z26570", template: "{{Z26570 | $subject | $P31_value | $value}}" },
-  "P1376": { function: "Z28016", template: "{{Z28016 | $subject | Q5119 | $value}}" },
-  "P37":   { function: "Z26955", template: "{{Z26955 | Q787 | $value | $subject}}" },
+  "P27":   { function: "Z26955", template: "{{Z26955 | Q42138 | $subject | $value}}" },
+  "P495":  { function: "Z26955", template: "{{Z26955 | Q3373417 | $subject | $value}}" },
+  "P1376": { function: "Z28016", template: "{{Z28016 | $subject | Q5119 | $value}}", skip_if: ["P36"] },
+  "P37":   { function: "Z26955", template: "{{Z26955 | Q23492 | $value | $subject}}" },
   "P38":   { function: "Z26955", template: "{{Z26955 | Q8142 | $value | $subject}}" },
 };
 
-const LOCATION_PROPS = new Set(["P131", "P17", "P30", "P27", "P495"]);
+// Only the most specific location property is used (P131 > P17 > P30)
+const LOCATION_PROPS = new Set(["P131", "P17", "P30"]);

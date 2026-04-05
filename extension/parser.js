@@ -157,19 +157,32 @@ function generateWikitextFromClaims(qid, claims, label, description) {
   }
   const p31Value = p31Values[0] || null;
 
-  const hasLocation = [...LOCATION_PROPS].some(pid => pid in claims && pid in PROPERTY_MAPPING);
+  // Pick best location property (most specific wins)
+  const locationPriority = ["P131", "P17", "P30"];
+  let bestLocation = null;
+  for (const pid of locationPriority) {
+    if (pid in claims && pid in PROPERTY_MAPPING) { bestLocation = pid; break; }
+  }
+
+  const hasOccupation = "P106" in claims && "P106" in PROPERTY_MAPPING;
 
   const fragments = [];
   const usedProps = new Set();
 
-  // P31 only if no location covers it
-  if (p31Value && !hasLocation) {
+  // P31 only if no location or occupation covers it
+  if (p31Value && !bestLocation && !hasOccupation) {
     fragments.push(`{{is a | $subject | ${p31Value}}}`);
   }
   usedProps.add("P31");
 
   for (const [pid, pmap] of Object.entries(PROPERTY_MAPPING)) {
     if (usedProps.has(pid) || !(pid in claims)) continue;
+
+    // Skip non-best location properties
+    if (pmap.location_priority && pid !== bestLocation) continue;
+
+    // Skip properties that conflict with others present
+    if (pmap.skip_if && pmap.skip_if.some(other => other in claims)) continue;
 
     let value = null;
     for (const claim of claims[pid]) {

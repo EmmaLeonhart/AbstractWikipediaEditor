@@ -283,13 +283,21 @@ AbstractTestBot/
   DOCUMENTATION.md              # This file
   README.md                     # Quick-start guide
   requirements.txt              # Python dependencies
-  password.md                   # Bot password reference (gitignored)
+  create_from_qid.py            # Main creation script: QID -> wikitext -> clipboard -> publish
+  edit_from_qid.py              # Edit existing articles with fresh Wikidata content
+  generate_wikitext.py          # Maps Wikidata properties to Wikifunctions templates
+  wikitext_parser.py            # Compiles wikitext to Abstract Wikipedia clipboard JSON
+  build_pages.py                # Build GitHub Pages site from existing articles
+  archive_pages.py              # Archive pages on the Wayback Machine
+  convert_article.py            # Convert Z-objects back to wikitext
+  convert_to_aliases.py         # Rewrite Z-IDs to human-readable aliases
   runclaude.bat                 # Launch Claude Code
-  create_rich_onepass.py        # Single-pass shrine creation via clipboard injection (THIS IS WHAT WORKS)
-  create_shrine_articles.py     # API-based approach (blocked, kept for reference)
-  runcreate.bat                 # Quick launcher: creates 10 shrines headed
+  runeditor.bat                 # Launch editor
+  data/
+    property_function_mapping.json  # Wikidata property -> Wikifunctions mapping
+    function_aliases.json           # Z-ID <-> human alias lookup
   .github/workflows/
-    create-shrine-articles.yml  # GitHub Actions workflow (uses API approach)
+    create-shrine-articles.yml  # GitHub Actions workflow (disabled, VPN blocks CI login)
 ```
 
 ---
@@ -369,16 +377,20 @@ WIKI_MAIN_PASSWORD=your_main_account_password
 
 ### Create articles
 
-The current script (`create_rich_onepass.py`) queries Wikidata via SPARQL for shrines with deities, checks which ones already have Abstract Wikipedia articles, and creates them with both location and deity fragments in a single editor session.
+The current scripts (`create_from_qid.py` and `edit_from_qid.py`) take any Wikidata QID, generate wikitext from properties, compile to clipboard JSON, and publish via Playwright.
 
 ```bash
-# Dry run
-python create_rich_onepass.py
+# Dry run (preview wikitext)
+python create_from_qid.py Q706499
 
-# Create 10 articles (headed, so you can watch)
-python create_rich_onepass.py --apply --max-edits 10 --headed
+# Create a single article (headed, so you can watch)
+python create_from_qid.py Q706499 --apply --headed
 
-# Or just double-click runcreate.bat to create 10 headed
+# Create multiple articles
+python create_from_qid.py --batch Q1,Q2,Q3 --apply --headed
+
+# Edit an existing article with fresh data
+python edit_from_qid.py Q706499 --apply --headed
 ```
 
 ### Important notes for Windows

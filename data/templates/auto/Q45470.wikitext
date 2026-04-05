@@ -1,0 +1,11 @@
+---
+title: Sasuke Inari Shrine
+description: "Shinto shrine in Kanagawa Prefecture, Japan"
+# Auto-generated from Wikidata Q45470
+# Properties used: P131, P17, P31, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q514480 | Q24862172}}
+{{Z26570 | $subject | Q514480 | Q17}}
+{{Z28016 | Q3080728 | Q11591100 | $subject}}

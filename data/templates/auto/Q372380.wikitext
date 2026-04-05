@@ -1,0 +1,12 @@
+---
+title: Katori Jingū
+description: "Shinto shrine in Chiba Prefecture, Japan"
+# Auto-generated from Wikidata Q372380
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q11667187 | Q858357}}
+{{Z26570 | $subject | Q11667187 | Q17}}
+{{Z28016 | Q1107286 | Q11591100 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q17222093}}

@@ -1,0 +1,9 @@
+---
+title: Observations on urethral infection in the male.
+description: "scientific article"
+# Auto-generated from Wikidata Q38897603
+# Properties used: P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q13442814}}

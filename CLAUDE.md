@@ -19,23 +19,19 @@ Keep the repo organized as follows. **Only runtime scripts belong in root.** Eve
 
 | Directory | Contents |
 |-----------|----------|
-| `/` (root) | Runtime scripts (`create_rich_onepass.py`), launchers (`runcreate.bat`), config, docs |
-| `research/` | Exploration, debugging, and test scripts used during development |
-| `archive/` | Superseded script versions kept for reference |
+| `/` (root) | Runtime scripts (`create_from_qid.py`, `edit_from_qid.py`), launchers, config, docs |
 | `data/` | Generated data files, cached JSON, HTML artifacts |
 | `screenshots/` | Debug and documentation screenshots |
 | `credentials/` | Passwords and secrets (**gitignored, never committed**) |
-
-When adding new files, place them in the appropriate directory. Do not add research, debug, or experimental scripts to root.
 
 ## Critical Rules
 - **NEVER hardcode Wikidata QIDs without explicitly asking the user first.** Every QID must be verified against the Wikidata API before use. Wrong QIDs (e.g. Q15292583 "Sonardi" instead of "part of", Q787 "pig" instead of "official language") were silently embedded in mappings and propagated into published articles, causing real damage.
 
 ## Architecture and Conventions
-- **`create_rich_onepass.py`** is the main working script. It uses Playwright to automate the Abstract Wikipedia visual editor via direct clipboard injection.
-- **`runcreate.bat`** is a quick launcher that creates 10 shrines in headed mode.
-- **`archive/create_shrine_articles.py`** is the API-based approach that doesn't work due to permission issues. Kept for reference.
-- The bot queries Wikidata for shrines with deities, checks which already have Abstract Wikipedia articles, then injects both location and deity fragments into the editor clipboard and publishes in a single pass.
+- **`create_from_qid.py`** is the main creation script. Takes any QID, generates wikitext from Wikidata properties, compiles to clipboard JSON, and publishes via Playwright browser automation.
+- **`edit_from_qid.py`** edits existing articles by removing old fragments and pasting fresh ones.
+- **`generate_wikitext.py`** maps Wikidata properties to Wikifunctions templates.
+- **`wikitext_parser.py`** compiles wikitext templates to Abstract Wikipedia clipboard JSON.
 - Main account credentials are required (bot passwords cannot create articles). Stored in `.env` as `WIKI_MAIN_PASSWORD`.
 - See `DOCUMENTATION.md` for extensive notes on all the API dead ends and workarounds.
 - No edit summary is added when publishing articles.

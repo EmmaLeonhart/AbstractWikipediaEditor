@@ -1,0 +1,9 @@
+---
+title: Mid-Autumn Festival
+description: "East Asian (Sinosphere) harvest festival"
+# Auto-generated from Wikidata Q379519
+# Properties used: P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q1197685 | Q148}}

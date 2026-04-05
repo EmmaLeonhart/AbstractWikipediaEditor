@@ -1,0 +1,11 @@
+---
+title: Ōmi Jingū
+description: "Shinto shrine in Ōtsu, Japan"
+# Auto-generated from Wikidata Q385407
+# Properties used: P131, P17, P31, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q120680118 | Q202907}}
+{{Z26570 | $subject | Q120680118 | Q17}}
+{{Z28016 | Q314802 | Q11591100 | $subject}}

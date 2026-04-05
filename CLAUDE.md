@@ -1,4 +1,4 @@
-# AbstractTestBot
+# Abstract Wikipedia Editor
 
 ## Project Description
 Desktop editor for creating articles on Abstract Wikipedia. The main product is an Electron app (`editor/`) that provides a wikitext editor with live preview, login screen, and publish-to-wiki capability. Python scripts exist for batch operations and debugging.

@@ -1,10 +1,8 @@
-# AbstractTestBot: Full Documentation
+# Abstract Wikipedia Editor: Technical Documentation
 
 ## Overview
 
-This bot creates Shinto shrine articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) by copying a Wikifunctions template from an existing article (Q11581011) and applying it to other Shinto shrine Wikidata items. This document captures everything we learned, every dead end we hit, and what actually works.
-
-**TL;DR:** Abstract Wikipedia's API does not support creating articles. We had to resort to Playwright browser automation to click through the visual editor. It works, but it was painful to figure out.
+This document covers the technical details of how the Abstract Wikipedia Editor works, including all the API dead ends and workarounds discovered during development. Abstract Wikipedia's API does not support creating articles, so we use Playwright browser automation to publish through the visual editor.
 
 ---
 
@@ -276,7 +274,7 @@ This does NOT cause issues — the content is genuinely there, the disabled stat
 ## File Structure
 
 ```
-AbstractTestBot/
+AbstractWikipediaEditor/
   .env                          # Credentials (gitignored)
   .gitignore
   CLAUDE.md                     # Project instructions for Claude Code
@@ -306,7 +304,7 @@ AbstractTestBot/
 
 - **25 articles created** (15 from initial run + 10 from second run at 10-min intervals)
 - **75 articles remaining** from the initial batch of 100
-- **The bot works** but uses browser automation, which is slower and more fragile than API calls
+- **The editor works** but uses browser automation, which is slower and more fragile than API calls
 - Edit summary set to "created page" for all runs
 - Use `--delay 600` for spaced-out runs to keep a low profile
 

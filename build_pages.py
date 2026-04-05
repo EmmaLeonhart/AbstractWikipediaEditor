@@ -326,6 +326,74 @@ def format_fragment_linked(fragment):
     return re.sub(r'Q\d+', link_qid, wikitext)
 
 
+def qid_link_label(qid, article_qid=None):
+    """Return an HTML link with the QID's English label."""
+    if qid == "$subject" and article_qid:
+        label = get_label(article_qid)
+        return f'<a href="https://www.wikidata.org/wiki/{article_qid}">{label}</a>'
+    if qid.startswith("Q"):
+        label = get_label(qid)
+        return f'<a href="https://www.wikidata.org/wiki/{qid}">{label}</a>'
+    return qid
+
+
+def render_english_preview(fragment, article_qid):
+    """Render a Z-object fragment as an approximate English sentence with linked labels."""
+    if isinstance(fragment, str):
+        return None
+
+    core = unwrap_fragment(fragment)
+    fid = get_func_id(core)
+    if not fid:
+        return None
+
+    # Extract positional args (skip Z1K1, Z7K1)
+    args = []
+    for key in sorted(core.keys()):
+        if key in ("Z1K1", "Z7K1"):
+            continue
+        val = core[key]
+        extracted = extract_value(val)
+        if extracted == "$lang":
+            continue
+        args.append(extracted)
+
+    # Resolve args to linked labels
+    def r(val):
+        if val == "$subject":
+            return qid_link_label(val, article_qid)
+        return qid_link_label(val)
+
+    a = [r(v) for v in args]
+
+    # Render sentence based on function
+    try:
+        if fid == "Z26570" and len(a) >= 3:
+            return f"{a[0]} is a {a[1]} in {a[2]}."
+        elif fid == "Z26039" and len(a) >= 2:
+            return f"{a[0]} is a {a[1]}."
+        elif fid == "Z26095" and len(a) >= 2:
+            return f"A {a[0]} is a {a[1]}."
+        elif fid == "Z28016" and len(a) >= 3:
+            return f"{a[0]} is the {a[1]} of {a[2]}."
+        elif fid == "Z26955" and len(a) >= 3:
+            return f"{a[1]} is {a[0]} of {a[2]}."
+        elif fid == "Z29591" and len(a) >= 3:
+            return f"{a[0]} is a {a[1]} {a[2]}."
+        elif fid == "Z26627" and len(a) >= 2:
+            return f"{a[0]} are {a[1]}."
+        elif fid == "Z27243" and len(a) >= 4:
+            return f"{a[0]} is the {a[1]} {a[2]} in {a[3]}."
+        elif fid == "Z27173" and len(a) >= 3:
+            return f"{a[0]} is {a[1]} {a[2]}."
+        elif fid == "Z29743" and len(a) >= 3:
+            return f"A {a[0]} is a {a[1]} {a[2]}."
+        else:
+            return " ".join(a)
+    except (IndexError, KeyError):
+        return None
+
+
 def build_article_page(article, content):
     """Generate markdown for a single article page."""
     title = article["title"]
@@ -367,8 +435,23 @@ def build_article_page(article, content):
             lines.append(f"**Functions used:** {func_list}")
             lines.append("")
 
+    # English preview (approximate rendering with resolved labels)
+    lines.append("## English preview")
+    lines.append("")
+    preview_num = 0
+    for section_id, section in sections.items():
+        fragments = section.get("fragments", [])
+        for frag in fragments:
+            sentence = render_english_preview(frag, title)
+            if sentence:
+                preview_num += 1
+                lines.append(f"{preview_num}. {sentence}")
+    if preview_num == 0:
+        lines.append("*No renderable fragments*")
+    lines.append("")
+
     # Language-neutral view
-    lines.append("## Language-neutral representation")
+    lines.append("## Wikitext")
     lines.append("")
     lines.append("```")
     frag_num = 0
@@ -377,7 +460,7 @@ def build_article_page(article, content):
         for frag in fragments:
             frag_num += 1
             wt = format_fragment_neutral(frag)
-            if wt and wt != "Z89":  # skip bare Z89 placeholder
+            if wt and wt != "Z89":
                 lines.append(wt)
     lines.append("```")
     lines.append("")

@@ -1,0 +1,12 @@
+---
+title: Atsuta Jingū
+description: "Shinto shrine in Aichi Prefecture, Japan"
+# Auto-generated from Wikidata Q482065
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q120680118 | Q66825637}}
+{{Z26570 | $subject | Q120680118 | Q17}}
+{{Z28016 | Q455602 | Q11591100 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q11465292}}

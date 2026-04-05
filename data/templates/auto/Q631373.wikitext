@@ -1,0 +1,12 @@
+---
+title: Kashii-gū
+description: "Shinto shrine in Fukuoka Prefecture, Japan"
+# Auto-generated from Wikidata Q631373
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q845945 | Q123365946}}
+{{Z26570 | $subject | Q845945 | Q17}}
+{{Z28016 | Q179971 | Q11591100 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q10917783}}

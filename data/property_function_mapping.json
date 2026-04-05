@@ -1,6 +1,11 @@
 {
   "_description": "Maps Wikidata properties to Wikifunctions sentence generators. Only properties that can produce meaningful article sentences are included.",
   "_usage": "Given a Wikidata item with property P31, use function Z26039 with the item as entity and the P31 value as class.",
+  "_dedup_rules": {
+    "location_priority": "P131 > P17 > P30. Only the most specific location property is used. P27 and P495 are not location relationships and use different functions.",
+    "capital_inverse": "P36 and P1376 are inverses. Only one should appear per item. P1376 is skipped if P36 exists.",
+    "instance_vs_occupation": "P31 is skipped when P106 is present, since occupation is more informative than 'is a human'."
+  },
   "mappings": {
     "P31": {
       "label": "instance of",
@@ -8,7 +13,8 @@
       "function_name": "Article-less instantiating fragment",
       "example": "Nairobi is a city.",
       "template": "{{Z26039 | $subject | $value}}",
-      "notes": "Most universal property. Maps entity to its class."
+      "notes": "Most universal property. Maps entity to its class. Skipped when P106 exists or when a location property covers it.",
+      "skip_if": ["P106"]
     },
     "P279": {
       "label": "subclass of",
@@ -24,7 +30,8 @@
       "function_name": "State location using entity and class",
       "example": "Kashima Shrine is a Shinto shrine in Kashima.",
       "template": "{{Z26570 | $subject | $P31_value | $value}}",
-      "notes": "Requires P31 value as the class argument. Uses admin territory as location."
+      "notes": "Requires P31 value as the class argument. Most specific location property.",
+      "location_priority": 1
     },
     "P17": {
       "label": "country",
@@ -32,7 +39,17 @@
       "function_name": "State location using entity and class",
       "example": "Tokyo Tower is a tower in Japan.",
       "template": "{{Z26570 | $subject | $P31_value | $value}}",
-      "notes": "Same function as P131 but with country as location."
+      "notes": "Same function as P131 but with country as location. Skipped when P131 exists.",
+      "location_priority": 2
+    },
+    "P30": {
+      "label": "continent",
+      "function": "Z26570",
+      "function_name": "State location using entity and class",
+      "example": "Japan is a country in Asia.",
+      "template": "{{Z26570 | $subject | $P31_value | $value}}",
+      "notes": "Least specific location. Only used when P131 and P17 are absent.",
+      "location_priority": 3
     },
     "P36": {
       "label": "capital",
@@ -60,19 +77,19 @@
     },
     "P825": {
       "label": "dedicated to",
-      "function": "Z28016",
-      "function_name": "defining role sentence",
-      "example": "The deity of Meiji Shrine is Emperor Meiji.",
-      "template": "{{Z28016 | $value | Q11591100 | $subject}}",
-      "notes": "Shrine-specific. Value is the deity, role=Q11591100 (Shinto shrine)."
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "Meiji Shrine is dedicated to Emperor Meiji.",
+      "template": "{{Z26955 | Q5765080 | $subject | $value}}",
+      "notes": "Predicate=Q5765080 (dedicated to). Subject is the shrine, object is the deity."
     },
     "P138": {
       "label": "named after",
-      "function": "Z28016",
-      "function_name": "defining role sentence",
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
       "example": "Victoria is named after Queen Victoria.",
-      "template": "{{Z28016 | $value | Q2607563 | $subject}}",
-      "notes": "Role=Q2607563 (namesake). Value is the namesake entity, subject is what was named after it."
+      "template": "{{Z26955 | Q66480858 | $subject | $value}}",
+      "notes": "Predicate=Q66480858 (named after). Subject is the thing named, object is the namesake."
     },
     "P361": {
       "label": "part of",
@@ -93,31 +110,23 @@
       "function_name": "Article-less instantiating fragment",
       "example": "Marie Curie is a physicist.",
       "template": "{{Z26039 | $subject | $value}}",
-      "notes": "Treats occupation as an instance-of relationship."
+      "notes": "Treats occupation as an instance-of relationship. When present, P31 is skipped."
     },
     "P27": {
       "label": "country of citizenship",
-      "function": "Z26570",
-      "function_name": "State location using entity and class",
-      "example": "Marie Curie is a person in Poland.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
-      "notes": "Uses citizenship country as location, P31 value as class."
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "Marie Curie is a citizen of Poland.",
+      "template": "{{Z26955 | Q1093829 | $subject | $value}}",
+      "notes": "Predicate=Q1093829 (citizen of). Citizenship is a legal relationship, not a location."
     },
     "P495": {
       "label": "country of origin",
-      "function": "Z26570",
-      "function_name": "State location using entity and class",
-      "example": "Toyota is a company in Japan.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
-      "notes": "Uses country of origin as location."
-    },
-    "P30": {
-      "label": "continent",
-      "function": "Z26570",
-      "function_name": "State location using entity and class",
-      "example": "Japan is a country in Asia.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
-      "notes": "Uses continent as location."
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "Toyota originates from Japan.",
+      "template": "{{Z26955 | Q66480858 | $subject | $value}}",
+      "notes": "Predicate=Q66480858 (named after/originates from). Origin is a provenance relationship, not a location."
     },
     "P1376": {
       "label": "capital of",
@@ -125,7 +134,8 @@
       "function_name": "defining role sentence",
       "example": "Tokyo is the capital of Japan.",
       "template": "{{Z28016 | $subject | Q5119 | $value}}",
-      "notes": "Subject is the capital, value is the country. Role=Q5119 (capital)."
+      "notes": "Subject is the capital, value is the country. Role=Q5119 (capital). Skipped when P36 exists.",
+      "skip_if": ["P36"]
     },
     "P37": {
       "label": "official language",

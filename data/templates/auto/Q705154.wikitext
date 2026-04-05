@@ -1,0 +1,11 @@
+---
+title: Niutsuhime Shrine
+description: "Shinto shrine in Katsuragi, Ito district, Wakayama prefecture, Japan"
+# Auto-generated from Wikidata Q705154
+# Properties used: P131, P17, P31, P361
+variables: {}
+---
+
+{{Z26570 | $subject | Q845945 | Q1345594}}
+{{Z26570 | $subject | Q845945 | Q17}}
+{{Z26955 | Q66305721 | $subject | Q611345}}

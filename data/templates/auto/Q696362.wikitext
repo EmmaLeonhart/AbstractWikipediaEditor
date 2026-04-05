@@ -1,0 +1,12 @@
+---
+title: Izumo Taisha
+description: "Possibly oldest Shinto shrine in Japan"
+# Auto-generated from Wikidata Q696362
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q11438310 | Q825166}}
+{{Z26570 | $subject | Q11438310 | Q17}}
+{{Z28016 | Q276944 | Q11591100 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q11395860}}

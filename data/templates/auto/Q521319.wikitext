@@ -1,0 +1,11 @@
+---
+title: Takekoma Inari Shrine
+description: "Shinto shrine in Miyagi Prefecture, Japan"
+# Auto-generated from Wikidata Q521319
+# Properties used: P131, P17, P31, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q845945 | Q518203}}
+{{Z26570 | $subject | Q845945 | Q17}}
+{{Z28016 | Q3080728 | Q11591100 | $subject}}

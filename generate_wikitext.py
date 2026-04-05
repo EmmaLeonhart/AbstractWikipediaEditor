@@ -89,14 +89,21 @@ def generate_wikitext(qid):
     fragments = []
     used_props = set()
 
-    # Check if any location properties (P131, P17, P30, P27, P495) are present
-    # If so, skip standalone "is a" since location already contains it
-    location_props = {"P131", "P17", "P30", "P27", "P495"}
-    has_location = any(pid in claims for pid in location_props if pid in mapping)
+    # Determine which location property to use (most specific wins)
+    # P131 (admin territory) > P17 (country) > P30 (continent)
+    location_props_by_priority = ["P131", "P17", "P30"]
+    best_location = None
+    for pid in location_props_by_priority:
+        if pid in claims and pid in mapping:
+            best_location = pid
+            break
 
-    # Start with P31 (instance of) only if no location property will cover it
+    # Check if P106 (occupation) exists — if so, skip P31 ("is a human" is useless)
+    has_occupation = "P106" in claims and "P106" in mapping
+
+    # Start with P31 (instance of) only if no location or occupation covers it
     if "P31" in mapping and p31_value:
-        if not has_location:
+        if not best_location and not has_occupation:
             fragments.append(f"{{{{Z26039 | $subject | {p31_value}}}}}")
         # Mark P31 as used either way so it doesn't repeat in the loop
         used_props.add("P31")
@@ -108,6 +115,19 @@ def generate_wikitext(qid):
         if pid not in claims:
             continue
 
+        # Skip properties marked as skipped
+        if pmap.get("skip"):
+            continue
+
+        # Skip non-best location properties (dedup)
+        if pmap.get("location_priority") and pid != best_location:
+            continue
+
+        # Skip properties that conflict with others present
+        skip_if = pmap.get("skip_if", [])
+        if any(other in claims for other in skip_if):
+            continue
+
         # Get first QID value for this property
         value = None
         for claim in claims[pid]:
@@ -116,10 +136,6 @@ def generate_wikitext(qid):
                 value = v
                 break
         if not value:
-            continue
-
-        # Skip properties marked as skipped
-        if pmap.get("skip"):
             continue
 
         # Build the template line based on the mapping

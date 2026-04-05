@@ -1,0 +1,17 @@
+---
+title: People's Republic of China
+description: "country in East Asia"
+# Auto-generated from Wikidata Q148
+# Properties used: P138, P17, P30, P31, P35, P36, P361, P37, P38, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q3624078 | Q148}}
+{{Z26570 | $subject | Q3624078 | Q48}}
+{{Z28016 | Q956 | Q5119 | $subject}}
+{{Z28016 | Q18111 | Q2285706 | $subject}}
+{{Z28016 | Q15031 | Q48352 | $subject}}
+{{Z26955 | Q66480858 | $subject | Q7183}}
+{{Z26955 | Q66305721 | $subject | Q29520}}
+{{Z26955 | Q23492 | Q727694 | $subject}}
+{{Z26955 | Q8142 | Q39099 | $subject}}

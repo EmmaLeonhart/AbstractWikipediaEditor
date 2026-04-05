@@ -1,0 +1,12 @@
+---
+title: Hikawa Shrine
+description: "shinto shrine in Saitama, Japan"
+# Auto-generated from Wikidata Q703633
+# Properties used: P131, P17, P31, P361, P825
+variables: {}
+---
+
+{{Z26570 | $subject | Q125314171 | Q153629}}
+{{Z26570 | $subject | Q125314171 | Q17}}
+{{Z28016 | Q272993 | Q11591100 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q11546334}}

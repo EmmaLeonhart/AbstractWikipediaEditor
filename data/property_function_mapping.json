@@ -71,8 +71,8 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Victoria is named after Queen Victoria.",
-      "template": "{{Z28016 | $subject | Q2607563 | $value}}",
-      "notes": "Role=Q2607563 (namesake)."
+      "template": "{{Z28016 | $value | Q2607563 | $subject}}",
+      "notes": "Role=Q2607563 (namesake). Value is the namesake entity, subject is what was named after it."
     },
     "P361": {
       "label": "part of",

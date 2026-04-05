@@ -111,7 +111,10 @@
       "Bash(xargs -I{} basename {} .wikitext)",
       "Read(//c/Users/IMMANU~1/AppData/Local/Temp/**)",
       "Read(//c/Users/Immanuelle/AppData/Local/Temp/**)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(sort -t: -k2 -rn)",
+      "Bash(grep -ohP 'Z\\\\d+' site/pages/*.html)",
+      "Bash(wc -l site/pages/*.html)"
     ]
   }
 }

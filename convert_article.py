@@ -1,0 +1,192 @@
+"""Convert an Abstract Wikipedia article's Z-objects to wikitext.
+
+Fetches the article content from Abstract Wikipedia and converts
+each fragment to human-readable wikitext using function aliases.
+
+Usage:
+    python convert_article.py Q191
+"""
+
+import io
+import sys
+import os
+import json
+import requests
+
+if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != 'utf-8':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(SCRIPT_DIR, "data")
+
+API_URL = "https://abstract.wikipedia.org/w/api.php"
+WIKIDATA_API = "https://www.wikidata.org/w/api.php"
+
+SESSION = requests.Session()
+SESSION.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+
+# Load function aliases
+FUNCTION_NAMES = {}
+aliases_path = os.path.join(DATA_DIR, "function_aliases.json")
+try:
+    with open(aliases_path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    for zid, names in data.get("reverse", {}).items():
+        FUNCTION_NAMES[zid] = names[0]
+except (FileNotFoundError, json.JSONDecodeError):
+    pass
+
+WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396"}
+
+
+def get_func_id(obj):
+    if not isinstance(obj, dict):
+        return None
+    z1k1 = obj.get("Z1K1", "")
+    if isinstance(z1k1, dict):
+        z1k1 = z1k1.get("Z9K1", "")
+    if z1k1 != "Z7":
+        return None
+    func_ref = obj.get("Z7K1", {})
+    if isinstance(func_ref, dict):
+        return func_ref.get("Z9K1")
+    return func_ref if isinstance(func_ref, str) else None
+
+
+def unwrap_fragment(obj):
+    if not isinstance(obj, dict):
+        return obj
+    fid = get_func_id(obj)
+    if fid in WRAPPER_FUNCS:
+        for key, val in sorted(obj.items()):
+            if key in ("Z1K1", "Z7K1"):
+                continue
+            if isinstance(val, dict) and get_func_id(val):
+                return unwrap_fragment(val)
+    return obj
+
+
+def extract_value(obj):
+    if isinstance(obj, str):
+        return obj
+    if not isinstance(obj, dict):
+        return str(obj)
+
+    z1k1 = obj.get("Z1K1", "")
+    if isinstance(z1k1, dict):
+        z1k1 = z1k1.get("Z9K1", "")
+
+    if z1k1 == "Z6091":
+        qid = obj.get("Z6091K1", {})
+        if isinstance(qid, dict):
+            qid = qid.get("Z6K1", "?")
+        return qid
+
+    if z1k1 == "Z18":
+        arg = obj.get("Z18K1", {})
+        if isinstance(arg, dict):
+            arg = arg.get("Z6K1", "?")
+        if arg == "Z825K1":
+            return "$subject"
+        if arg == "Z825K2":
+            return "$lang"
+        return f"${arg}"
+
+    if z1k1 == "Z6":
+        return obj.get("Z6K1", "")
+
+    if z1k1 == "Z9":
+        return obj.get("Z9K1", "?")
+
+    fid = get_func_id(obj)
+    if fid:
+        return FUNCTION_NAMES.get(fid, fid)
+
+    return "?"
+
+
+def format_as_wikitext(obj):
+    if isinstance(obj, str):
+        return obj if obj != "Z89" else None
+
+    fid = get_func_id(obj)
+    if not fid:
+        return None
+
+    alias = FUNCTION_NAMES.get(fid, fid)
+    args = []
+    for key in sorted(obj.keys()):
+        if key in ("Z1K1", "Z7K1"):
+            continue
+        val = obj[key]
+        extracted = extract_value(val)
+        if extracted == "$lang":
+            continue
+        args.append(extracted)
+
+    parts = [alias] + args
+    return "{{" + " | ".join(parts) + "}}"
+
+
+def convert_article(qid):
+    # Fetch from Abstract Wikipedia
+    r = SESSION.get(API_URL, params={
+        "action": "query", "titles": qid,
+        "prop": "revisions", "rvprop": "content",
+        "rvslots": "main", "format": "json",
+    }, timeout=30)
+    r.raise_for_status()
+    pages = r.json()["query"]["pages"]
+
+    content = None
+    for page in pages.values():
+        revisions = page.get("revisions", [])
+        if revisions:
+            raw = revisions[0].get("slots", {}).get("main", {}).get("*", "")
+            if raw:
+                content = json.loads(raw)
+
+    if not content:
+        print(f"# No article found for {qid}", flush=True)
+        sys.exit(1)
+
+    # Get label
+    lr = SESSION.get(WIKIDATA_API, params={
+        "action": "wbgetentities", "ids": qid,
+        "props": "labels|descriptions", "languages": "en", "format": "json",
+    }, timeout=15)
+    lr.raise_for_status()
+    entity = lr.json()["entities"].get(qid, {})
+    label = entity.get("labels", {}).get("en", {}).get("value", qid)
+    description = entity.get("descriptions", {}).get("en", {}).get("value", "")
+
+    # Output wikitext
+    lines = [
+        "---",
+        f"title: {label}",
+    ]
+    if description:
+        lines.append(f'description: "{description}"')
+    lines.append(f"# From Abstract Wikipedia {qid}")
+    lines.append("variables: {}")
+    lines.append("---")
+    lines.append("")
+
+    sections = content.get("sections", {})
+    for section in sections.values():
+        for frag in section.get("fragments", []):
+            if isinstance(frag, str):
+                continue
+            core = unwrap_fragment(frag)
+            wt = format_as_wikitext(core)
+            if wt:
+                lines.append(wt)
+
+    print("\n".join(lines), flush=True)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Usage: python convert_article.py Q191")
+        sys.exit(1)
+    convert_article(sys.argv[1].upper())

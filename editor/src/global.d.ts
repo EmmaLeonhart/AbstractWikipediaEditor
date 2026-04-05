@@ -5,7 +5,7 @@ interface ElectronAPI {
   checkArticle: (qid: string) => Promise<{ exists: boolean; content: string | null }>;
   generateWikitext: (qid: string) => Promise<string>;
   convertArticle: (qid: string) => Promise<string>;
-  pushArticle: (qid: string) => Promise<string>;
+  pushArticle: (qid: string, wikitext: string) => Promise<string>;
 }
 
 interface Window {

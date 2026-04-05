@@ -94,7 +94,7 @@ btnPush.addEventListener('click', async () => {
   btnPush.disabled = true;
   statusEl.textContent = 'Pushing to Abstract Wikipedia (browser will open)...';
   try {
-    const output = await window.api.pushArticle(qid);
+    const output = await window.api.pushArticle(qid, editorEl.value);
     if (output.includes('SUCCESS')) {
       statusEl.textContent = `${qid} - published!`;
     } else if (output.includes('ERROR')) {

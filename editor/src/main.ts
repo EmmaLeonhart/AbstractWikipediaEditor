@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import * as path from 'path';
 import * as https from 'https';
+import * as fs from 'fs';
+import * as os from 'os';
 import { execFile } from 'child_process';
 
 function createWindow(): void {
@@ -140,19 +142,23 @@ ipcMain.handle('convert-article', async (_event, qid: string): Promise<string> =
   return await runPython('convert_article.py', [qid]);
 });
 
-// Push to Abstract Wikipedia - create or edit depending on whether article exists
-ipcMain.handle('push-article', async (_event, qid: string): Promise<string> => {
+// Push to Abstract Wikipedia - uses editor wikitext directly
+ipcMain.handle('push-article', async (_event, qid: string, wikitext: string): Promise<string> => {
+  // Write editor wikitext to a temp file for the Python script
+  const tmpFile = path.join(os.tmpdir(), `abstractbot_${qid}.wikitext`);
+  fs.writeFileSync(tmpFile, wikitext, 'utf-8');
+  console.log(`[push] Wrote wikitext to ${tmpFile}`);
+
   // Check if article already exists
-  const url = `https://abstract.wikipedia.org/wiki/${qid}`;
   const r = await fetchJSON<Record<string, unknown>>(`https://abstract.wikipedia.org/w/api.php?action=parse&page=${qid}&prop=wikitext&format=json`);
   const exists = !r.error;
+  const script = exists ? 'edit_from_qid.py' : 'create_from_qid.py';
+  console.log(`[push] ${qid} ${exists ? 'exists, editing' : 'does not exist, creating'}`);
 
-  if (exists) {
-    console.log(`[push] ${qid} exists, editing`);
-    return await runPython('edit_from_qid.py', [qid, '--apply', '--headed']);
-  } else {
-    console.log(`[push] ${qid} does not exist, creating`);
-    return await runPython('create_from_qid.py', [qid, '--apply', '--headed']);
+  try {
+    return await runPython(script, [qid, '--wikitext', tmpFile, '--apply', '--headed']);
+  } finally {
+    try { fs.unlinkSync(tmpFile); } catch {}
   }
 });
 

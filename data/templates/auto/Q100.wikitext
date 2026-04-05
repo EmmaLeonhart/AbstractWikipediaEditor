@@ -1,0 +1,15 @@
+---
+title: Boston
+description: "capital and largest city of Massachusetts, United States"
+# Auto-generated from Wikidata Q100
+# Properties used: P131, P1376, P138, P17, P30, P31, P361, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q1093829 | Q54072}}
+{{Z26570 | $subject | Q1093829 | Q30}}
+{{Z28016 | Q15126384 | Q2285706 | $subject}}
+{{Z28016 | Q311975 | Q2607563 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q1190137}}
+{{Z26570 | $subject | Q1093829 | Q49}}
+{{Z28016 | $subject | Q5119 | Q771}}

@@ -7,5 +7,5 @@ contextBridge.exposeInMainWorld('api', {
   checkArticle: (qid: string) => ipcRenderer.invoke('check-article', qid),
   generateWikitext: (qid: string) => ipcRenderer.invoke('generate-wikitext', qid),
   convertArticle: (qid: string) => ipcRenderer.invoke('convert-article', qid),
-  pushArticle: (qid: string) => ipcRenderer.invoke('push-article', qid),
+  pushArticle: (qid: string, wikitext: string) => ipcRenderer.invoke('push-article', qid, wikitext),
 });

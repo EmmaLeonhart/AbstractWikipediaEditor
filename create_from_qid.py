@@ -99,8 +99,17 @@ def publish_page(page):
     time.sleep(15)
 
 
-def paste_fragment(page, clipboard_index, is_first=False):
-    """Add an empty fragment and paste from clipboard at the given index."""
+def paste_fragment(page, single_item, is_first=False):
+    """Add an empty fragment and paste a single clipboard item into it.
+
+    Instead of injecting all items at once and selecting by index, we inject
+    only the one item we need right before pasting.  This avoids issues with
+    clipboard items being consumed or re-indexed after each paste.
+    """
+    # Inject just this one item so index 0 is always the right one
+    inject_clipboard(page, [single_item])
+    time.sleep(0.5)
+
     page.locator("button[aria-label='Menu for selecting and adding a new fragment']").click()
     time.sleep(1)
     page.get_by_role("option", name="Add empty fragment").click()
@@ -118,26 +127,29 @@ def paste_fragment(page, clipboard_index, is_first=False):
     dialog = page.locator(".cdx-dialog").first
     items = dialog.locator("div.ext-wikilambda-app-clipboard__item-head")
     count = items.count()
-    if count <= clipboard_index:
-        print(f"    ERROR: Need index {clipboard_index} but only {count} items", flush=True)
+    if count == 0:
+        print(f"    ERROR: No clipboard items found in dialog", flush=True)
         return False
-    items.nth(clipboard_index).click()
+    items.first.click()
     time.sleep(3)
     return True
 
 
-def create_article_from_qid(page, qid):
+def create_article_from_qid(page, qid, wikitext_override=None):
     """Full pipeline: QID -> wikitext -> clipboard -> article."""
     print(f"\n{'='*50}", flush=True)
     print(f"Creating article for {qid}", flush=True)
 
-    # Step 1: Generate wikitext
-    wikitext, used_props, label = generate_wikitext(qid)
-    print(f"  {label}: {len(used_props)} properties -> wikitext", flush=True)
-
-    if not used_props:
-        print("  SKIP: No mappable properties found", flush=True)
-        return "skipped"
+    # Step 1: Get wikitext (from file override or generate from Wikidata)
+    if wikitext_override:
+        wikitext = wikitext_override
+        print(f"  Using provided wikitext ({len(wikitext)} chars)", flush=True)
+    else:
+        wikitext, used_props, label = generate_wikitext(qid)
+        print(f"  {label}: {len(used_props)} properties -> wikitext", flush=True)
+        if not used_props:
+            print("  SKIP: No mappable properties found", flush=True)
+            return "skipped"
 
     # Save wikitext for tracking
     auto_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "templates", "auto")
@@ -160,13 +172,10 @@ def create_article_from_qid(page, qid):
     page.wait_for_load_state("networkidle")
     time.sleep(5)
 
-    # Step 4: Inject and paste fragments
-    inject_clipboard(page, clipboard)
-    time.sleep(1)
-
-    for i in range(len(clipboard)):
+    # Step 4: Paste fragments one at a time
+    for i, item in enumerate(clipboard):
         print(f"  Pasting fragment {i+1}/{len(clipboard)}...", flush=True)
-        if not paste_fragment(page, i, is_first=(i == 0)):
+        if not paste_fragment(page, item, is_first=(i == 0)):
             return "error"
 
     # Dismiss dialogs
@@ -198,10 +207,18 @@ def main():
     parser = argparse.ArgumentParser(description="Create Abstract Wikipedia article from any QID")
     parser.add_argument("qid", nargs="?", type=str, help="Wikidata QID")
     parser.add_argument("--batch", type=str, help="Comma-separated QIDs")
+    parser.add_argument("--wikitext", type=str, help="Path to wikitext file (use instead of generating from Wikidata)")
     parser.add_argument("--apply", action="store_true", help="Actually create articles")
     parser.add_argument("--headed", action="store_true", help="Show browser")
     parser.add_argument("--delay", type=int, default=5, help="Seconds between articles")
     args = parser.parse_args()
+
+    # Load wikitext from file if provided
+    wikitext_override = None
+    if args.wikitext:
+        with open(args.wikitext, "r", encoding="utf-8") as f:
+            wikitext_override = f.read()
+        print(f"Loaded wikitext from {args.wikitext}", flush=True)
 
     if args.batch:
         qids = [q.strip().upper() for q in args.batch.split(",")]
@@ -254,7 +271,7 @@ def main():
 
         for i, qid in enumerate(todo):
             try:
-                result = create_article_from_qid(page, qid)
+                result = create_article_from_qid(page, qid, wikitext_override)
                 stats[result] = stats.get(result, 0) + 1
                 if result == "created" and i < len(todo) - 1:
                     time.sleep(args.delay)

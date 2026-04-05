@@ -1,11 +1,11 @@
 ---
 title: Titanic
 description: "1997 film by James Cameron"
-# Auto-generated from Wikidata Q44578
-# Properties used: P138, P31, P361, P495
+# From Abstract Wikipedia Q44578
 variables: {}
 ---
 
-{{Z28016 | Q25173 | Q2607563 | $subject}}
-{{Z26955 | Q66305721 | $subject | Q392108}}
-{{Z26570 | $subject | Q11424 | Q30}}
+{{location | $subject | Q11424 | Q30}}
+{{spo | Q66305721 | $subject | Q392108}}
+
+

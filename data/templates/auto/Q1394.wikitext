@@ -6,6 +6,6 @@ description: "founding leader of the Soviet Union from 1922 to 1924 (1870–1924
 variables: {}
 ---
 
-{{Z26955 | Q15292583 | Q58330128 | $subject}}
+{{Z26955 | Q66305721 | Q58330128 | $subject}}
 {{Z26039 | $subject | Q82955}}
 {{Z26570 | $subject | Q5 | Q34266}}

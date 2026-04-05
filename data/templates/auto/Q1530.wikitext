@@ -11,4 +11,4 @@ variables: {}
 {{Z28016 | Q19367467 | Q2285706 | $subject}}
 {{Z26570 | $subject | Q1549591 | Q48}}
 {{Z28016 | $subject | Q5119 | Q149805}}
-{{Z26955 | Q787 | Q36368 | $subject}}
+{{Z26955 | Q23492 | Q36368 | $subject}}

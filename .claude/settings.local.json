@@ -93,7 +93,9 @@
       "Bash(taskkill /F /FI \"WINDOWTITLE eq *archive_pages*\")",
       "Bash(pkill -f archive_pages.py)",
       "Bash(gh api:*)",
-      "WebFetch(domain:emmaleonhart.github.io)"
+      "WebFetch(domain:emmaleonhart.github.io)",
+      "Bash(git tag:*)",
+      "Bash(C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe:*)"
     ]
   }
 }

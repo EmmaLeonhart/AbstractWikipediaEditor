@@ -1,0 +1,11 @@
+---
+title: universe
+description: "totality consisting of space, time, matter and energy"
+# Auto-generated from Wikidata Q1
+# Properties used: P31, P361, P527
+variables: {}
+---
+
+{{Z26039 | $subject | Q36906466}}
+{{Z26955 | Q15292583 | $subject | Q3327819}}
+{{Z26955 | Q15292583 | Q133327 | $subject}}

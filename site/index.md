@@ -10,7 +10,7 @@ This project exists to make editing Abstract Wikipedia feel more like editing a 
 
 ## The API problem
 
-Abstract Wikipedia's API does not currently support creating or editing articles. The `abstractwiki` content model requires a special permission (`wikilambda-abstract-create`) that bot passwords cannot access. This means there is no way to programmatically publish articles through the standard MediaWiki API.
+Abstract Wikipedia's API does not currently support creating or editing articles. The standard MediaWiki `action=edit` endpoint does not work with the `abstractwiki` content model, and there is no alternative API for publishing article content.
 
 To work around this, the editor uses [Playwright](https://playwright.dev/) browser automation to inject article content into the visual editor's internal clipboard and click through the publish flow. This is fragile and slower than API access, but it works.
 

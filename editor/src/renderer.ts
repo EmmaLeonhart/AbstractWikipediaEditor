@@ -31,16 +31,27 @@ for (const [alias, zid] of Object.entries(ALIASES)) {
 const labelCache: Record<string, string> = {};
 let currentQid = '';
 let renderTimeout: ReturnType<typeof setTimeout> | null = null;
+let hasCredentials = false;
 
 // DOM
 const qidInput = document.getElementById('qid-input') as HTMLInputElement;
 const btnWikidata = document.getElementById('btn-wikidata') as HTMLButtonElement;
 const btnAbstract = document.getElementById('btn-abstract') as HTMLButtonElement;
 const btnPush = document.getElementById('btn-push') as HTMLButtonElement;
+const btnLogin = document.getElementById('btn-login') as HTMLButtonElement;
 const editorEl = document.getElementById('editor') as HTMLTextAreaElement;
 const previewEl = document.getElementById('preview') as HTMLDivElement;
 const statusEl = document.getElementById('status') as HTMLSpanElement;
 const infoLeft = document.getElementById('info-left') as HTMLSpanElement;
+
+// Login overlay elements
+const loginOverlay = document.getElementById('login-overlay') as HTMLDivElement;
+const loginUsername = document.getElementById('login-username') as HTMLInputElement;
+const loginPassword = document.getElementById('login-password') as HTMLInputElement;
+const loginMainPassword = document.getElementById('login-main-password') as HTMLInputElement;
+const loginSave = document.getElementById('login-save') as HTMLButtonElement;
+const loginCancel = document.getElementById('login-cancel') as HTMLButtonElement;
+const loginStatus = document.getElementById('login-status') as HTMLDivElement;
 
 // --- Pull from Wikidata (uses generate_wikitext.py) ---
 
@@ -195,3 +206,65 @@ function normalizeQid(): string {
   currentQid = qid;
   return qid;
 }
+
+// --- Login ---
+
+async function checkCredentials(): Promise<void> {
+  const creds = await window.api.getCredentials();
+  if (creds && creds.mainPassword) {
+    hasCredentials = true;
+    btnLogin.textContent = 'Logged in';
+    btnLogin.classList.add('logged-in');
+  } else {
+    hasCredentials = false;
+    btnLogin.textContent = 'Login';
+    btnLogin.classList.remove('logged-in');
+  }
+}
+
+btnLogin.addEventListener('click', async () => {
+  loginOverlay.classList.add('visible');
+  loginStatus.textContent = '';
+  loginStatus.className = 'login-status';
+
+  const creds = await window.api.getCredentials();
+  if (creds) {
+    loginUsername.value = creds.username;
+    loginPassword.value = creds.password;
+    loginMainPassword.value = creds.mainPassword;
+  }
+});
+
+loginCancel.addEventListener('click', () => {
+  loginOverlay.classList.remove('visible');
+});
+
+loginOverlay.addEventListener('click', (e) => {
+  if (e.target === loginOverlay) loginOverlay.classList.remove('visible');
+});
+
+loginSave.addEventListener('click', async () => {
+  const username = loginUsername.value.trim();
+  const password = loginPassword.value.trim();
+  const mainPassword = loginMainPassword.value.trim();
+
+  if (!username || !mainPassword) {
+    loginStatus.textContent = 'Username and main password are required.';
+    loginStatus.className = 'login-status err';
+    return;
+  }
+
+  const ok = await window.api.saveCredentials({ username, password, mainPassword });
+  if (ok) {
+    loginStatus.textContent = 'Credentials saved.';
+    loginStatus.className = 'login-status ok';
+    await checkCredentials();
+    setTimeout(() => loginOverlay.classList.remove('visible'), 800);
+  } else {
+    loginStatus.textContent = 'Failed to save credentials.';
+    loginStatus.className = 'login-status err';
+  }
+});
+
+// Check on startup
+checkCredentials();

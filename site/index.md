@@ -55,7 +55,6 @@ Renders in the preview as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sas
 ## Planned features
 
 - **Multilingual preview** -- render articles in languages other than English, matching Abstract Wikipedia's core promise of language-neutral content
-- **Direct API publishing** -- replace browser automation when Abstract Wikipedia opens API access
 - **Expanded property coverage** -- map more Wikidata properties to Wikifunctions sentence generators beyond the current 17
 - **Installable .exe** -- one-click Windows installer instead of requiring Node.js
 

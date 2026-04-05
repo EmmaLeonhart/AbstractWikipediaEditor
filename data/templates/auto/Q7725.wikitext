@@ -7,4 +7,4 @@ variables: {}
 ---
 
 {{Z26039 | $subject | Q1260524}}
-{{Z26955 | Q15292583 | $subject | Q573}}
+{{Z26955 | Q66305721 | $subject | Q573}}

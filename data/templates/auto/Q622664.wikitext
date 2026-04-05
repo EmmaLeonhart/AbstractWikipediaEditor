@@ -6,8 +6,7 @@ description: "public university in La Jolla, California, United States"
 variables: {}
 ---
 
-{{Z26039 | $subject | Q875538}}
 {{Z26570 | $subject | Q875538 | Q840668}}
 {{Z26570 | $subject | Q875538 | Q30}}
-{{Z26955 | Q15292583 | $subject | Q184478}}
-{{Z26955 | Q15292583 | Q7895182 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q184478}}
+{{Z26955 | Q66305721 | Q7895182 | $subject}}

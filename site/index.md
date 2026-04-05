@@ -6,7 +6,7 @@ Abstract Wikipedia stores articles as language-neutral function calls that rende
 
 ## Download
 
-**[Download ZIP](https://github.com/EmmaLeonhart/AbstractEditing/archive/refs/heads/master.zip)** | [View on GitHub](https://github.com/EmmaLeonhart/AbstractEditing)
+**[Download ZIP](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/archive/refs/heads/master.zip)** | [View on GitHub](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)
 
 After extracting, run the desktop editor:
 
@@ -41,10 +41,12 @@ Renders as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrin
 
 ## Article catalog
 
-**[Browse all created articles](catalog.html)** -- articles with live-rendered English previews using the same renderer as the desktop editor.
+Abstract Wikipedia articles often fail to render in the browser. This catalog provides pre-rendered English previews of all articles on Abstract Wikipedia, so you can actually see what each article says.
+
+**[View rendered articles](catalog.html)** -- every Abstract Wikipedia article with live English rendering powered by the same engine as the desktop editor.
 
 ## Links
 
-- [GitHub repository](https://github.com/EmmaLeonhart/AbstractEditing)
+- [GitHub repository](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)
 - [Abstract Wikipedia](https://abstract.wikipedia.org/)
-- [Full documentation](https://github.com/EmmaLeonhart/AbstractEditing/blob/master/DOCUMENTATION.md)
+- [Full documentation](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/blob/master/DOCUMENTATION.md)

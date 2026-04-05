@@ -31,4 +31,5 @@ credentials/
 
 # Generated data
 shrine_qids.json
-site/
+site/pages/
+site/catalog.md

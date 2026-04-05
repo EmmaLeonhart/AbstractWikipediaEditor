@@ -2,7 +2,7 @@
 
 Bot that creates articles on [Abstract Wikipedia](https://abstract.wikipedia.org/) from any Wikidata item using Playwright browser automation.
 
-**[Article Catalog](https://emmaleonhart.github.io/AbstractEditing/)** -- browse all created articles with language-neutral and English views
+**[Project website](https://emmaleonhart.github.io/AbstractEditing/)** | **[Article catalog](https://emmaleonhart.github.io/AbstractEditing/catalog.html)**
 
 **[Wikifunctions Shortlist](WIKIFUNCTIONS_SHORTLIST.md)** -- curated list of functions for building articles | [Full catalog](WIKIFUNCTIONS_CATALOG.md) (3,911 functions)
 
@@ -55,15 +55,13 @@ Each `{{...}}` block becomes one clipboard fragment. Supports Z-function calls, 
 | `/` | Runtime scripts: `create_from_qid.py`, `generate_wikitext.py`, `wikitext_parser.py` |
 | `extension/` | Chrome extension for manual article creation |
 | `data/` | Property mappings, function aliases, generated templates |
-| `site/` | GitHub Pages article catalog (auto-generated) |
-| `research/` | Exploration and debugging scripts |
-| `archive/` | Superseded scripts (old shrine-only approach, batch launchers) |
+| `site/` | GitHub Pages project website and article catalog |
 
 ## GitHub Actions
 
 | Workflow | Purpose |
 |----------|---------|
-| `pages.yml` | Builds the [article catalog](https://emmaleonhart.github.io/AbstractEditing/) daily, archives pages on the Wayback Machine |
+| `pages.yml` | Builds the [project site](https://emmaleonhart.github.io/AbstractEditing/) and article catalog daily, archives pages on the Wayback Machine |
 | `ci.yml` | Runs tests on push/PR |
 
 ## Configuration

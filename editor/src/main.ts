@@ -105,6 +105,39 @@ ipcMain.handle('check-article', async (_event, qid: string): Promise<ArticleResu
 
 const PYTHON = 'C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe';
 const PROJECT_ROOT = path.join(__dirname, '..', '..');
+const ENV_PATH = path.join(PROJECT_ROOT, '.env');
+
+// --- Credentials (.env) management ---
+
+ipcMain.handle('get-credentials', async (): Promise<{ username: string; password: string; mainPassword: string } | null> => {
+  try {
+    const text = fs.readFileSync(ENV_PATH, 'utf-8');
+    const lines = text.split('\n');
+    const vals: Record<string, string> = {};
+    for (const line of lines) {
+      const eq = line.indexOf('=');
+      if (eq > 0) vals[line.slice(0, eq).trim()] = line.slice(eq + 1).trim();
+    }
+    return {
+      username: vals['WIKI_USERNAME'] || '',
+      password: vals['WIKI_PASSWORD'] || '',
+      mainPassword: vals['WIKI_MAIN_PASSWORD'] || '',
+    };
+  } catch {
+    return null;
+  }
+});
+
+ipcMain.handle('save-credentials', async (_event, creds: { username: string; password: string; mainPassword: string }): Promise<boolean> => {
+  try {
+    const content = `WIKI_USERNAME=${creds.username}\nWIKI_PASSWORD=${creds.password}\nWIKI_MAIN_PASSWORD=${creds.mainPassword}\n`;
+    fs.writeFileSync(ENV_PATH, content, 'utf-8');
+    return true;
+  } catch (e) {
+    console.error('[save-credentials]', e);
+    return false;
+  }
+});
 
 function runPython(script: string, args: string[]): Promise<string> {
   return new Promise((resolve, reject) => {

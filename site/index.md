@@ -39,18 +39,6 @@ The desktop editor lets you:
 
 Renders as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrine is dedication of Inari."
 
-## Command-line tools
-
-For batch operations without the desktop editor:
-
-```bash
-pip install requests python-dotenv pyyaml playwright
-python -m playwright install chromium
-
-python create_from_qid.py --batch Q60,Q1653 --apply --headed
-python edit_from_qid.py Q706499 --apply --headed
-```
-
 ## Article catalog
 
 **[Browse all created articles](catalog.html)** -- articles with live-rendered English previews using the same renderer as the desktop editor.

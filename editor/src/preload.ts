@@ -8,4 +8,6 @@ contextBridge.exposeInMainWorld('api', {
   generateWikitext: (qid: string) => ipcRenderer.invoke('generate-wikitext', qid),
   convertArticle: (qid: string) => ipcRenderer.invoke('convert-article', qid),
   pushArticle: (qid: string, wikitext: string) => ipcRenderer.invoke('push-article', qid, wikitext),
+  getCredentials: () => ipcRenderer.invoke('get-credentials'),
+  saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
 });

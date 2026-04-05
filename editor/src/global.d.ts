@@ -6,6 +6,8 @@ interface ElectronAPI {
   generateWikitext: (qid: string) => Promise<string>;
   convertArticle: (qid: string) => Promise<string>;
   pushArticle: (qid: string, wikitext: string) => Promise<string>;
+  getCredentials: () => Promise<{ username: string; password: string; mainPassword: string } | null>;
+  saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => Promise<boolean>;
 }
 
 interface Window {

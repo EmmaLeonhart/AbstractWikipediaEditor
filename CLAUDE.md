@@ -1,9 +1,9 @@
 # AbstractTestBot
 
 ## Project Description
-Desktop editor and automation toolkit for creating articles on Abstract Wikipedia. The main product is an Electron app (`editor/`) that provides a wikitext editor with live preview and publish-to-wiki capability. There is also a Chrome extension (`extension/`) and Python CLI tools for batch operations.
+Desktop editor for creating articles on Abstract Wikipedia. The main product is an Electron app (`editor/`) that provides a wikitext editor with live preview, login screen, and publish-to-wiki capability. Python scripts exist for batch operations and debugging.
 
-The bot queries Wikidata for item properties, maps them to Wikifunctions sentence generators, compiles to clipboard JSON, and publishes via Playwright browser automation. The API doesn't support creating `abstractwiki` content (bot passwords lack `wikilambda-abstract-create` rights).
+The app queries Wikidata for item properties, maps them to Wikifunctions sentence generators, compiles to clipboard JSON, and publishes via Playwright browser automation. The API doesn't support creating `abstractwiki` content (bot passwords lack `wikilambda-abstract-create` rights).
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.
@@ -21,19 +21,10 @@ The bot queries Wikidata for item properties, maps them to Wikifunctions sentenc
 | Path | Purpose |
 |------|---------|
 | `editor/` | Electron desktop app (main product) -- TypeScript, builds with `npm run build` |
-| `extension/` | Chrome extension for quick article creation from browser |
-| `create_from_qid.py` | CLI: create new articles from any QID |
-| `edit_from_qid.py` | CLI: edit existing articles with fresh Wikidata data |
-| `generate_wikitext.py` | Map Wikidata properties to wikitext templates |
-| `wikitext_parser.py` | Compile wikitext to Abstract Wikipedia clipboard JSON |
-| `convert_article.py` | Convert existing Abstract Wikipedia Z-objects back to wikitext |
-| `convert_to_aliases.py` | Rewrite Z-IDs to human-readable aliases |
-| `build_pages.py` | Generate project website and article catalog for GitHub Pages |
-| `archive_pages.py` | Archive pages on the Wayback Machine |
 | `data/` | Property mappings (`property_function_mapping.json`), function aliases, generated templates |
-| `site/` | Project website -- `index.md` is committed, `pages/` and `catalog.md` are generated |
+| `site/` | Project website -- `index.md` and `renderer.js` committed, `pages/` and `catalog.md` generated |
+| `*.py` | CLI scripts for batch operations and debugging (not the main product) |
 | `tests/` | Unit tests |
-| `screenshots/` | Debug screenshots from Playwright runs |
 | `credentials/` | Passwords and secrets (**gitignored, never committed**) |
 
 ## Critical Rules
@@ -42,18 +33,13 @@ The bot queries Wikidata for item properties, maps them to Wikifunctions sentenc
 ## Architecture
 
 ### Electron Editor (`editor/`)
-- `src/main.ts` -- Main process. Handles IPC for Wikidata fetching, article checking, and calling Python scripts via `execFile`.
-- `src/renderer.ts` -- Renderer process. Parses wikitext templates, resolves QIDs to labels, renders English preview sentences. This same rendering logic is ported to `site/renderer.js` for the project website.
+- `src/main.ts` -- Main process. Handles IPC for Wikidata fetching, article checking, credential management (.env read/write), and calling Python scripts via `execFile`.
+- `src/renderer.ts` -- Renderer process. Parses wikitext templates, resolves QIDs to labels, renders English preview sentences. Also handles the login overlay UI. This same rendering logic is ported to `site/renderer.js` for the project website.
 - `src/preload.ts` -- Context bridge exposing `window.api` to renderer.
-- `index.html` -- Editor UI with QID input, preview pane, and wikitext textarea.
+- `index.html` -- Editor UI with login button, QID input, preview pane, wikitext textarea, and login overlay.
+- The login button opens an overlay where users enter their Wikimedia credentials. Credentials are saved to `.env` in the project root.
 - Python path is hardcoded to `C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe`.
 - `npm run dist` builds a Windows .exe installer via electron-builder.
-
-### Chrome Extension (`extension/`)
-- `data.js` -- Function registry, aliases, and property mapping (must be kept in sync with `data/property_function_mapping.json`).
-- `parser.js` -- Wikitext compiler (JS port of `wikitext_parser.py`) and wikitext generator from Wikidata claims.
-- `popup.html` / `popup.js` -- Extension UI.
-- `background.js` / `content.js` -- Automation scripts for the Abstract Wikipedia editor.
 
 ### Property Mapping (`data/property_function_mapping.json`)
 Maps Wikidata properties to Wikifunctions sentence generators. Key dedup rules:
@@ -61,7 +47,7 @@ Maps Wikidata properties to Wikifunctions sentence generators. Key dedup rules:
 - **P31 vs P106**: P31 skipped when P106 (occupation) exists
 - **P36 vs P1376**: P1376 skipped when P36 exists (inverse pair)
 
-The mapping is used by `generate_wikitext.py` (Python), `extension/data.js` (Chrome), and the Electron editor (via Python).
+The mapping is used by `generate_wikitext.py` (Python) and the Electron editor (via Python).
 
 ### Website (`site/`)
 - `index.md` -- Landing page (committed to git)
@@ -72,7 +58,7 @@ The mapping is used by `generate_wikitext.py` (Python), `extension/data.js` (Chr
 
 ### Authentication
 - Main account credentials required (bot passwords cannot create articles)
-- Stored in `.env` as `WIKI_MAIN_PASSWORD`
+- Stored in `.env` as `WIKI_MAIN_PASSWORD` (created via the Electron app's login screen)
 - VPN usage triggers email verification (not 2FA) -- this is why CI-based creation is disabled
 - Without VPN, login works directly
 

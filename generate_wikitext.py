@@ -125,11 +125,10 @@ def generate_wikitext(qid):
             used_props.add("P106")
             used_props.add("P27")
 
-    # Start with P31 (instance of) only if no location or occupation covers it
-    if "P31" in mapping and p31_value:
-        if not best_location and not has_occupation:
-            fragments.append(f"{{{{Z26039 | $subject | {p31_value}}}}}")
-        # Mark P31 as used either way so it doesn't repeat in the loop
+    # Always include all P31 values — let the user decide which to keep
+    if "P31" in mapping and p31_values:
+        for v in p31_values:
+            fragments.append(f"{{{{Z26039 | $subject | {v}}}}}")
         used_props.add("P31")
 
     # Process other mapped properties
@@ -152,30 +151,31 @@ def generate_wikitext(qid):
         if any(other in claims for other in skip_if):
             continue
 
-        # Get first QID value for this property
-        value = None
+        # Include all QID values for this property, not just the first
+        values = []
         for claim in claims[pid]:
             v = extract_qid_value(claim)
             if v:
-                value = v
-                break
-        if not value:
+                values.append(v)
+        if not values:
             continue
+        value = values[0]
 
         # Build the template line based on the mapping
         func = pmap["function"]
         template = pmap["template"]
 
-        # Replace template variables
-        line = template.replace("$subject", "$subject")
-        line = line.replace("$value", value)
-        if "$P31_value" in line:
-            if p31_value:
-                line = line.replace("$P31_value", p31_value)
-            else:
-                continue  # Skip if we need P31 but don't have it
+        # Emit a line for each value of this property
+        for v in values:
+            line = template.replace("$subject", "$subject")
+            line = line.replace("$value", v)
+            if "$P31_value" in line:
+                if p31_value:
+                    line = line.replace("$P31_value", p31_value)
+                else:
+                    continue  # Skip if we need P31 but don't have it
+            fragments.append(line)
 
-        fragments.append(line)
         used_props.add(pid)
 
     # Build the frontmatter
@@ -185,6 +185,8 @@ def generate_wikitext(qid):
         lines.append(f"description: \"{description}\"")
     lines.append(f"# Auto-generated from Wikidata {qid}")
     lines.append(f"# Properties used: {', '.join(sorted(used_props))}")
+    lines.append(f"# NOTE: All available values are included below. You probably don't want")
+    lines.append(f"# to use all of them — review and remove the ones that aren't relevant.")
     lines.append("variables: {}")
     lines.append("---")
     lines.append("")

@@ -1,9 +1,0 @@
----
-title: saijin
-description: "term in Shinto"
-# Auto-generated from Wikidata Q11591100
-# Properties used: P279
-variables: {}
----
-
-{{Z26095 | $subject | Q524158}}

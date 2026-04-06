@@ -33,6 +33,7 @@ credentials/
 shrine_qids.json
 site/pages/
 site/catalog.md
+data/templates/auto/
 
 # Runtime/debug artifacts
 data/clipboard_*.json

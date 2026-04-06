@@ -13,20 +13,25 @@
 - [x] Auto-generate wikitext from any Wikidata item (`generate_wikitext.py`)
 - [x] General article pipeline: QID -> wikitext -> clipboard -> publish
 - [x] Function aliases (human-readable names in templates)
-- [x] Chrome extension for browser-based article creation
 - [x] Electron desktop editor with live preview
 - [x] Edit existing articles (`edit_from_qid.py`)
 - [x] Convert existing Abstract Wikipedia articles back to wikitext (`convert_article.py`)
 - [x] Fix wrong hardcoded QIDs in property mapping
 - [x] Fix property collision/dedup (location priority, P31 vs P106, inverse pairs)
-- [x] Sync extension data.js with fixed mappings
 - [x] Project website with live renderer (same as Electron app)
 - [x] Website landing page with download link
+- [x] Edit summaries linking to editor user page
+- [x] Named 38 undocumented top-level functions from article scan
+- [x] Skip P138 (named after) — always bad
+
+## Known Issues
+
+- [ ] **P279 (subclass of) → Z26095 is almost always wrong.** Z26095 produces "A X is a Y" which is only correct for class-to-class relationships (e.g. "An antelope is a mammal"). But P279 gets applied to all kinds of items where this phrasing is nonsensical. Need to either skip P279 entirely or add strict filtering to only use it when the item is genuinely a class/type, not an instance.
+- [ ] Edit all previously published articles to fix errors from old wrong QIDs
 
 ## In Progress
 
 - [ ] Build distributable .exe installer via electron-builder
-- [ ] Edit all previously published articles to fix errors from old wrong QIDs
 
 ## Next Steps
 

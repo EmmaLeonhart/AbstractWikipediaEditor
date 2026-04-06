@@ -85,11 +85,8 @@
     },
     "P138": {
       "label": "named after",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
-      "example": "Victoria is named after Queen Victoria.",
-      "template": "{{Z26955 | Q2607563 | $subject | $value}}",
-      "notes": "Predicate=Q2607563 (namesake). Subject is the thing named, object is the namesake."
+      "skip": true,
+      "notes": "Skipped. The 'named after' relationship rarely produces useful article sentences and the predicate QID is unreliable."
     },
     "P361": {
       "label": "part of",

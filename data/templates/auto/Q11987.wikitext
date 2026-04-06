@@ -1,0 +1,9 @@
+---
+title: Assis Chateaubriand
+description: "Brazilian journalist, entrepreneur, art collector and diplomat (1892–1968)"
+# Auto-generated from Wikidata Q11987
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+{{Z26955 | Q1930187 | $subject | Q155}}

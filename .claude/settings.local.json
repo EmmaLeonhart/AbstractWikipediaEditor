@@ -125,7 +125,27 @@
       "Bash(rm -f .github/workflows/create-shrine-articles.yml)",
       "Bash(find /c/Users/Immanuelle/Documents/Github/AbstractTestBot -type f -name \"*.wikitext\" -exec grep -l \"citizenship\\\\|P27\" {} \\\\;)",
       "Bash(python3 /c/Users/Immanuelle/Documents/Github/AbstractTestBot/generate_wikitext.py Q22666)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(where python:*)",
+      "Bash(where py:*)",
+      "Bash(where python3:*)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(powershell -Command \"[Environment]::GetEnvironmentVariable\\('Path', 'User'\\)\")",
+      "Bash(powershell -Command \"[Environment]::GetEnvironmentVariable\\('Path', 'Machine'\\)\")",
+      "Bash(powershell:*)",
+      "Bash(py generate_wikitext.py Q8680 --save)",
+      "Bash(py generate_wikitext.py Q12536 --save)",
+      "Bash(py generate_wikitext.py Q77 --save)",
+      "Bash(py generate_wikitext.py Q99 --save)",
+      "Bash(py generate_wikitext.py Q148 --save)",
+      "Bash(py generate_wikitext.py Q1867 --save)",
+      "Bash(py generate_wikitext.py Q7184 --save)",
+      "Bash(py generate_wikitext.py Q60 --save)",
+      "Bash(py generate_wikitext.py Q3818 --save)",
+      "Bash(py generate_wikitext.py Q191 --save)",
+      "Bash(py generate_wikitext.py Q3551 --save)",
+      "Bash(py generate_wikitext.py Q1530 --save)",
+      "Bash(py edit_from_qid.py --batch Q8680,Q12536,Q77,Q99,Q148,Q1867,Q7184,Q60,Q3818,Q191,Q3551,Q1530 --apply)"
     ]
   }
 }

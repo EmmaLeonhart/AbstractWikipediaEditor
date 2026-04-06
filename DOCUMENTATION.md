@@ -186,6 +186,43 @@ The editor stores Wikimedia credentials in a `.env` file in the project root. Yo
 
 ---
 
+## Wikitext Generation Pipeline
+
+The path from a Wikidata QID to a published article goes through three stages:
+
+### Stage 1: Wikidata → Wikitext (`generate_wikitext.py`)
+
+Given a QID, the script fetches the item's claims from the Wikidata API and maps each property to a Wikifunctions sentence generator using `data/property_function_mapping.json`.
+
+For example, Sophocles (Q7235) has P106 (occupation: tragedy writer) and P27 (citizenship: Classical Athens). The mapping produces:
+
+```
+{{Z26955 | Q22073916 | $subject | Q844930}}
+```
+
+Which renders as: "Sophocles is a tragedy writer of Classical Athens."
+
+**Deduplication rules** prevent redundant or awkward sentences:
+- **Location priority**: P131 (admin territory) > P17 (country) > P30 (continent) — only the most specific is used
+- **Occupation over instance**: P31 (instance of) is skipped when P106 (occupation) exists, since "X is a human" adds nothing when "X is a physicist" is already there
+- **Occupation + citizenship merge**: When both P106 and P27 exist, they combine into one Z26955 call using the occupation as the predicate, instead of generating two separate sentences
+- **Capital inverse**: P1376 (capital of) is skipped when P36 (capital) exists — they express the same relationship from opposite directions
+
+### Stage 2: Wikitext → Z-object JSON (`wikitext_parser.py`)
+
+The parser reads the wikitext template and converts each `{{...}}` block into the nested Z-object JSON that Abstract Wikipedia's visual editor expects. It handles:
+
+- Resolving function aliases (`location` → `Z26570`) using `data/function_aliases.json`
+- Wrapping Q-items as Wikidata entity references (`Z6091`)
+- Resolving `$subject` and `$lang` to the article's entity and language
+- Auto-wrapping return types (Z11-returning functions get `Z29749`, Z6-returning get `Z27868`)
+
+### Stage 3: Publish via Playwright (`create_from_qid.py` / `edit_from_qid.py`)
+
+The compiled JSON is injected into the editor's localStorage clipboard and pasted via the visual editor. See the "What Actually Works" section above for the full browser automation workflow.
+
+---
+
 ## Running the Desktop Editor
 
 ```bash

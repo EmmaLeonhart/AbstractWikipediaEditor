@@ -145,7 +145,8 @@
       "Bash(py generate_wikitext.py Q191 --save)",
       "Bash(py generate_wikitext.py Q3551 --save)",
       "Bash(py generate_wikitext.py Q1530 --save)",
-      "Bash(py edit_from_qid.py --batch Q8680,Q12536,Q77,Q99,Q148,Q1867,Q7184,Q60,Q3818,Q191,Q3551,Q1530 --apply)"
+      "Bash(py edit_from_qid.py --batch Q8680,Q12536,Q77,Q99,Q148,Q1867,Q7184,Q60,Q3818,Q191,Q3551,Q1530 --apply)",
+      "Bash(grep -l \"P106\" /c/Users/Immanuelle/Documents/Github/AbstractTestBot/data/templates/auto/Q*.wikitext)"
     ]
   }
 }

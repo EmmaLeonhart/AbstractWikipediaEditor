@@ -22,7 +22,7 @@ In the shorter term, we hope Abstract Wikipedia will open up direct API access f
 
 ## Download
 
-**[Download ZIP](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/archive/refs/heads/master.zip)** | [View on GitHub](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)
+**[Download latest release](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/releases/latest)** | [View on GitHub](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)
 
 After extracting, run the desktop editor:
 

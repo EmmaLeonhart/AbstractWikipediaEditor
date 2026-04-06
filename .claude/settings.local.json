@@ -118,7 +118,11 @@
       "Bash(grep -ohP 'Z\\\\d+' site/pages/*.md)",
       "Bash(grep -oE 'Z[0-9]+. \\\\\\(\\\\?\\\\\\)' site/pages/*.md)",
       "Bash(grep -oE '\\\\{\\\\{[A-Za-z0-9 ]+ \\\\|' site/pages/*.md)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(grep -r \"chrome\\\\|chromium\\\\|debug\\\\|test_\" /c/Users/Immanuelle/Documents/Github/AbstractTestBot/*.py --include=\"*.py\")",
+      "Bash(rm -f data/clipboard_cache_*.json data/clipboard_cache_template.json data/clipboard_dump.json data/clipboard_dialog.html data/editor_after_add.html data/editor_structure.html)",
+      "Bash(rm -rf screenshots/)",
+      "Bash(rm -f .github/workflows/create-shrine-articles.yml)"
     ]
   }
 }

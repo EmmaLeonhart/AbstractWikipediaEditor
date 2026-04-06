@@ -2,7 +2,7 @@
 title: Shinto Shrine
 description: >
   Creates an article for a Shinto shrine with location and deity sentences.
-  Equivalent to create_rich_onepass.py but in template form.
+  Template for creating Shinto shrine articles.
 variables:
   deity: Q-item    # Wikidata QID for the shrine's deity
 ---

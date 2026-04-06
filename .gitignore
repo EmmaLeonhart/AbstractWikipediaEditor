@@ -33,3 +33,10 @@ credentials/
 shrine_qids.json
 site/pages/
 site/catalog.md
+
+# Runtime/debug artifacts
+data/clipboard_*.json
+data/*_dump.json
+data/archive_failures.json
+data/*.html
+screenshots/

@@ -1,13 +1,10 @@
 # Abstract Wikipedia Editor
 
-Desktop editor and automation toolkit for creating and editing articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).
+Desktop editor for creating and editing articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).
 
-Abstract Wikipedia stores articles as language-neutral function calls (Z-objects) that get rendered into every language automatically. This project provides:
+Abstract Wikipedia stores articles as language-neutral function calls (Z-objects) that get rendered into every language automatically. This project provides an Electron desktop app for writing articles with a live English preview, and publishing them to Abstract Wikipedia.
 
-- **Electron desktop app** for writing, previewing, and publishing articles
-- **Project website** with live-rendered article previews
-
-**[Project website](https://emmaleonhart.github.io/AbstractEditing/)** | **[Article catalog](https://emmaleonhart.github.io/AbstractEditing/catalog.html)**
+**[Project website](https://emmaleonhart.github.io/AbstractEditing/)** | **[Download latest release](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/releases/latest)**
 
 ## Desktop editor
 
@@ -21,29 +18,17 @@ npm start
 
 Or double-click `runeditor.bat` on Windows.
 
-To build a distributable .exe installer:
-
-```bash
-cd editor
-npm run dist
-```
-
 ### Features
 
 - Enter any Wikidata QID and auto-generate a wikitext template from its properties
 - Live preview renders English sentences with resolved Wikidata labels
 - Pull existing articles from Abstract Wikipedia and edit them
 - Push articles to Abstract Wikipedia via Playwright browser automation
+- Built-in login screen for Wikimedia credentials
 
-## Project structure
+## Why browser automation?
 
-| Path | Purpose |
-|------|---------|
-| `editor/` | Electron desktop app (TypeScript) -- the main product |
-| `data/` | Property mappings, function aliases, generated templates |
-| `site/` | Project website (deployed via GitHub Pages) |
-| `*.py` | CLI scripts for batch operations and debugging |
-| `tests/` | Unit tests |
+Abstract Wikipedia's API does not support creating or editing articles. The standard `action=edit` endpoint does not work with the `abstractwiki` content model. So we automate the visual editor's clipboard-paste workflow via Playwright. See [DOCUMENTATION.md](DOCUMENTATION.md) for the full technical details.
 
 ## Wikitext template syntax
 
@@ -59,25 +44,21 @@ variables:
 
 Each `{{...}}` block becomes one article fragment. Supports Z-function IDs, human-readable aliases (`location`, `role`, `spo`), `$subject`/`$lang` references, Q-item auto-wrapping, and template variables.
 
-## Why browser automation?
+## Project structure
 
-Abstract Wikipedia's API does not support creating `abstractwiki` content. The `wikilambda-abstract-create` right is required but bot passwords cannot access it. So we automate the visual editor's clipboard-paste workflow via Playwright. See [DOCUMENTATION.md](DOCUMENTATION.md) for details.
+| Path | Purpose |
+|------|---------|
+| `editor/` | Electron desktop app (TypeScript) -- the main product |
+| `data/` | Property mappings, function aliases, wikitext templates |
+| `site/` | Project website (deployed via GitHub Pages) |
+| `*.py` | CLI scripts used by the editor and for debugging |
+| `tests/` | Unit tests |
 
 ## Configuration
 
-Create a `.env` file in the project root:
+Credentials can be entered through the Login button in the desktop editor, or by creating a `.env` file in the project root:
 
 ```
-WIKI_USERNAME=YourUsername@BotName
-WIKI_MAIN_PASSWORD=main_account_password
+WIKI_USERNAME=YourUsername
+WIKI_MAIN_PASSWORD=your_password
 ```
-
-Main account credentials are required -- bot passwords cannot create articles.
-
-## GitHub Actions
-
-| Workflow | Purpose |
-|----------|---------|
-| `pages.yml` | Builds the [project website](https://emmaleonhart.github.io/AbstractEditing/) and article catalog daily |
-| `ci.yml` | Runs tests on push/PR |
-| `create-shrine-articles.yml` | Disabled -- VPN-triggered email verification blocks CI login |

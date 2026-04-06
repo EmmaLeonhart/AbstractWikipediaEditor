@@ -12,7 +12,7 @@ For the full catalog of all 3,911 functions and 71 types, see [`data/wikifunctio
 
 ## Currently Implemented
 
-These functions are used in `create_rich_onepass.py` to create Shinto shrine articles.
+These functions are used by the editor's wikitext template system to create articles.
 
 ### Z26570: State location using entity and class ✅
 

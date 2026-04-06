@@ -1,0 +1,10 @@
+---
+title: Abraham Lincoln
+description: "president of the United States from 1861 to 1865 (1809–1865)"
+# Auto-generated from Wikidata Q91
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+
+{{Z26955 | Q82955 | $subject | Q30}}

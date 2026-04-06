@@ -1,0 +1,10 @@
+---
+title: Simone de Beauvoir
+description: "French philosopher, social theorist and activist (1908–1986)"
+# Auto-generated from Wikidata Q7197
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q18930007}}
+{{Z26955 | Q42138 | $subject | Q142}}

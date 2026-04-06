@@ -1,0 +1,10 @@
+---
+title: Abraham
+description: "Hebrew patriarch according to the Hebrew Bible"
+# Auto-generated from Wikidata Q9181
+# Properties used: P106, P31, P361
+variables: {}
+---
+
+
+{{Z26039 | $subject | Q42857}}

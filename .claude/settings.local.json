@@ -122,7 +122,10 @@
       "Bash(grep -r \"chrome\\\\|chromium\\\\|debug\\\\|test_\" /c/Users/Immanuelle/Documents/Github/AbstractTestBot/*.py --include=\"*.py\")",
       "Bash(rm -f data/clipboard_cache_*.json data/clipboard_cache_template.json data/clipboard_dump.json data/clipboard_dialog.html data/editor_after_add.html data/editor_structure.html)",
       "Bash(rm -rf screenshots/)",
-      "Bash(rm -f .github/workflows/create-shrine-articles.yml)"
+      "Bash(rm -f .github/workflows/create-shrine-articles.yml)",
+      "Bash(find /c/Users/Immanuelle/Documents/Github/AbstractTestBot -type f -name \"*.wikitext\" -exec grep -l \"citizenship\\\\|P27\" {} \\\\;)",
+      "Bash(python3 /c/Users/Immanuelle/Documents/Github/AbstractTestBot/generate_wikitext.py Q22666)",
+      "WebSearch"
     ]
   }
 }

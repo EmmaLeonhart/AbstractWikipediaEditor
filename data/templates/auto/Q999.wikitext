@@ -1,0 +1,11 @@
+---
+title: astatine
+description: "chemical element with symbol At and atomic number 85"
+# Auto-generated from Wikidata Q999
+# Properties used: P138, P279, P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q11344}}
+{{Z26039 | $subject | Q19596}}
+{{Z26955 | Q66305721 | $subject | Q239813}}

@@ -1,0 +1,10 @@
+---
+title: Rachel Maddow
+description: "American television news host and political commentator"
+# Auto-generated from Wikidata Q555
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+
+{{Z26955 | Q1930187 | $subject | Q30}}

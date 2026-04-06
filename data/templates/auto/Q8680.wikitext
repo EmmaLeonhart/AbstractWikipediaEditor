@@ -1,0 +1,12 @@
+---
+title: British Empire
+description: "overseas possessions of England and later the United Kingdom (1607–1997)"
+# Auto-generated from Wikidata Q8680
+# Properties used: P17, P31, P36, P37, P38
+variables: {}
+---
+
+{{Z26570 | $subject | Q1790360 | Q161885}}
+{{Z28016 | Q84 | Q5119 | $subject}}
+{{Z26955 | Q23492 | Q1860 | $subject}}
+{{Z26955 | Q8142 | Q25224 | $subject}}

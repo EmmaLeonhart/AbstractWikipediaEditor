@@ -1,0 +1,9 @@
+---
+title: Amazon
+description: "river in South America"
+# Auto-generated from Wikidata Q3783
+# Properties used: P17, P31
+variables: {}
+---
+
+{{Z26570 | $subject | Q4022 | Q18}}

@@ -1,0 +1,10 @@
+---
+title: astronomy
+description: "natural science studying celestial objects and phenomena in the cosmos"
+# Auto-generated from Wikidata Q333
+# Properties used: P279, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q2465832}}
+{{Z26039 | $subject | Q14632398}}

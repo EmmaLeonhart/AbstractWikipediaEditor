@@ -1,0 +1,10 @@
+---
+title: Lech Wałęsa
+description: "President of Poland from 1990 to 1995 (born 1943)"
+# Auto-generated from Wikidata Q444
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+
+{{Z26955 | Q82955| $subject | Q36}}

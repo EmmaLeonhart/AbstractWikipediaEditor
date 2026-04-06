@@ -1,0 +1,10 @@
+---
+title: honey
+description: "sweet food made by bees mostly using nectar from flowers"
+# Auto-generated from Wikidata Q10987
+# Properties used: P279, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q25403900}}
+{{Z26039 | $subject | Q5159627}}

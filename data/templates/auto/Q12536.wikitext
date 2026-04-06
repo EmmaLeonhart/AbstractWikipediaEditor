@@ -1,0 +1,13 @@
+---
+title: Abbasid Caliphate
+description: "third Islamic caliphate (750–1258)"
+# Auto-generated from Wikidata Q12536
+# Properties used: P30, P31, P35, P36, P37, P38
+variables: {}
+---
+
+{{Z26570 | $subject | Q131401 | Q48}}
+{{Z28016 | Q170047 | Q5119 | $subject}}
+{{Z28016 | Q252087 | Q48352 | $subject}}
+{{Z26955 | Q23492 | Q13955 | $subject}}
+{{Z26955 | Q8142 | Q11220294 | $subject}}

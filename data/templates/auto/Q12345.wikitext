@@ -1,0 +1,10 @@
+---
+title: Count von Count
+description: "character on Sesame Street"
+# Auto-generated from Wikidata Q12345
+# Properties used: P27, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q30061417}}
+

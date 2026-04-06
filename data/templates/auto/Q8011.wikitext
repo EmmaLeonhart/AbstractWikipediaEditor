@@ -1,0 +1,9 @@
+---
+title: Avicenna
+description: "Persian polymath, physician and philosopher (c. 980–1037)"
+# Auto-generated from Wikidata Q8011
+# Properties used: P106, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q4964182}}

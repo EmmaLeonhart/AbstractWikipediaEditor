@@ -1,0 +1,10 @@
+---
+title: Gavin Newsom
+description: "40th governor of California since 2019"
+# Auto-generated from Wikidata Q461391
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+
+{{Z26955 | Q82955 | $subject | Q30}}

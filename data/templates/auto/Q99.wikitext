@@ -1,0 +1,12 @@
+---
+title: California
+description: "state of the United States of America"
+# Auto-generated from Wikidata Q99
+# Properties used: P131, P138, P31, P36, P361, P37, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q35657 | Q30}}
+{{Z28016 | Q18013 | Q5119 | $subject}}
+{{Z28016 | Q461391 | Q2285706 | $subject}}
+{{Z26955 | Q23492 | Q1860 | $subject}}

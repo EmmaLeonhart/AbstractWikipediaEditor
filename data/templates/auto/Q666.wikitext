@@ -1,0 +1,10 @@
+---
+title: number of the beast
+description: "number associated with the beast in the Book of Revelation; either 666 or 616, depending on the manuscript"
+# Auto-generated from Wikidata Q666
+# Properties used: P138, P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q80071}}
+{{Z26955 | Q66305721 | $subject | Q4903287}}

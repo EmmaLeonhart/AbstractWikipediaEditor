@@ -1,0 +1,9 @@
+---
+title: Aristotle
+description: "4th-century BCE Classical Greek philosopher and polymath"
+# Auto-generated from Wikidata Q868
+# Properties used: P106, P31
+variables: {}
+---
+
+{{Z26039 | $subject | Q4964182}}

@@ -1,0 +1,9 @@
+---
+title: bead
+description: "small decorative object with drilled hole"
+# Auto-generated from Wikidata Q12345678
+# Properties used: P279
+variables: {}
+---
+
+{{Z26095 | $subject | Q838948}}

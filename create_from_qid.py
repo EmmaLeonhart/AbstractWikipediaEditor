@@ -74,7 +74,11 @@ def inject_clipboard(page, clipboard_data):
     }""", clipboard_data)
 
 
-def publish_page(page):
+EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]] (https://emmaleonhart.github.io/AbstractEditing/)"
+EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]] (https://emmaleonhart.github.io/AbstractEditing/)"
+
+
+def publish_page(page, summary=""):
     page.evaluate("""
         const btn = document.querySelector('button.ext-wikilambda-app-abstract-publish__publish');
         if (btn) { btn.removeAttribute('disabled'); btn.disabled = false; }
@@ -84,7 +88,23 @@ def publish_page(page):
         document.querySelector('button.ext-wikilambda-app-abstract-publish__publish')?.click();
     """)
     time.sleep(3)
-    time.sleep(1)
+
+    # Fill edit summary if there's an input in the dialog
+    if summary:
+        page.evaluate("""(summary) => {
+            const dialogs = document.querySelectorAll('.cdx-dialog');
+            for (const d of dialogs) {
+                if (d.offsetParent !== null) {
+                    const input = d.querySelector('input[type="text"], textarea, .cdx-text-input__input');
+                    if (input) {
+                        input.value = summary;
+                        input.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            }
+        }""", summary)
+        time.sleep(1)
+
     page.evaluate("""
         const dialogs = document.querySelectorAll('.cdx-dialog');
         for (const d of dialogs) {
@@ -187,7 +207,7 @@ def create_article_from_qid(page, qid, wikitext_override=None):
 
     # Step 5: Publish
     print("  Publishing...", flush=True)
-    publish_page(page)
+    publish_page(page, EDIT_SUMMARY_CREATE)
 
     # Verify
     page.goto(f"{WIKI_URL}/wiki/{qid}")

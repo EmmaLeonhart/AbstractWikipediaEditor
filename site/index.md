@@ -1,4 +1,4 @@
-Home | [Article Catalog](catalog.html)
+Home | [Article Catalog](catalog.html) | [QuickStatements](quickstatements.html)
 
 # Abstract Wikipedia Editor
 

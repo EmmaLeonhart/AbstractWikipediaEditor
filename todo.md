@@ -27,6 +27,7 @@
 ## Known Issues
 
 - [ ] **P279 (subclass of) → Z26095 is almost always wrong.** Z26095 produces "A X is a Y" which is only correct for class-to-class relationships (e.g. "An antelope is a mammal"). But P279 gets applied to all kinds of items where this phrasing is nonsensical. Need to either skip P279 entirely or add strict filtering to only use it when the item is genuinely a class/type, not an instance.
+- [ ] **Z26955 renderer produces broken English.** The local preview renders Z26955 as `"X is Y of Z"` with no article, producing sentences like "Marie Curie is citizenship of Poland" instead of "Marie Curie is a citizen of Poland." The Wikifunctions Z26955 function handles articles intelligently per-predicate, but our simplified renderer cannot. Need to either make the renderer smarter about articles or use per-property overrides in the mapping.
 - [ ] Edit all previously published articles to fix errors from old wrong QIDs
 
 ## In Progress

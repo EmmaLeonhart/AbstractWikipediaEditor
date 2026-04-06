@@ -438,7 +438,7 @@ nav a {{ margin-right: 8px; }}
 </style>
 </head>
 <body>
-<nav><a href="../index.html">Home</a> | <a href="../catalog.html">Article Catalog</a></nav>
+<nav><a href="../index.html">Home</a> | <a href="../catalog.html">Article Catalog</a> | <a href="../quickstatements.html">QuickStatements</a></nav>
 <h1>{label}</h1>
 <div class="meta">
   <a href="https://www.wikidata.org/wiki/{title}">Wikidata: {title}</a>
@@ -465,7 +465,7 @@ renderWikitext(`{wikitext_escaped}`, "{title}", document.getElementById("rendere
 def build_index(articles, labels):
     """Generate the index page."""
     lines = [
-        "[Home](index.html) | Article Catalog",
+        "[Home](index.html) | Article Catalog | [QuickStatements](quickstatements.html)",
         "",
         "# Abstract Wikipedia Article Catalog",
         "",
@@ -484,6 +484,33 @@ def build_index(articles, labels):
         frag_count = a.get("fragment_count", "?")
         lines.append(f"| {i} | [{label}](pages/{title}.html) | [{title}]({ABSTRACT_WIKI_BASE}{title}) | {ts} | {frag_count} |")
 
+    lines.append("")
+    lines.append("---")
+    lines.append("[Back to home](index.html) | [Abstract Wikipedia Editor](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)")
+
+    return "\n".join(lines)
+
+
+def build_quickstatements(articles):
+    """Generate a QuickStatements page to connect Abstract Wikipedia articles to their Wikidata items."""
+    qids = [a["title"] for a in articles if a["title"].startswith("Q")]
+
+    lines = [
+        "[Home](index.html) | [Article Catalog](catalog.html) | QuickStatements",
+        "",
+        "# QuickStatements",
+        "",
+        f"**{len(qids)} statements** to add [Abstract Wikipedia](https://abstract.wikipedia.org/) sitelinks on Wikidata.",
+        "",
+        "Copy the block below and paste it into [QuickStatements v1](https://quickstatements.toolforge.org/#/batch).",
+        "",
+        "```",
+    ]
+
+    for qid in qids:
+        lines.append(f"{qid}\tSabstractwiki\t\"{qid}\"")
+
+    lines.append("```")
     lines.append("")
     lines.append("---")
     lines.append("[Back to home](index.html) | [Abstract Wikipedia Editor](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)")
@@ -624,6 +651,11 @@ def main():
     catalog_md = build_index(articles, all_labels)
     with open(os.path.join(SITE_DIR, "catalog.md"), "w", encoding="utf-8") as f:
         f.write(catalog_md + "\n")
+
+    # Build QuickStatements page
+    qs_md = build_quickstatements(articles)
+    with open(os.path.join(SITE_DIR, "quickstatements.md"), "w", encoding="utf-8") as f:
+        f.write(qs_md + "\n")
 
     # Save failures for next retry
     save_failures(new_failures)

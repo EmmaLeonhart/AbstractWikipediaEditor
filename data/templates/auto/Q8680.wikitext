@@ -8,5 +8,5 @@ variables: {}
 
 {{Z26570 | $subject | Q1790360 | Q161885}}
 {{Z28016 | Q84 | Q5119 | $subject}}
-{{Z26955 | Q23492 | Q1860 | $subject}}
-{{Z26955 | Q8142 | Q25224 | $subject}}
+{{Z28016 | Q1860 | Q23492 | $subject}}
+{{Z28016 | Q25224 | Q8142 | $subject}}

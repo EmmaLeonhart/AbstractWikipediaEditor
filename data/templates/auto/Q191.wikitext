@@ -2,7 +2,7 @@
 title: Estonia
 description: "country in Northern Europe"
 # Auto-generated from Wikidata Q191
-# Properties used: P138, P17, P30, P31, P35, P36, P361, P37, P38, P6
+# Properties used: P17, P31, P35, P36, P361, P37, P38, P6
 variables: {}
 ---
 
@@ -10,8 +10,6 @@ variables: {}
 {{Z28016 | Q1770 | Q5119 | $subject}}
 {{Z28016 | Q57640 | Q2285706 | $subject}}
 {{Z28016 | Q299114 | Q48352 | $subject}}
-{{Z28016 | Q1503237 | Q2607563 | $subject}}
 {{Z26955 | Q66305721 | $subject | Q39731}}
-{{Z26570 | $subject | Q6256 | Q46}}
-{{Z26955 | Q23492 | Q9072 | $subject}}
-{{Z26955 | Q8142 | Q4916 | $subject}}
+{{Z28016 | Q9072 | Q23492 | $subject}}
+{{Z28016 | Q4916 | Q8142 | $subject}}

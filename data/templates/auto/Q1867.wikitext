@@ -2,15 +2,12 @@
 title: Taipei
 description: "special municipality and capital city of Taiwan"
 # Auto-generated from Wikidata Q1867
-# Properties used: P131, P1376, P17, P30, P31, P36, P361, P37, P6
+# Properties used: P131, P31, P36, P361, P37, P6
 variables: {}
 ---
 
 {{Z26570 | $subject | Q515 | Q865}}
-{{Z26570 | $subject | Q515 | Q865}}
-{{Z28016 | Q5119 | Q271151 | $subject}}
+{{Z28016 | Q271151 | Q5119 | $subject}}
 {{Z28016 | Q18113714 | Q2285706 | $subject}}
 {{Z26955 | Q66305721 | $subject | Q6851564}}
-{{Z26570 | $subject | Q515 | Q48}}
-{{Z28016 | $subject | Q5119 | Q865}}
-{{Z26955 | Q23492 | Q262828 | $subject}}
+{{Z28016 | Q262828 | Q23492 | $subject}}

@@ -2,13 +2,11 @@
 title: Baghdad
 description: "capital city of Iraq"
 # Auto-generated from Wikidata Q1530
-# Properties used: P131, P1376, P17, P30, P31, P37, P6
+# Properties used: P131, P1376, P31, P37, P6
 variables: {}
 ---
 
 {{Z26570 | $subject | Q1549591 | Q191075}}
-{{Z26570 | $subject | Q1549591 | Q796}}
 {{Z28016 | Q19367467 | Q2285706 | $subject}}
-{{Z26570 | $subject | Q1549591 | Q48}}
 {{Z28016 | $subject | Q5119 | Q149805}}
-{{Z26955 | Q23492 | Q36368 | $subject}}
+{{Z28016 | Q36368 | Q23492 | $subject}}

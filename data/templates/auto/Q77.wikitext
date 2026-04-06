@@ -2,12 +2,13 @@
 title: Uruguay
 description: "sovereign state in South America"
 # Auto-generated from Wikidata Q77
-# Properties used: P138, P17, P31, P35, P36, P361, P38, P6
+# Properties used: P17, P31, P35, P36, P361, P38, P6
 variables: {}
 ---
 
 {{Z26570 | $subject | Q3624078 | Q77}}
 {{Z28016 | Q1335 | Q5119 | $subject}}
+{{Z28016 | Q19946921 | Q2285706 | $subject}}
 {{Z28016 | Q19946921 | Q48352 | $subject}}
 {{Z26955 | Q66305721 | $subject | Q12585}}
-{{Z26955 | Q8142 | Q209272 | $subject}}
+{{Z28016 | Q209272 | Q8142 | $subject}}

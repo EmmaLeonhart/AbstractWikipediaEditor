@@ -541,7 +541,7 @@ def build_quickstatements(articles):
         lines.append("")
         lines.append("```")
         for qid in unconnected:
-            lines.append(f"{qid}|Sabstractwiki|{qid}")
+            lines.append(f'{qid}|Sabstractwiki|"{qid}"')
         lines.append("```")
     else:
         lines.append("All articles are already connected!")

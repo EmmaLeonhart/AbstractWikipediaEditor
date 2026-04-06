@@ -136,19 +136,19 @@
     },
     "P37": {
       "label": "official language",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Japanese is the official language of Japan.",
-      "template": "{{Z26955 | Q23492 | $value | $subject}}",
-      "notes": "Predicate=Q23492 (official language)."
+      "template": "{{Z28016 | $value | Q23492 | $subject}}",
+      "notes": "Value is the language, role=Q23492 (official language), dependency is the country/region."
     },
     "P38": {
       "label": "currency",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "The yen is the currency of Japan.",
-      "template": "{{Z26955 | Q8142 | $value | $subject}}",
-      "notes": "Predicate=Q8142 (currency)."
+      "template": "{{Z28016 | $value | Q8142 | $subject}}",
+      "notes": "Value is the currency, role=Q8142 (currency), dependency is the country/region."
     }
   }
 }

@@ -2,12 +2,10 @@
 title: Malabo
 description: "city and former capital of Equatorial Guinea"
 # Auto-generated from Wikidata Q3818
-# Properties used: P131, P1376, P138, P17, P31, P37
+# Properties used: P131, P1376, P31, P37
 variables: {}
 ---
 
 {{Z26570 | $subject | Q515 | Q3031443}}
-{{Z26570 | $subject | Q515 | Q983}}
-{{Z28016 | Q6740779 | Q2607563 | $subject}}
 {{Z28016 | $subject | Q5119 | Q983}}
-{{Z26955 | Q23492 | Q35110 | $subject}}
+{{Z28016 | Q35110 | Q23492 | $subject}}

@@ -491,26 +491,61 @@ def build_index(articles, labels):
     return "\n".join(lines)
 
 
+def fetch_connected_qids():
+    """Query WDQS for all Wikidata items that already have an Abstract Wikipedia sitelink."""
+    sparql = """SELECT ?item WHERE {
+  ?sitelink schema:about ?item ;
+            schema:isPartOf <https://abstract.wikipedia.org/> .
+}"""
+    try:
+        resp = SESSION.get(
+            "https://query.wikidata.org/sparql",
+            params={"query": sparql, "format": "json"},
+            timeout=60,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        connected = set()
+        for row in data["results"]["bindings"]:
+            uri = row["item"]["value"]
+            qid = uri.rsplit("/", 1)[-1]
+            connected.add(qid)
+        return connected
+    except Exception as e:
+        print(f"  SPARQL query failed: {e}", flush=True)
+        return set()
+
+
 def build_quickstatements(articles):
-    """Generate a QuickStatements page to connect Abstract Wikipedia articles to their Wikidata items."""
-    qids = [a["title"] for a in articles if a["title"].startswith("Q")]
+    """Generate a QuickStatements page for Abstract Wikipedia articles missing sitelinks on Wikidata."""
+    all_qids = [a["title"] for a in articles if a["title"].startswith("Q")]
+
+    print(f"Checking sitelinks for {len(all_qids)} articles via WDQS...", flush=True)
+    connected = fetch_connected_qids()
+    print(f"  {len(connected)} already connected", flush=True)
+
+    unconnected = [qid for qid in all_qids if qid not in connected]
+    print(f"  {len(unconnected)} need sitelinks", flush=True)
 
     lines = [
         "[Home](index.html) | [Article Catalog](catalog.html) | QuickStatements",
         "",
         "# QuickStatements",
         "",
-        f"**{len(qids)} statements** to add [Abstract Wikipedia](https://abstract.wikipedia.org/) sitelinks on Wikidata.",
+        f"**{len(unconnected)}** of {len(all_qids)} Abstract Wikipedia articles need sitelinks on Wikidata.",
         "",
-        "Copy the block below and paste it into [QuickStatements v1](https://quickstatements.toolforge.org/#/batch).",
-        "",
-        "```",
     ]
 
-    for qid in qids:
-        lines.append(f"{qid}\tSabstractwiki\t\"{qid}\"")
+    if unconnected:
+        lines.append("Copy the block below and paste it into [QuickStatements v1](https://quickstatements.toolforge.org/#/batch).")
+        lines.append("")
+        lines.append("```")
+        for qid in unconnected:
+            lines.append(f"{qid}\tSabstractwiki\t\"{qid}\"")
+        lines.append("```")
+    else:
+        lines.append("All articles are already connected!")
 
-    lines.append("```")
     lines.append("")
     lines.append("---")
     lines.append("[Back to home](index.html) | [Abstract Wikipedia Editor](https://github.com/EmmaLeonhart/AbstractWikipediaEditor)")

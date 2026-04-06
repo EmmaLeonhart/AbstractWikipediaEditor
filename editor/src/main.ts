@@ -103,7 +103,7 @@ ipcMain.handle('check-article', async (_event, qid: string): Promise<ArticleResu
   }
 });
 
-const PYTHON = process.platform === 'win32' ? 'python' : 'python3';
+const PYTHON = process.platform === 'win32' ? 'py' : 'python3';
 const PROJECT_ROOT = path.join(__dirname, '..', '..');
 const ENV_PATH = path.join(PROJECT_ROOT, '.env');
 

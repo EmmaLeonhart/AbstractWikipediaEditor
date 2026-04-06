@@ -1,0 +1,11 @@
+---
+title: weather
+description: "state of the atmosphere"
+# Auto-generated from Wikidata Q11663
+# Properties used: P279, P31, P361
+variables: {}
+---
+
+{{Z26039 | $subject | Q1322005}}
+{{Z26095 | $subject | Q16332653}}
+{{Z26955 | Q66305721 | $subject | Q2615451}}

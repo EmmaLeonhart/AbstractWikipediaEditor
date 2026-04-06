@@ -1,0 +1,15 @@
+---
+title: South Korea
+description: "country in East Asia"
+# Auto-generated from Wikidata Q884
+# Properties used: P17, P31, P35, P36, P361, P37, P38, P6
+variables: {}
+---
+
+{{Z26570 | $subject | Q3624078 | Q48}}
+{{Z28016 | Q8684 | Q5119 | $subject}}
+{{Z28016 | Q16091128 | Q2285706 | $subject}}
+{{Z28016 | Q138048 | Q48352 | $subject}}
+{{Z26955 | Q66305721 | $subject | Q865479}}
+{{Z28016 | Q9176 | Q23492 | $subject}}
+{{Z28016 | Q202040 | Q8142 | $subject}}

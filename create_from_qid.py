@@ -74,8 +74,8 @@ def inject_clipboard(page, clipboard_data):
     }""", clipboard_data)
 
 
-EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]] (https://emmaleonhart.github.io/AbstractEditing/)"
-EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]] (https://emmaleonhart.github.io/AbstractEditing/)"
+EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
+EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
 
 
 def publish_page(page, summary=""):

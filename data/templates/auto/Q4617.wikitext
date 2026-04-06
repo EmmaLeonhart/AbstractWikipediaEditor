@@ -1,0 +1,10 @@
+---
+title: Corbin Bleu
+description: "American actor (born 1989)"
+# Auto-generated from Wikidata Q4617
+# Properties used: P106, P27, P31
+variables: {}
+---
+
+
+{{Z26955 | Q10798782 | $subject | Q30}}

@@ -36,10 +36,15 @@
 
     .status { margin-left: auto; font-size: 13px; color: #6c7086; }
 
+    .editor-container {
+      display: flex; gap: 12px; margin-bottom: 12px;
+    }
+
     .preview {
       background: #181825; border: 1px solid #313244; border-radius: 6px;
-      padding: 16px; margin-bottom: 12px; min-height: 80px;
+      padding: 16px; min-height: 80px;
       font-size: 15px; line-height: 1.8;
+      flex: 1; overflow-y: auto; height: calc(100vh - 220px);
     }
     .preview .sentence {
       margin-bottom: 6px;
@@ -52,7 +57,7 @@
     .preview .placeholder { color: #6c7086; font-style: italic; }
 
     textarea {
-      width: 100%; height: calc(100vh - 260px); background: #1e1e2e;
+      flex: 1; height: calc(100vh - 220px); background: #1e1e2e;
       border: 1px solid #313244; border-radius: 6px; color: #cdd6f4;
       padding: 14px; font-family: 'Consolas', 'Fira Code', monospace;
       font-size: 14px; line-height: 1.6; resize: none; outline: none;
@@ -143,10 +148,6 @@
     <span class="status" id="status"></span>
   </div>
 
-  <div class="preview" id="preview">
-    <span class="placeholder">Enter a QID and pull to see a preview.</span>
-  </div>
-
   <div class="info">
     <span id="info-left"></span>
     <span id="info-right">Aliases: location, is a, kind of, role, describe, spo, are, superlative</span>
@@ -157,7 +158,12 @@
     <input type="text" id="edit-summary" placeholder="Optional — appended after tool credit">
   </div>
 
-  <textarea id="editor" placeholder="Wikitext will appear here..."></textarea>
+  <div class="editor-container">
+    <textarea id="editor" placeholder="Wikitext will appear here..."></textarea>
+    <div class="preview" id="preview">
+      <span class="placeholder">Enter a QID and pull to see a preview.</span>
+    </div>
+  </div>
 
   <!-- History view (replaces editor when active) -->
   <div id="history-view" style="display: none;">

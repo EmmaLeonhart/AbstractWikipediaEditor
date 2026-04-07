@@ -101,18 +101,18 @@ def generate_wikitext(qid):
     # Check if P106 (occupation) exists — if so, skip P31 ("is a human" is useless)
     has_occupation = "P106" in claims and "P106" in mapping
 
-    # When both P106 (occupation) and P27 (citizenship) exist, combine them:
-    # "X is a tragedy writer of Classical Athens" instead of two separate sentences
-    occupation_value = None
+    # Collect all occupation values
+    occupation_values = []
     if has_occupation:
         for claim in claims["P106"]:
             v = extract_qid_value(claim)
             if v:
-                occupation_value = v
-                break
+                occupation_values.append(v)
 
+    # When both P106 (occupation) and P27 (citizenship) exist, combine first occupation
+    # with citizenship: "X is a tragedy writer of Classical Athens"
     has_citizenship = "P27" in claims and "P27" in mapping
-    if occupation_value and has_citizenship:
+    if occupation_values and has_citizenship:
         citizenship_value = None
         for claim in claims["P27"]:
             v = extract_qid_value(claim)
@@ -120,10 +120,18 @@ def generate_wikitext(qid):
                 citizenship_value = v
                 break
         if citizenship_value:
-            # Combined: "X is a [occupation] of [country]"
-            fragments.append(f"{{{{Z26955 | {occupation_value} | $subject | {citizenship_value}}}}}")
+            fragments.append(f"{{{{Z26955 | {occupation_values[0]} | $subject | {citizenship_value}}}}}")
+            # Remaining occupations as standalone "is a" fragments
+            for occ in occupation_values[1:]:
+                fragments.append(f"{{{{Z26039 | $subject | {occ}}}}}")
             used_props.add("P106")
             used_props.add("P27")
+
+    # If P106 exists but P27 doesn't, emit all occupations as standalone
+    if occupation_values and "P106" not in used_props:
+        for occ in occupation_values:
+            fragments.append(f"{{{{Z26039 | $subject | {occ}}}}}")
+        used_props.add("P106")
 
     # Include P31 values, but skip Q5 (human) when occupation exists
     if "P31" in mapping and p31_values:

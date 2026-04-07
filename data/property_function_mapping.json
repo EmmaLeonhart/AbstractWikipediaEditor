@@ -98,8 +98,19 @@
     },
     "P527": {
       "label": "has part(s)",
-      "skip": true,
-      "notes": "Inverse of P361. Skipped because the part's own article should use P361 instead. No Abstract Wikipedia function exists for 'X has Y' phrasing."
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "Honshu is part of Japan.",
+      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
+      "notes": "Inverse of P361. Predicate=Q66305721 (part of). Value is the part, subject is the whole."
+    },
+    "P2670": {
+      "label": "has part(s) of the class",
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "An arm is part of a human body.",
+      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
+      "notes": "Predicate=Q66305721 (part of). Value is the class of parts, subject is the whole."
     },
     "P106": {
       "label": "occupation",

@@ -197,7 +197,7 @@ Given a QID, the script fetches the item's claims from the Wikidata API and maps
 For example, Sophocles (Q7235) has P106 (occupation: tragedy writer) and P27 (citizenship: Classical Athens). The mapping produces:
 
 ```
-{{Z26955 | Q22073916 | $subject | Q844930}}
+{{Z26955|Q22073916|SUBJECT|Q844930}}
 ```
 
 Which renders as: "Sophocles is a tragedy writer of Classical Athens."
@@ -214,7 +214,7 @@ The parser reads the wikitext template and converts each `{{...}}` block into th
 
 - Resolving function aliases (`location` → `Z26570`) using `data/function_aliases.json`
 - Wrapping Q-items as Wikidata entity references (`Z6091`)
-- Resolving `$subject` and `$lang` to the article's entity and language
+- Resolving `SUBJECT` and `$lang` to the article's entity and language
 - Auto-wrapping return types (Z11-returning functions get `Z29749`, Z6-returning get `Z27868`)
 
 ### Stage 3: Publish via Playwright (`create_from_qid.py` / `edit_from_qid.py`)

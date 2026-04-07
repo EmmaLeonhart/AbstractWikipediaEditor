@@ -218,7 +218,7 @@ function qLink(qid: string): string {
 }
 
 function resolveArg(a: string): string {
-  if (a === '$subject') return qLink(currentQid);
+  if (a === 'SUBJECT') return qLink(currentQid);
   if (a === '$lang') return '<em>language</em>';
   if (/^Q\d+$/.test(a)) return qLink(a);
   return a;

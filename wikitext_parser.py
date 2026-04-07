@@ -4,11 +4,11 @@ Converts a human-readable template syntax into the nested Z-object clipboard
 JSON that Abstract Wikipedia's visual editor expects. Templates use a
 MediaWiki-inspired syntax:
 
-    {{Z26570 | $subject | Q845945 | Q17}}
+    {{Z26570|SUBJECT|Q845945|Q17}}
 
 Each {{...}} block becomes one clipboard fragment. The parser handles:
 - Z-function calls with positional or named arguments
-- $subject / $lang as implicit article entity/language references
+- SUBJECT / $lang as implicit article entity/language references
 - Q-items automatically wrapped as Wikidata item references (Z6091)
 - $variables filled in at render time
 - Auto-wrapping: Z11-returning functions get Z29749, Z6-returning get Z27868
@@ -19,8 +19,8 @@ Template format:
     variables:
       deity: Q-item
     ---
-    {{Z26570 | $subject | Q845945 | Q17}}
-    {{Z28016 | $deity | Q11591100 | $subject}}
+    {{Z26570|SUBJECT|Q845945|Q17}}
+    {{Z28016|$deity|Q11591100|SUBJECT}}
 
 Usage:
     from wikitext_parser import compile_template
@@ -263,7 +263,7 @@ for _fid, _finfo in FUNCTION_REGISTRY.items():
 
 # Special variables that map to argument references (Z18)
 IMPLICIT_REFS = {
-    "$subject": "Z825K1",   # article entity
+    "SUBJECT": "Z825K1",    # article entity
     "$lang": "Z825K2",      # language
 }
 
@@ -272,7 +272,7 @@ def resolve_value(raw_value, variables=None):
     """Convert a raw template value into a Z-object.
 
     Resolution rules:
-    - "$subject" / "$lang" -> Z18 argument reference
+    - "SUBJECT" / "$lang" -> Z18 argument reference
     - "$varname" -> look up in variables dict, then treat result as a value
     - "Q..." (Wikidata QID) -> Z6091 Wikidata item reference
     - "Z..." that looks like a Z-ID -> Z9 reference
@@ -407,9 +407,9 @@ def parse_template_calls(body):
         {"func_id": "Z26570", "args": [...], "named_args": {...}, "line": N}
 
     Supports both positional and named arguments:
-        {{Z26570 | $subject | Q845945 | Q17}}
-        {{location | $subject | Q845945 | Q17}}
-        {{Z26570 | entity=$subject | class=Q845945 | location=Q17}}
+        {{Z26570|SUBJECT|Q845945|Q17}}
+        {{location|SUBJECT|Q845945|Q17}}
+        {{Z26570|entity=SUBJECT|class=Q845945|location=Q17}}
     """
     fragments = []
     # Match {{ ... }} allowing newlines inside

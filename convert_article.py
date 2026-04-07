@@ -87,7 +87,7 @@ def extract_value(obj):
         if isinstance(arg, dict):
             arg = arg.get("Z6K1", "?")
         if arg == "Z825K1":
-            return "$subject"
+            return "SUBJECT"
         if arg == "Z825K2":
             return "$lang"
         return f"${arg}"
@@ -125,7 +125,7 @@ def format_as_wikitext(obj):
         args.append(extracted)
 
     parts = [alias] + args
-    return "{{" + " | ".join(parts) + "}}"
+    return "{{" + "|".join(parts) + "}}"
 
 
 def convert_article(qid, oldid=None):

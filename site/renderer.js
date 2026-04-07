@@ -44,7 +44,7 @@ function qLink(qid) {
 }
 
 function resolveArg(a, subjectQid) {
-  if (a === '$subject') return qLink(subjectQid);
+  if (a === 'SUBJECT') return qLink(subjectQid);
   if (a === '$lang') return '<em>language</em>';
   if (/^Q\d+$/.test(a)) return qLink(a);
   return a;

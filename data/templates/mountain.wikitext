@@ -9,4 +9,4 @@ variables:
   location: Q-item     # e.g. Q48 (Asia)
 ---
 
-{{Z27243 | $subject | $adjective | $class | $location}}
+{{Z27243|SUBJECT|$adjective|$class|$location}}

@@ -46,8 +46,8 @@ npm start
 A wikitext template like this:
 
 ```
-{{location | $subject | Q845945 | Q17}}
-{{spo | Q1762010 | $subject | Q3080728}}
+{{location|SUBJECT|Q845945|Q17}}
+{{spo|Q1762010|SUBJECT|Q3080728}}
 ```
 
 Renders in the preview as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrine is dedicated to Inari."

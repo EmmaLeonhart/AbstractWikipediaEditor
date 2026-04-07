@@ -120,17 +120,17 @@ def generate_wikitext(qid):
                 citizenship_value = v
                 break
         if citizenship_value:
-            fragments.append(f"{{{{Z26955 | {occupation_values[0]} | $subject | {citizenship_value}}}}}")
+            fragments.append(f"{{{{Z26955|{occupation_values[0]}|SUBJECT|{citizenship_value}}}}}")
             # Remaining occupations as standalone "is a" fragments
             for occ in occupation_values[1:]:
-                fragments.append(f"{{{{Z26039 | $subject | {occ}}}}}")
+                fragments.append(f"{{{{Z26039|SUBJECT|{occ}}}}}")
             used_props.add("P106")
             used_props.add("P27")
 
     # If P106 exists but P27 doesn't, emit all occupations as standalone
     if occupation_values and "P106" not in used_props:
         for occ in occupation_values:
-            fragments.append(f"{{{{Z26039 | $subject | {occ}}}}}")
+            fragments.append(f"{{{{Z26039|SUBJECT|{occ}}}}}")
         used_props.add("P106")
 
     # Include P31 values, but skip Q5 (human) when occupation exists
@@ -138,7 +138,7 @@ def generate_wikitext(qid):
         for v in p31_values:
             if has_occupation and v == "Q5":
                 continue
-            fragments.append(f"{{{{Z26039 | $subject | {v}}}}}")
+            fragments.append(f"{{{{Z26039|SUBJECT|{v}}}}}")
         used_props.add("P31")
 
     # Process other mapped properties
@@ -177,7 +177,7 @@ def generate_wikitext(qid):
 
         # Emit a line for each value of this property
         for v in values:
-            line = template.replace("$subject", "$subject")
+            line = template.replace("SUBJECT", "SUBJECT")
             line = line.replace("$value", v)
             if "$P31_value" in line:
                 if p31_value:

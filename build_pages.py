@@ -248,7 +248,7 @@ def extract_value(obj):
         if isinstance(arg, dict):
             arg = arg.get("Z6K1", "?")
         if arg == "Z825K1":
-            return "$subject"
+            return "SUBJECT"
         if arg == "Z825K2":
             return "$lang"
         return f"${arg}"
@@ -297,7 +297,7 @@ def format_as_wikitext(obj):
         args.append(extracted)
 
     parts = [alias] + args
-    inner = " | ".join(parts)
+    inner = "|".join(parts)
     return "{{" + inner + "}}"
 
 
@@ -328,7 +328,7 @@ def format_fragment_linked(fragment):
 
 def qid_link_label(qid, article_qid=None):
     """Return an HTML link with the QID's English label."""
-    if qid == "$subject" and article_qid:
+    if qid == "SUBJECT" and article_qid:
         label = get_label(article_qid)
         return f'<a href="https://www.wikidata.org/wiki/{article_qid}">{label}</a>'
     if qid.startswith("Q"):
@@ -360,7 +360,7 @@ def render_english_preview(fragment, article_qid):
 
     # Resolve args to linked labels
     def r(val):
-        if val == "$subject":
+        if val == "SUBJECT":
             return qid_link_label(val, article_qid)
         return qid_link_label(val)
 

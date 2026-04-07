@@ -2,7 +2,7 @@
 
 Desktop editor for creating and editing articles on [Abstract Wikipedia](https://abstract.wikipedia.org/).
 
-Abstract Wikipedia stores articles as language-neutral function calls (Z-objects) that get rendered into every language automatically. Instead of writing prose, you write function calls like `{{Z26570 | $subject | Q845945 | Q17}}` which render to sentences like "Kashima Shrine is a Shinto shrine in Kashima" in any language. This project provides tools for writing those function calls and publishing them.
+Abstract Wikipedia stores articles as language-neutral function calls (Z-objects) that get rendered into every language automatically. Instead of writing prose, you write function calls like `{{Z26570|SUBJECT|Q845945|Q17}}` which render to sentences like "Kashima Shrine is a Shinto shrine in Kashima" in any language. This project provides tools for writing those function calls and publishing them.
 
 **[Project website](https://emmaleonhart.github.io/AbstractEditing/)** | **[Download latest release](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/releases/latest)**
 
@@ -49,14 +49,14 @@ title: Shinto Shrine
 variables:
   deity: Q-item
 ---
-{{location | $subject | Q845945 | Q17}}
-{{spo | Q1762010 | $subject | $deity}}
+{{location|SUBJECT|Q845945|Q17}}
+{{spo|Q1762010|SUBJECT|$deity}}
 ```
 
 Each `{{...}}` block becomes one article fragment (one sentence). The syntax supports:
 
 - **Z-function IDs** (`Z26570`) or **human-readable aliases** (`location`, `spo`, `role`) — see `data/function_aliases.json` for the full alias list
-- **`$subject`** — the article's Wikidata entity (auto-resolved)
+- **`SUBJECT`** — the article's Wikidata entity (auto-resolved)
 - **`$lang`** — the rendering language
 - **Q-items** (`Q845945`) — automatically wrapped as Wikidata entity references
 - **Template variables** (`$deity`) — declared in the YAML frontmatter and filled at render time

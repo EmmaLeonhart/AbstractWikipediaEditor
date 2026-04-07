@@ -49,7 +49,7 @@ class TestZObjectHelpers:
 
 class TestResolveValue:
     def test_subject_ref(self):
-        result = resolve_value("$subject")
+        result = resolve_value("SUBJECT")
         assert result == z18("Z825K1")
 
     def test_lang_ref(self):
@@ -100,14 +100,14 @@ title: Test
 variables:
   deity: Q-item
 ---
-{{Z26570 | $subject | Q845945 | Q17}}"""
+{{Z26570|SUBJECT|Q845945|Q17}}"""
         meta, body = parse_frontmatter(text)
         assert meta["title"] == "Test"
         assert "deity" in meta["variables"]
         assert "{{Z26570" in body
 
     def test_without_frontmatter(self):
-        text = "{{Z26570 | $subject | Q845945 | Q17}}"
+        text = "{{Z26570|SUBJECT|Q845945|Q17}}"
         meta, body = parse_frontmatter(text)
         assert meta == {}
         assert "{{Z26570" in body
@@ -115,7 +115,7 @@ variables:
     def test_empty_frontmatter(self):
         text = """---
 ---
-{{Z26570 | $subject | Q845945 | Q17}}"""
+{{Z26570|SUBJECT|Q845945|Q17}}"""
         meta, body = parse_frontmatter(text)
         assert meta == {}
         assert "{{Z26570" in body
@@ -127,46 +127,46 @@ variables:
 
 class TestParseTemplateCalls:
     def test_single_call(self):
-        body = "{{Z26570 | $subject | Q845945 | Q17}}"
+        body = "{{Z26570|SUBJECT|Q845945|Q17}}"
         result = parse_template_calls(body)
         assert len(result) == 1
         assert result[0]["func_id"] == "Z26570"
-        assert result[0]["args"] == ["$subject", "Q845945", "Q17"]
+        assert result[0]["args"] == ["SUBJECT", "Q845945", "Q17"]
 
     def test_multiple_calls(self):
-        body = """{{Z26570 | $subject | Q845945 | Q17}}
-{{Z28016 | $deity | Q11591100 | $subject}}"""
+        body = """{{Z26570|SUBJECT|Q845945|Q17}}
+{{Z28016|$deity|Q11591100|SUBJECT}}"""
         result = parse_template_calls(body)
         assert len(result) == 2
         assert result[0]["func_id"] == "Z26570"
         assert result[1]["func_id"] == "Z28016"
 
     def test_named_args(self):
-        body = "{{Z26570 | entity=$subject | class=Q845945 | location=Q17}}"
+        body = "{{Z26570|entity=SUBJECT|class=Q845945|location=Q17}}"
         result = parse_template_calls(body)
-        assert result[0]["named_args"]["entity"] == "$subject"
+        assert result[0]["named_args"]["entity"] == "SUBJECT"
         assert result[0]["named_args"]["class"] == "Q845945"
         assert result[0]["named_args"]["location"] == "Q17"
         assert result[0]["args"] == []
 
     def test_mixed_args(self):
-        body = "{{Z26570 | $subject | class=Q845945 | Q17}}"
+        body = "{{Z26570|SUBJECT|class=Q845945|Q17}}"
         result = parse_template_calls(body)
-        assert result[0]["args"] == ["$subject", "Q17"]
+        assert result[0]["args"] == ["SUBJECT", "Q17"]
         assert result[0]["named_args"]["class"] == "Q845945"
 
     def test_comments_ignored(self):
         body = """# This is a comment
-{{Z26570 | $subject | Q845945 | Q17}}
+{{Z26570|SUBJECT|Q845945|Q17}}
 # Another comment"""
         result = parse_template_calls(body)
         assert len(result) == 1
 
     def test_line_numbers(self):
         body = """# Comment
-{{Z26570 | $subject | Q845945 | Q17}}
+{{Z26570|SUBJECT|Q845945|Q17}}
 
-{{Z28016 | $deity | Q11591100 | $subject}}"""
+{{Z28016|$deity|Q11591100|SUBJECT}}"""
         result = parse_template_calls(body)
         assert result[0]["line"] == 2
         assert result[1]["line"] == 4
@@ -180,13 +180,13 @@ class TestBuildFuncCall:
     def test_z26570_positional(self):
         frag = {
             "func_id": "Z26570",
-            "args": ["$subject", "Q845945", "Q17"],
+            "args": ["SUBJECT", "Q845945", "Q17"],
             "named_args": {},
         }
         call, ret_type = build_func_call(frag)
         assert ret_type == "Z11"
         assert call["Z7K1"] == z9s("Z26570")
-        # K1 = entity = $subject -> Z825K1
+        # K1 = entity = SUBJECT -> Z825K1
         assert call["Z26570K1"] == z18("Z825K1")
         # K2 = class = Q845945
         assert call["Z26570K2"] == z6091("Q845945")
@@ -198,7 +198,7 @@ class TestBuildFuncCall:
     def test_z28016_with_variable(self):
         frag = {
             "func_id": "Z28016",
-            "args": ["$deity", "Q11591100", "$subject"],
+            "args": ["$deity", "Q11591100", "SUBJECT"],
             "named_args": {},
         }
         call, ret_type = build_func_call(frag, {"deity": "Q99999"})
@@ -207,7 +207,7 @@ class TestBuildFuncCall:
         assert call["Z28016K1"] == z6091("Q99999")
         # K2 = role = Q11591100
         assert call["Z28016K2"] == z6091("Q11591100")
-        # K3 = dependency = $subject -> Z825K1
+        # K3 = dependency = SUBJECT -> Z825K1
         assert call["Z28016K3"] == z18("Z825K1")
         # K4 = language = auto
         assert call["Z28016K4"] == z18("Z825K2")
@@ -215,7 +215,7 @@ class TestBuildFuncCall:
     def test_z26039_returns_z6(self):
         frag = {
             "func_id": "Z26039",
-            "args": ["$subject", "Q515"],
+            "args": ["SUBJECT", "Q515"],
             "named_args": {},
         }
         call, ret_type = build_func_call(frag)
@@ -226,7 +226,7 @@ class TestBuildFuncCall:
             "func_id": "Z26570",
             "args": [],
             "named_args": {
-                "entity": "$subject",
+                "entity": "SUBJECT",
                 "class": "Q845945",
                 "location": "Q17",
             },
@@ -250,7 +250,7 @@ class TestBuildFuncCall:
     def test_missing_args_raises(self):
         frag = {
             "func_id": "Z26570",
-            "args": ["$subject"],  # Missing class and location
+            "args": ["SUBJECT"],  # Missing class and location
             "named_args": {},
         }
         with pytest.raises(ValueError, match="Not enough arguments"):
@@ -323,8 +323,8 @@ title: Shinto Shrine
 variables:
   deity: Q-item
 ---
-{{Z26570 | $subject | Q845945 | Q17}}
-{{Z28016 | $deity | Q11591100 | $subject}}"""
+{{Z26570|SUBJECT|Q845945|Q17}}
+{{Z28016|$deity|Q11591100|SUBJECT}}"""
 
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
         assert len(result) == 2
@@ -342,14 +342,14 @@ variables:
         assert frag1["value"]["Z7K1"] == z9s("Z29749")
 
     def test_no_frontmatter(self):
-        template = "{{Z26570 | $subject | Q845945 | Q17}}"
+        template = "{{Z26570|SUBJECT|Q845945|Q17}}"
         result = compile_template(template)
         assert len(result) == 1
 
     def test_three_fragment_shrine(self):
-        template = """{{Z26570 | $subject | Q845945 | Q17}}
-{{Z28016 | $deity | Q11591100 | $subject}}
-{{Z26570 | $subject | Q845945 | $admin}}"""
+        template = """{{Z26570|SUBJECT|Q845945|Q17}}
+{{Z28016|$deity|Q11591100|SUBJECT}}
+{{Z26570|SUBJECT|Q845945|$admin}}"""
 
         result = compile_template(template, {
             "deity": "Q111",
@@ -358,7 +358,7 @@ variables:
         assert len(result) == 3
 
     def test_z6_returning_function_wraps_z27868(self):
-        template = "{{Z26039 | $subject | Q515}}"
+        template = "{{Z26039|SUBJECT|Q515}}"
         result = compile_template(template)
         assert result[0]["value"]["Z7K1"] == z9s("Z27868")
 
@@ -372,7 +372,7 @@ class TestMatchesExistingOutput:
 
     def test_deity_fragment_structure(self):
         """The deity fragment should match the Z28016 call structure."""
-        template = "{{Z28016 | $deity | Q11591100 | $subject}}"
+        template = "{{Z28016|$deity|Q11591100|SUBJECT}}"
         result = compile_template(template, {"deity": "Q99999"})
         frag = result[0]["value"]
 
@@ -387,7 +387,7 @@ class TestMatchesExistingOutput:
         assert inner["Z28016K1"]["Z6091K1"]["Z6K1"] == "Q99999"
         # Z28016K2 = role (Q11591100)
         assert inner["Z28016K2"]["Z6091K1"]["Z6K1"] == "Q11591100"
-        # Z28016K3 = dependency ($subject -> Z825K1)
+        # Z28016K3 = dependency (SUBJECT -> Z825K1)
         assert inner["Z28016K3"]["Z18K1"]["Z6K1"] == "Z825K1"
         # Z28016K4 = language (auto -> Z825K2)
         assert inner["Z28016K4"]["Z18K1"]["Z6K1"] == "Z825K2"
@@ -397,7 +397,7 @@ class TestMatchesExistingOutput:
 
     def test_location_fragment_structure(self):
         """The location fragment uses Z26570 wrapped in Z29749."""
-        template = "{{Z26570 | $subject | Q845945 | Q17}}"
+        template = "{{Z26570|SUBJECT|Q845945|Q17}}"
         result = compile_template(template)
         frag = result[0]["value"]
 
@@ -408,7 +408,7 @@ class TestMatchesExistingOutput:
         inner = frag["Z29749K1"]
         assert inner["Z7K1"]["Z9K1"] == "Z26570"
 
-        # K1 = entity ($subject -> Z825K1)
+        # K1 = entity (SUBJECT -> Z825K1)
         assert inner["Z26570K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         # K2 = class (Q845945)
         assert inner["Z26570K2"]["Z6091K1"]["Z6K1"] == "Q845945"

@@ -12,7 +12,7 @@
       "function": "Z26039",
       "function_name": "Article-less instantiating fragment",
       "example": "Nairobi is a city.",
-      "template": "{{Z26039 | $subject | $value}}",
+      "template": "{{Z26039|SUBJECT|$value}}",
       "notes": "Most universal property. Maps entity to its class. Skipped when P106 exists or when a location property covers it.",
       "skip_if": ["P106"]
     },
@@ -21,7 +21,7 @@
       "function": "Z26095",
       "function_name": "Article-ful instantiating fragment",
       "example": "An antelope is a mammal.",
-      "template": "{{Z26095 | $subject | $value}}",
+      "template": "{{Z26095|SUBJECT|$value}}",
       "notes": "For class hierarchy relationships."
     },
     "P131": {
@@ -29,7 +29,7 @@
       "function": "Z26570",
       "function_name": "State location using entity and class",
       "example": "Kashima Shrine is a Shinto shrine in Kashima.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
+      "template": "{{Z26570|SUBJECT|$P31_value|$value}}",
       "notes": "Requires P31 value as the class argument. Most specific location property.",
       "location_priority": 1
     },
@@ -38,7 +38,7 @@
       "function": "Z26570",
       "function_name": "State location using entity and class",
       "example": "Tokyo Tower is a tower in Japan.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
+      "template": "{{Z26570|SUBJECT|$P31_value|$value}}",
       "notes": "Same function as P131 but with country as location. Skipped when P131 exists.",
       "location_priority": 2
     },
@@ -47,7 +47,7 @@
       "function": "Z26570",
       "function_name": "State location using entity and class",
       "example": "Japan is a country in Asia.",
-      "template": "{{Z26570 | $subject | $P31_value | $value}}",
+      "template": "{{Z26570|SUBJECT|$P31_value|$value}}",
       "notes": "Least specific location. Only used when P131 and P17 are absent.",
       "location_priority": 3
     },
@@ -56,7 +56,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Tokyo is the capital of Japan.",
-      "template": "{{Z28016 | $value | Q5119 | $subject}}",
+      "template": "{{Z28016|$value|Q5119|SUBJECT}}",
       "notes": "Subject is the country, value is the capital city. Role=Q5119 (capital)."
     },
     "P6": {
@@ -64,7 +64,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Fumio Kishida is the head of government of Japan.",
-      "template": "{{Z28016 | $value | Q2285706 | $subject}}",
+      "template": "{{Z28016|$value|Q2285706|SUBJECT}}",
       "notes": "Value is the person, role=Q2285706 (head of government)."
     },
     "P35": {
@@ -72,7 +72,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Naruhito is the head of state of Japan.",
-      "template": "{{Z28016 | $value | Q48352 | $subject}}",
+      "template": "{{Z28016|$value|Q48352|SUBJECT}}",
       "notes": "Value is the person, role=Q48352 (head of state)."
     },
     "P825": {
@@ -80,7 +80,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Meiji Shrine is dedicated to Emperor Meiji.",
-      "template": "{{Z26955 | Q1762010 | $subject | $value}}",
+      "template": "{{Z26955|Q1762010|SUBJECT|$value}}",
       "notes": "Predicate=Q1762010 (dedication). Subject is the shrine, object is the deity."
     },
     "P138": {
@@ -93,7 +93,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z26955 | Q66305721 | $subject | $value}}",
+      "template": "{{Z26955|Q66305721|SUBJECT|$value}}",
       "notes": "Predicate=Q66305721 (part of). Subject is the part, object is the whole."
     },
     "P527": {
@@ -101,7 +101,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
+      "template": "{{Z26955|Q66305721|$value|SUBJECT}}",
       "notes": "Inverse of P361. Predicate=Q66305721 (part of). Value is the part, subject is the whole."
     },
     "P2670": {
@@ -109,7 +109,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "An arm is part of a human body.",
-      "template": "{{Z26955 | Q66305721 | $value | $subject}}",
+      "template": "{{Z26955|Q66305721|$value|SUBJECT}}",
       "notes": "Predicate=Q66305721 (part of). Value is the class of parts, subject is the whole."
     },
     "P106": {
@@ -117,7 +117,7 @@
       "function": "Z26039",
       "function_name": "Article-less instantiating fragment",
       "example": "Marie Curie is a physicist.",
-      "template": "{{Z26039 | $subject | $value}}",
+      "template": "{{Z26039|SUBJECT|$value}}",
       "notes": "Treats occupation as an instance-of relationship. When present, P31 is skipped."
     },
     "P27": {
@@ -125,7 +125,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Marie Curie is a citizen of Poland.",
-      "template": "{{Z26955 | Q42138 | $subject | $value}}",
+      "template": "{{Z26955|Q42138|SUBJECT|$value}}",
       "notes": "Predicate=Q42138 (citizenship). Citizenship is a legal relationship, not a location."
     },
     "P495": {
@@ -133,7 +133,7 @@
       "function": "Z26955",
       "function_name": "SPO sentence, S without and O with article",
       "example": "Toyota originates from Japan.",
-      "template": "{{Z26955 | Q3373417 | $subject | $value}}",
+      "template": "{{Z26955|Q3373417|SUBJECT|$value}}",
       "notes": "Predicate=Q3373417 (country of origin). Origin is a provenance relationship, not a location."
     },
     "P1376": {
@@ -141,7 +141,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Tokyo is the capital of Japan.",
-      "template": "{{Z28016 | $subject | Q5119 | $value}}",
+      "template": "{{Z28016|SUBJECT|Q5119|$value}}",
       "notes": "Subject is the capital, value is the country. Role=Q5119 (capital). Skipped when P36 exists.",
       "skip_if": ["P36"]
     },
@@ -150,7 +150,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Japanese is the official language of Japan.",
-      "template": "{{Z28016 | $value | Q23492 | $subject}}",
+      "template": "{{Z28016|$value|Q23492|SUBJECT}}",
       "notes": "Value is the language, role=Q23492 (official language), dependency is the country/region."
     },
     "P38": {
@@ -158,7 +158,7 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "The yen is the currency of Japan.",
-      "template": "{{Z28016 | $value | Q8142 | $subject}}",
+      "template": "{{Z28016|$value|Q8142|SUBJECT}}",
       "notes": "Value is the currency, role=Q8142 (currency), dependency is the country/region."
     }
   }

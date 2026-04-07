@@ -7,4 +7,4 @@ variables:
   class: Q-item     # e.g. Q515 (city), Q1549591 (big city)
 ---
 
-{{Z26570 | $subject | $class | $country}}
+{{Z26570|SUBJECT|$class|$country}}

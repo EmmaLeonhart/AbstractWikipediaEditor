@@ -1,7 +1,7 @@
 """Convert wikitext templates from Z-IDs to human-readable aliases.
 
-Reads wikitext files with {{Z26570 | ...}} syntax and rewrites them
-using English aliases like {{location | ...}}.
+Reads wikitext files with {{Z26570|...}} syntax and rewrites them
+using English aliases like {{location|...}}.
 
 Usage:
     python convert_to_aliases.py                          # Convert all in data/templates/auto/
@@ -45,7 +45,7 @@ def convert_line(line, reverse):
         if re.match(r'^Z\d+$', func_name) and func_name in reverse:
             parts[0] = reverse[func_name]
 
-        return '{{' + ' | '.join(parts) + '}}'
+        return '{{' + '|'.join(parts) + '}}'
 
     return re.sub(r'\{\{(.+?)\}\}', replace_func, line)
 

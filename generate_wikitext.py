@@ -125,9 +125,11 @@ def generate_wikitext(qid):
             used_props.add("P106")
             used_props.add("P27")
 
-    # Always include all P31 values — let the user decide which to keep
+    # Include P31 values, but skip Q5 (human) when occupation exists
     if "P31" in mapping and p31_values:
         for v in p31_values:
+            if has_occupation and v == "Q5":
+                continue
             fragments.append(f"{{{{Z26039 | $subject | {v}}}}}")
         used_props.add("P31")
 

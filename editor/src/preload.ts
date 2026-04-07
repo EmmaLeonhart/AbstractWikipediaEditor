@@ -9,7 +9,7 @@ contextBridge.exposeInMainWorld('api', {
   convertArticle: (qid: string) => ipcRenderer.invoke('convert-article', qid),
   convertArticleRevision: (qid: string, oldid: string) => ipcRenderer.invoke('convert-article-revision', qid, oldid),
   fetchRevisions: (qid: string) => ipcRenderer.invoke('fetch-revisions', qid),
-  pushArticle: (qid: string, wikitext: string, restoreRevId?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId),
+  pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId, editSummary),
   getCredentials: () => ipcRenderer.invoke('get-credentials'),
   saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
 });

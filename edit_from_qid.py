@@ -238,7 +238,7 @@ def shot(page, name):
     print(f"  Screenshot: {path}", flush=True)
 
 
-def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None):
+def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None, extra_summary=None):
     """Full pipeline: open existing article, delete fragments, paste new ones, publish."""
     print(f"\n{'='*50}", flush=True)
     if restore_rev:
@@ -312,6 +312,8 @@ def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None):
         summary = EDIT_SUMMARY_RESTORE.format(rev=restore_rev)
     else:
         summary = EDIT_SUMMARY_EDIT
+    if extra_summary:
+        summary = f"{summary}: {extra_summary}"
     print(f"  Publishing with summary: {summary}", flush=True)
     publish_page(page, summary)
 
@@ -338,6 +340,7 @@ def main():
     parser.add_argument("--apply", action="store_true", help="Actually edit articles")
     parser.add_argument("--headed", action="store_true", help="Show browser")
     parser.add_argument("--restore-rev", type=str, default=None, help="Revision ID being restored (changes edit summary)")
+    parser.add_argument("--summary", type=str, default=None, help="Extra text appended to the edit summary")
     parser.add_argument("--delay", type=int, default=5, help="Seconds between articles")
     args = parser.parse_args()
 
@@ -404,7 +407,7 @@ def main():
 
         for i, qid in enumerate(verified):
             try:
-                result = edit_article_from_qid(page, qid, wikitext_override, restore_rev=args.restore_rev)
+                result = edit_article_from_qid(page, qid, wikitext_override, restore_rev=args.restore_rev, extra_summary=args.summary)
                 stats[result] = stats.get(result, 0) + 1
                 if result == "edited" and i < len(verified) - 1:
                     time.sleep(args.delay)

@@ -206,7 +206,7 @@ ipcMain.handle('convert-article', async (_event, qid: string): Promise<string> =
 });
 
 // Push to Abstract Wikipedia - uses editor wikitext directly
-ipcMain.handle('push-article', async (_event, qid: string, wikitext: string, restoreRevId?: string): Promise<string> => {
+ipcMain.handle('push-article', async (_event, qid: string, wikitext: string, restoreRevId?: string, editSummary?: string): Promise<string> => {
   // Write editor wikitext to a temp file for the Python script
   const tmpFile = path.join(os.tmpdir(), `abstractbot_${qid}.wikitext`);
   fs.writeFileSync(tmpFile, wikitext, 'utf-8');
@@ -221,6 +221,9 @@ ipcMain.handle('push-article', async (_event, qid: string, wikitext: string, res
   const args = [qid, '--wikitext', tmpFile, '--apply', '--headed'];
   if (restoreRevId && script === 'edit_from_qid.py') {
     args.push('--restore-rev', restoreRevId);
+  }
+  if (editSummary) {
+    args.push('--summary', editSummary);
   }
 
   try {

@@ -64,6 +64,18 @@
       margin-bottom: 6px; font-size: 12px; color: #6c7086;
     }
 
+    /* Edit summary bar */
+    .summary-bar {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+    }
+    .summary-bar label { font-size: 13px; color: #a6adc8; white-space: nowrap; }
+    .summary-bar input {
+      flex: 1; background: #313244; border: 1px solid #45475a; color: #cdd6f4;
+      padding: 6px 10px; border-radius: 4px; font-size: 13px;
+    }
+    .summary-bar input::placeholder { color: #585b70; font-style: italic; }
+    .summary-bar input:focus { outline: none; border-color: #89b4fa; }
+
     /* History view */
     .history-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -138,6 +150,11 @@
   <div class="info">
     <span id="info-left"></span>
     <span id="info-right">Aliases: location, is a, kind of, role, describe, spo, are, superlative</span>
+  </div>
+
+  <div class="summary-bar" id="summary-bar" style="display: none;">
+    <label for="edit-summary">Edit summary:</label>
+    <input type="text" id="edit-summary" placeholder="Optional — appended after tool credit">
   </div>
 
   <textarea id="editor" placeholder="Wikitext will appear here..."></textarea>

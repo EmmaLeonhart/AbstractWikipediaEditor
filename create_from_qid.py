@@ -155,7 +155,7 @@ def paste_fragment(page, single_item, is_first=False):
     return True
 
 
-def create_article_from_qid(page, qid, wikitext_override=None):
+def create_article_from_qid(page, qid, wikitext_override=None, extra_summary=None):
     """Full pipeline: QID -> wikitext -> clipboard -> article."""
     print(f"\n{'='*50}", flush=True)
     print(f"Creating article for {qid}", flush=True)
@@ -206,8 +206,11 @@ def create_article_from_qid(page, qid, wikitext_override=None):
     time.sleep(2)
 
     # Step 5: Publish
-    print("  Publishing...", flush=True)
-    publish_page(page, EDIT_SUMMARY_CREATE)
+    summary = EDIT_SUMMARY_CREATE
+    if extra_summary:
+        summary = f"{summary}: {extra_summary}"
+    print(f"  Publishing with summary: {summary}", flush=True)
+    publish_page(page, summary)
 
     # Verify
     page.goto(f"{WIKI_URL}/wiki/{qid}")
@@ -230,6 +233,7 @@ def main():
     parser.add_argument("--wikitext", type=str, help="Path to wikitext file (use instead of generating from Wikidata)")
     parser.add_argument("--apply", action="store_true", help="Actually create articles")
     parser.add_argument("--headed", action="store_true", help="Show browser")
+    parser.add_argument("--summary", type=str, default=None, help="Extra text appended to the edit summary")
     parser.add_argument("--delay", type=int, default=5, help="Seconds between articles")
     args = parser.parse_args()
 
@@ -291,7 +295,7 @@ def main():
 
         for i, qid in enumerate(todo):
             try:
-                result = create_article_from_qid(page, qid, wikitext_override)
+                result = create_article_from_qid(page, qid, wikitext_override, extra_summary=args.summary)
                 stats[result] = stats.get(result, 0) + 1
                 if result == "created" and i < len(todo) - 1:
                     time.sleep(args.delay)

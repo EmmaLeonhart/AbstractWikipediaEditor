@@ -42,12 +42,13 @@
 
     .preview {
       background: #181825; border: 1px solid #313244; border-radius: 6px;
-      padding: 16px;
-      font-size: 15px; line-height: 1.8;
+      padding: 14px;
+      font-size: 14px; line-height: 1.6;
       flex: 1; overflow-y: auto;
     }
     .preview .sentence {
-      margin-bottom: 6px;
+      height: calc(14px * 1.6); overflow: hidden; white-space: nowrap;
+      text-overflow: ellipsis;
     }
     .preview a.label {
       color: #89b4fa; text-decoration: underline; text-decoration-style: dotted;

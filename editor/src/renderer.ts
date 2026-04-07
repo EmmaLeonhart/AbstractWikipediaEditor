@@ -155,17 +155,22 @@ editorEl.addEventListener('input', () => {
   renderTimeout = setTimeout(renderPreview, 300);
 });
 
+// Sync scroll between editor and preview
+editorEl.addEventListener('scroll', () => {
+  previewEl.scrollTop = editorEl.scrollTop;
+});
+previewEl.addEventListener('scroll', () => {
+  editorEl.scrollTop = previewEl.scrollTop;
+});
+
 async function renderPreview(): Promise<void> {
   const text = editorEl.value;
-  const fragments = parseTemplates(text);
+  const lines = text.split('\n');
 
-  if (fragments.length === 0) {
-    previewEl.innerHTML = '<span class="placeholder">No fragments to preview.</span>';
-    return;
-  }
-
+  // Collect all QIDs that need labels
+  const allFragments = parseTemplates(text);
   const needed = new Set<string>();
-  for (const frag of fragments) {
+  for (const frag of allFragments) {
     for (const arg of frag.args) {
       if (/^Q\d+$/.test(arg) && !labelCache[arg]) needed.add(arg);
     }
@@ -177,9 +182,21 @@ async function renderPreview(): Promise<void> {
     Object.assign(labelCache, labels);
   }
 
-  previewEl.innerHTML = fragments.map(f =>
-    `<div class="sentence">${renderSentence(f)}</div>`
-  ).join('');
+  // Render line-by-line so each preview line aligns with each textarea line
+  const html = lines.map(line => {
+    const trimmed = line.trim();
+    const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
+    if (tmplMatch) {
+      const parts = tmplMatch[1].trim().split('|').map(s => s.trim());
+      const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
+      const frag: ParsedFragment = { funcId, args: parts.slice(1) };
+      return `<div class="sentence">${renderSentence(frag)}</div>`;
+    }
+    // Non-template lines render as empty lines to maintain alignment
+    return '<div class="sentence">&nbsp;</div>';
+  }).join('');
+
+  previewEl.innerHTML = html || '<span class="placeholder">No fragments to preview.</span>';
 }
 
 function parseTemplates(text: string): ParsedFragment[] {

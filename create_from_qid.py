@@ -82,7 +82,7 @@ def add_wikidata_sitelink(qid):
         "id": qid,
         "linksite": "abstractwiki",
         "linktitle": qid,
-        "summary": "Adding Abstract Wikipedia sitelink via [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]",
+        "summary": "Adding Abstract Wikipedia sitelink",
         "token": csrf_token,
         "format": "json",
     })

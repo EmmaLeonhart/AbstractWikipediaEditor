@@ -7,7 +7,9 @@ contextBridge.exposeInMainWorld('api', {
   checkArticle: (qid: string) => ipcRenderer.invoke('check-article', qid),
   generateWikitext: (qid: string) => ipcRenderer.invoke('generate-wikitext', qid),
   convertArticle: (qid: string) => ipcRenderer.invoke('convert-article', qid),
-  pushArticle: (qid: string, wikitext: string) => ipcRenderer.invoke('push-article', qid, wikitext),
+  convertArticleRevision: (qid: string, oldid: string) => ipcRenderer.invoke('convert-article-revision', qid, oldid),
+  fetchRevisions: (qid: string) => ipcRenderer.invoke('fetch-revisions', qid),
+  pushArticle: (qid: string, wikitext: string, restoreRevId?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId),
   getCredentials: () => ipcRenderer.invoke('get-credentials'),
   saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
 });

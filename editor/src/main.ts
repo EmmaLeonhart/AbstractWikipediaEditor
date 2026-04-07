@@ -83,6 +83,36 @@ ipcMain.handle('fetch-labels', async (_event, qids: string[]): Promise<Record<st
   return results;
 });
 
+// Fetch revision history for a QID from Abstract Wikipedia
+interface RevisionInfo {
+  revid: number;
+  parentid: number;
+  user: string;
+  timestamp: string;
+  comment: string;
+  size: number;
+}
+
+ipcMain.handle('fetch-revisions', async (_event, qid: string): Promise<RevisionInfo[]> => {
+  const url = `https://abstract.wikipedia.org/w/api.php?action=query&titles=${qid}&prop=revisions&rvprop=ids|timestamp|user|comment|size&rvlimit=50&format=json`;
+  try {
+    const data = await fetchJSON<{ query?: { pages?: Record<string, { revisions?: RevisionInfo[] }> } }>(url);
+    const pages = data.query?.pages || {};
+    for (const page of Object.values(pages)) {
+      if (page.revisions) return page.revisions;
+    }
+    return [];
+  } catch (e) {
+    console.error('[fetch-revisions]', e);
+    return [];
+  }
+});
+
+// Convert a specific revision to wikitext
+ipcMain.handle('convert-article-revision', async (_event, qid: string, oldid: string): Promise<string> => {
+  return await runPython('convert_article.py', [qid, '--oldid', oldid]);
+});
+
 // Check if article exists on Abstract Wikipedia
 ipcMain.handle('check-article', async (_event, qid: string): Promise<ArticleResult> => {
   const url = `https://abstract.wikipedia.org/w/api.php?action=parse&page=${qid}&prop=wikitext&format=json`;
@@ -176,7 +206,7 @@ ipcMain.handle('convert-article', async (_event, qid: string): Promise<string> =
 });
 
 // Push to Abstract Wikipedia - uses editor wikitext directly
-ipcMain.handle('push-article', async (_event, qid: string, wikitext: string): Promise<string> => {
+ipcMain.handle('push-article', async (_event, qid: string, wikitext: string, restoreRevId?: string): Promise<string> => {
   // Write editor wikitext to a temp file for the Python script
   const tmpFile = path.join(os.tmpdir(), `abstractbot_${qid}.wikitext`);
   fs.writeFileSync(tmpFile, wikitext, 'utf-8');
@@ -188,8 +218,13 @@ ipcMain.handle('push-article', async (_event, qid: string, wikitext: string): Pr
   const script = exists ? 'edit_from_qid.py' : 'create_from_qid.py';
   console.log(`[push] ${qid} ${exists ? 'exists, editing' : 'does not exist, creating'}`);
 
+  const args = [qid, '--wikitext', tmpFile, '--apply', '--headed'];
+  if (restoreRevId && script === 'edit_from_qid.py') {
+    args.push('--restore-rev', restoreRevId);
+  }
+
   try {
-    return await runPython(script, [qid, '--wikitext', tmpFile, '--apply', '--headed']);
+    return await runPython(script, args);
   } finally {
     try { fs.unlinkSync(tmpFile); } catch {}
   }

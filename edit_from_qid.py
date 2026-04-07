@@ -187,6 +187,7 @@ def paste_fragment(page, single_item, is_first=False):
 
 EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
 EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
+EDIT_SUMMARY_RESTORE = "Restored to [[Special:Diff/{rev}|revision {rev}]] with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
 
 
 def publish_page(page, summary=""):
@@ -237,10 +238,13 @@ def shot(page, name):
     print(f"  Screenshot: {path}", flush=True)
 
 
-def edit_article_from_qid(page, qid, wikitext_override=None):
+def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None):
     """Full pipeline: open existing article, delete fragments, paste new ones, publish."""
     print(f"\n{'='*50}", flush=True)
-    print(f"Editing article for {qid}", flush=True)
+    if restore_rev:
+        print(f"Restoring article for {qid} to revision {restore_rev}", flush=True)
+    else:
+        print(f"Editing article for {qid}", flush=True)
 
     # Step 1: Get wikitext (from file override or generate from Wikidata)
     if wikitext_override:
@@ -304,8 +308,12 @@ def edit_article_from_qid(page, qid, wikitext_override=None):
     shot(page, f"{qid}_03_after_paste")
 
     # Step 6: Publish
-    print("  Publishing...", flush=True)
-    publish_page(page, EDIT_SUMMARY_EDIT)
+    if restore_rev:
+        summary = EDIT_SUMMARY_RESTORE.format(rev=restore_rev)
+    else:
+        summary = EDIT_SUMMARY_EDIT
+    print(f"  Publishing with summary: {summary}", flush=True)
+    publish_page(page, summary)
 
     # Verify
     page.goto(f"{WIKI_URL}/wiki/{qid}")
@@ -329,6 +337,7 @@ def main():
     parser.add_argument("--random", type=int, help="Pick N random existing articles to edit")
     parser.add_argument("--apply", action="store_true", help="Actually edit articles")
     parser.add_argument("--headed", action="store_true", help="Show browser")
+    parser.add_argument("--restore-rev", type=str, default=None, help="Revision ID being restored (changes edit summary)")
     parser.add_argument("--delay", type=int, default=5, help="Seconds between articles")
     args = parser.parse_args()
 
@@ -395,7 +404,7 @@ def main():
 
         for i, qid in enumerate(verified):
             try:
-                result = edit_article_from_qid(page, qid, wikitext_override)
+                result = edit_article_from_qid(page, qid, wikitext_override, restore_rev=args.restore_rev)
                 stats[result] = stats.get(result, 0) + 1
                 if result == "edited" and i < len(verified) - 1:
                     time.sleep(args.delay)

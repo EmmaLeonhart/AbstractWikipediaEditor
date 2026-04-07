@@ -27,6 +27,8 @@
     .btn-abstract:hover { background: #74c7ec; }
     .btn-push { background: #fab387; color: #1e1e2e; }
     .btn-push:hover { background: #f9e2af; }
+    .btn-history { background: #f5c2e7; color: #1e1e2e; }
+    .btn-history:hover { background: #f5e0dc; }
     .btn-login { background: #cba6f7; color: #1e1e2e; }
     .btn-login:hover { background: #b4befe; }
     .btn-login.logged-in { background: #a6e3a1; }
@@ -61,6 +63,33 @@
       display: flex; justify-content: space-between; align-items: center;
       margin-bottom: 6px; font-size: 12px; color: #6c7086;
     }
+
+    /* History view */
+    .history-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .history-header h2 { font-size: 16px; color: #cdd6f4; }
+    .history-list {
+      max-height: calc(100vh - 200px); overflow-y: auto;
+    }
+    .history-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px; background: #181825; border: 1px solid #313244;
+      border-radius: 6px; margin-bottom: 6px;
+    }
+    .history-item:first-child { border-color: #a6e3a1; }
+    .history-item .rev-info { flex: 1; }
+    .history-item .rev-id { color: #89b4fa; font-weight: 600; font-size: 13px; }
+    .history-item .rev-date { color: #a6adc8; font-size: 13px; margin-left: 8px; }
+    .history-item .rev-user { color: #f5c2e7; font-size: 12px; }
+    .history-item .rev-comment { color: #6c7086; font-size: 12px; font-style: italic; margin-top: 2px; }
+    .history-item .rev-size { color: #6c7086; font-size: 12px; }
+    .history-item button { white-space: nowrap; }
+    .btn-restore { background: #fab387; color: #1e1e2e; font-size: 12px; padding: 6px 12px; }
+    .btn-restore:hover { background: #f9e2af; }
+    .btn-undo { background: #f38ba8; color: #1e1e2e; font-size: 12px; padding: 6px 12px; }
+    .btn-undo:hover { background: #eba0ac; }
 
     /* Login overlay */
     #login-overlay {
@@ -98,6 +127,7 @@
     <button class="btn-wikidata" id="btn-wikidata">Pull from Wikidata</button>
     <button class="btn-abstract" id="btn-abstract">Pull from Abstract Wikipedia</button>
     <button class="btn-push" id="btn-push" disabled>Push to Abstract Wikipedia</button>
+    <button class="btn-history" id="btn-history" disabled>History</button>
     <span class="status" id="status"></span>
   </div>
 
@@ -111,6 +141,17 @@
   </div>
 
   <textarea id="editor" placeholder="Wikitext will appear here..."></textarea>
+
+  <!-- History view (replaces editor when active) -->
+  <div id="history-view" style="display: none;">
+    <div class="history-header">
+      <h2 id="history-title">Revision History</h2>
+      <button class="btn-abstract" id="btn-history-back">Back to Editor</button>
+    </div>
+    <div id="history-list" class="history-list">
+      <span class="placeholder">Loading revisions...</span>
+    </div>
+  </div>
 
   <!-- Login overlay -->
   <div id="login-overlay">

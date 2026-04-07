@@ -128,13 +128,18 @@ def format_as_wikitext(obj):
     return "{{" + " | ".join(parts) + "}}"
 
 
-def convert_article(qid):
+def convert_article(qid, oldid=None):
     # Fetch from Abstract Wikipedia
-    r = SESSION.get(API_URL, params={
-        "action": "query", "titles": qid,
+    params = {
+        "action": "query",
         "prop": "revisions", "rvprop": "content",
         "rvslots": "main", "format": "json",
-    }, timeout=30)
+    }
+    if oldid:
+        params["revids"] = oldid
+    else:
+        params["titles"] = qid
+    r = SESSION.get(API_URL, params=params, timeout=30)
     r.raise_for_status()
     pages = r.json()["query"]["pages"]
 
@@ -186,7 +191,9 @@ def convert_article(qid):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python convert_article.py Q191")
-        sys.exit(1)
-    convert_article(sys.argv[1].upper())
+    import argparse
+    parser = argparse.ArgumentParser(description="Convert Abstract Wikipedia article to wikitext")
+    parser.add_argument("qid", type=str, help="Wikidata QID")
+    parser.add_argument("--oldid", type=str, default=None, help="Specific revision ID to fetch")
+    args = parser.parse_args()
+    convert_article(args.qid.upper(), oldid=args.oldid)

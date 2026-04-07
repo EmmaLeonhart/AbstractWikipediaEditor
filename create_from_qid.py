@@ -30,12 +30,69 @@ from wikitext_parser import compile_template
 
 WIKI_URL = "https://abstract.wikipedia.org"
 API_URL = f"{WIKI_URL}/w/api.php"
+WIKIDATA_API = "https://www.wikidata.org/w/api.php"
 
 
 def check_article_exists(qid):
     r = requests.get(f"{WIKI_URL}/wiki/{qid}", allow_redirects=True,
                      headers={"User-Agent": "AbstractTestBot/1.0"})
     return "There is currently no text in this page" not in r.text
+
+
+def add_wikidata_sitelink(qid):
+    """Add an Abstract Wikipedia sitelink to the Wikidata item using bot credentials."""
+    username = os.environ.get("WIKI_USERNAME", "")
+    password = os.environ.get("WIKI_PASSWORD", "")
+    if not username or not password:
+        print(f"  SITELINK: Skipped (no bot credentials in .env)", flush=True)
+        return False
+
+    session = requests.Session()
+    session.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+
+    # Step 1: Get login token
+    r = session.get(WIKIDATA_API, params={
+        "action": "query", "meta": "tokens", "type": "login", "format": "json",
+    })
+    login_token = r.json()["query"]["tokens"]["logintoken"]
+
+    # Step 2: Log in with bot credentials
+    r = session.post(WIKIDATA_API, data={
+        "action": "login",
+        "lgname": username,
+        "lgpassword": password,
+        "lgtoken": login_token,
+        "format": "json",
+    })
+    login_result = r.json().get("login", {})
+    if login_result.get("result") != "Success":
+        print(f"  SITELINK: Login failed: {login_result}", flush=True)
+        return False
+    print(f"  SITELINK: Logged in to Wikidata as {login_result.get('lgusername')}", flush=True)
+
+    # Step 3: Get CSRF token
+    r = session.get(WIKIDATA_API, params={
+        "action": "query", "meta": "tokens", "format": "json",
+    })
+    csrf_token = r.json()["query"]["tokens"]["csrftoken"]
+
+    # Step 4: Set the sitelink
+    r = session.post(WIKIDATA_API, data={
+        "action": "wbsetsitelink",
+        "id": qid,
+        "linksite": "abstractwiki",
+        "linktitle": qid,
+        "summary": "Adding Abstract Wikipedia sitelink via [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]",
+        "token": csrf_token,
+        "format": "json",
+    })
+    result = r.json()
+    if "error" in result:
+        print(f"  SITELINK: Error: {result['error'].get('info', result['error'])}", flush=True)
+        return False
+
+    print(f"  SITELINK: Added abstractwikipedia sitelink for {qid}", flush=True)
+    return True
 
 
 def browser_login(page):
@@ -218,6 +275,11 @@ def create_article_from_qid(page, qid, wikitext_override=None, extra_summary=Non
     body = page.locator("body").inner_text()
     if "There is currently no text in this page" not in body:
         print(f"  SUCCESS: {WIKI_URL}/wiki/{qid}", flush=True)
+        # Add Wikidata sitelink now that the page exists
+        try:
+            add_wikidata_sitelink(qid)
+        except Exception as e:
+            print(f"  SITELINK: Exception: {e}", flush=True)
         return "created"
     else:
         print("  ERROR: Page has no content after publish", flush=True)

@@ -5,6 +5,20 @@ Desktop editor for creating articles on Abstract Wikipedia. The main product is 
 
 The app queries Wikidata for item properties, maps them to Wikifunctions sentence generators, compiles to clipboard JSON, and publishes via Playwright browser automation. The API doesn't support creating `abstractwiki` content (bot passwords lack `wikilambda-abstract-create` rights).
 
+### Batch Scripts (Local Execution)
+- `create_from_qid.py` -- Create new articles via Playwright (run locally, NOT via GitHub Actions)
+- `edit_from_qid.py` -- Edit existing articles via Playwright (run locally)
+- These scripts use `--apply` to actually execute, `--headed` to show the browser
+- Authentication uses `.env` credentials and runs through the browser login flow
+- Screenshots saved to `screenshots/` directory
+
+### Paragraph Model (`{{p}}`)
+Templates between `{{p}}` markers compile into a single Z32123(Z32234([...])) clipboard item.
+This means one paste operation per paragraph instead of one per sentence.
+- `generate_wikitext.py` wraps all output in `{{p}}` by default
+- `convert_article.py` outputs `{{p}}` markers for Z32234 paragraphs
+- Templates without `{{p}}` still work (each template = separate clipboard item)
+
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.
 - **Do not enter planning-only modes.** All thinking must produce files and commits.

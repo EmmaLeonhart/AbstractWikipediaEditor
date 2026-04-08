@@ -236,6 +236,18 @@ FUNCTION_REGISTRY = {
         ],
         "returns": "Z11",
     },
+    "Z32229": {
+        "name": "comparative measurement sentence",
+        "example": "Jupiter has a mass 1/1,048 times that of the Sun.",
+        "params": [
+            {"key": "K1", "name": "entity", "type": "entity_ref"},
+            {"key": "K2", "name": "comparison_entity", "type": "Q-item"},
+            {"key": "K3", "name": "measurement", "type": "Q-item"},
+            {"key": "K4", "name": "quantity", "type": "string"},
+            {"key": "K5", "name": "language", "type": "language"},
+        ],
+        "returns": "Z6",
+    },
     # Structural / rendering functions (return Z89 directly)
     "Z29822": {
         "name": "ArticlePlaceholder render article",

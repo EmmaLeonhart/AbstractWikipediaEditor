@@ -36,7 +36,7 @@ try:
 except (FileNotFoundError, json.JSONDecodeError):
     pass
 
-WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396"}
+WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396", "Z32123"}
 
 
 def get_func_id(obj):
@@ -97,6 +97,18 @@ def extract_value(obj):
 
     if z1k1 == "Z9":
         return obj.get("Z9K1", "?")
+
+    # Z13518: natural number
+    if z1k1 == "Z13518":
+        return obj.get("Z13518K1", "?")
+
+    # Z19677: quantity/ratio (numerator/denominator)
+    if z1k1 == "Z19677":
+        num = extract_value(obj.get("Z19677K2", {}))
+        den = extract_value(obj.get("Z19677K3", {}))
+        if den == "1":
+            return num
+        return f"{num}/{den}"
 
     fid = get_func_id(obj)
     if fid:
@@ -178,14 +190,39 @@ def convert_article(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
+    first_fragment = True
     for section in sections.values():
         for frag in section.get("fragments", []):
             if isinstance(frag, str):
                 continue
             core = unwrap_fragment(frag)
+            fid = get_func_id(core)
+
+            # Z32234 (join text to html) is a paragraph combiner -
+            # decompose into individual sentences grouped together
+            if fid == "Z32234":
+                if not first_fragment:
+                    lines.append("")  # blank line = paragraph break
+                for key in sorted(core.keys()):
+                    if key in ("Z1K1", "Z7K1"):
+                        continue
+                    val = core[key]
+                    if isinstance(val, list):
+                        for item in val:
+                            if isinstance(item, dict):
+                                inner = unwrap_fragment(item)
+                                wt = format_as_wikitext(inner)
+                                if wt:
+                                    lines.append(wt)
+                first_fragment = False
+                continue
+
             wt = format_as_wikitext(core)
             if wt:
+                if not first_fragment:
+                    lines.append("")  # blank line between fragments
                 lines.append(wt)
+                first_fragment = False
 
     print("\n".join(lines), flush=True)
 

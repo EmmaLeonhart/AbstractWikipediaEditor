@@ -20,6 +20,7 @@ const ALIASES: Record<string, string> = {
   'sunset': 'Z30000',
   'begins': 'Z31405',
   'auto article': 'Z29822',
+  'comparative measurement': 'Z32229',
 };
 
 const REVERSE_ALIASES: Record<string, string> = {};
@@ -224,6 +225,16 @@ function resolveArg(a: string): string {
   return a;
 }
 
+function formatNumber(raw: string): string {
+  if (!raw) return '?';
+  if (raw.includes('/')) {
+    const [n, d] = raw.split('/');
+    return n.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '/' +
+           d.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 function renderSentence(frag: ParsedFragment): string {
   const a = frag.args.map(resolveArg);
   switch (frag.funcId) {
@@ -237,6 +248,7 @@ function renderSentence(frag: ParsedFragment): string {
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;
     case 'Z27173': return `${a[0]} is ${a[1]} ${a[2]}.`;
     case 'Z29743': return `A ${a[0]} is a ${a[1]} ${a[2]}.`;
+    case 'Z32229': return `${a[0]} has a ${a[2]} ${formatNumber(a[3])} times that of ${a[1]}.`;
     default: return a.join(' ');
   }
 }

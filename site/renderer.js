@@ -16,6 +16,7 @@ const ALIASES = {
   'sunset': 'Z30000',
   'begins': 'Z31405',
   'auto article': 'Z29822',
+  'comparative measurement': 'Z32229',
 };
 
 const REVERSE_ALIASES = {};
@@ -50,6 +51,16 @@ function resolveArg(a, subjectQid) {
   return a;
 }
 
+function formatNumber(raw) {
+  if (!raw) return '?';
+  if (raw.includes('/')) {
+    const [n, d] = raw.split('/');
+    return n.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '/' +
+           d.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 function renderSentence(frag, subjectQid) {
   const a = frag.args.map(arg => resolveArg(arg, subjectQid));
   switch (frag.funcId) {
@@ -63,6 +74,7 @@ function renderSentence(frag, subjectQid) {
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;
     case 'Z27173': return `${a[0]} is ${a[1]} ${a[2]}.`;
     case 'Z29743': return `A ${a[0]} is a ${a[1]} ${a[2]}.`;
+    case 'Z32229': return `${a[0]} has a ${a[2]} ${formatNumber(a[3])} times that of ${a[1]}.`;
     default: return a.join(' ');
   }
 }
@@ -88,8 +100,13 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  const fragments = parseTemplates(wikitext);
-  if (fragments.length === 0) {
+  // Split by blank lines into paragraph groups.
+  // Lines within a group (separated by single newlines) form one paragraph.
+  const paragraphs = wikitext.split(/\n\s*\n/).filter(p => p.trim());
+  const paragraphFragments = paragraphs.map(p => parseTemplates(p));
+  const allFragments = paragraphFragments.flat();
+
+  if (allFragments.length === 0) {
     targetEl.innerHTML = '<em>No fragments to render.</em>';
     return;
   }
@@ -97,7 +114,7 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   // Collect all QIDs that need labels
   const needed = new Set();
   if (subjectQid) needed.add(subjectQid);
-  for (const frag of fragments) {
+  for (const frag of allFragments) {
     for (const arg of frag.args) {
       if (/^Q\d+$/.test(arg)) needed.add(arg);
     }
@@ -106,7 +123,11 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   targetEl.innerHTML = '<em>Resolving labels...</em>';
   await fetchLabels([...needed]);
 
-  targetEl.innerHTML = fragments.map(f =>
-    `<p class="sentence">${renderSentence(f, subjectQid)}</p>`
-  ).join('');
+  // Render each paragraph group: sentences joined with spaces inside a <p>
+  targetEl.innerHTML = paragraphFragments
+    .filter(frags => frags.length > 0)
+    .map(frags => {
+      const sentences = frags.map(f => renderSentence(f, subjectQid)).join(' ');
+      return `<p>${sentences}</p>`;
+    }).join('');
 }

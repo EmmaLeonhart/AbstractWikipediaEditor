@@ -193,7 +193,7 @@ def extract_function_ids(obj, funcs=None):
 
 
 # Wrapper functions that should be stripped to show the inner call
-WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396"}
+WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396", "Z32123"}
 
 
 def get_func_id(obj):
@@ -259,6 +259,18 @@ def extract_value(obj):
     if z1k1 == "Z9":
         return obj.get("Z9K1", "?")
 
+    # Z13518: natural number
+    if z1k1 == "Z13518":
+        return obj.get("Z13518K1", "?")
+
+    # Z19677: quantity/ratio (numerator/denominator)
+    if z1k1 == "Z19677":
+        num = extract_value(obj.get("Z19677K2", {}))
+        den = extract_value(obj.get("Z19677K3", {}))
+        if den == "1":
+            return num
+        return f"{num}/{den}"
+
     # Nested function call - show just the function name
     fid = get_func_id(obj)
     if fid:
@@ -301,12 +313,50 @@ def format_as_wikitext(obj):
     return "{{" + inner + "}}"
 
 
+def extract_paragraph_calls(obj):
+    """Extract inner function calls from a Z32234 paragraph combiner.
+
+    Z32234 takes a typed list ['Z1', {call}, ' ', {call}, ...] of inner
+    function calls separated by whitespace strings.  Returns a list of
+    the inner Z-object calls (unwrapped).
+    """
+    for key in sorted(obj.keys()):
+        if key in ("Z1K1", "Z7K1"):
+            continue
+        val = obj[key]
+        if isinstance(val, list):
+            calls = []
+            for item in val:
+                if isinstance(item, dict):
+                    core = unwrap_fragment(item)
+                    calls.append(core)
+            return calls
+    return []
+
+
 def format_fragment_neutral(fragment):
-    """Format a Z-object fragment as wikitext template syntax."""
+    """Format a Z-object fragment as wikitext template syntax.
+
+    Z32234 (join text to html) is decomposed into its inner calls so
+    that each sentence gets its own wikitext line within a paragraph
+    group.
+    """
     if isinstance(fragment, str):
         return fragment
 
     core = unwrap_fragment(fragment)
+    fid = get_func_id(core)
+
+    # Z32234 is a paragraph combiner - decompose into inner sentences
+    if fid == "Z32234":
+        inner_calls = extract_paragraph_calls(core)
+        lines = []
+        for call in inner_calls:
+            wt = format_as_wikitext(call)
+            if wt and wt != "Z89":
+                lines.append(wt)
+        return "\n".join(lines) if lines else None
+
     return format_as_wikitext(core)
 
 
@@ -388,6 +438,8 @@ def render_english_preview(fragment, article_qid):
             return f"{a[0]} is {a[1]} {a[2]}."
         elif fid == "Z29743" and len(a) >= 3:
             return f"A {a[0]} is a {a[1]} {a[2]}."
+        elif fid == "Z32229" and len(a) >= 4:
+            return f"{a[0]} has a {a[2]} {a[3]} times that of {a[1]}."
         else:
             return " ".join(a)
     except (IndexError, KeyError):
@@ -402,15 +454,17 @@ def build_article_page(article, content):
     label = get_label(title) if title.startswith("Q") else title
 
     # Extract wikitext fragments from the Z-object
+    # Each top-level fragment becomes a paragraph group separated by blank lines.
+    # Z32234 paragraphs produce multiple lines within a single group.
     sections = content.get("sections", {})
-    wikitext_lines = []
+    wikitext_parts = []
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
             wt = format_fragment_neutral(frag)
             if wt and wt != "Z89":
-                wikitext_lines.append(wt)
-    wikitext = "\n".join(wikitext_lines)
+                wikitext_parts.append(wt)
+    wikitext = "\n\n".join(wikitext_parts)
 
     # Escape for embedding in JS
     wikitext_escaped = wikitext.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")

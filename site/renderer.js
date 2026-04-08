@@ -100,9 +100,13 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  // Split by blank lines into paragraph groups.
-  // Lines within a group (separated by single newlines) form one paragraph.
-  const paragraphs = wikitext.split(/\n\s*\n/).filter(p => p.trim());
+  // Split by {{p}} markers into paragraph groups.
+  // Each group's templates are joined into one <p> tag.
+  // Falls back to blank-line splitting if no {{p}} markers found.
+  const hasP = /\{\{\s*p\s*\}\}/i.test(wikitext);
+  const paragraphs = hasP
+    ? wikitext.split(/\{\{\s*p\s*\}\}/i).filter(p => p.trim())
+    : wikitext.split(/\n\s*\n/).filter(p => p.trim());
   const paragraphFragments = paragraphs.map(p => parseTemplates(p));
   const allFragments = paragraphFragments.flat();
 

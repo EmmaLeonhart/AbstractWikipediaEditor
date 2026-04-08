@@ -186,6 +186,10 @@ async function renderPreview(): Promise<void> {
   // Render line-by-line so each preview line aligns with each textarea line
   const html = lines.map(line => {
     const trimmed = line.trim();
+    // {{p}} paragraph marker renders as a visual break
+    if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
+      return '<div class="sentence paragraph-break">&nbsp;</div>';
+    }
     const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
     if (tmplMatch) {
       const parts = tmplMatch[1].trim().split('|').map(s => s.trim());

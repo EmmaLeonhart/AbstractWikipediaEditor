@@ -199,10 +199,9 @@ def convert_article(qid, oldid=None):
             fid = get_func_id(core)
 
             # Z32234 (join text to html) is a paragraph combiner -
-            # decompose into individual sentences grouped together
+            # decompose into individual sentences grouped as a {{p}} block
             if fid == "Z32234":
-                if not first_fragment:
-                    lines.append("")  # blank line = paragraph break
+                lines.append("{{p}}")
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):
                         continue
@@ -219,8 +218,10 @@ def convert_article(qid, oldid=None):
 
             wt = format_as_wikitext(core)
             if wt:
-                if not first_fragment:
-                    lines.append("")  # blank line between fragments
+                if first_fragment:
+                    lines.append("{{p}}")
+                else:
+                    lines.append("{{p}}")
                 lines.append(wt)
                 first_fragment = False
 

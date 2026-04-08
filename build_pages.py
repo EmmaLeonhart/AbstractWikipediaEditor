@@ -348,14 +348,15 @@ def format_fragment_neutral(fragment):
     fid = get_func_id(core)
 
     # Z32234 is a paragraph combiner - decompose into inner sentences
+    # with {{p}} marker at the start of the paragraph
     if fid == "Z32234":
         inner_calls = extract_paragraph_calls(core)
-        lines = []
+        lines = ["{{p}}"]
         for call in inner_calls:
             wt = format_as_wikitext(call)
             if wt and wt != "Z89":
                 lines.append(wt)
-        return "\n".join(lines) if lines else None
+        return "\n".join(lines) if len(lines) > 1 else None
 
     return format_as_wikitext(core)
 
@@ -454,8 +455,8 @@ def build_article_page(article, content):
     label = get_label(title) if title.startswith("Q") else title
 
     # Extract wikitext fragments from the Z-object
-    # Each top-level fragment becomes a paragraph group separated by blank lines.
-    # Z32234 paragraphs produce multiple lines within a single group.
+    # Z32234 paragraphs produce {{p}}-delimited blocks.
+    # Non-paragraph fragments get their own {{p}} marker.
     sections = content.get("sections", {})
     wikitext_parts = []
     for section_id, section in sections.items():
@@ -463,8 +464,11 @@ def build_article_page(article, content):
         for frag in fragments:
             wt = format_fragment_neutral(frag)
             if wt and wt != "Z89":
+                # If this fragment doesn't start with {{p}}, add one
+                if not wt.startswith("{{p}}"):
+                    wt = "{{p}}\n" + wt
                 wikitext_parts.append(wt)
-    wikitext = "\n\n".join(wikitext_parts)
+    wikitext = "\n".join(wikitext_parts)
 
     # Escape for embedding in JS
     wikitext_escaped = wikitext.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")

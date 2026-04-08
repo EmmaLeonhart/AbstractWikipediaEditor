@@ -201,7 +201,8 @@ def generate_wikitext(qid):
     lines.append("---")
     lines.append("")
 
-    # Add fragments
+    # Add fragments wrapped in a paragraph marker
+    lines.append("{{p}}")
     for frag in fragments:
         lines.append(frag)
 

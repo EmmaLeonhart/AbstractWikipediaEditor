@@ -559,11 +559,43 @@ def parse_template(text):
     }
 
 
+def compile_paragraph(fragment_defs, variables, origin_qid, index):
+    """Compile a group of fragments into a single paragraph clipboard item.
+
+    Wraps multiple function calls in Z32123(Z32234([Z1, call1, "  ", call2, ...])).
+    Each inner call is NOT individually wrapped — Z32234 handles text
+    concatenation and Z32123 produces the final Z89 HTML paragraph.
+    """
+    inner_calls = []
+    for frag_def in fragment_defs:
+        func_call, _return_type = build_func_call(frag_def, variables)
+        inner_calls.append(func_call)
+
+    # Build typed list with whitespace separators between sentences
+    typed_list = ["Z1"]
+    for i, call in enumerate(inner_calls):
+        if i > 0:
+            typed_list.append("  ")
+        typed_list.append(call)
+
+    # Z32234 (join text to html) wraps the list
+    z32234_call = z7_call("Z32234", {"Z32234K1": typed_list})
+
+    # Z32123 (paragraph) wraps Z32234 to produce Z89
+    z32123_call = z7_call("Z32123", {"Z32123K1": z32234_call})
+
+    return build_clipboard_item(z32123_call, index=index, origin_qid=origin_qid)
+
+
 def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
     This is the main entry point. Takes a template string and variable
     values, returns a list of clipboard items ready for injection.
+
+    If the template contains ``{{p}}`` paragraph markers, templates between
+    markers are grouped into single Z32123(Z32234(...)) clipboard items.
+    Without markers, each template produces its own clipboard item (legacy).
 
     Args:
         text: Template string in wikitext format.
@@ -573,19 +605,33 @@ def compile_template(text, variables=None):
         List of clipboard item dicts, ready for inject_clipboard().
     """
     variables = variables or {}
-    parsed = parse_template(text)
-
-    # Merge frontmatter defaults with provided variables
-    meta_vars = parsed["metadata"].get("variables", {})
-    # meta_vars defines expected variables; actual values come from `variables` arg
-
-    # Validate: warn about undefined variables
-    for var_name in meta_vars:
-        if var_name not in variables and var_name != "subject":
-            # Not an error — might be optional or have defaults later
-            pass
-
+    _, body = parse_frontmatter(text)
     origin_qid = variables.get("subject", "Q0")
+
+    # Check for {{p}} paragraph markers
+    if re.search(r'\{\{\s*p\s*\}\}', body, re.IGNORECASE):
+        groups = re.split(r'\{\{\s*p\s*\}\}', body, flags=re.IGNORECASE)
+        clipboard_items = []
+
+        for group_text in groups:
+            group_text = group_text.strip()
+            if not group_text:
+                continue
+            fragments = parse_template_calls(group_text)
+            if not fragments:
+                continue
+
+            if len(fragments) == 1:
+                # Single sentence paragraph — still wrap as paragraph
+                item = compile_paragraph(fragments, variables, origin_qid, len(clipboard_items))
+            else:
+                item = compile_paragraph(fragments, variables, origin_qid, len(clipboard_items))
+            clipboard_items.append(item)
+
+        return clipboard_items
+
+    # Legacy: no {{p}} markers — each template is its own clipboard item
+    parsed = parse_template(text)
     clipboard_items = []
 
     for i, frag_def in enumerate(parsed["fragments"]):

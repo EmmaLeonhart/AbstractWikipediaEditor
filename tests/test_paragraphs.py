@@ -1,0 +1,241 @@
+"""Tests for {{p}} paragraph compilation and rendering.
+
+Verifies that:
+- {{p}} markers group templates into Z32123(Z32234([...])) clipboard items
+- One paragraph = one clipboard paste operation
+- Jupiter (Q319) article compiles to a single paragraph
+- Backward compatibility: templates without {{p}} still work as before
+"""
+
+import json
+import pytest
+import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from wikitext_parser import (
+    z6, z9s, z6091, z18, z7_call,
+    compile_template, compile_paragraph, build_func_call,
+    parse_template_calls, FUNCTION_REGISTRY,
+)
+
+
+# Cached Wikidata labels for Jupiter (Q319) — avoids network calls in tests
+JUPITER_LABELS = {
+    "Q319": "Jupiter",
+    "Q634": "planet",
+    "Q12935276": "largeness",
+    "Q544": "Solar System",
+    "Q121750": "gas giant",
+    "Q525": "Sun",
+    "Q11423": "mass",
+    "Q2": "Earth",
+    "Q37221": "diameter",
+}
+
+# Jupiter wikitext as produced by convert_article.py
+JUPITER_WIKITEXT = """{{p}}
+{{is a|SUBJECT|Q634}}
+{{superlative|SUBJECT|Q12935276|Q634|Q544}}
+{{is a|SUBJECT|Q121750}}
+{{comparative measurement|SUBJECT|Q525|Q11423|1/1048}}
+{{comparative measurement|SUBJECT|Q2|Q37221|11}}"""
+
+
+class TestParagraphCompilation:
+    """Test that {{p}} markers produce Z32123(Z32234([...])) clipboard items."""
+
+    def test_single_paragraph_produces_one_item(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        assert len(result) == 1, "Jupiter should compile to exactly 1 clipboard item"
+
+    def test_paragraph_outer_is_z32123(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        value = result[0]["value"]
+        assert value["Z7K1"]["Z9K1"] == "Z32123", "Outer function should be Z32123 (paragraph)"
+
+    def test_paragraph_inner_is_z32234(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        inner = result[0]["value"]["Z32123K1"]
+        assert inner["Z7K1"]["Z9K1"] == "Z32234", "Inner function should be Z32234 (join text to html)"
+
+    def test_typed_list_structure(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        assert isinstance(typed_list, list)
+        assert typed_list[0] == "Z1", "Typed list must start with 'Z1'"
+
+    def test_typed_list_has_five_calls(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        assert len(calls) == 5, "Jupiter paragraph should have 5 function calls"
+
+    def test_typed_list_has_separators(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        seps = [x for x in typed_list if isinstance(x, str) and x != "Z1"]
+        assert len(seps) == 4, "5 calls need 4 separators between them"
+        assert all(s == "  " for s in seps), "Separators should be double spaces"
+
+    def test_inner_calls_are_correct_functions(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        func_ids = [c["Z7K1"]["Z9K1"] for c in calls]
+        assert func_ids == ["Z26039", "Z27243", "Z26039", "Z32229", "Z32229"]
+
+    def test_clipboard_envelope(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        item = result[0]
+        assert item["itemId"] == "Q319.1#1"
+        assert item["originKey"] == "Q319.1"
+        assert item["originSlotType"] == "Z89"
+        assert item["resolvingType"] == "Z89"
+
+    def test_subject_resolved_in_inner_calls(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        first_call = typed_list[1]  # Z26039
+        # K1 should be SUBJECT -> Z18(Z825K1)
+        assert first_call["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
+
+    def test_qids_resolved_in_inner_calls(self):
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        first_call = typed_list[1]  # Z26039 with Q634
+        assert first_call["Z26039K2"]["Z6091K1"]["Z6K1"] == "Q634"
+
+
+class TestMultipleParagraphs:
+    """Test wikitext with multiple {{p}} markers."""
+
+    def test_two_paragraphs(self):
+        template = """{{p}}
+{{is a|SUBJECT|Q634}}
+{{superlative|SUBJECT|Q12935276|Q634|Q544}}
+{{p}}
+{{is a|SUBJECT|Q121750}}
+{{comparative measurement|SUBJECT|Q525|Q11423|1/1048}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2, "Two {{p}} markers should produce 2 clipboard items"
+
+    def test_two_paragraphs_both_z32123(self):
+        template = """{{p}}
+{{is a|SUBJECT|Q634}}
+{{p}}
+{{is a|SUBJECT|Q121750}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+
+    def test_single_sentence_paragraph(self):
+        """Even a single sentence with {{p}} gets wrapped as a paragraph."""
+        template = """{{p}}
+{{is a|SUBJECT|Q634}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 1
+        value = result[0]["value"]
+        assert value["Z7K1"]["Z9K1"] == "Z32123"
+        inner = value["Z32123K1"]
+        assert inner["Z7K1"]["Z9K1"] == "Z32234"
+        typed_list = inner["Z32234K1"]
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        assert len(calls) == 1
+
+    def test_paragraph_item_ids_increment(self):
+        template = """{{p}}
+{{is a|SUBJECT|Q634}}
+{{p}}
+{{is a|SUBJECT|Q121750}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert result[0]["itemId"] == "Q319.1#1"
+        assert result[1]["itemId"] == "Q319.2#1"
+
+
+class TestBackwardCompatibility:
+    """Templates without {{p}} markers should still work as before."""
+
+    def test_no_p_markers_each_template_is_item(self):
+        template = """{{Z26039|SUBJECT|Q634}}
+{{Z26570|SUBJECT|Q634|Q544}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2, "Without {{p}}, each template is its own clipboard item"
+
+    def test_no_p_markers_wrapped_individually(self):
+        template = "{{Z26039|SUBJECT|Q634}}"
+        result = compile_template(template, {"subject": "Q319"})
+        # Z26039 returns Z6, wrapped with Z27868
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z27868"
+
+    def test_shrine_template_still_works(self):
+        template = """---
+title: Shinto Shrine
+variables:
+  deity: Q-item
+---
+{{Z26570|SUBJECT|Q845945|Q17}}
+{{Z28016|$deity|Q11591100|SUBJECT}}"""
+        result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
+        assert len(result) == 2
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z29749"
+
+
+class TestCompileParagraphDirect:
+    """Test the compile_paragraph function directly."""
+
+    def test_compile_paragraph_basic(self):
+        frags = parse_template_calls("{{Z26039|SUBJECT|Q634}}\n{{Z26039|SUBJECT|Q121750}}")
+        item = compile_paragraph(frags, {}, "Q319", 0)
+        assert item["value"]["Z7K1"]["Z9K1"] == "Z32123"
+
+    def test_compile_paragraph_inner_not_wrapped(self):
+        """Inner calls should NOT have Z29749/Z27868 wrappers."""
+        frags = parse_template_calls("{{Z26039|SUBJECT|Q634}}")
+        item = compile_paragraph(frags, {}, "Q319", 0)
+        typed_list = item["value"]["Z32123K1"]["Z32234K1"]
+        inner_call = typed_list[1]
+        # Should be raw Z26039, not wrapped in Z27868
+        assert inner_call["Z7K1"]["Z9K1"] == "Z26039"
+
+
+class TestJupiterRoundTrip:
+    """Test the full Jupiter pipeline: wikitext -> compile -> verify structure."""
+
+    def test_jupiter_one_paste(self):
+        """Jupiter should need exactly one paste operation."""
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        assert len(result) == 1
+
+    def test_jupiter_matches_real_structure(self):
+        """The compiled output should match the Z-object structure from Abstract Wikipedia.
+
+        Real Q319 has: Z32123(Z32234([Z1, Z26039, ' ', Z27243, ' ', Z26039, ' ', Z32229, ' ', Z32229]))
+        """
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+
+        # Type marker
+        assert typed_list[0] == "Z1"
+
+        # 5 function calls at positions 1, 3, 5, 7, 9
+        assert typed_list[1]["Z7K1"]["Z9K1"] == "Z26039"   # is a planet
+        assert typed_list[3]["Z7K1"]["Z9K1"] == "Z27243"   # superlative
+        assert typed_list[5]["Z7K1"]["Z9K1"] == "Z26039"   # is a gas giant
+        assert typed_list[7]["Z7K1"]["Z9K1"] == "Z32229"   # mass comparison
+        assert typed_list[9]["Z7K1"]["Z9K1"] == "Z32229"   # diameter comparison
+
+        # Separators at positions 2, 4, 6, 8
+        assert typed_list[2] == "  "
+        assert typed_list[4] == "  "
+        assert typed_list[6] == "  "
+        assert typed_list[8] == "  "
+
+    def test_jupiter_z32229_has_quantity_arg(self):
+        """Z32229 calls should have the quantity string as K4."""
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        mass_call = typed_list[7]  # first Z32229
+        # K4 = quantity = "1/1048" -> Z6 string
+        assert mass_call["Z32229K4"]["Z6K1"] == "1/1048"

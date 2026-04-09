@@ -11,5 +11,5 @@ contextBridge.exposeInMainWorld('api', {
   fetchRevisions: (qid: string) => ipcRenderer.invoke('fetch-revisions', qid),
   pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId, editSummary),
   getCredentials: () => ipcRenderer.invoke('get-credentials'),
-  saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
+  saveCredentials: (creds: { username: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
 });

@@ -139,7 +139,7 @@ const ENV_PATH = path.join(PROJECT_ROOT, '.env');
 
 // --- Credentials (.env) management ---
 
-ipcMain.handle('get-credentials', async (): Promise<{ username: string; password: string; mainPassword: string } | null> => {
+ipcMain.handle('get-credentials', async (): Promise<{ username: string; mainPassword: string } | null> => {
   try {
     const text = fs.readFileSync(ENV_PATH, 'utf-8');
     const lines = text.split('\n');
@@ -150,7 +150,6 @@ ipcMain.handle('get-credentials', async (): Promise<{ username: string; password
     }
     return {
       username: vals['WIKI_USERNAME'] || '',
-      password: vals['WIKI_PASSWORD'] || '',
       mainPassword: vals['WIKI_MAIN_PASSWORD'] || '',
     };
   } catch {
@@ -158,9 +157,9 @@ ipcMain.handle('get-credentials', async (): Promise<{ username: string; password
   }
 });
 
-ipcMain.handle('save-credentials', async (_event, creds: { username: string; password: string; mainPassword: string }): Promise<boolean> => {
+ipcMain.handle('save-credentials', async (_event, creds: { username: string; mainPassword: string }): Promise<boolean> => {
   try {
-    const content = `WIKI_USERNAME=${creds.username}\nWIKI_PASSWORD=${creds.password}\nWIKI_MAIN_PASSWORD=${creds.mainPassword}\n`;
+    const content = `WIKI_USERNAME=${creds.username}\nWIKI_MAIN_PASSWORD=${creds.mainPassword}\n`;
     fs.writeFileSync(ENV_PATH, content, 'utf-8');
     return true;
   } catch (e) {

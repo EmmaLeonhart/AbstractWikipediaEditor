@@ -58,7 +58,6 @@ const btnHistoryBack = document.getElementById('btn-history-back') as HTMLButton
 // Login overlay elements
 const loginOverlay = document.getElementById('login-overlay') as HTMLDivElement;
 const loginUsername = document.getElementById('login-username') as HTMLInputElement;
-const loginPassword = document.getElementById('login-password') as HTMLInputElement;
 const loginMainPassword = document.getElementById('login-main-password') as HTMLInputElement;
 const loginSave = document.getElementById('login-save') as HTMLButtonElement;
 const loginCancel = document.getElementById('login-cancel') as HTMLButtonElement;
@@ -386,7 +385,6 @@ btnLogin.addEventListener('click', async () => {
   const creds = await window.api.getCredentials();
   if (creds) {
     loginUsername.value = creds.username;
-    loginPassword.value = creds.password;
     loginMainPassword.value = creds.mainPassword;
   }
 });
@@ -401,16 +399,15 @@ loginOverlay.addEventListener('click', (e) => {
 
 loginSave.addEventListener('click', async () => {
   const username = loginUsername.value.trim();
-  const password = loginPassword.value.trim();
   const mainPassword = loginMainPassword.value.trim();
 
   if (!username || !mainPassword) {
-    loginStatus.textContent = 'Username and main password are required.';
+    loginStatus.textContent = 'Username and password are required.';
     loginStatus.className = 'login-status err';
     return;
   }
 
-  const ok = await window.api.saveCredentials({ username, password, mainPassword });
+  const ok = await window.api.saveCredentials({ username, mainPassword });
   if (ok) {
     loginStatus.textContent = 'Credentials saved.';
     loginStatus.className = 'login-status ok';

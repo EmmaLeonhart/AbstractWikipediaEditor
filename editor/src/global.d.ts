@@ -17,8 +17,8 @@ interface ElectronAPI {
   convertArticleRevision: (qid: string, oldid: string) => Promise<string>;
   fetchRevisions: (qid: string) => Promise<RevisionInfo[]>;
   pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => Promise<string>;
-  getCredentials: () => Promise<{ username: string; password: string; mainPassword: string } | null>;
-  saveCredentials: (creds: { username: string; password: string; mainPassword: string }) => Promise<boolean>;
+  getCredentials: () => Promise<{ username: string; mainPassword: string } | null>;
+  saveCredentials: (creds: { username: string; mainPassword: string }) => Promise<boolean>;
 }
 
 interface Window {

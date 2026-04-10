@@ -80,9 +80,9 @@ def extract_value(obj):
         qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
-        # Round-trip pronoun QID back to its readable wikitext alias
-        if qid == "Q6091500":
-            return "it"
+        # Always emit the bare canonical QID, including for Q6091500.
+        # The "it" wikitext shortcut is a user-facing typing alias only;
+        # the converter never invents it on the round-trip path.
         return qid
 
     if z1k1 == "Z18":

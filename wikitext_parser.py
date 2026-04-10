@@ -369,7 +369,15 @@ QID_ALIASES = {
 }
 
 
-def resolve_value(raw_value, variables=None):
+# Param types in FUNCTION_REGISTRY that require an entity-typed value
+# (Z6091/Z18). A plain Z6 string in one of these slots is a type error
+# and must be rejected at compile time so the editor cannot push bad
+# data — that class of bug is invisible in preview renderers and
+# silently corrupts published articles.
+ENTITY_PARAM_TYPES = frozenset({"Q-item", "entity_ref"})
+
+
+def resolve_value(raw_value, variables=None, expected_type=None):
     """Convert a raw template value into a Z-object.
 
     Resolution rules:
@@ -378,7 +386,8 @@ def resolve_value(raw_value, variables=None):
     - QID_ALIASES key (e.g. "it") -> Z6091 Wikidata item reference
     - "Q..." (Wikidata QID) -> Z6091 Wikidata item reference
     - "Z..." that looks like a Z-ID -> Z9 reference
-    - Anything else -> Z6 string literal
+    - Anything else -> Z6 string literal (only allowed if expected_type
+      is not an entity slot — entity slots reject plain strings)
     """
     variables = variables or {}
     raw_value = raw_value.strip()
@@ -394,7 +403,7 @@ def resolve_value(raw_value, variables=None):
             raise ValueError(f"Undefined variable: {raw_value}")
         resolved = variables[var_name]
         # Recurse: the resolved value might be a QID, Z-ID, etc.
-        return resolve_value(resolved, variables)
+        return resolve_value(resolved, variables, expected_type)
 
     # Wikitext aliases for Wikidata items (e.g. "it" -> Q6091500)
     if raw_value in QID_ALIASES:
@@ -414,7 +423,17 @@ def resolve_value(raw_value, variables=None):
     if raw_value.lower() in ("false", "no"):
         return z9s("Z42")  # Z42 = false
 
-    # Plain string
+    # Plain string — only legal in slots that explicitly accept strings.
+    # In entity slots, refuse to fall through to z6() because that
+    # silently puts a Z6 in a Z6091 slot and corrupts the article.
+    if expected_type in ENTITY_PARAM_TYPES:
+        alias_hint = ", ".join(sorted(QID_ALIASES.keys()))
+        raise ValueError(
+            f"'{raw_value}' is not a valid value for an entity slot "
+            f"(expected a Q-item, $variable, SUBJECT, or alias: {alias_hint}). "
+            f"Plain strings in entity positions are rejected because they "
+            f"silently corrupt the published JSON."
+        )
     return z6(raw_value)
 
 
@@ -600,7 +619,7 @@ def build_func_call(fragment_def, variables=None):
         if func_id in _PARAM_NAME_INDEX and param_name in _PARAM_NAME_INDEX[func_id]:
             param = _PARAM_NAME_INDEX[func_id][param_name]
             full_key = f"{func_id}{param['key']}"
-            args_dict[full_key] = resolve_value(raw_value, variables)
+            args_dict[full_key] = resolve_value(raw_value, variables, param.get("type"))
             # Mark this position as used
             idx = next(i for i, p in enumerate(params) if p["name"] == param_name)
             used_positions.add(idx)
@@ -641,7 +660,7 @@ def build_func_call(fragment_def, variables=None):
         if param["type"] == "date":
             args_dict[full_key] = parse_date_string(raw_value)
         else:
-            args_dict[full_key] = resolve_value(raw_value, variables)
+            args_dict[full_key] = resolve_value(raw_value, variables, param.get("type"))
 
     return z7_call(func_id, args_dict), func_info["returns"]
 

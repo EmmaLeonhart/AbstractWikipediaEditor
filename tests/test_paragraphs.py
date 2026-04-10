@@ -377,6 +377,21 @@ class TestSectionHeaders:
         assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
+    def test_bare_string_in_entity_slot_rejected(self):
+        """A literal that is not a QID, alias, $variable, or SUBJECT must
+        be rejected at compile time when it appears in an entity slot.
+
+        This is the safety net that prevents the original 'it' bug from
+        recurring: a stray string in a Q-item position used to silently
+        compile to a Z6 plain string and corrupt the published JSON.
+        Now it raises so the editor refuses to push.
+        """
+        import pytest
+        # role expects entity / Q-item args; "garbage" is none of those
+        template = "{{role|Q813858|Q11591100|garbage}}"
+        with pytest.raises(ValueError, match="not a valid value for an entity slot"):
+            compile_template(template, {"subject": "Q288312"})
+
     def test_literal_it_alias_resolves_to_pronoun_qid(self):
         """The wikitext alias `it` (e.g. from a round-tripped article) must
         resolve to a Z6091 entity for Q6091500, never a Z6 plain string.

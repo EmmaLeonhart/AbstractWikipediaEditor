@@ -612,6 +612,23 @@ def compile_section_header(qid, variables, origin_qid, index):
     return build_clipboard_item(z31465_call, index=index, origin_qid=origin_qid)
 
 
+def replace_subject_with_pronoun(segment_text):
+    """Replace SUBJECT with Q6091500 ("it") after the first occurrence.
+
+    The first SUBJECT in a paragraph stays as SUBJECT (which compiles to
+    the article entity Z825K1). Subsequent SUBJECTs become Q6091500,
+    the Wikidata item for the pronoun "it". This avoids the bot
+    repeating the subject's name in every sentence of a paragraph.
+    """
+    count = [0]
+    def replacer(match):
+        count[0] += 1
+        if count[0] == 1:
+            return match.group(0)
+        return "Q6091500"
+    return re.sub(r'\bSUBJECT\b', replacer, segment_text)
+
+
 def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
@@ -621,6 +638,10 @@ def compile_template(text, variables=None):
     All content is implicitly one paragraph. ``{{p}}`` midway through
     starts a new paragraph. ``==QID==`` section headers also cause
     paragraph breaks and produce Z31465 section title items.
+
+    Within each paragraph, the first SUBJECT mention stays as SUBJECT;
+    subsequent SUBJECTs become Q6091500 ("it") so the article doesn't
+    keep repeating the subject's name.
 
     Args:
         text: Template string in wikitext format.
@@ -642,15 +663,24 @@ def compile_template(text, variables=None):
     )
 
     clipboard_items = []
-    current_fragments = []
     section_counter = 0  # for auto-numbering non-QID headings
+    pending_segments = []  # raw text segments accumulating into the current paragraph
 
     def flush_paragraph():
-        """Compile accumulated fragments into a paragraph and add to items."""
-        if not current_fragments:
+        """Compile accumulated fragments into a paragraph and add to items.
+
+        SUBJECT-to-pronoun substitution happens here, scoped to the
+        whole paragraph (across all its segments).
+        """
+        if not pending_segments:
+            return
+        combined = "\n".join(pending_segments)
+        rewritten = replace_subject_with_pronoun(combined)
+        fragments = parse_template_calls(rewritten)
+        if not fragments:
             return
         item = compile_paragraph(
-            current_fragments, variables, origin_qid, len(clipboard_items)
+            fragments, variables, origin_qid, len(clipboard_items)
         )
         clipboard_items.append(item)
 
@@ -659,14 +689,14 @@ def compile_template(text, variables=None):
         # Process any template calls before this marker
         segment = body[last_end:match.start()].strip()
         if segment:
-            current_fragments.extend(parse_template_calls(segment))
+            pending_segments.append(segment)
 
         # Check if this is a section header ==...==
         header_text = match.group(2)
         if header_text is not None:
             # Section header: flush current paragraph, emit header, start new paragraph
             flush_paragraph()
-            current_fragments = []
+            pending_segments = []
             if re.match(r'^Q\d+$', header_text):
                 section_qid = header_text
             else:
@@ -680,14 +710,14 @@ def compile_template(text, variables=None):
         else:
             # {{p}} marker: flush current paragraph, start new one
             flush_paragraph()
-            current_fragments = []
+            pending_segments = []
 
         last_end = match.end()
 
     # Process remaining content after last marker
     remaining = body[last_end:].strip()
     if remaining:
-        current_fragments.extend(parse_template_calls(remaining))
+        pending_segments.append(remaining)
     flush_paragraph()
 
     return clipboard_items

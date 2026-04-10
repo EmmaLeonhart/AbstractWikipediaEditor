@@ -309,7 +309,13 @@ def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None, e
     shot(page, f"{qid}_03_after_paste")
 
     # Step 6: Publish
-    if extra_summary:
+    # extra_summary semantics:
+    #   None      -> use the default AWE-credited summary (or restore summary)
+    #   ""        -> publish with an empty summary (no announcement)
+    #   non-empty -> prepend to TOOL_CREDIT
+    if extra_summary == "":
+        summary = ""
+    elif extra_summary:
         summary = f"{extra_summary} {TOOL_CREDIT}"
     elif restore_rev:
         summary = EDIT_SUMMARY_RESTORE.format(rev=restore_rev)

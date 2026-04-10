@@ -326,7 +326,7 @@ class TestSectionHeaders:
         assert result[4]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q201"
 
     def test_subject_replaced_with_pronoun_after_first(self):
-        """SUBJECT becomes the literal string "it" after the first mention in a paragraph."""
+        """SUBJECT becomes Q6091500 ("it") after the first mention in a paragraph."""
         template = """{{Z26039|SUBJECT|Q634}}
 {{Z26570|SUBJECT|Q634|Q544}}
 {{Z26955|Q66305721|SUBJECT|Q87982}}"""
@@ -334,10 +334,10 @@ class TestSectionHeaders:
         typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         # Call 1: first SUBJECT stays as arg ref
         assert typed_list[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        # Call 2: SUBJECT becomes Z6 string "it"
-        assert typed_list[3]["Z26570K1"]["Z6K1"] == "it"
-        # Call 3: SUBJECT becomes Z6 string "it"
-        assert typed_list[5]["Z26955K2"]["Z6K1"] == "it"
+        # Call 2: SUBJECT becomes Q6091500 wrapped as a Z6091 entity
+        assert typed_list[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
+        # Call 3: SUBJECT becomes Q6091500 wrapped as a Z6091 entity
+        assert typed_list[5]["Z26955K2"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
     def test_pronoun_resets_per_paragraph(self):
         """Pronoun counter resets at {{p}} markers."""
@@ -352,11 +352,11 @@ class TestSectionHeaders:
         # Paragraph 1: first SUBJECT stays, second becomes pronoun
         p1 = result[0]["value"]["Z32123K1"]["Z32234K1"]
         assert p1[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p1[3]["Z26570K1"]["Z6K1"] == "it"
+        assert p1[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
         # Paragraph 2: counter reset, first SUBJECT stays, second becomes pronoun
         p2 = result[1]["value"]["Z32123K1"]["Z32234K1"]
         assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p2[3]["Z26570K1"]["Z6K1"] == "it"
+        assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
     def test_pronoun_resets_at_section_header(self):
         """Pronoun counter resets at ==QID== section headers."""
@@ -371,11 +371,11 @@ class TestSectionHeaders:
         # Paragraph 1
         p1 = result[0]["value"]["Z32123K1"]["Z32234K1"]
         assert p1[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p1[3]["Z26570K1"]["Z6K1"] == "it"
+        assert p1[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
         # Paragraph 2 after section header — counter reset
         p2 = result[2]["value"]["Z32123K1"]["Z32234K1"]
         assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p2[3]["Z26570K1"]["Z6K1"] == "it"
+        assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
     def test_cite_web_url_only(self):
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""

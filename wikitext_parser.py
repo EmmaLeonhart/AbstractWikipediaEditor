@@ -720,20 +720,22 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 
 def replace_subject_with_pronoun(segment_text):
-    """Replace SUBJECT with the literal text "it" after the first occurrence.
+    """Replace SUBJECT with Q6091500 ("it") after the first occurrence.
 
     The first SUBJECT in a paragraph stays as SUBJECT (which compiles to
-    the article entity Z825K1). Subsequent SUBJECTs become the literal
-    string "it", which compiles to a Z6 string and renders directly as
-    "it" in the article. This avoids the bot repeating the subject's
-    name in every sentence of a paragraph.
+    the article entity Z825K1). Subsequent SUBJECTs become Q6091500, the
+    Wikidata item for the third-person neuter pronoun "it", so they
+    compile to a Z6091 entity reference — the structurally correct shape
+    for slots that expect a Wikidata item. Substituting the literal
+    string "it" instead would produce a Z6 string and break the function
+    call's type contract.
     """
     count = [0]
     def replacer(match):
         count[0] += 1
         if count[0] == 1:
             return match.group(0)
-        return "it"
+        return "Q6091500"
     return re.sub(r'\bSUBJECT\b', replacer, segment_text)
 
 

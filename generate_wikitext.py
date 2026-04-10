@@ -73,30 +73,26 @@ URL_REFERENCE_PROPS = [
 ]
 
 
-def collect_reference_urls(claims, used_props):
-    """Collect unique reference URLs from claims for the used properties.
+def cite_fragments_for_claim(claim, seen_urls):
+    """Return cite-web fragments for any new reference URLs on this claim.
 
-    Walks the references attached to each claim of a used property and
-    extracts URLs from the URL_REFERENCE_PROPS. URLs containing '|' are
-    skipped because that character would break wikitext template parsing.
+    Walks the claim's references, pulls URLs from URL_REFERENCE_PROPS,
+    skips URLs already in seen_urls (mutating it in place), and skips
+    URLs containing '|' since that character would break wikitext
+    template parsing.
     """
-    urls = []
-    seen = set()
-    for pid in used_props:
-        if pid not in claims:
-            continue
-        for claim in claims[pid]:
-            for ref in claim.get("references", []):
-                snaks = ref.get("snaks", {})
-                for url_prop in URL_REFERENCE_PROPS:
-                    if url_prop not in snaks:
-                        continue
-                    for snak in snaks[url_prop]:
-                        val = snak.get("datavalue", {}).get("value")
-                        if isinstance(val, str) and "|" not in val and val not in seen:
-                            seen.add(val)
-                            urls.append(val)
-    return urls
+    out = []
+    for ref in claim.get("references", []):
+        snaks = ref.get("snaks", {})
+        for url_prop in URL_REFERENCE_PROPS:
+            if url_prop not in snaks:
+                continue
+            for snak in snaks[url_prop]:
+                val = snak.get("datavalue", {}).get("value")
+                if isinstance(val, str) and "|" not in val and val not in seen_urls:
+                    seen_urls.add(val)
+                    out.append(f"{{{{cite web|{val}}}}}")
+    return out
 
 
 def generate_wikitext(qid):
@@ -108,21 +104,30 @@ def generate_wikitext(qid):
     description = entity.get("descriptions", {}).get("en", {}).get("value", "")
     claims = entity.get("claims", {})
 
-    # Get P31 value (instance of) - needed by several templates
+    # Get P31 value (instance of) - needed by several templates.
+    # Also track the source claim for each value so we can cite it later.
     p31_value = None
-    p31_values = []
+    p31_value_claims = []  # list of (qid, claim) tuples
     if "P31" in claims:
         for claim in claims["P31"]:
             v = extract_qid_value(claim)
             if v:
-                p31_values.append(v)
+                p31_value_claims.append((v, claim))
                 if not p31_value:
                     p31_value = v
+    p31_values = [v for v, _ in p31_value_claims]
 
     # Collect variables we'll need
     variables = {}
     fragments = []
     used_props = set()
+    seen_urls = set()  # global dedupe for cite-web URLs
+
+    def emit(frag, claim=None):
+        """Append a fragment, then any cite-web fragments from its source claim."""
+        fragments.append(frag)
+        if claim is not None:
+            fragments.extend(cite_fragments_for_claim(claim, seen_urls))
 
     # Determine which location property to use (most specific wins)
     # P131 (admin territory) > P17 (country) > P30 (continent)
@@ -136,44 +141,53 @@ def generate_wikitext(qid):
     # Check if P106 (occupation) exists — if so, skip P31 ("is a human" is useless)
     has_occupation = "P106" in claims and "P106" in mapping
 
-    # Collect all occupation values
-    occupation_values = []
+    # Collect all occupation values with their source claims
+    occupation_value_claims = []  # list of (qid, claim) tuples
     if has_occupation:
         for claim in claims["P106"]:
             v = extract_qid_value(claim)
             if v:
-                occupation_values.append(v)
+                occupation_value_claims.append((v, claim))
+    occupation_values = [v for v, _ in occupation_value_claims]
 
     # When both P106 (occupation) and P27 (citizenship) exist, combine first occupation
     # with citizenship: "X is a tragedy writer of Classical Athens"
     has_citizenship = "P27" in claims and "P27" in mapping
-    if occupation_values and has_citizenship:
+    if occupation_value_claims and has_citizenship:
         citizenship_value = None
+        citizenship_claim = None
         for claim in claims["P27"]:
             v = extract_qid_value(claim)
             if v:
                 citizenship_value = v
+                citizenship_claim = claim
                 break
         if citizenship_value:
-            fragments.append(f"{{{{Z26955|{occupation_values[0]}|SUBJECT|{citizenship_value}}}}}")
+            first_occ, first_occ_claim = occupation_value_claims[0]
+            emit(
+                f"{{{{Z26955|{first_occ}|SUBJECT|{citizenship_value}}}}}",
+                first_occ_claim,
+            )
+            # Cite the citizenship claim too
+            fragments.extend(cite_fragments_for_claim(citizenship_claim, seen_urls))
             # Remaining occupations as standalone "is a" fragments
-            for occ in occupation_values[1:]:
-                fragments.append(f"{{{{Z26039|SUBJECT|{occ}}}}}")
+            for occ_v, occ_claim in occupation_value_claims[1:]:
+                emit(f"{{{{Z26039|SUBJECT|{occ_v}}}}}", occ_claim)
             used_props.add("P106")
             used_props.add("P27")
 
     # If P106 exists but P27 doesn't, emit all occupations as standalone
-    if occupation_values and "P106" not in used_props:
-        for occ in occupation_values:
-            fragments.append(f"{{{{Z26039|SUBJECT|{occ}}}}}")
+    if occupation_value_claims and "P106" not in used_props:
+        for occ_v, occ_claim in occupation_value_claims:
+            emit(f"{{{{Z26039|SUBJECT|{occ_v}}}}}", occ_claim)
         used_props.add("P106")
 
     # Include P31 values, but skip Q5 (human) when occupation exists
-    if "P31" in mapping and p31_values:
-        for v in p31_values:
+    if "P31" in mapping and p31_value_claims:
+        for v, claim in p31_value_claims:
             if has_occupation and v == "Q5":
                 continue
-            fragments.append(f"{{{{Z26039|SUBJECT|{v}}}}}")
+            emit(f"{{{{Z26039|SUBJECT|{v}}}}}", claim)
         used_props.add("P31")
 
     # Process other mapped properties
@@ -196,35 +210,24 @@ def generate_wikitext(qid):
         if any(other in claims for other in skip_if):
             continue
 
-        # Include all QID values for this property, not just the first
-        values = []
+        # Walk claims directly so we can attach refs to each fragment
+        emitted_any = False
+        template = pmap["template"]
         for claim in claims[pid]:
             v = extract_qid_value(claim)
-            if v:
-                values.append(v)
-        if not values:
-            continue
-        value = values[0]
-
-        # Build the template line based on the mapping
-        func = pmap["function"]
-        template = pmap["template"]
-
-        # Emit a line for each value of this property
-        for v in values:
-            line = template.replace("SUBJECT", "SUBJECT")
-            line = line.replace("$value", v)
+            if not v:
+                continue
+            line = template.replace("$value", v)
             if "$P31_value" in line:
                 if p31_value:
                     line = line.replace("$P31_value", p31_value)
                 else:
                     continue  # Skip if we need P31 but don't have it
-            fragments.append(line)
+            emit(line, claim)
+            emitted_any = True
 
-        used_props.add(pid)
-
-    # Collect reference URLs from the used properties
-    ref_urls = collect_reference_urls(claims, used_props)
+        if emitted_any:
+            used_props.add(pid)
 
     # Build the frontmatter
     lines = ["---"]
@@ -242,12 +245,6 @@ def generate_wikitext(qid):
     # Add fragments (everything is implicitly one paragraph)
     for frag in fragments:
         lines.append(frag)
-
-    # Append cite-web fragments for any reference URLs in their own paragraph
-    if ref_urls:
-        lines.append("{{p}}")
-        for url in ref_urls:
-            lines.append(f"{{{{cite web|{url}}}}}")
 
     return "\n".join(lines), used_props, label
 

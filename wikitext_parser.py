@@ -633,16 +633,17 @@ def compile_template(text, variables=None):
     _, body = parse_frontmatter(text)
     origin_qid = variables.get("subject", "Q0")
 
-    # Split body into segments separated by {{p}} or ==QID== markers.
-    # Each segment becomes a paragraph; ==QID== also produces a section header item.
-    # Pattern matches {{p}} or ==QID== (with optional whitespace)
+    # Split body into segments separated by {{p}} or ==...== markers.
+    # Each segment becomes a paragraph; ==...== also produces a section header item.
+    # ==QID== uses the QID directly; ==anything else== auto-assigns natural number QIDs.
     split_pattern = re.compile(
-        r'(\{\{\s*p\s*\}\}|^==\s*(Q\d+)\s*==$)',
+        r'(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$)',
         re.IGNORECASE | re.MULTILINE
     )
 
     clipboard_items = []
     current_fragments = []
+    section_counter = 0  # for auto-numbering non-QID headings
 
     def flush_paragraph():
         """Compile accumulated fragments into a paragraph and add to items."""
@@ -660,12 +661,18 @@ def compile_template(text, variables=None):
         if segment:
             current_fragments.extend(parse_template_calls(segment))
 
-        # Check if this is a section header ==QID==
-        section_qid = match.group(2)
-        if section_qid:
+        # Check if this is a section header ==...==
+        header_text = match.group(2)
+        if header_text is not None:
             # Section header: flush current paragraph, emit header, start new paragraph
             flush_paragraph()
             current_fragments = []
+            if re.match(r'^Q\d+$', header_text):
+                section_qid = header_text
+            else:
+                # Non-QID heading: assign natural number QID (Q199=1, Q200=2, ...)
+                section_counter += 1
+                section_qid = f"Q{198 + section_counter}"
             header_item = compile_section_header(
                 section_qid, variables, origin_qid, len(clipboard_items)
             )

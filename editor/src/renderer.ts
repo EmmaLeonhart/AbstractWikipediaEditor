@@ -195,16 +195,19 @@ async function renderPreview(): Promise<void> {
     if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
       return '<div class="sentence paragraph-break">&nbsp;</div>';
     }
-    // ==QID== section header renders as a numbered h2
-    const sectionMatch = /^==\s*(Q\d+)\s*==$/.exec(trimmed);
+    // ==...== section header
+    const sectionMatch = /^==\s*(.+?)\s*==$/.exec(trimmed);
     if (sectionMatch) {
-      sectionNumber++;
-      const qid = sectionMatch[1];
-      const label = labelCache[qid];
-      const display = label && label !== qid
-        ? `${sectionNumber} ${label} (${qid})`
-        : `${sectionNumber} (${qid})`;
-      return `<div class="sentence section-header"><h2>${display}</h2></div>`;
+      const content = sectionMatch[1];
+      if (/^Q\d+$/.test(content)) {
+        // Valid QID: show label
+        const label = labelCache[content] || content;
+        return `<div class="sentence section-header"><h2>${label}</h2></div>`;
+      } else {
+        // Non-QID: show as auto-numbered
+        sectionNumber++;
+        return `<div class="sentence section-header"><h2>${sectionNumber} <em>(${content})</em></h2></div>`;
+      }
     }
     const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
     if (tmplMatch) {

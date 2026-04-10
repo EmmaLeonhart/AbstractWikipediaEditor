@@ -295,3 +295,45 @@ class TestSectionHeaders:
         assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z32123"
         assert result[2]["value"]["Z7K1"]["Z9K1"] == "Z31465"
         assert result[3]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+
+    def test_non_qid_heading_gets_natural_number(self):
+        """==Parts== gets auto-assigned Q199 (natural number 1)."""
+        template = """{{Z26039|SUBJECT|Q634}}
+==Parts==
+{{Z26039|SUBJECT|Q515}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 3
+        header = result[1]["value"]
+        assert header["Z7K1"]["Z9K1"] == "Z31465"
+        # Should use Q199 (natural number 1)
+        z24766 = header["Z31465K1"]["Z10771K1"]
+        assert z24766["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q199"
+
+    def test_multiple_non_qid_headings_increment(self):
+        """Multiple non-QID headings get Q199, Q200, Q201..."""
+        template = """==Parts==
+{{Z26039|SUBJECT|Q634}}
+==Types==
+{{Z26039|SUBJECT|Q515}}
+==Questions==
+{{Z26039|SUBJECT|Q544}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        # header, para, header, para, header, para = 6
+        assert len(result) == 6
+        # Q199, Q200, Q201
+        assert result[0]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q199"
+        assert result[2]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q200"
+        assert result[4]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q201"
+
+    def test_mixed_qid_and_non_qid_headings(self):
+        """QID headings use the QID; non-QID headings auto-number independently."""
+        template = """==Q131819891==
+{{Z26039|SUBJECT|Q634}}
+==Parts==
+{{Z26039|SUBJECT|Q515}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 4
+        # First header uses actual QID
+        assert result[0]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q131819891"
+        # Second header gets Q199 (first non-QID = 1)
+        assert result[2]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q199"

@@ -100,23 +100,29 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  // Split by {{p}} and ==QID== markers into segments.
+  // Split by {{p}} and ==...== markers into segments.
   // Everything before the first marker is the first paragraph.
-  // {{p}} starts a new paragraph; ==QID== emits a section header and starts a new paragraph.
-  const splitPattern = /(\{\{\s*p\s*\}\}|^==\s*Q\d+\s*==$)/im;
-  const segments = wikitext.split(new RegExp('(\\{\\{\\s*p\\s*\\}\\}|^==\\s*Q\\d+\\s*==$)', 'gim'));
+  // {{p}} starts a new paragraph; ==...== emits a section header and starts a new paragraph.
+  const segments = wikitext.split(new RegExp('(\\{\\{\\s*p\\s*\\}\\}|^==\\s*.+?\\s*==$)', 'gim'));
 
   // segments alternate: text, delimiter, text, delimiter, ...
-  // Build a list of render items: { type: 'paragraph', fragments } or { type: 'header', qid }
+  // Build a list of render items
   const items = [];
+  let sectionCounter = 0;
   for (let i = 0; i < segments.length; i++) {
     const seg = segments[i].trim();
     if (!seg) continue;
-    const headerMatch = /^==\s*(Q\d+)\s*==$/.exec(seg);
+    const headerMatch = /^==\s*(.+?)\s*==$/.exec(seg);
     if (headerMatch) {
-      items.push({ type: 'header', qid: headerMatch[1] });
+      const content = headerMatch[1];
+      if (/^Q\d+$/.test(content)) {
+        items.push({ type: 'header', qid: content, label: null });
+      } else {
+        // Non-QID: auto-assign natural number QID
+        sectionCounter++;
+        items.push({ type: 'header', qid: 'Q' + (198 + sectionCounter), label: String(sectionCounter) + ' (' + content + ')' });
+      }
     } else if (/^\{\{\s*p\s*\}\}$/i.test(seg)) {
-      // paragraph break marker — handled implicitly by segment splitting
       continue;
     } else {
       const frags = parseTemplates(seg);
@@ -135,7 +141,7 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   const needed = new Set();
   if (subjectQid) needed.add(subjectQid);
   for (const item of items) {
-    if (item.type === 'header') {
+    if (item.type === 'header' && !item.label) {
       needed.add(item.qid);
     } else if (item.type === 'paragraph') {
       for (const frag of item.fragments) {
@@ -149,15 +155,10 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   targetEl.innerHTML = '<em>Resolving labels...</em>';
   await fetchLabels([...needed]);
 
-  // Render items with numbered section headers
-  let sectionNumber = 0;
+  // Render items
   targetEl.innerHTML = items.map(item => {
     if (item.type === 'header') {
-      sectionNumber++;
-      const label = labelCache[item.qid];
-      const display = label && label !== item.qid
-        ? `${sectionNumber} ${label} (${item.qid})`
-        : `${sectionNumber} (${item.qid})`;
+      const display = item.label || labelCache[item.qid] || item.qid;
       return `<h2>${display}</h2>`;
     }
     const sentences = item.fragments.map(f => renderSentence(f, subjectQid)).join(' ');

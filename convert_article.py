@@ -118,6 +118,18 @@ def extract_value(obj):
             return num
         return f"{num}/{den}"
 
+    # Z20420: date — inverse of wikitext_parser.z20420_date(). Emit as
+    # YYYY-MM-DD so compile_template's parse_date_string accepts it on push.
+    if z1k1 == "Z20420":
+        try:
+            year = obj["Z20420K1"]["Z20159K2"]["Z13518K1"]
+            month_ref = obj["Z20420K2"]["Z20342K1"]["Z16098K1"]
+            day = obj["Z20420K2"]["Z20342K2"]["Z13518K1"]
+            month = int(month_ref.replace("Z", "")) - 16100
+            return f"{int(year):04d}-{month:02d}-{int(day):02d}"
+        except (KeyError, TypeError, ValueError, AttributeError):
+            return "?"
+
     fid = get_func_id(obj)
     if fid:
         return FUNCTION_NAMES.get(fid, fid)
@@ -169,7 +181,13 @@ def _extract_section_qid(obj):
     return None
 
 
-def convert_article(qid, oldid=None):
+def convert_article_to_wikitext(qid, oldid=None):
+    """Fetch an Abstract Wikipedia article and return its wikitext, or None.
+
+    This is the data-only version of the CLI. The CLI wrapper below prints
+    the result; other scripts call this directly to round-trip articles
+    (e.g. roundtrip_broken_it_articles.py).
+    """
     # Fetch from Abstract Wikipedia
     params = {
         "action": "query",
@@ -193,8 +211,7 @@ def convert_article(qid, oldid=None):
                 content = json.loads(raw)
 
     if not content:
-        print(f"# No article found for {qid}", flush=True)
-        sys.exit(1)
+        return None
 
     # Get label
     lr = SESSION.get(WIKIDATA_API, params={
@@ -261,7 +278,16 @@ def convert_article(qid, oldid=None):
                 lines.append(wt)
                 paragraph_count += 1
 
-    print("\n".join(lines), flush=True)
+    return "\n".join(lines)
+
+
+def convert_article(qid, oldid=None):
+    """CLI entry point: fetch and print wikitext (or exit on failure)."""
+    wikitext = convert_article_to_wikitext(qid, oldid=oldid)
+    if wikitext is None:
+        print(f"# No article found for {qid}", flush=True)
+        sys.exit(1)
+    print(wikitext, flush=True)
 
 
 if __name__ == "__main__":

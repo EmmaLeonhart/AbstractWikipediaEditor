@@ -167,7 +167,7 @@ async function renderPreview(): Promise<void> {
   const text = editorEl.value;
   const lines = text.split('\n');
 
-  // Collect all QIDs that need labels
+  // Collect all QIDs that need labels (from templates and section headers)
   const allFragments = parseTemplates(text);
   const needed = new Set<string>();
   for (const frag of allFragments) {
@@ -175,7 +175,11 @@ async function renderPreview(): Promise<void> {
       if (/^Q\d+$/.test(arg) && !labelCache[arg]) needed.add(arg);
     }
   }
-
+  const sectionHeaderPattern = /^==\s*(Q\d+)\s*==$/gm;
+  let shMatch;
+  while ((shMatch = sectionHeaderPattern.exec(text)) !== null) {
+    if (!labelCache[shMatch[1]]) needed.add(shMatch[1]);
+  }
 
   if (needed.size > 0) {
     previewEl.innerHTML = '<span class="placeholder">Resolving labels...</span>';
@@ -196,7 +200,11 @@ async function renderPreview(): Promise<void> {
     if (sectionMatch) {
       sectionNumber++;
       const qid = sectionMatch[1];
-      return `<div class="sentence section-header"><h2>${sectionNumber} (${qid})</h2></div>`;
+      const label = labelCache[qid];
+      const display = label && label !== qid
+        ? `${sectionNumber} ${label} (${qid})`
+        : `${sectionNumber} (${qid})`;
+      return `<div class="sentence section-header"><h2>${display}</h2></div>`;
     }
     const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
     if (tmplMatch) {

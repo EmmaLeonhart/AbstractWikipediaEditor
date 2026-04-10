@@ -135,7 +135,9 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   const needed = new Set();
   if (subjectQid) needed.add(subjectQid);
   for (const item of items) {
-    if (item.type === 'paragraph') {
+    if (item.type === 'header') {
+      needed.add(item.qid);
+    } else if (item.type === 'paragraph') {
       for (const frag of item.fragments) {
         for (const arg of frag.args) {
           if (/^Q\d+$/.test(arg)) needed.add(arg);
@@ -152,7 +154,11 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   targetEl.innerHTML = items.map(item => {
     if (item.type === 'header') {
       sectionNumber++;
-      return `<h2>${sectionNumber} (${item.qid})</h2>`;
+      const label = labelCache[item.qid];
+      const display = label && label !== item.qid
+        ? `${sectionNumber} ${label} (${item.qid})`
+        : `${sectionNumber} (${item.qid})`;
+      return `<h2>${display}</h2>`;
     }
     const sentences = item.fragments.map(f => renderSentence(f, subjectQid)).join(' ');
     return `<p>${sentences}</p>`;

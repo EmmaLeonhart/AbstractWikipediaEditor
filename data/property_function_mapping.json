@@ -83,6 +83,14 @@
       "template": "{{Z26955|Q1762010|SUBJECT|$value}}",
       "notes": "Predicate=Q1762010 (dedication). Subject is the shrine, object is the deity."
     },
+    "P13723": {
+      "label": "shrine ranking",
+      "function": "Z26955",
+      "function_name": "SPO sentence, S without and O with article",
+      "example": "The shrine rank of Ise Grand Shrine is Jingu.",
+      "template": "{{Z26955|Q10444029|SUBJECT|$value}}",
+      "notes": "Predicate=Q10444029 (shrine rank). Subject is the shrine, object is the rank classification."
+    },
     "P138": {
       "label": "named after",
       "skip": true,

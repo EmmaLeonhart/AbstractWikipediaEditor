@@ -377,6 +377,21 @@ class TestSectionHeaders:
         assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
+    def test_literal_it_alias_resolves_to_pronoun_qid(self):
+        """The wikitext alias `it` (e.g. from a round-tripped article) must
+        resolve to a Z6091 entity for Q6091500, never a Z6 plain string.
+
+        This is the Q288312 round-trip case: convert_article emits `it`
+        for Q6091500, and pushing the wikitext back must produce a
+        properly typed entity in that slot.
+        """
+        template = "{{role|Q813858|Q11591100|it}}"
+        result = compile_template(template, {"subject": "Q288312"})
+        call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        # The third arg ("it") must compile to a Z6091 entity, not a Z6 string
+        assert call["Z28016K3"]["Z1K1"]["Z9K1"] == "Z6091"
+        assert call["Z28016K3"]["Z6091K1"]["Z6K1"] == "Q6091500"
+
     def test_cite_web_url_only(self):
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""
         template = "{{cite web|https://example.com/foo}}"

@@ -80,6 +80,9 @@ def extract_value(obj):
         qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
+        # Round-trip pronoun QID back to its readable wikitext alias
+        if qid == "Q6091500":
+            return "it"
         return qid
 
     if z1k1 == "Z18":

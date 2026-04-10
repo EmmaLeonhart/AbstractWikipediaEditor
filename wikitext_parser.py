@@ -360,6 +360,14 @@ IMPLICIT_REFS = {
     "$lang": "Z825K2",      # language
 }
 
+# Wikitext aliases that resolve to Wikidata items. These are author-facing
+# shortcuts so the source text reads naturally instead of forcing the writer
+# to remember an opaque QID. They compile to a Z6091 entity reference, never
+# a Z6 string — the literal alias word must not appear in the published JSON.
+QID_ALIASES = {
+    "it": "Q6091500",  # third-person neuter singular pronoun
+}
+
 
 def resolve_value(raw_value, variables=None):
     """Convert a raw template value into a Z-object.
@@ -367,6 +375,7 @@ def resolve_value(raw_value, variables=None):
     Resolution rules:
     - "SUBJECT" / "$lang" -> Z18 argument reference
     - "$varname" -> look up in variables dict, then treat result as a value
+    - QID_ALIASES key (e.g. "it") -> Z6091 Wikidata item reference
     - "Q..." (Wikidata QID) -> Z6091 Wikidata item reference
     - "Z..." that looks like a Z-ID -> Z9 reference
     - Anything else -> Z6 string literal
@@ -386,6 +395,10 @@ def resolve_value(raw_value, variables=None):
         resolved = variables[var_name]
         # Recurse: the resolved value might be a QID, Z-ID, etc.
         return resolve_value(resolved, variables)
+
+    # Wikitext aliases for Wikidata items (e.g. "it" -> Q6091500)
+    if raw_value in QID_ALIASES:
+        return z6091(QID_ALIASES[raw_value])
 
     # Wikidata QID (Q followed by digits)
     if re.match(r'^Q\d+$', raw_value):
@@ -720,22 +733,22 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 
 def replace_subject_with_pronoun(segment_text):
-    """Replace SUBJECT with Q6091500 ("it") after the first occurrence.
+    """Replace SUBJECT with the alias "it" after the first occurrence.
 
     The first SUBJECT in a paragraph stays as SUBJECT (which compiles to
-    the article entity Z825K1). Subsequent SUBJECTs become Q6091500, the
-    Wikidata item for the third-person neuter pronoun "it", so they
-    compile to a Z6091 entity reference — the structurally correct shape
-    for slots that expect a Wikidata item. Substituting the literal
-    string "it" instead would produce a Z6 string and break the function
-    call's type contract.
+    the article entity Z825K1). Subsequent SUBJECTs become the alias
+    "it", which `resolve_value()` resolves to Q6091500 (the Wikidata
+    item for the third-person neuter pronoun) and wraps as a Z6091
+    entity reference — the structurally correct shape for slots that
+    expect a Wikidata item. The literal string "it" never lands in the
+    published JSON; only the entity does.
     """
     count = [0]
     def replacer(match):
         count[0] += 1
         if count[0] == 1:
             return match.group(0)
-        return "Q6091500"
+        return "it"
     return re.sub(r'\bSUBJECT\b', replacer, segment_text)
 
 

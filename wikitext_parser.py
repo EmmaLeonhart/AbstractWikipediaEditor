@@ -524,9 +524,13 @@ def parse_template_calls(body):
         for part in parts[1:]:
             if '=' in part and not part.startswith('$'):
                 key, _, value = part.partition('=')
-                named_args[key.strip()] = value.strip()
-            else:
-                positional_args.append(part)
+                key = key.strip()
+                # Only treat as named arg if the key is a simple identifier.
+                # This avoids misparsing URLs (e.g. ?title=Foo) as named args.
+                if re.match(r'^[a-zA-Z_][a-zA-Z0-9_]*$', key):
+                    named_args[key] = value.strip()
+                    continue
+            positional_args.append(part)
 
         fragments.append({
             "func_id": func_id,

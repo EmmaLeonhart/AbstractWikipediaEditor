@@ -64,6 +64,41 @@ def extract_qid_value(claim):
     return None
 
 
+# Wikidata reference properties that hold URLs
+URL_REFERENCE_PROPS = [
+    "P854",   # reference URL
+    "P4656",  # Wikimedia import URL
+    "P953",   # full work available at URL
+    "P973",   # described at URL
+]
+
+
+def collect_reference_urls(claims, used_props):
+    """Collect unique reference URLs from claims for the used properties.
+
+    Walks the references attached to each claim of a used property and
+    extracts URLs from the URL_REFERENCE_PROPS. URLs containing '|' are
+    skipped because that character would break wikitext template parsing.
+    """
+    urls = []
+    seen = set()
+    for pid in used_props:
+        if pid not in claims:
+            continue
+        for claim in claims[pid]:
+            for ref in claim.get("references", []):
+                snaks = ref.get("snaks", {})
+                for url_prop in URL_REFERENCE_PROPS:
+                    if url_prop not in snaks:
+                        continue
+                    for snak in snaks[url_prop]:
+                        val = snak.get("datavalue", {}).get("value")
+                        if isinstance(val, str) and "|" not in val and val not in seen:
+                            seen.add(val)
+                            urls.append(val)
+    return urls
+
+
 def generate_wikitext(qid):
     """Generate a wikitext template for the given QID."""
     mapping = load_mapping()
@@ -188,6 +223,9 @@ def generate_wikitext(qid):
 
         used_props.add(pid)
 
+    # Collect reference URLs from the used properties
+    ref_urls = collect_reference_urls(claims, used_props)
+
     # Build the frontmatter
     lines = ["---"]
     lines.append(f"title: {label}")
@@ -204,6 +242,12 @@ def generate_wikitext(qid):
     # Add fragments (everything is implicitly one paragraph)
     for frag in fragments:
         lines.append(frag)
+
+    # Append cite-web fragments for any reference URLs in their own paragraph
+    if ref_urls:
+        lines.append("{{p}}")
+        for url in ref_urls:
+            lines.append(f"{{{{cite web|{url}}}}}")
 
     return "\n".join(lines), used_props, label
 

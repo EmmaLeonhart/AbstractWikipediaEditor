@@ -155,6 +155,15 @@ class TestParseTemplateCalls:
         assert result[0]["args"] == ["SUBJECT", "Q17"]
         assert result[0]["named_args"]["class"] == "Q845945"
 
+    def test_url_with_query_string_is_positional(self):
+        """URLs with ?key=value query strings should not be parsed as named args."""
+        body = "{{cite web|https://ja.wikipedia.org/w/index.php?title=Foo&oldid=12345}}"
+        result = parse_template_calls(body)
+        assert result[0]["args"] == [
+            "https://ja.wikipedia.org/w/index.php?title=Foo&oldid=12345"
+        ]
+        assert result[0]["named_args"] == {}
+
     def test_comments_ignored(self):
         body = """# This is a comment
 {{Z26570|SUBJECT|Q845945|Q17}}

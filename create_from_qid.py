@@ -131,8 +131,9 @@ def inject_clipboard(page, clipboard_data):
     }""", clipboard_data)
 
 
-EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
-EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
+TOOL_CREDIT = "([[User:Immanuelle/Abstract Wikipedia Editor|AWE]])"
+EDIT_SUMMARY_CREATE = f"Created page {TOOL_CREDIT}"
+EDIT_SUMMARY_EDIT = f"Edited {TOOL_CREDIT}"
 
 
 def publish_page(page, summary=""):
@@ -263,9 +264,10 @@ def create_article_from_qid(page, qid, wikitext_override=None, extra_summary=Non
     time.sleep(2)
 
     # Step 5: Publish
-    summary = EDIT_SUMMARY_CREATE
     if extra_summary:
-        summary = f"{summary}: {extra_summary}"
+        summary = f"{extra_summary} {TOOL_CREDIT}"
+    else:
+        summary = EDIT_SUMMARY_CREATE
     print(f"  Publishing with summary: {summary}", flush=True)
     publish_page(page, summary)
 

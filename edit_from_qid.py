@@ -185,9 +185,10 @@ def paste_fragment(page, single_item, is_first=False):
     return True
 
 
-EDIT_SUMMARY_CREATE = "Created page with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
-EDIT_SUMMARY_EDIT = "Edited with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
-EDIT_SUMMARY_RESTORE = "Restored to [[Special:Diff/{rev}|revision {rev}]] with [[User:Immanuelle/Abstract Wikipedia Editor|Abstract Wikipedia Editor]]"
+TOOL_CREDIT = "([[User:Immanuelle/Abstract Wikipedia Editor|AWE]])"
+EDIT_SUMMARY_CREATE = f"Created page {TOOL_CREDIT}"
+EDIT_SUMMARY_EDIT = f"Edited {TOOL_CREDIT}"
+EDIT_SUMMARY_RESTORE = "Restored to [[Special:Diff/{rev}|revision {rev}]] " + TOOL_CREDIT
 
 
 def publish_page(page, summary=""):
@@ -308,12 +309,12 @@ def edit_article_from_qid(page, qid, wikitext_override=None, restore_rev=None, e
     shot(page, f"{qid}_03_after_paste")
 
     # Step 6: Publish
-    if restore_rev:
+    if extra_summary:
+        summary = f"{extra_summary} {TOOL_CREDIT}"
+    elif restore_rev:
         summary = EDIT_SUMMARY_RESTORE.format(rev=restore_rev)
     else:
         summary = EDIT_SUMMARY_EDIT
-    if extra_summary:
-        summary = f"{summary}: {extra_summary}"
     print(f"  Publishing with summary: {summary}", flush=True)
     publish_page(page, summary)
 

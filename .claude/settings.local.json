@@ -153,7 +153,14 @@
       "Bash('C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe' -c ':*)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" edit_from_qid.py Q28573)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_from_qid.py Q28573)",
-      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_from_qid.py --batch Q15969,Q57143,Q20925,Q96221,Q77534,Q31064,Q58421,Q53808,Q14312,Q98826 --apply --headed)"
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" create_from_qid.py --batch Q15969,Q57143,Q20925,Q96221,Q77534,Q31064,Q58421,Q53808,Q14312,Q98826 --apply --headed)",
+      "Bash(xargs -I {} bash -c \"echo '=== {} ===' && head -20 {}\")",
+      "Bash(grep -l \"query\\\\|unfixed\\\\|broken\\\\|error\" *.py)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" reformat_loop.py)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -v)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -v --tb=short)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -q)",
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" generate_wikitext.py Q11380928)"
     ]
   }
 }

@@ -72,6 +72,7 @@ async function pullFromWikidata(): Promise<void> {
   const qid = normalizeQid();
   if (!qid) return;
 
+  showEditorView();
   statusEl.textContent = 'Generating from Wikidata...';
   try {
     const wikitext = await window.api.generateWikitext(qid);
@@ -96,6 +97,7 @@ async function pullFromAbstract(): Promise<void> {
   const qid = normalizeQid();
   if (!qid) return;
 
+  showEditorView();
   statusEl.textContent = 'Fetching from Abstract Wikipedia...';
   try {
     const wikitext = await window.api.convertArticle(qid);
@@ -118,6 +120,7 @@ btnPush.addEventListener('click', async () => {
   const qid = normalizeQid();
   if (!qid) return;
 
+  showEditorView();
   btnPush.disabled = true;
   if (restoringRevId) {
     statusEl.textContent = `Restoring ${qid} to revision ${restoringRevId} (browser will open)...`;
@@ -289,16 +292,14 @@ function normalizeQid(): string {
 
 function showEditorView(): void {
   historyView.style.display = 'none';
-  previewEl.style.display = '';
+  (document.querySelector('.editor-container') as HTMLElement).style.display = '';
   (document.querySelector('.info') as HTMLElement).style.display = '';
-  editorEl.style.display = '';
 }
 
 function showHistoryView(): void {
   historyView.style.display = '';
-  previewEl.style.display = 'none';
+  (document.querySelector('.editor-container') as HTMLElement).style.display = 'none';
   (document.querySelector('.info') as HTMLElement).style.display = 'none';
-  editorEl.style.display = 'none';
 }
 
 btnHistory.addEventListener('click', async () => {
@@ -398,6 +399,7 @@ async function checkCredentials(): Promise<void> {
 }
 
 btnLogin.addEventListener('click', async () => {
+  showEditorView();
   loginOverlay.classList.add('visible');
   loginStatus.textContent = '';
   loginStatus.className = 'login-status';

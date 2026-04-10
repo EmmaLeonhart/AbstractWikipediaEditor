@@ -140,6 +140,27 @@ def format_as_wikitext(obj):
     return "{{" + "|".join(parts) + "}}"
 
 
+def _extract_section_qid(obj):
+    """Extract the QID from a Z31465 section title object.
+
+    Expected structure: Z31465(Z10771(Z24766(Z6091(QID), ...)))
+    """
+    try:
+        inner = obj.get("Z31465K1", {})
+        z10771 = inner if get_func_id(inner) == "Z10771" else {}
+        z24766 = z10771.get("Z10771K1", {})
+        if get_func_id(z24766) == "Z24766":
+            z6091 = z24766.get("Z24766K1", {})
+            z1k1 = z6091.get("Z1K1", "")
+            if isinstance(z1k1, dict):
+                z1k1 = z1k1.get("Z9K1", "")
+            if z1k1 == "Z6091" or (isinstance(z1k1, str) and "Z6091" in z1k1):
+                return z6091.get("Z6091K1", {}).get("Z6K1", None) if isinstance(z6091.get("Z6091K1"), dict) else z6091.get("Z6091K1", None)
+    except (AttributeError, KeyError):
+        pass
+    return None
+
+
 def convert_article(qid, oldid=None):
     # Fetch from Abstract Wikipedia
     params = {
@@ -190,7 +211,7 @@ def convert_article(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    first_fragment = True
+    paragraph_count = 0
     for section in sections.values():
         for frag in section.get("fragments", []):
             if isinstance(frag, str):
@@ -198,10 +219,19 @@ def convert_article(qid, oldid=None):
             core = unwrap_fragment(frag)
             fid = get_func_id(core)
 
+            # Z31465 (section title) — extract QID and emit ==QID==
+            if fid == "Z31465":
+                section_qid = _extract_section_qid(core)
+                if section_qid:
+                    lines.append(f"=={section_qid}==")
+                    paragraph_count += 1
+                continue
+
             # Z32234 (join text to html) is a paragraph combiner -
-            # decompose into individual sentences grouped as a {{p}} block
+            # decompose into individual sentences
             if fid == "Z32234":
-                lines.append("{{p}}")
+                if paragraph_count > 0:
+                    lines.append("{{p}}")
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):
                         continue
@@ -213,17 +243,15 @@ def convert_article(qid, oldid=None):
                                 wt = format_as_wikitext(inner)
                                 if wt:
                                     lines.append(wt)
-                first_fragment = False
+                paragraph_count += 1
                 continue
 
             wt = format_as_wikitext(core)
             if wt:
-                if first_fragment:
-                    lines.append("{{p}}")
-                else:
+                if paragraph_count > 0:
                     lines.append("{{p}}")
                 lines.append(wt)
-                first_fragment = False
+                paragraph_count += 1
 
     print("\n".join(lines), flush=True)
 

@@ -1,10 +1,11 @@
-"""Tests for {{p}} paragraph compilation and rendering.
+"""Tests for paragraph compilation, section headers, and rendering.
 
 Verifies that:
-- {{p}} markers group templates into Z32123(Z32234([...])) clipboard items
+- Everything is implicitly one paragraph; {{p}} midway starts a new one
+- ==QID== section headers compile to Z31465(Z10771(Z24766(QID, $lang)))
+- Section headers cause paragraph breaks
 - One paragraph = one clipboard paste operation
 - Jupiter (Q319) article compiles to a single paragraph
-- Backward compatibility: templates without {{p}} still work as before
 """
 
 import json
@@ -16,8 +17,8 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from wikitext_parser import (
     z6, z9s, z6091, z18, z7_call,
-    compile_template, compile_paragraph, build_func_call,
-    parse_template_calls, FUNCTION_REGISTRY,
+    compile_template, compile_paragraph, compile_section_header,
+    build_func_call, parse_template_calls, FUNCTION_REGISTRY,
 )
 
 
@@ -154,22 +155,22 @@ class TestMultipleParagraphs:
         assert result[1]["itemId"] == "Q319.2#1"
 
 
-class TestBackwardCompatibility:
-    """Templates without {{p}} markers should still work as before."""
+class TestImplicitParagraph:
+    """Templates without {{p}} markers are grouped into one paragraph."""
 
-    def test_no_p_markers_each_template_is_item(self):
+    def test_no_p_markers_single_paragraph(self):
         template = """{{Z26039|SUBJECT|Q634}}
 {{Z26570|SUBJECT|Q634|Q544}}"""
         result = compile_template(template, {"subject": "Q319"})
-        assert len(result) == 2, "Without {{p}}, each template is its own clipboard item"
+        assert len(result) == 1, "Without {{p}}, all templates form one paragraph"
 
-    def test_no_p_markers_wrapped_individually(self):
+    def test_no_p_markers_wraps_as_paragraph(self):
         template = "{{Z26039|SUBJECT|Q634}}"
         result = compile_template(template, {"subject": "Q319"})
-        # Z26039 returns Z6, wrapped with Z27868
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z27868"
+        # Now wraps as Z32123 paragraph, not individually
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
-    def test_shrine_template_still_works(self):
+    def test_shrine_template_one_paragraph(self):
         template = """---
 title: Shinto Shrine
 variables:
@@ -178,8 +179,8 @@ variables:
 {{Z26570|SUBJECT|Q845945|Q17}}
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
-        assert len(result) == 2
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z29749"
+        assert len(result) == 1
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
 
 class TestCompileParagraphDirect:
@@ -239,3 +240,58 @@ class TestJupiterRoundTrip:
         mass_call = typed_list[7]  # first Z32229
         # K4 = quantity = "1/1048" -> Z6 string
         assert mass_call["Z32229K4"]["Z6K1"] == "1/1048"
+
+
+class TestSectionHeaders:
+    """Test ==QID== section header compilation."""
+
+    def test_section_header_structure(self):
+        """==QID== produces Z31465(Z10771(Z24766(QID, $lang)))."""
+        item = compile_section_header("Q131819891", {}, "Q762", 0)
+        val = item["value"]
+        assert val["Z7K1"]["Z9K1"] == "Z31465"
+        z10771 = val["Z31465K1"]
+        assert z10771["Z7K1"]["Z9K1"] == "Z10771"
+        z24766 = z10771["Z10771K1"]
+        assert z24766["Z7K1"]["Z9K1"] == "Z24766"
+        assert z24766["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q131819891"
+        assert z24766["Z24766K2"]["Z18K1"]["Z6K1"] == "Z825K2"
+
+    def test_section_header_in_template(self):
+        """Section header produces a separate clipboard item."""
+        template = """{{Z26039|SUBJECT|Q634}}
+==Q131819891==
+{{Z26039|SUBJECT|Q515}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        # paragraph, section header, paragraph = 3 items
+        assert len(result) == 3
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z31465"
+        assert result[2]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+
+    def test_section_header_causes_paragraph_break(self):
+        """Templates before and after a section header are separate paragraphs."""
+        template = """{{Z26039|SUBJECT|Q634}}
+{{Z26570|SUBJECT|Q634|Q544}}
+==Q1310239==
+{{Z26039|SUBJECT|Q515}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 3
+        # First paragraph has 2 inner calls
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        assert len(typed_list) == 4  # [Z1, call1, "  ", call2]
+
+    def test_p_and_section_header_combined(self):
+        """{{p}} and ==QID== can coexist."""
+        template = """{{Z26039|SUBJECT|Q634}}
+{{p}}
+{{Z26039|SUBJECT|Q515}}
+==Q131819891==
+{{Z26039|SUBJECT|Q544}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        # para1, para2, header, para3 = 4 items
+        assert len(result) == 4
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert result[2]["value"]["Z7K1"]["Z9K1"] == "Z31465"
+        assert result[3]["value"]["Z7K1"]["Z9K1"] == "Z32123"

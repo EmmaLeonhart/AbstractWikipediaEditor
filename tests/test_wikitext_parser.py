@@ -327,19 +327,14 @@ variables:
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
 
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
-        assert len(result) == 2
+        # All templates form one paragraph (no {{p}} markers)
+        assert len(result) == 1
 
-        # First fragment: location
         frag0 = result[0]
         assert frag0["resolvingType"] == "Z89"
         assert frag0["itemId"] == "Q12345.1#1"
-        # Should be wrapped with Z29749 (Z11 -> Z89)
-        assert frag0["value"]["Z7K1"] == z9s("Z29749")
-
-        # Second fragment: deity
-        frag1 = result[1]
-        assert frag1["itemId"] == "Q12345.2#1"
-        assert frag1["value"]["Z7K1"] == z9s("Z29749")
+        # Wrapped as Z32123 paragraph
+        assert frag0["value"]["Z7K1"] == z9s("Z32123")
 
     def test_no_frontmatter(self):
         template = "{{Z26570|SUBJECT|Q845945|Q17}}"
@@ -355,12 +350,15 @@ variables:
             "deity": "Q111",
             "admin": "Q222",
         })
-        assert len(result) == 3
+        # All three form one paragraph
+        assert len(result) == 1
+        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
 
-    def test_z6_returning_function_wraps_z27868(self):
+    def test_z6_returning_function_wraps_as_paragraph(self):
         template = "{{Z26039|SUBJECT|Q515}}"
         result = compile_template(template)
-        assert result[0]["value"]["Z7K1"] == z9s("Z27868")
+        # Single template wraps as Z32123 paragraph
+        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
 
 
 # ============================================================
@@ -371,16 +369,21 @@ class TestMatchesExistingOutput:
     """Verify parser output matches the hardcoded CLIPBOARD_TEMPLATE from create_rich_onepass.py."""
 
     def test_deity_fragment_structure(self):
-        """The deity fragment should match the Z28016 call structure."""
+        """The deity fragment should match the Z28016 call structure inside a paragraph."""
         template = "{{Z28016|$deity|Q11591100|SUBJECT}}"
         result = compile_template(template, {"deity": "Q99999"})
-        frag = result[0]["value"]
+        para = result[0]["value"]
 
-        # Outer: Z29749 (monolingual text -> HTML with auto-langcode)
-        assert frag["Z7K1"]["Z9K1"] == "Z29749"
+        # Outer: Z32123 paragraph
+        assert para["Z7K1"]["Z9K1"] == "Z32123"
 
-        # Inner: Z28016 function call
-        inner = frag["Z29749K1"]
+        # Z32234 inside
+        z32234 = para["Z32123K1"]
+        assert z32234["Z7K1"]["Z9K1"] == "Z32234"
+
+        # Inner call list: [Z1, Z28016_call]
+        typed_list = z32234["Z32234K1"]
+        inner = typed_list[1]
         assert inner["Z7K1"]["Z9K1"] == "Z28016"
 
         # Z28016K1 = deity QID
@@ -392,20 +395,19 @@ class TestMatchesExistingOutput:
         # Z28016K4 = language (auto -> Z825K2)
         assert inner["Z28016K4"]["Z18K1"]["Z6K1"] == "Z825K2"
 
-        # Z29749K2 = language ref
-        assert frag["Z29749K2"]["Z18K1"]["Z6K1"] == "Z825K2"
-
     def test_location_fragment_structure(self):
-        """The location fragment uses Z26570 wrapped in Z29749."""
+        """The location fragment uses Z26570 inside a paragraph."""
         template = "{{Z26570|SUBJECT|Q845945|Q17}}"
         result = compile_template(template)
-        frag = result[0]["value"]
+        para = result[0]["value"]
 
-        # Outer: Z29749
-        assert frag["Z7K1"]["Z9K1"] == "Z29749"
+        # Outer: Z32123 paragraph
+        assert para["Z7K1"]["Z9K1"] == "Z32123"
 
-        # Inner: Z26570
-        inner = frag["Z29749K1"]
+        # Inner call inside Z32234
+        z32234 = para["Z32123K1"]
+        typed_list = z32234["Z32234K1"]
+        inner = typed_list[1]
         assert inner["Z7K1"]["Z9K1"] == "Z26570"
 
         # K1 = entity (SUBJECT -> Z825K1)
@@ -467,8 +469,8 @@ class TestTemplateFiles:
             "subject": "Q513",
         })
         assert len(result) == 1
-        # Z27243 returns Z11, should be wrapped with Z29749
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z29749"
+        # Single template wraps as Z32123 paragraph
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
 
 class TestFunctionRegistry:

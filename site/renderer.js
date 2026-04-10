@@ -100,17 +100,33 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  // Split by {{p}} markers into paragraph groups.
-  // Each group's templates are joined into one <p> tag.
-  // Falls back to blank-line splitting if no {{p}} markers found.
-  const hasP = /\{\{\s*p\s*\}\}/i.test(wikitext);
-  const paragraphs = hasP
-    ? wikitext.split(/\{\{\s*p\s*\}\}/i).filter(p => p.trim())
-    : wikitext.split(/\n\s*\n/).filter(p => p.trim());
-  const paragraphFragments = paragraphs.map(p => parseTemplates(p));
-  const allFragments = paragraphFragments.flat();
+  // Split by {{p}} and ==QID== markers into segments.
+  // Everything before the first marker is the first paragraph.
+  // {{p}} starts a new paragraph; ==QID== emits a section header and starts a new paragraph.
+  const splitPattern = /(\{\{\s*p\s*\}\}|^==\s*Q\d+\s*==$)/im;
+  const segments = wikitext.split(new RegExp('(\\{\\{\\s*p\\s*\\}\\}|^==\\s*Q\\d+\\s*==$)', 'gim'));
 
-  if (allFragments.length === 0) {
+  // segments alternate: text, delimiter, text, delimiter, ...
+  // Build a list of render items: { type: 'paragraph', fragments } or { type: 'header', qid }
+  const items = [];
+  for (let i = 0; i < segments.length; i++) {
+    const seg = segments[i].trim();
+    if (!seg) continue;
+    const headerMatch = /^==\s*(Q\d+)\s*==$/.exec(seg);
+    if (headerMatch) {
+      items.push({ type: 'header', qid: headerMatch[1] });
+    } else if (/^\{\{\s*p\s*\}\}$/i.test(seg)) {
+      // paragraph break marker — handled implicitly by segment splitting
+      continue;
+    } else {
+      const frags = parseTemplates(seg);
+      if (frags.length > 0) {
+        items.push({ type: 'paragraph', fragments: frags });
+      }
+    }
+  }
+
+  if (items.length === 0) {
     targetEl.innerHTML = '<em>No fragments to render.</em>';
     return;
   }
@@ -118,20 +134,27 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
   // Collect all QIDs that need labels
   const needed = new Set();
   if (subjectQid) needed.add(subjectQid);
-  for (const frag of allFragments) {
-    for (const arg of frag.args) {
-      if (/^Q\d+$/.test(arg)) needed.add(arg);
+  for (const item of items) {
+    if (item.type === 'paragraph') {
+      for (const frag of item.fragments) {
+        for (const arg of frag.args) {
+          if (/^Q\d+$/.test(arg)) needed.add(arg);
+        }
+      }
     }
   }
 
   targetEl.innerHTML = '<em>Resolving labels...</em>';
   await fetchLabels([...needed]);
 
-  // Render each paragraph group: sentences joined with spaces inside a <p>
-  targetEl.innerHTML = paragraphFragments
-    .filter(frags => frags.length > 0)
-    .map(frags => {
-      const sentences = frags.map(f => renderSentence(f, subjectQid)).join(' ');
-      return `<p>${sentences}</p>`;
-    }).join('');
+  // Render items with numbered section headers
+  let sectionNumber = 0;
+  targetEl.innerHTML = items.map(item => {
+    if (item.type === 'header') {
+      sectionNumber++;
+      return `<h2>${sectionNumber} (${item.qid})</h2>`;
+    }
+    const sentences = item.fragments.map(f => renderSentence(f, subjectQid)).join(' ');
+    return `<p>${sentences}</p>`;
+  }).join('');
 }

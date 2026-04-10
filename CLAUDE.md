@@ -12,12 +12,16 @@ The app queries Wikidata for item properties, maps them to Wikifunctions sentenc
 - Authentication uses `.env` credentials and runs through the browser login flow
 - Screenshots saved to `screenshots/` directory
 
-### Paragraph Model (`{{p}}`)
-Templates between `{{p}}` markers compile into a single Z32123(Z32234([...])) clipboard item.
-This means one paste operation per paragraph instead of one per sentence.
-- `generate_wikitext.py` wraps all output in `{{p}}` by default
-- `convert_article.py` outputs `{{p}}` markers for Z32234 paragraphs
-- Templates without `{{p}}` still work (each template = separate clipboard item)
+### Paragraph Model (`{{p}}`) and Section Headers (`==QID==`)
+All templates are implicitly within one paragraph. A `{{p}}` midway starts a new paragraph.
+Each paragraph compiles into a single Z32123(Z32234([...])) clipboard item (one paste per paragraph).
+
+Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item.
+They compile to Z31465(Z10771(Z24766(QID, $lang))) and cause implicit paragraph breaks.
+
+- `generate_wikitext.py` outputs templates without any initial `{{p}}`
+- `convert_article.py` handles Z31465 section titles as `==QID==`
+- `{{p}}` is only used between paragraphs, never at the start
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.

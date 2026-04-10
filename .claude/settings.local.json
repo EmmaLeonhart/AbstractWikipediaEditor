@@ -160,7 +160,9 @@
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -v)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -v --tb=short)",
       "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" -m pytest tests/ -q)",
-      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" generate_wikitext.py Q11380928)"
+      "Bash(\"C:\\\\Users\\\\Immanuelle\\\\AppData\\\\Local\\\\Programs\\\\Python\\\\Python313\\\\python.exe\" generate_wikitext.py Q11380928)",
+      "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" -m pytest tests/test_paragraphs.py -x -q)",
+      "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" -m pytest -x -q)"
     ]
   }
 }

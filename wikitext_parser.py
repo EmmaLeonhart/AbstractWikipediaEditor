@@ -587,15 +587,40 @@ def compile_paragraph(fragment_defs, variables, origin_qid, index):
     return build_clipboard_item(z32123_call, index=index, origin_qid=origin_qid)
 
 
+def compile_section_header(qid, variables, origin_qid, index):
+    """Compile a ==QID== section header into a clipboard item.
+
+    Builds Z31465(Z10771(Z24766(QID, $lang))) which renders as a section
+    title on Abstract Wikipedia.
+    """
+    # Z24766: get label for QID in language
+    z24766_call = z7_call("Z24766", {
+        "Z24766K1": z6091(qid),
+        "Z24766K2": z18(IMPLICIT_REFS["$lang"]),
+    })
+
+    # Z10771: section title text
+    z10771_call = z7_call("Z10771", {
+        "Z10771K1": z24766_call,
+    })
+
+    # Z31465: section title wrapper
+    z31465_call = z7_call("Z31465", {
+        "Z31465K1": z10771_call,
+    })
+
+    return build_clipboard_item(z31465_call, index=index, origin_qid=origin_qid)
+
+
 def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
     This is the main entry point. Takes a template string and variable
     values, returns a list of clipboard items ready for injection.
 
-    If the template contains ``{{p}}`` paragraph markers, templates between
-    markers are grouped into single Z32123(Z32234(...)) clipboard items.
-    Without markers, each template produces its own clipboard item (legacy).
+    All content is implicitly one paragraph. ``{{p}}`` midway through
+    starts a new paragraph. ``==QID==`` section headers also cause
+    paragraph breaks and produce Z31465 section title items.
 
     Args:
         text: Template string in wikitext format.
@@ -608,37 +633,55 @@ def compile_template(text, variables=None):
     _, body = parse_frontmatter(text)
     origin_qid = variables.get("subject", "Q0")
 
-    # Check for {{p}} paragraph markers
-    if re.search(r'\{\{\s*p\s*\}\}', body, re.IGNORECASE):
-        groups = re.split(r'\{\{\s*p\s*\}\}', body, flags=re.IGNORECASE)
-        clipboard_items = []
+    # Split body into segments separated by {{p}} or ==QID== markers.
+    # Each segment becomes a paragraph; ==QID== also produces a section header item.
+    # Pattern matches {{p}} or ==QID== (with optional whitespace)
+    split_pattern = re.compile(
+        r'(\{\{\s*p\s*\}\}|^==\s*(Q\d+)\s*==$)',
+        re.IGNORECASE | re.MULTILINE
+    )
 
-        for group_text in groups:
-            group_text = group_text.strip()
-            if not group_text:
-                continue
-            fragments = parse_template_calls(group_text)
-            if not fragments:
-                continue
-
-            if len(fragments) == 1:
-                # Single sentence paragraph — still wrap as paragraph
-                item = compile_paragraph(fragments, variables, origin_qid, len(clipboard_items))
-            else:
-                item = compile_paragraph(fragments, variables, origin_qid, len(clipboard_items))
-            clipboard_items.append(item)
-
-        return clipboard_items
-
-    # Legacy: no {{p}} markers — each template is its own clipboard item
-    parsed = parse_template(text)
     clipboard_items = []
+    current_fragments = []
 
-    for i, frag_def in enumerate(parsed["fragments"]):
-        func_call, return_type = build_func_call(frag_def, variables)
-        wrapped = wrap_as_fragment(frag_def["func_id"], func_call, return_type)
-        item = build_clipboard_item(wrapped, index=i, origin_qid=origin_qid)
+    def flush_paragraph():
+        """Compile accumulated fragments into a paragraph and add to items."""
+        if not current_fragments:
+            return
+        item = compile_paragraph(
+            current_fragments, variables, origin_qid, len(clipboard_items)
+        )
         clipboard_items.append(item)
+
+    last_end = 0
+    for match in split_pattern.finditer(body):
+        # Process any template calls before this marker
+        segment = body[last_end:match.start()].strip()
+        if segment:
+            current_fragments.extend(parse_template_calls(segment))
+
+        # Check if this is a section header ==QID==
+        section_qid = match.group(2)
+        if section_qid:
+            # Section header: flush current paragraph, emit header, start new paragraph
+            flush_paragraph()
+            current_fragments = []
+            header_item = compile_section_header(
+                section_qid, variables, origin_qid, len(clipboard_items)
+            )
+            clipboard_items.append(header_item)
+        else:
+            # {{p}} marker: flush current paragraph, start new one
+            flush_paragraph()
+            current_fragments = []
+
+        last_end = match.end()
+
+    # Process remaining content after last marker
+    remaining = body[last_end:].strip()
+    if remaining:
+        current_fragments.extend(parse_template_calls(remaining))
+    flush_paragraph()
 
     return clipboard_items
 

@@ -334,12 +334,33 @@ def extract_paragraph_calls(obj):
     return []
 
 
+def _extract_section_qid_bp(obj):
+    """Extract QID from a Z31465 section title object."""
+    try:
+        inner = obj.get("Z31465K1", {})
+        fid = get_func_id(inner)
+        z10771 = inner if fid == "Z10771" else {}
+        z24766 = z10771.get("Z10771K1", {})
+        if get_func_id(z24766) == "Z24766":
+            z6091 = z24766.get("Z24766K1", {})
+            z1k1 = z6091.get("Z1K1", "")
+            if isinstance(z1k1, dict):
+                z1k1 = z1k1.get("Z9K1", "")
+            if "Z6091" in str(z1k1):
+                val = z6091.get("Z6091K1", {})
+                return val.get("Z6K1") if isinstance(val, dict) else val
+    except (AttributeError, KeyError):
+        pass
+    return None
+
+
 def format_fragment_neutral(fragment):
     """Format a Z-object fragment as wikitext template syntax.
 
     Z32234 (join text to html) is decomposed into its inner calls so
     that each sentence gets its own wikitext line within a paragraph
-    group.
+    group. Z31465 section titles become ==QID== headers.
+    Returns a tuple (type, text) where type is 'paragraph', 'header', or None.
     """
     if isinstance(fragment, str):
         return fragment
@@ -347,16 +368,22 @@ def format_fragment_neutral(fragment):
     core = unwrap_fragment(fragment)
     fid = get_func_id(core)
 
+    # Z31465 section title -> ==QID==
+    if fid == "Z31465":
+        qid = _extract_section_qid_bp(core)
+        if qid:
+            return f"=={qid}=="
+        return None
+
     # Z32234 is a paragraph combiner - decompose into inner sentences
-    # with {{p}} marker at the start of the paragraph
     if fid == "Z32234":
         inner_calls = extract_paragraph_calls(core)
-        lines = ["{{p}}"]
+        lines = []
         for call in inner_calls:
             wt = format_as_wikitext(call)
             if wt and wt != "Z89":
                 lines.append(wt)
-        return "\n".join(lines) if len(lines) > 1 else None
+        return "\n".join(lines) if lines else None
 
     return format_as_wikitext(core)
 
@@ -455,19 +482,26 @@ def build_article_page(article, content):
     label = get_label(title) if title.startswith("Q") else title
 
     # Extract wikitext fragments from the Z-object
-    # Z32234 paragraphs produce {{p}}-delimited blocks.
-    # Non-paragraph fragments get their own {{p}} marker.
+    # Everything is implicitly one paragraph. {{p}} separates paragraphs.
+    # ==QID== section headers also cause paragraph breaks.
     sections = content.get("sections", {})
     wikitext_parts = []
+    part_count = 0
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
             wt = format_fragment_neutral(frag)
             if wt and wt != "Z89":
-                # If this fragment doesn't start with {{p}}, add one
-                if not wt.startswith("{{p}}"):
-                    wt = "{{p}}\n" + wt
-                wikitext_parts.append(wt)
+                is_header = wt.startswith("==") and wt.endswith("==")
+                if is_header:
+                    # Section headers cause implicit paragraph breaks
+                    wikitext_parts.append(wt)
+                else:
+                    # Add {{p}} before non-first paragraphs
+                    if part_count > 0:
+                        wikitext_parts.append("{{p}}")
+                    wikitext_parts.append(wt)
+                part_count += 1
     wikitext = "\n".join(wikitext_parts)
 
     # Escape for embedding in JS

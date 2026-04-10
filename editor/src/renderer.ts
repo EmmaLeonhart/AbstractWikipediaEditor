@@ -176,6 +176,7 @@ async function renderPreview(): Promise<void> {
     }
   }
 
+
   if (needed.size > 0) {
     previewEl.innerHTML = '<span class="placeholder">Resolving labels...</span>';
     const labels = await window.api.fetchLabels([...needed]);
@@ -183,11 +184,19 @@ async function renderPreview(): Promise<void> {
   }
 
   // Render line-by-line so each preview line aligns with each textarea line
+  let sectionNumber = 0;
   const html = lines.map(line => {
     const trimmed = line.trim();
     // {{p}} paragraph marker renders as a visual break
     if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
       return '<div class="sentence paragraph-break">&nbsp;</div>';
+    }
+    // ==QID== section header renders as a numbered h2
+    const sectionMatch = /^==\s*(Q\d+)\s*==$/.exec(trimmed);
+    if (sectionMatch) {
+      sectionNumber++;
+      const qid = sectionMatch[1];
+      return `<div class="sentence section-header"><h2>${sectionNumber} (${qid})</h2></div>`;
     }
     const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
     if (tmplMatch) {

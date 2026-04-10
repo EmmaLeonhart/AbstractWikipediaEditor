@@ -87,6 +87,74 @@ def z7_call(func_id, args_dict):
     return result
 
 
+def z20420_date(year, month, day):
+    """Build a Z20420 (Gregorian calendar date) object.
+
+    Months are referenced via Z16101 (January) through Z16112 (December).
+    Era is hardcoded to AD (Z17814).
+    """
+    return {
+        "Z1K1": "Z20420",
+        "Z20420K1": {  # year (with era)
+            "Z1K1": "Z20159",
+            "Z20159K1": {
+                "Z1K1": "Z17813",
+                "Z17813K1": "Z17814",  # AD era
+            },
+            "Z20159K2": {
+                "Z1K1": "Z13518",
+                "Z13518K1": str(int(year)),
+            },
+        },
+        "Z20420K2": {  # month + day
+            "Z1K1": "Z20342",
+            "Z20342K1": {
+                "Z1K1": "Z16098",
+                "Z16098K1": f"Z{16100 + int(month)}",
+            },
+            "Z20342K2": {
+                "Z1K1": "Z13518",
+                "Z13518K1": str(int(day)),
+            },
+        },
+    }
+
+
+def parse_date_string(raw):
+    """Parse a YYYY-MM-DD date string into a Z20420 object.
+
+    Accepts forms like '2026-03-14' or '+2026-03-14T00:00:00Z'.
+    """
+    s = raw.strip()
+    if s.startswith("+"):
+        s = s[1:]
+    if "T" in s:
+        s = s.split("T", 1)[0]
+    parts = s.split("-")
+    if len(parts) < 3:
+        raise ValueError(f"Invalid date string: {raw!r}")
+    return z20420_date(parts[0], parts[1], parts[2])
+
+
+def today_z20420():
+    """Build a Z20420 object for today's date."""
+    from datetime import datetime, timezone
+    now = datetime.now(timezone.utc)
+    return z20420_date(now.year, now.month, now.day)
+
+
+def _domain_from_url(url):
+    """Extract a domain name from a URL for use as a website name."""
+    try:
+        from urllib.parse import urlparse
+        netloc = urlparse(url).netloc
+        if netloc.startswith("www."):
+            netloc = netloc[4:]
+        return netloc or url
+    except Exception:
+        return url
+
+
 # ============================================================
 # Function registry: maps Z-function IDs to parameter metadata
 # ============================================================
@@ -256,6 +324,19 @@ FUNCTION_REGISTRY = {
             {"key": "K1", "name": "display_language", "type": "language"},
             {"key": "K2", "name": "item", "type": "Q-item"},
             {"key": "K3", "name": "include_empty", "type": "boolean"},
+        ],
+        "returns": "Z89",
+    },
+    # Citation function: Simple cite web — for citing web sources
+    "Z32053": {
+        "name": "Simple cite web",
+        "example": "Cite a web source with URL, title, site, date.",
+        "params": [
+            {"key": "K1", "name": "url", "type": "string"},
+            {"key": "K2", "name": "title", "type": "string"},
+            {"key": "K3", "name": "website", "type": "string"},
+            {"key": "K4", "name": "access_date", "type": "date"},
+            {"key": "K5", "name": "language", "type": "language"},
         ],
         "returns": "Z89",
     },
@@ -462,11 +543,25 @@ def build_func_call(fragment_def, variables=None):
 
     Resolves positional and named arguments using the function registry.
     Language parameters are auto-filled with $lang if not provided.
+
+    Z32053 (cite web) has special defaults: only the URL is required.
+    Title and website default to the URL/domain, access date defaults
+    to today, and language defaults to $lang.
     """
     func_id = fragment_def["func_id"]
-    positional = fragment_def["args"]
+    positional = list(fragment_def["args"])
     named = fragment_def["named_args"]
     variables = variables or {}
+
+    # Z32053 cite web: fill in defaults when only the URL is provided
+    if func_id == "Z32053" and len(positional) >= 1 and not named:
+        url = positional[0]
+        domain = _domain_from_url(url)
+        # Pad positional args up to 4 (date is type=date, language auto-fills)
+        while len(positional) < 2:
+            positional.append(url)
+        while len(positional) < 3:
+            positional.append(domain)
 
     # Look up function in registry
     if func_id not in FUNCTION_REGISTRY:
@@ -516,12 +611,20 @@ def build_func_call(fragment_def, variables=None):
         try:
             raw_value = next(pos_iter)
         except StopIteration:
+            # Date parameters default to today's date if not provided
+            if param["type"] == "date":
+                args_dict[full_key] = today_z20420()
+                continue
             raise ValueError(
                 f"Not enough arguments for {func_id} ({func_info['name']}). "
                 f"Missing: {param['name']} ({param['key']})"
             )
 
-        args_dict[full_key] = resolve_value(raw_value, variables)
+        # Date parameters need to be parsed into Z20420 objects
+        if param["type"] == "date":
+            args_dict[full_key] = parse_date_string(raw_value)
+        else:
+            args_dict[full_key] = resolve_value(raw_value, variables)
 
     return z7_call(func_id, args_dict), func_info["returns"]
 

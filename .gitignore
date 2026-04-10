@@ -41,3 +41,5 @@ data/*_dump.json
 data/archive_failures.json
 data/*.html
 screenshots/
+reformat_articles.py
+cleanup.bat

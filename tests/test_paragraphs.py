@@ -377,6 +377,33 @@ class TestSectionHeaders:
         assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
 
+    def test_cite_web_url_only(self):
+        """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""
+        template = "{{cite web|https://example.com/foo}}"
+        result = compile_template(template, {"subject": "Q319"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z7K1"]["Z9K1"] == "Z32053"
+        assert inner["Z32053K1"]["Z6K1"] == "https://example.com/foo"
+        assert inner["Z32053K2"]["Z6K1"] == "https://example.com/foo"
+        assert inner["Z32053K3"]["Z6K1"] == "example.com"
+        # Date is a Z20420 object
+        assert inner["Z32053K4"]["Z1K1"] == "Z20420"
+        # Language defaults to $lang
+        assert inner["Z32053K5"]["Z18K1"]["Z6K1"] == "Z825K2"
+
+    def test_cite_web_full_args(self):
+        """{{cite web|URL|Title|Site|YYYY-MM-DD}} parses date into Z20420."""
+        template = "{{cite web|https://en.wikipedia.org/wiki/Foo|Foo|Wikipedia|2026-03-14}}"
+        result = compile_template(template, {"subject": "Q319"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z32053K1"]["Z6K1"] == "https://en.wikipedia.org/wiki/Foo"
+        assert inner["Z32053K2"]["Z6K1"] == "Foo"
+        assert inner["Z32053K3"]["Z6K1"] == "Wikipedia"
+        # Date: 2026-03-14
+        assert inner["Z32053K4"]["Z20420K1"]["Z20159K2"]["Z13518K1"] == "2026"
+        assert inner["Z32053K4"]["Z20420K2"]["Z20342K1"]["Z16098K1"] == "Z16103"  # March
+        assert inner["Z32053K4"]["Z20420K2"]["Z20342K2"]["Z13518K1"] == "14"
+
     def test_mixed_qid_and_non_qid_headings(self):
         """QID headings use the QID; non-QID headings auto-number independently."""
         template = """==Q131819891==

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-04-11T23:34:37Z
+  Fetched:   2026-04-11T23:50:46Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -57,6 +57,7 @@ When trying to view pages longer than a sentence that aren't hard coded copies o
 
 :ex: [[Q213]] [[User:MetalBreaksAndBends|MetalBreaksAndBends]] ([[User talk:MetalBreaksAndBends|talk]]) 14:00, 25 March 2026 (UTC)
 :Yes it's a bug. Tracked in [[phab:T420630]]. &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 14:09, 25 March 2026 (UTC)
+::Is there any progress on this bug being fixed? I think it is the number one issue keeping this wiki from being easily readable [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:36, 11 April 2026 (UTC)
 
 == [[f:Z26095|Z26095]] not working ==
 

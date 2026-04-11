@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-04-11T23:32:18Z
+  Fetched:   2026-04-11T23:50:46Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -16,6 +16,7 @@ You seem to have made several articles that use the Indian village of Sonardi as
 I wanted to say that I do not object to your goal of creating every article "every Wikipedia should have," and I am working on a similar thing. I came here to recommend that you also look into the [[m:Wiki99|Wiki99]] lists for individual topics, like I have been doing for [[m:Wiki99/LGBT+]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:36, 6 April 2026 (UTC)
 
 :Thank you so much! I will get on it after working on the main list! [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:30, 6 April 2026 (UTC)
+::I'm excited. To work on this more, but some people did object, so I'm going to wait a bit longer in order to make sure that I'm not causing any issues or propagating any kind of errors. But I hope that in the future, the editor that I made is going to be better at making the articles, and it'll be a pretty clear thing where I can just kinda do it. And we'll be at a point where we're past the beta stage and more want to actually start putting a lot of work into attracting new users by having all these things on commonly trafficked articles be visible.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:44, 11 April 2026 (UTC)
 
 == Use of SPO sentence ==
 

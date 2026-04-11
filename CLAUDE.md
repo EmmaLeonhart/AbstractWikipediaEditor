@@ -52,7 +52,7 @@ They compile to Z31465(Z10771(Z24766(QID, $lang))) and cause implicit paragraph 
 
 ### Electron Editor (`editor/`)
 - `src/main.ts` -- Main process. Handles IPC for Wikidata fetching, article checking, credential management (.env read/write), and calling Python scripts via `execFile`.
-- `src/renderer.ts` -- Renderer process. Parses wikitext line-by-line and shows a live preview where each template is rendered by the **real Wikifunctions evaluator** (see [Live Preview Rendering](#live-preview-rendering) below), with per-line caching keyed by `(subject, line)`. Also handles the login overlay UI.
+- `src/renderer.ts` -- Renderer process. Parses wikitext templates, fetches Wikidata labels for QID arguments, and renders a line-aligned preview where each sentence is built from a small per-function template (e.g. `Z26039` → `"${a[0]} is a ${a[1]}."`). See [Live Preview Rendering](#live-preview-rendering). Also handles the login overlay UI. This logic is also mirrored in `site/renderer.js` for the project website.
 - `src/preload.ts` -- Context bridge exposing `window.api` to renderer.
 - `index.html` -- Editor UI with login button, QID input, preview pane, wikitext textarea, and login overlay.
 - The login button opens an overlay where users enter their Wikimedia credentials. Credentials are saved to `.env` in the project root.
@@ -60,33 +60,30 @@ They compile to Z31465(Z10771(Z24766(QID, $lang))) and cause implicit paragraph 
 - `npm run dist` builds a Windows .exe installer via electron-builder.
 
 ### Live Preview Rendering
-The editor's live preview pane shows what each sentence **actually** renders to, by calling the real Wikifunctions evaluator — not a hand-rolled approximation. This means the preview matches publication exactly and automatically picks up upstream function changes.
+The preview pane shows a line-aligned rendering of the editor's wikitext. Each template line (`{{is a|SUBJECT|Q146}}`) is parsed locally in TypeScript, each QID is resolved to its English Wikidata label (via `window.api.fetchLabels`, which hits `wbgetentities` in batches of 50), and the sentence is built from a small hand-rolled per-function template in `renderSentence()` — `Z26039` ("is a") emits `"${subject} is a ${class}."`, `Z26570` ("location") emits `"${subject} is a ${class} in ${place}."`, and so on. SUBJECT is replaced with the current page's QID label, `$lang` renders as a visible placeholder, and each QID becomes a clickable link to `wikidata.org/wiki/${qid}`.
 
-**Pipeline** (`render_wikitext.py` invoked from `main.ts`'s `render-wikitext` IPC):
-1. For each template line, run `wikitext_parser.compile_template(line, {"subject": qid})` to get the same Z-object the editor would paste on push.
-2. Walk the tree and substitute three kinds of references the Abstract Wikipedia renderer normally resolves at publish time but the standalone evaluator doesn't:
-   - `Z18(Z825K1)` → `Z6091(<subject qid>)` — this is `SUBJECT`
-   - `Z18(Z825K2)` → `Z9(Z1002)` — this is `$lang`, fixed to English for the preview
-   - `Z6091(Q6091500)` → `Z6091(<subject qid>)` — the `"it"` pronoun, which the Abstract Wikipedia renderer rewrites to the article's subject. Without this swap the preview shows "An it is a pet" because the evaluator just looks up the English label of `Q6091500`, which is literally "it".
-   The first two are strictly required — without them the evaluator returns a `Z5` error because those slots only exist inside `Z825`'s scope.
-3. Hand the patched object to `wikifunctions.call(outer_zid, *args)` from the [`wikifunctions` PyPI library](#wikifunctions-pypi-library-feeglgeef), which POSTs it to `https://www.wikifunctions.org/w/api.php?action=wikifunctions_run` and returns the parsed `Z22`. We decompose our `Z32123(…)` compiled object into its outer ZID plus `Z32123K1, K2, …` positional arguments just so `wf.call()` can reassemble the same shape — the wire format is identical to posting directly.
-4. Extract `Z22K1.Z89K1` from the returned Z22 — the rendered HTML fragment. If `Z22K1` is `Z24` (no result) we dig the underlying `Z5` error type out of `Z22K2` metadata so failures surface as e.g. `evaluator error (Z507)` instead of a generic "no result".
-5. Strip the outer `<p>...</p>` wrapper that `Z32123` adds (the preview uses a line-aligned gutter, not block paragraphs).
+This is an approximation of what Wikifunctions actually produces — fast, offline-ish, and visually familiar, but it doesn't pick up upstream function changes and new function templates have to be added to `renderSentence()`'s switch statement by hand.
 
-Per-line wall-clock budget is enforced with `future.result(timeout=30)` in the TS→Python worker pool, because `wf.call()` itself doesn't support timeouts — a hung evaluator request could otherwise stall a live-preview render forever.
+There is also experimental infrastructure (`render_wikitext.py` + the `render-wikitext` IPC + `window.api.renderWikitext`) that routes lines through the real Wikifunctions evaluator via `wikifunctions.call()`. It is **not** wired into the live preview because the evaluator-based path produced wrong output for several function shapes — the manual `Z825K1/K2` + `Q6091500` substitution doesn't match what `Z825` (the real article renderer) does internally, so `spo` dropped its predicate, `it` substitution fought with pronoun agreement, and so on. The plumbing is left in place so a future attempt can start from working infrastructure instead of nothing; to re-enable it, replace the body of `renderPreview()` in `src/renderer.ts` with a call to `window.api.renderWikitext(currentQid, lines)` and handle the returned per-line results.
 
 **Caching.** TypeScript caches results in a `{"${subject}::${trimmed_line}": RenderLineResult}` dict, so editing one line in a 20-line article only renders that one line. A monotonic `renderSeq` counter lets newer renders cancel older ones if the user keeps typing — no stale output overwrites fresh output.
 
 **Not routed through the evaluator.** Section headers (`==QID==`) are still rendered locally as `<h2>{wikidata_label}</h2>` because the Z31465 function's output is effectively just a label lookup — round-tripping through the API would be pure latency. Paragraph breaks (`{{p}}`) and blank lines are also handled in TypeScript.
 
 ### `wikifunctions` PyPI library (Feeglgeef)
-**Runtime dependency — install with `pip install wikifunctions` before launching the editor.** Imported by `render_wikitext.py`, which the Electron preview calls on every debounced keystroke. See `https://pypi.org/project/wikifunctions/`.
+**Optional dependency** — installed with `pip install wikifunctions`. Imported only by `render_wikitext.py`, which is currently unused by the editor (the live preview went back to Wikidata-label-based rendering because the evaluator-based path produced wrong output). See `https://pypi.org/project/wikifunctions/`.
 
 **What it is:** a thin Python wrapper around the Wikifunctions function-evaluation API, plus builders for Z-object types (`ZFunctionCall`, `ZReference`, `ZMonolingualText`, `ZNaturalNumber`, `ZWikidataItemReference`, etc.). Internally `wf.call(zid, *args)` builds `{"Z1K1":"Z7","Z7K1":zid,"{zid}K{i}":arg_i}` and POSTs to `/w/api.php?action=wikifunctions_run`, returning the parsed `Z22` result. Each arg can be any Python value including a fully-built nested Z-object dict — the server handles evaluation.
 
 **What it can do in this project:**
-- **Render Z-objects by calling the real evaluator.** This is how the editor's live preview works (see [Live Preview Rendering](#live-preview-rendering)). `render_wikitext.py` calls `wf.call(outer_zid, *args)` after decomposing the Z-object our `compile_template` produces into its outer function ZID and positional `{zid}K1, K2, …` arguments. The library rebuilds the same Z7 shape we started with — the round-trip is intentional and lets us pick up any future library improvements (caching, auth, rate limiting, better error shapes) by upgrading the pip instead of patching our own code.
-- **Validate compiler output in tests.** Future work: a `pytest` suite can compile a known wikitext snippet, send it to the evaluator via `wf.call()`, and assert the English comes back matching. The `"it"` pronoun bug that corrupted 61 articles would have been caught by one such test — a bare string in an entity slot fails the evaluator's type check immediately.
+- **Evaluate individual Wikifunctions calls by ZID.** Useful for validating simple function calls in tests: compile a known wikitext snippet, send the resulting Z-object to `wf.call()`, check the returned Z22. Works well for leaf functions (e.g. a `Z26039` "is a" call with two concrete QIDs and a concrete language).
+- **Future test suite.** A `pytest` file could compile known templates and assert rendering matches expected English. The `"it"` pronoun bug that corrupted 61 articles would have been caught by one such test — a bare string in an entity slot fails the evaluator's type check immediately.
+
+**What it can *not* do:**
+- **Render a full Abstract Wikipedia article the way the wiki does.** Abstract Wikipedia articles are rendered by wrapping everything in `Z825` (the article renderer) which binds `Z825K1` = subject, `Z825K2` = language, and handles pronoun substitution, error recovery, and paragraph assembly. Calling the inner function calls directly (which is what `render_wikitext.py` does, bypassing `Z825`) produces noticeably wrong output for non-trivial shapes — `spo` drops its predicate, `it` substitution doesn't match what `Z825` does internally, etc. A correct end-to-end evaluator-based preview would have to call `Z825` itself, and that's what `render_wikitext.py`'s simulation approach got wrong.
+- **Publish / edit articles.** Read-only. All writes to Abstract Wikipedia still go through Playwright browser automation because the MediaWiki API rejects bot-password edits to the `Page` namespace with `protectednamespace`.
+- **Fetch articles by QID from Abstract Wikipedia.** It only talks to the function evaluator, not the article store. Pulling an article's JSON still uses a direct MediaWiki `action=query` call (see `convert_article.py` and `check-article` in `main.ts`).
+- **Parse or serialize our wikitext.** No overlap with `wikitext_parser.py` or `convert_article.py`; those stay.
 
 **What it can *not* do:**
 - **Publish / edit articles.** The library is read-only. All writes to Abstract Wikipedia (`create_from_qid.py`, `edit_from_qid.py`, the editor's push button) still go through Playwright browser automation, because the MediaWiki API rejects bot-password edits to the `Page` namespace with `protectednamespace`. `wikifunctions` doesn't even attempt writes.
@@ -106,7 +103,7 @@ The mapping is used by `generate_wikitext.py` (Python) and the Electron editor (
 
 ### Website (`site/`)
 - `index.md` -- Landing page (committed to git)
-- `renderer.js` -- Client-side renderer **originally** ported from `editor/src/renderer.ts`. Currently still uses the hand-rolled switch-statement rendering; **out of sync** with the editor, which now uses the real Wikifunctions evaluator. Future work: either call `wikifunctions_run` directly from the browser (the API allows CORS with `origin=*`), or accept the divergence and document it here.
+- `renderer.js` -- Client-side renderer ported from `editor/src/renderer.ts`. Uses the same Wikidata-label-based rendering path the editor uses.
 - `pages/` and `catalog.md` -- Generated by `build_pages.py` (gitignored)
 - Article pages are HTML that load `renderer.js` to render wikitext live with Wikidata labels
 - Built and deployed by `.github/workflows/pages.yml`

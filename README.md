@@ -90,6 +90,7 @@ The file `data/property_function_mapping.json` is the core configuration that dr
 | `data/property_function_mapping.json` | Maps Wikidata properties → Wikifunctions sentence generators |
 | `data/function_aliases.json` | Human-readable names for Z-function IDs (e.g. `location` → `Z26570`) |
 | `data/templates/` | Hand-crafted wikitext templates (auto-generated ones are gitignored) |
+| `discussions/` | Snapshots of Abstract Wikipedia discussion pages the bot watches (updated daily + on push by a GitHub Actions workflow) |
 | `site/` | Project website (deployed via GitHub Pages) |
 | `tests/` | Unit tests |
 
@@ -105,6 +106,7 @@ The file `data/property_function_mapping.json` is the core configuration that dr
 | `convert_to_aliases.py` | Rewrites Z-IDs in wikitext files to human-readable aliases (e.g. `Z26570` → `location`) |
 | `build_pages.py` | Builds the GitHub Pages site from all existing Abstract Wikipedia articles |
 | `archive_pages.py` | Submits Abstract Wikipedia pages to the Wayback Machine for archiving |
+| `fetch_discussions.py` | Snapshots a hardcoded list of Abstract Wikipedia discussion pages (project chat, talk pages, etc.) into `discussions/` so the bot has offline context. Run automatically on push and daily via GitHub Actions |
 
 ## Configuration
 

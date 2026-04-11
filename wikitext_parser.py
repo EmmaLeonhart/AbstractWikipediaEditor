@@ -509,20 +509,33 @@ def _load_aliases():
         return {}
 
 _FUNCTION_ALIASES = _load_aliases()
+# Lowercase-keyed index so alias lookup is actually case-insensitive.
+# The canonical JSON stores some keys with uppercase letters (e.g.
+# "is the X of") — without this index, typing "is the x of" would fall
+# through and be treated as a literal function name, then blow up on
+# push with a "not a Z-id" error. There are no case-collisions in the
+# canonical file as of writing (checked at build time), so collapsing
+# to lowercase loses no information.
+_FUNCTION_ALIASES_LC = {k.lower(): v for k, v in _FUNCTION_ALIASES.items()}
 
 
 def resolve_function_name(name):
     """Resolve a function name or alias to a Z-ID.
 
     Accepts Z-IDs directly (e.g. "Z26570") or English aliases
-    (e.g. "location", "is a", "role"). Case-insensitive for aliases.
+    (e.g. "location", "is a", "role", "is the x of"). Alias lookup is
+    case-insensitive — both "is the X of" and "is the x of" resolve
+    to the same Z-id.
+
+    Unknown names pass through unchanged, which lets callers error out
+    later with a more specific "not a Z-id" message instead of us
+    silently replacing the name with garbage.
     """
     name = name.strip()
     # Already a Z-ID
     if re.match(r'^Z\d+$', name):
         return name
-    # Try alias lookup (case-insensitive)
-    return _FUNCTION_ALIASES.get(name.lower(), _FUNCTION_ALIASES.get(name, name))
+    return _FUNCTION_ALIASES_LC.get(name.lower(), name)
 
 
 def parse_template_calls(body):

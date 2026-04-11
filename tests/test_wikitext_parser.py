@@ -12,7 +12,47 @@ from wikitext_parser import (
     resolve_value, parse_frontmatter, parse_template_calls,
     build_func_call, compile_template, parse_template,
     wrap_as_fragment, build_clipboard_item, FUNCTION_REGISTRY,
+    resolve_function_name,
 )
+
+
+class TestResolveFunctionName:
+    """Alias resolution must be truly case-insensitive. The canonical
+    function_aliases.json stores some keys with mixed case (e.g.
+    "is the X of"), and the editor's live preview goes through this
+    function on every render — any miss here surfaces as "not a Z-id"
+    errors in the preview pane. Regression test for the case where
+    "is the x of" (lowercase x) passed through unchanged because the
+    dict was keyed on the mixed-case string and lookup only lowercased
+    the input, not the keys."""
+
+    def test_already_a_zid_passes_through(self):
+        assert resolve_function_name("Z26570") == "Z26570"
+        assert resolve_function_name("Z801") == "Z801"
+
+    def test_lowercase_alias(self):
+        assert resolve_function_name("is a") == "Z26039"
+        assert resolve_function_name("location") == "Z26570"
+
+    def test_mixed_case_canonical_key(self):
+        # "is the X of" is the key in the JSON — must match regardless of user case
+        assert resolve_function_name("is the X of") == "Z28016"
+        assert resolve_function_name("is the x of") == "Z28016"
+        assert resolve_function_name("IS THE X OF") == "Z28016"
+        assert resolve_function_name("Is The X Of") == "Z28016"
+
+    def test_multi_word_alias_case_insensitive(self):
+        assert resolve_function_name("cite web") == "Z32053"
+        assert resolve_function_name("CITE WEB") == "Z32053"
+        assert resolve_function_name("Cite Web") == "Z32053"
+
+    def test_unknown_alias_passes_through(self):
+        # Unknown names should pass through unchanged so the caller can
+        # error out later with a specific "not a Z-id" message.
+        assert resolve_function_name("xyzzy not an alias") == "xyzzy not an alias"
+
+    def test_whitespace_trimmed(self):
+        assert resolve_function_name("  is a  ") == "Z26039"
 
 
 # ============================================================

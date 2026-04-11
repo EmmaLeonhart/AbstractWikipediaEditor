@@ -44,14 +44,15 @@ Wikidata labels, because those don't benefit from the real renderer).
 """
 
 import argparse
-import copy
 import io
 import json
 import os
 import sys
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
+from concurrent.futures import as_completed
 
 import requests
+import wikifunctions as wf
 
 if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != "utf-8":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
@@ -61,16 +62,10 @@ sys.path.insert(0, SCRIPT_DIR)
 
 from wikitext_parser import compile_template  # noqa: E402
 
-WIKIFUNCTIONS_API = "https://www.wikifunctions.org/w/api.php"
 ENGLISH_ZID = "Z1002"
 IT_PRONOUN_QID = "Q6091500"  # Wikidata item for the English pronoun "it"
-RENDER_TIMEOUT = 30
+RENDER_TIMEOUT = 30  # per-line wall-clock budget (wf.call has no built-in timeout)
 MAX_WORKERS = 6  # be polite to the evaluator
-
-SESSION = requests.Session()
-SESSION.headers.update({
-    "User-Agent": "AbstractTestBot/1.0 (Electron editor live preview)",
-})
 
 
 def _is_template_line(line):
@@ -180,36 +175,42 @@ def _extract_html(z22_data):
 
 
 def _render_zobject(zobj):
-    """POST a Z-object to wikifunctions_run and extract the rendered
-    HTML. Returns (html, error_string)."""
+    """Call the Wikifunctions evaluator via the `wikifunctions` PyPI
+    library and extract the rendered HTML. Returns (html, error_string).
+
+    Our `compile_template` already produces a canonical Z7 function call
+    (e.g. `Z32123(Z32234([...]))`) with nested Z-objects in each `{zid}K{i}`
+    slot. `wf.call(zid, *args)` wants the outer function ZID and its
+    arguments as separate parameters, then rebuilds the same Z7 shape
+    internally. So we decompose our compiled object — pull the outer ZID
+    out of `Z7K1` and collect `{zid}K1, K2, ...` in order — and hand them
+    to `wf.call()`, which POSTs to `wikifunctions_run` and returns the
+    parsed Z22 response. The round-trip is byte-identical to posting the
+    dict ourselves, we just go through the library so any future behavior
+    tweaks (caching, auth, rate limiting) land by upgrading the pip.
+    """
     try:
-        r = SESSION.post(
-            WIKIFUNCTIONS_API,
-            data={
-                "action": "wikifunctions_run",
-                "format": "json",
-                "function_call": json.dumps(zobj),
-                "origin": "*",
-            },
-            timeout=RENDER_TIMEOUT,
-        )
-        r.raise_for_status()
-        payload = r.json()
+        z7k1 = zobj.get("Z7K1")
+        outer_zid = z7k1.get("Z9K1") if isinstance(z7k1, dict) else z7k1
+        if not isinstance(outer_zid, str) or not outer_zid.startswith("Z"):
+            return None, f"bad outer function ref: {outer_zid!r}"
+
+        args = []
+        i = 1
+        while True:
+            key = f"{outer_zid}K{i}"
+            if key not in zobj:
+                break
+            args.append(zobj[key])
+            i += 1
+
+        z22 = wf.call(outer_zid, *args)
     except requests.RequestException as e:
         return None, f"http error: {e}"
-    except ValueError as e:
-        return None, f"bad json: {e}"
-
-    run = payload.get("wikifunctions_run")
-    if not run or "data" not in run:
-        # API-level error (e.g. throttling, unknown action)
-        err = payload.get("error", {}).get("info", "missing wikifunctions_run.data")
-        return None, f"api error: {err}"
-
-    try:
-        z22 = json.loads(run["data"])
-    except (ValueError, TypeError) as e:
-        return None, f"bad Z22 json: {e}"
+    except (ValueError, KeyError, TypeError) as e:
+        return None, f"library error: {e}"
+    except Exception as e:  # noqa: BLE001 — wf.call can raise anything
+        return None, f"wf.call error: {type(e).__name__}: {e}"
 
     return _extract_html(z22)
 
@@ -269,19 +270,33 @@ def main():
         else:
             results[i] = {"html": None, "error": None}
 
-    # Render template lines in parallel
+    # Render template lines in parallel. Each future gets its own
+    # wall-clock budget via future.result(timeout=...), because wf.call()
+    # has no built-in timeout — a hung evaluator request could otherwise
+    # stall a live-preview render indefinitely.
     if template_indices:
         with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
             futures = {
                 pool.submit(render_line, lines[i], subject): i
                 for i in template_indices
             }
-            for fut in futures:
-                i = futures[fut]
-                try:
-                    results[i] = fut.result()
-                except Exception as e:
-                    results[i] = {"html": None, "error": f"worker error: {e}"}
+            try:
+                for fut in as_completed(futures, timeout=RENDER_TIMEOUT + 5):
+                    i = futures[fut]
+                    try:
+                        results[i] = fut.result(timeout=RENDER_TIMEOUT)
+                    except FutureTimeout:
+                        results[i] = {"html": None, "error": f"timeout after {RENDER_TIMEOUT}s"}
+                    except Exception as e:
+                        results[i] = {"html": None, "error": f"worker error: {e}"}
+            except FutureTimeout:
+                # Outer iterator timed out — any still-unfinished futures get
+                # flagged as timeouts; finished-but-unseen ones already have
+                # their result set above.
+                pass
+            for fut, i in futures.items():
+                if results[i] is None:
+                    results[i] = {"html": None, "error": f"timeout after {RENDER_TIMEOUT}s"}
 
     json.dump(results, sys.stdout, ensure_ascii=False)
     sys.stdout.write("\n")

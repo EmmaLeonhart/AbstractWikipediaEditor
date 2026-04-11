@@ -1,0 +1,104 @@
+<!--
+  Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
+  Fetched:   2026-04-11T23:34:37Z
+  Source:    fetch_discussions.py (auto-updated via GitHub Actions)
+  DO NOT EDIT — any local changes will be overwritten on the next run.
+-->
+This is a page where to report technical problems and bugs you might encounter on the website. Please, add your report below this line.
+__NEWSECTIONLINK__
+[[Category:Abstract Wikipedia administration|Report A Technical Problem]]
+----
+
+== Editing and viewing abstract pages do not work ==
+
+Essentially the title. To reproduce, go to, say [[Q319]]. Notice you cannot use it (it just displays JSON), and when you try to edit it, the same JSON is shown and editable. I'm sure the team is aware, just writing this down. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:58, 19 March 2026 (UTC)
+
+:[[User:Jdforrester (WMF)]] notes that abstract articles are being created in the wrong namespace, which seems the likely cause. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:00, 19 March 2026 (UTC)
+
+== Function links are 404s ==
+
+If I click from https://abstract.wikipedia.org/wiki/Q142 to the function view https://abstract.wikipedia.org/view/en/Z27868 I get a 404 error. That seems to be true for all the "Z" links. [[User:Eloquence|Eloquence]] ([[User talk:Eloquence|talk]]) 23:17, 19 March 2026 (UTC)
+:This also seems to happen if you click "Read". [[User: Tenshi Hinanawi|Tenshi!]] ([[User talk: Tenshi Hinanawi|Talk page]]) 00:29, 20 March 2026 (UTC)
+::It seems to try and view functions in Abstract Wikipedia when the functions are on Wikifunctions instead. https://wikifunctions.org/wiki/Z27868 is where the link should go. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 00:42, 20 March 2026 (UTC)
+:Fix underway in [[phab:T420666|T420666: Our /view/ URLs aren't working on abstract.wikipedia.org, so we're generating links for users that don't work]]. Sorry for the disruption. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:43, 23 March 2026 (UTC)
+::Note: This part is fixed; the second part is [[phab:T420670|T420670: from Abstract Wikipedia, links to ZIDs should go to Wikifunctions]] which will get deployed next week. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 16:42, 26 March 2026 (UTC)
+
+== Search not working ==
+Whne I search, say Canberra, which has an Abstract Wikipedia article, the search bar takes me to [https://abstract.wikipedia.org/view/en/Q3114?wprov=acrw1_0 Not Found], with an error. It should go to [[Q3114|Q3114 - Abstract Wikipedia]]. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 00:31, 20 March 2026 (UTC)
+
+:Fix underway in [[phab:T420666|T420666: Our /view/ URLs aren't working on abstract.wikipedia.org, so we're generating links for users that don't work]] for this one too. Sorry for the disruption. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:43, 23 March 2026 (UTC)
+::This fix is now deployed. Sorry for the disruption! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 16:42, 26 March 2026 (UTC)
+
+== Undo not working ==
+
+When I try to "undo" from history, it doesn't show the revert screen, but only shows the edit screen of the latest article. Maybe the same reason of mis-created namespace... [[User:Higa4|Higa4]] ([[User talk:Higa4|talk]]) 06:45, 20 March 2026 (UTC)
+
+:Filed as [[phab:T420915|T420915: Attempting to undo an Abstract article edit appears to fail, and opens the editor with the current revision]]. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:48, 23 March 2026 (UTC)
+
+== Special:CreateAbstract with an argument ==
+
+Steps to reproduce:
+* Go to [[Special:CreateAbstract/Q123456]]
+* Add some content
+* Try to publish
+
+Error message:
+<blockquote>The value of the 'qid' property ('Q0') does not match the page title 'Q123456'</blockquote>
+
+[[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 00:38, 21 March 2026 (UTC)
+
+:I got this same error message when trying to [[Special:CreateAbstract/Q151]] (of course with it saying Q151 rather than Q123456). Also occurred when I tried to create a blank page. <span class="nowrap"><code>[[User:Dot.py|dot]][[User talk:Dot.py|.]][[Special:Contributions/Dot.py (alt)|p]][[Special:Contributions/Dot.py|y]]</code></span> 23:43, 22 March 2026 (UTC)
+:Filed as [[phab:T420916|T420916: Direct browses to Special:CreateAbstract/Q123456 don't work on publishing, attempt to publish to Q0]]. Thanks for the report! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:49, 23 March 2026 (UTC)
+::This fix is now deployed. Sorry for the disruption! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 16:43, 26 March 2026 (UTC)
+
+== Pages can't be viewed ==
+
+When trying to view pages longer than a sentence that aren't hard coded copies of articles from enwiki, I get "Reached max retries. Try again later." Is this expected behavior? [[User:MetalBreaksAndBends|MetalBreaksAndBends]] ([[User talk:MetalBreaksAndBends|talk]]) 13:59, 25 March 2026 (UTC)
+
+:ex: [[Q213]] [[User:MetalBreaksAndBends|MetalBreaksAndBends]] ([[User talk:MetalBreaksAndBends|talk]]) 14:00, 25 March 2026 (UTC)
+:Yes it's a bug. Tracked in [[phab:T420630]]. &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 14:09, 25 March 2026 (UTC)
+
+== [[f:Z26095|Z26095]] not working ==
+
+Hello, I could just file a task on Phabricator but checking here first. For some reason, I can't find [[f:Z26095|Z26095]] in the list of functions. [[User:FantasticWikiUser|FantasticWikiUser]] ([[User talk:FantasticWikiUser|talk]]) 17:33, 25 March 2026 (UTC)
+
+:@[[User:FantasticWikiUser|FantasticWikiUser]]: Z26095 outputs a "[https://www.wikifunctions.org/view/en-gb/Z11 Monolingual text]" item, not a fragment of HTML, so it won't show up in search except in places you can use a monolingual text item, like as an argument to a Z32234 call. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:23, 25 March 2026 (UTC)
+
+== Mainspace content model ==
+
+The content model of abstract articles, as reported by <syntaxhighlight lang="wikitext" inline>{{#contentmodel:canonical|Q1}}</syntaxhighlight>, is <code>abstractwiki</code>. Can this be changed to something else more descriptive, akin to Wikidata's <code>wikibase-item</code>/<code>wikibase-lexeme</code>/<code>wikibase-property</code> and Wikifunctions's <code>zobject</code>? <code>abstractarticle</code>, for example. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 01:24, 28 March 2026 (UTC)
+
+== 1 (Q199) isn't appearing when I choose it ==
+
+For some reason, Q199 doesn't show up when it is used. 2 works fine. [[User:FantasticWikiUser|FantasticWikiUser]] ([[User talk:FantasticWikiUser|talk]]) 09:24, 28 March 2026 (UTC)
+
+:Example: [[Q199]] itself, or [[Q556]] [[User:FantasticWikiUser|FantasticWikiUser]] ([[User talk:FantasticWikiUser|talk]]) 09:31, 28 March 2026 (UTC)
+::On Wikidata, [[d:Q199]] didn't have a special label for English, instead using the default for all languages. The [[f:Z23753|label of item reference in language]] function was only able to find labels in the given language, without looking for defaults, so it showed up as nothing. I added an English label for 1, so everything should be fine now. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 10:11, 28 March 2026 (UTC)
+
+== Rate limits and other non-intelligible errors ==
+
+I've been editing some pages here to experiment around, and the first thing I notice, aside from the very slow speed of how these very short sentences are constructed, are the constant errors I get. Some of these are:
+
+* [[Q711]]<br/>Wikifunctions returned a failed response: Could not acquire WASI runner within time limit
+* [[Q183]]<br/>Unable to render this fragment due to an unknown error.
+
+There was also something about a rate limit for the orchestrator? Is this a problem with the WMF servers? I've never noticed these kinds of performance issues, even in wikis like en-WP which have stacks and stacks of Lua modules and wikitext templates built on top of each other! [[User:LastCelebration|'''<span style="color:#d98dd3;">Last</span><span style="color:#033a7f;">Celebration</span>''']] ([[User talk:LastCelebration|talk]]) 06:54, 31 March 2026 (UTC)
+
+== Error: Lexeme lacks compatible representations  ==
+
+I have tried to create two articles using [[f:Z29743|Z29743]], one of which ([[Q467]]) has been successfully created. The other article was identical in structure, but linked the Wikidata items [[d:Q9800899|Q9800899]], [[d:Q6636|Q6636]], and [[d:Q467|Q467]]. However, neither article renders anything in English or French, throwing <code>Error: Lexeme lacks compatible representations</code>. Any ideas? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:52, 2 April 2026 (UTC)
+
+:There is a similar error at [[Q111]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 19:25, 2 April 2026 (UTC)
+:I think I’ve found the source of the error, and the problem is that the English lexemes with senses linking to [[:d:Q80994]] do not include the adjective [[:d:L5792]]. What you get instead is [[:d:L5791]], but that is a noun and therefore lacks the [[:d:Q3482678]] feature that the function is ultimately looking for. For English, we could avoid looking for that feature, but we currently don’t. Please compare [https://www.wikifunctions.org/view/en/Z21734?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z21734%22%2C%22Z21734K1%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z6825%22%2C%22Z6825K1%22%3A%7B%22Z1K1%22%3A%22Z6095%22%2C%22Z6095K1%22%3A%22L3080%22%7D%7D%2C%22Z21734K2%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z6825%22%2C%22Z6825K1%22%3A%7B%22Z1K1%22%3A%22Z6095%22%2C%22Z6095K1%22%3A%22L5791%22%7D%7D%7D this call (with error in Details)] with [https://www.wikifunctions.org/view/en/Z21734?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z21734%22%2C%22Z21734K1%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z6825%22%2C%22Z6825K1%22%3A%7B%22Z1K1%22%3A%22Z6095%22%2C%22Z6095K1%22%3A%22L3080%22%7D%7D%2C%22Z21734K2%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z6825%22%2C%22Z6825K1%22%3A%7B%22Z1K1%22%3A%22Z6095%22%2C%22Z6095K1%22%3A%22L5792%22%7D%7D%7D this one that succeeds].
+:Even if the adjective were linked to the item, I think you would still fail to get the result you are looking for, because the function is not looking through the lexemes to find one that is an adjective. This is something we definitely need to do and I’m a little surprised that no one has done it yet. But only a little; there is still so much to do! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:52, 2 April 2026 (UTC)
+::@[[User:GrounderUK|GrounderUK]]: I took some time to address this problem and concocted [[f:Z33078|Z33078]]. It passes one more test than the previous version, but two other tests (that the other implementations also failed) timed out. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 05:36, 3 April 2026 (UTC)
+:::Neat! I have connected your implementation. [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 06:09, 3 April 2026 (UTC)
+:::Thank you for your contribution. The new function will naturally claim more resources simply because it looks at more lexemes. The increase seems disproportionate, however, and I haven’t investigated why that might be. (Not that I’m claiming any expertise in that area!) [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 09:44, 3 April 2026 (UTC)
+
+== Unable to select the function [[f:Z28016|Z28016]] while creating page [[Q628]] ==
+
+I tried to add the function [[f:Z28016|Z28016]] on the page [[Q628]], but the selector didn't let me select the function, so i was forced to use the indonesian version of the function, and i think this is a bug, so i want to report it. [[User:Mattiz6276|Mattiz6276]] ([[User talk:Mattiz6276|talk]]) 19:11, 3 April 2026 (UTC)
+
+:@[[User:Mattiz6276|Mattiz6276]]: The problem here is that [[f:Z28016|Z28016]] doesn't return a type that can be cast as HTML raw content, but rather monolingual text. Also, it looks like you wanted [[f:Z26570|Z26570]], so I changed it to use that. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 20:07, 3 April 2026 (UTC)
+::Hi, i haven't been active on Abstract Wikipedia for a while (i mainly edit it.wiki), so sorry to not have answered you sooner.
+::Thank you for helping me fix [[Q628]] and showing me what functions to use. [[User:Mattiz6276|Mattiz6276]] ([[User talk:Mattiz6276|talk]]) 07:54, 6 April 2026 (UTC)

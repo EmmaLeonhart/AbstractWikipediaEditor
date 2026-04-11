@@ -38,6 +38,8 @@ API_URL = "https://abstract.wikipedia.org/w/api.php"
 PAGES = [
     ("Abstract_Wikipedia:Project_chat",
      "abstract_wikipedia_project_chat.wikitext"),
+    ("Abstract_Wikipedia:Report_a_technical_problem",
+     "abstract_wikipedia_report_a_technical_problem.wikitext"),
     ("User_talk:Immanuelle",
      "user_talk_immanuelle.wikitext"),
     ("User_talk:Immanuelle/Abstract_Wikipedia_Editor",

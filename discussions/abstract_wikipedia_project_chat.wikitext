@@ -1,0 +1,605 @@
+<!--
+  Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
+  Fetched:   2026-04-11T23:32:18Z
+  Source:    fetch_discussions.py (auto-updated via GitHub Actions)
+  DO NOT EDIT — any local changes will be overwritten on the next run.
+-->
+__NEWSECTIONLINK__
+[[Category:Abstract Wikipedia administration|Project Chat]]
+This is the Abstract Wikipedia Project chat. This is where discussions on the project happen. Add your discussion below this line. More technical issues should go to [[Abstract Wikipedia:Report a technical problem]].
+
+==Discussions not working==
+I keep getting a type error whenever I try to create a new topic. Anybody else? [[ talk:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:05, 19 March 2026 (UTC)
+:I'm also experiencing the same error. [[User: Tenshi Hinanawi|Tenshi!]] ([[User talk: Tenshi Hinanawi|Talk page]]) 18:19, 19 March 2026 (UTC)
+:@[[User:Feeglgeef|Feeglgeef]], @[[User:Tenshi Hinanawi|Tenshi Hinanawi]]: Sorry about that; it was due to a production mis-configuration that I've worked around for now. Unfortunately the same bug also meant that the community's first Abstract articles were all mis-created into the <code>Abstract Wikipedia:</code> namespace, and I don't think we can move them into the proper positions right now, so they'll need to be re-created. Please reply here, on [[Abstract Wikipedia:Report a technical problem]], or file any issues you run into in Phabricator. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 18:34, 19 March 2026 (UTC)
+::The new abstract table is breaking globalcontribs counter across all Wikis, [[:phab:T420632]] [[User:Shushugah|Shushugah]] ([[User talk:Shushugah|talk]]) 18:51, 19 March 2026 (UTC)
+
+== Horray! 🎉  ==
+
+This is just a celebratory post acknowledging the milestone of getting this project started. Great work on the engineering team so far, now we can get some community creating content as well! [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 18:53, 19 March 2026 (UTC)
+
+:I want to contribute but I'm a bit lost with the function editor so I'll wait until some documentation is uploaded on the community page. [[User:Hathor1719|Hathor1719]] ([[User talk:Hathor1719|talk]]) 18:55, 19 March 2026 (UTC)
+:🎉🎉🎉! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:56, 19 March 2026 (UTC)
+
+== Local help page ==
+
+The Help page in the sidebar goes to [[mw:Help:Contents]]. We should change that to just [[Help:Contents]]. (But I guess for that we need a local admin as well.)  [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 18:59, 19 March 2026 (UTC)
+
+:@[[User:Ainali|Ainali]], done. But the page [[Help:Contents]] needs to be written. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 19:13, 19 March 2026 (UTC)
+::Is there a caching thing, that it is still not working? We have [[MediaWiki:Helppage]], but the link in the sidebar still goes to Mediawiki for me. <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|diskussion]]</sup><sub>[[Special:Bidrag/Ainali|bidrag]]</sub></small> 07:36, 20 March 2026 (UTC)
+:::Try [https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat?action=purge purge]. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 07:59, 20 March 2026 (UTC)
+::::I tried purging, it doesn't help. Interestingly, if I change the interface language to English, I get the new link, but not when I use it in Swedish. A bug, or do we need to define this for each language? <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|diskussion]]</sup><sub>[[Special:Bidrag/Ainali|bidrag]]</sub></small> 12:48, 20 March 2026 (UTC)
+:::::couldn’t find the solution, I think it's because multilingual feature hasn’t enabled yet. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 13:44, 20 March 2026 (UTC)
+::::::Now it works, without any new purging. Weird (but good). <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|diskussion]]</sup><sub>[[Special:Bidrag/Ainali|bidrag]]</sub></small> 15:36, 20 March 2026 (UTC)
+
+== qqx doesn't seem to work ==
+
+I switched my user interface language to Hebrew. I'm trying to [[Special:CreateAbstract/Q18383|create a page]]. There's a plus button under "lead paragraph (Q8776414)". It has several items that begin with "Add" and continue with English strings that are probably function names: "section title", "paragraph", "HTML unordered list", etc. I tried using uselang=qqx to see what functions those are, but then the editing interface is not loaded at all. I see a yellow box with this text:
+
+: (wikilambda-initialize-error)
+: (wikilambda-renderer-error-footer-project-chat)
+
+uselang=qqx works quite nicely in Wikifunctions and shows ZIDs of objects when their labels are used in the interface, but it seems to fail here. It would be quite nice to make it work. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:06, 19 March 2026 (UTC)
+
+== Visual editor on this page ==
+
+The first time I posted something here on this page (using DiscussionTools), I noticed a mistake and wanted to fix it. I clicked "edit" near the section heading, and it started editing the whole page in Visual editor. If I recall correctly, the default on other wikis is that the edit button next to the section heading on discussion pages opens only that section and in the wikitext editor. It should probably be the same here. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:10, 19 March 2026 (UTC)
+
+:[[Abstract Wikipedia:Report a technical problem]] would be more appropriate. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:14, 19 March 2026 (UTC)
+
+== Temporary adminship ==
+
+I'm requesting temporary adminship here (for 24 hours to a week) to help set up the wiki on the community side. As administrator on Wikifunctions, I designed the current layout of the main page (also used locally), among other things. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:16, 19 March 2026 (UTC)
+:{{ping|Feeglgeef}} while I agree that temporary adminship could be useful, both personally and as a steward, I'm not sure it's a good idea to grant this request. First of all, you didn't really say why you need admin rights (and your history, both on Wikifunctions and Meta, make me want to be extra cautious). In the meantime, stewards and global admins can also (and already do) help if needed, don't hesitate to ask. Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 21:36, 19 March 2026 (UTC)
+::Ah, right! Please update the main page as I've requested on its talk page, as well as delete the existing pages on the Abstract Wikipedia namespace with QIDs (they are now redundant), and add the correct license to [[MediaWiki:License]]. I have a few more things, but they're relatively minor. Consider the above request retracted. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:29, 19 March 2026 (UTC)
+:::{{reply to|VIGNERON}} ? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:50, 20 March 2026 (UTC)
+::::{{reply to|Feeglgeef}} yes ? please [https://dontasktoask.com/ Don't ask to ask, just ask]. Cdlt, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 16:28, 20 March 2026 (UTC)
+:::::{{ping|VIGNERON}} I wanted you to do the things I asked in the above reply (which you ignored :(. ). The main page is fixed and the license is fine (not complete, but alas), but any page following the pattern "Abstract Wikipedia:Q[n]" should be deleted. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:57, 20 March 2026 (UTC)
+::::::{{reply to|Feeglgeef}} I did the deletion this morning, did I miss any pages? Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 18:00, 20 March 2026 (UTC)
+
+== Templates - per usual or as abstract content? ==
+
+I was about to import a few templates that can come in handy in discussions and other meta-related activities but then realized that it may be a great use case for abstract content. Or will it not be possible to do it in that way on this wiki (or at all)? [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 19:28, 19 March 2026 (UTC)
+
+:Calling functions here is currently possible, but some templates are impossible to replace and functions are inconvenient in any case. It'd be helpful if you said which templates you intended to import, but generally I'd say import them. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:33, 19 March 2026 (UTC)
+::I think what I wonder most is if we always should do multilingual templates with the traditional <code><nowiki><translate></nowiki></code> tags or use functions wherever we can. [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 19:42, 19 March 2026 (UTC)
+:::The problem with "functions wherever we can" is that most template-like functions are content based, like abbr or 0. I'm assuming you mean templates that are more about meta stuff, which probably should '''not''' be functions, at least under the current idea. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:46, 19 March 2026 (UTC)
+::::Yes, I was only thinking about meta stuff. Where can I read about this idea you are referring to? It seems important enough that it should be part of [[Abstract Wikipedia:Scope|this project's scope]] (or similar page/policy). [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 19:52, 19 March 2026 (UTC)
+:::::It's not written down, I suppose. I didn't mean there was a rule against creating the functions, (feel free, if you'd like). The main problem with putting them on Wikifunctions is speed and the fact that you must use HTML fragments (no wikitext), which to me makes it unreasonable. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:56, 19 March 2026 (UTC)
+::::::That's a fair point of view. The reason I asked was that it would be an excellent way of [[d:Q3033752|Q3033752]] (note to self, we need the functionality of [[d:Template:Q]]). If we get used here to not falling back into wikitext, we get more training at creating excellent abstract content. [[User:Ainali|Ainali]] ([[User talk:Ainali|talk]]) 20:03, 19 March 2026 (UTC)
+:::::::I haven’t tried an embedded function on an AW Project page, so I suppose I should… if you’ll forgive me!
+:::::::{{#function:Z32878|Q2013|}} [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:37, 30 March 2026 (UTC)
+
+== Articles now creatable properly ==
+
+Hello all! To those not on the telegram (or not following), articles are now able to be created in the correct way. Any articles you have previously made will need to be recreated. I'd courtesy ping those who have already created one but it seems we don't have that set up yet! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:31, 19 March 2026 (UTC)
+
+== Testing from a different language ==
+
+I have set the UI to Spanish and there are some menus not translated (Create an article in the sidebar, for example). Where can I translate the content I see missing?
+
+Also, I tried to create a very simple abstract article on the environment ([[Q43619]]) and it fails to render (Wikifunctions returned a failed response: Alcanzado el límite de tiempo en el Orquestador): I also found a random, decently big one ([[Q408]]) and it keeps loading for five minutes already in Spanish.
+
+Finally, if this is going to be with the purpose of multi lingual edition, shouldn't help and talk pages like these be also automatically translated? Because otherwise it becomes just an output of information, an editor who isn't familiar with English would be able to read the Abstract Wikipedia in their language but unable to provide feedback (as I'm doing now). [[User:Hathor1719|Hathor1719]] ([[User talk:Hathor1719|talk]]) 06:56, 20 March 2026 (UTC)
+
+:I am not sure that we want "automatic" translation. But regular translation, I truly agree that we should have. There is a Phabricator created to enable the Translate extension on this wiki ([[Phab:T420656]]). <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|diskussion]]</sup><sub>[[Special:Bidrag/Ainali|bidrag]]</sub></small> 07:42, 20 March 2026 (UTC)
+::Yes at least the ability to translate user messages, so that I for example could read the messages in this page in Spanish and reply in Spanish, and the rest of users translate them to their local languages. Otherwise cross-lingual collaborative effort isn't going to work unless everyone has a decent level of English as a second language. Thank you for the link! [[User:Hathor1719|Hathor1719]] ([[User talk:Hathor1719|talk]]) 08:42, 20 March 2026 (UTC) 
+::
+::I would greatly appreciate automatic per-comment translation (the way Discourse implements it), and hope we find a way to implement that for the truly multilingual sites like this. In the wiki spirit, the outputs of the automatic translation should be savable and editable so that a) the computation of auto-translation only happens once into each target language and b) everyone can improve each of those translations. [[User:Sj|Sj]] ([[User talk:Sj|talk]]) 21:23, 22 March 2026 (UTC)
+
+== Using Function IDs ==
+
+It seems like when creating an article you cannot insert a function ID (i.e. Z6839) in a function call's function field and you have to type in it's name and hope it pops up (which it seems as though it doesn't always). [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 13:13, 20 March 2026 (UTC)
+
+== Not showing functions that return strings where an HTML fragment is needed ==
+
+It might be good to adjust the search function inside the abstract wikipedia editor to show functions that return strings as grayed-out where an HTML fragment is needed, as it took me a while to realize that [https://www.wikifunctions.org/view/en/Z24102 label of item reference in specific/general lang] returns a string and not an HTML fragment, meaning that it doesn't show up when searching. [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 13:30, 20 March 2026 (UTC)
+
+== Cannot find Lorrain in the language list ==
+
+Hi, I wanted to try generating an article in lorrain ([[d:Q671198]]), but it does not appear in the selection list. Where can I ask for it to be added, so that I can try experimenting with it?
+
+Thanks! [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 19:48, 20 March 2026 (UTC)
+
+:I'm not certain, but I know it's a bit of a process that I think begins on Wikidata. Even if it were added, there would be no support for it in community-made functions, so for the foreseeable future this will be impossible. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:54, 20 March 2026 (UTC)
+::There are already plenty of lexemes in lorrain on Wikidata. [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 20:38, 20 March 2026 (UTC)
+:::Can you point me to them? [[Special:Contributions/&#126;2026-17446-79|&#126;2026-17446-79]] ([[User talk:&#126;2026-17446-79|talk]]) 22:04, 20 March 2026 (UTC)
+::::https://w.wiki/FiVz [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 06:12, 21 March 2026 (UTC)
+:I see no reason for not adding this to our list of languages, after all we already have plenty of languages, including dialects like [[f:Z1640]]. {{ping|Poslovitch}} does this mean you are volunteering to create wikifunctions in lorrain 🤣 Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 09:50, 21 March 2026 (UTC)
+::@[[User:VIGNERON|VIGNERON]] Of course! I suppose this means the fonctions will need to support the many ways to write in lorrain, since it is not standardized. Do you have any examples of functions that support such things? [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 09:54, 21 March 2026 (UTC)
+:::I tried creating a "Natural language" object on Wikifunctions, but it seems I don't have permission to do this. &lt;rant&gt;Why is it always so hard with languages that have no ISO codes :sob: &lt;/rant&gt; [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 13:32, 21 March 2026 (UTC)
+::::You wouldn’t be able to create a Natural language object even if you did have an ISO code to hand. Could you raise a ticket on Phabricator, tagged with [https://phabricator.wikimedia.org/tag/abstract_wikipedia_team/  Abstract Wikipedia team]? [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:54, 21 March 2026 (UTC)
+:::::Thanks @[[User:GrounderUK|GrounderUK]], will do! [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 14:56, 21 March 2026 (UTC)
+:::::Raised: [[phab:T420823]]. [[User:Poslovitch|Poslovitch]] ([[User talk:Poslovitch|talk]]) 15:09, 21 March 2026 (UTC)
+
+== Project namespace alias ==
+
+On all other Wikipedias, "WP" is an alias of the Project namespace. Why isn't it here? There's also "Abstract", but that's too long for my liking. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 21:48, 20 March 2026 (UTC)
+
+:Noting that this has been discussed multiple times on the telegram. I would prefer AWP, but it doesn't really matter. [[Special:Contributions/&#126;2026-17446-79|&#126;2026-17446-79]] ([[User talk:&#126;2026-17446-79|talk]]) 22:02, 20 March 2026 (UTC)
+:well it’s not like another language version of Wikipedia, and there're still confusion if it’s a sister project or else. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 22:09, 20 March 2026 (UTC)
+::{{ping|Tanbiruzzaman}} It is listed as a Wikipedia on [[Special:SiteMatrix]]. The domain and database ID says so as well. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 22:13, 20 March 2026 (UTC)
+:::It was an initial process to connect wikidata, but will be configured later, per [[phab:T420420]] (also check comments in [[phab:T420643]]). [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 22:32, 20 March 2026 (UTC)
+:On a similar note, is there a reason why [[Main Page]] is a redlink? Feels useful to redirect it to [[Abstract Wikipedia:Main page]]. //[[User:SHB2000|SHB2000]] ([[User talk:SHB2000|talk]]) 07:33, 25 March 2026 (UTC)
+::redirect from mainspace is not possible here, I guess. You may give a try. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 07:39, 25 March 2026 (UTC)
+:::Fair enough I guess. --[[User:SHB2000|SHB2000]] ([[User talk:SHB2000|talk]]) 07:41, 25 March 2026 (UTC)
+::::I can do it if I'm an admin. This project has no local admins or bureaucrats. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 23:42, 26 March 2026 (UTC)
+:::::I tried to create it and it shows "The provided title 'Main_Page' is not valid for an Abstract Article.", also tried to change the content model to wikitext and shows the same error. Note that I also have the similar technical rights as admin. @[[User:Koavf|Koavf]], is there another way you'd try if you're an administrator? [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 03:44, 27 March 2026 (UTC)
+::::::Import from another project's "[[Main Page]]". I did this at [[:d:Main Page]] (but the community decided to delete it, which I did). [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 03:47, 27 March 2026 (UTC)
+::::::We do not have [[:f:Main Page]] either and I do not see why it would be needed here. --[[User:Ameisenigel|Ameisenigel]] ([[User talk:Ameisenigel|talk]]) 23:06, 27 March 2026 (UTC)
+:::::::I can easily imagine the scenario where there are incoming links to it. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 23:58, 27 March 2026 (UTC)
+::@[[User:SHB2000|SHB2000]]: Because the main namespace is not meant to have anything other than abstract articles in it, the same as for Wikifunctions and Wikidata. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 18:22, 27 March 2026 (UTC)
+:I checked the [[Special:NamespaceInfo|namespace information]] to see if there were any aliases for the Project namespace and I saw that Abstract: was an alias. Would that conflict with the interwiki prefix abstract:? [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 23:07, 28 March 2026 (UTC)
+
+== Making it easier to contribute ==
+I'm aware that we're only a few days into the public beta of this project, and everything is a little rough around the edges, but I thought it could be useful to come up with some goals to work towards in order to make the site more accommodating and easier to contribute to, for newer and more experienced editors alike. (If there's a place where this discussion is already taking place please tell me and I can move there).
+Here are some thoughts I had so far:
+* Most of the current articles are extremely short, just one or two sentences long. I think it would be good to pick one article in each of a few main categories (e.g. one country, one type of food, one notable person, etc.) and work to try to include as much relevant information as possible, to serve as an example for future articles of similar types.
+* As I understand it, a lot of the limitations for what kind of information we can include in an article is due to which functions exist on Wikifunctions. We have [[Abstract Wikipedia:Useful functions for article composition]], which is a good way to find some functions, but this list can't include every single function, so it would be good to have some way to find relevant functions on Wikifunctions. Is there a category containing AWP-related functions there? I'm not too familiar with Wikifunctions yet but if there is a category, we should link it there.
+* In a similar vein, it seems like there are very few such functions currently available. It would be good to have some kind of guide as to how to create such functions that can be used here. I tried creating a new function there yesterday and it took me a while to find my way around, and I still haven't figured it out completely, so a guide specifically for people wanting to improve Abstract Wikipedia could be useful.
+* Lastly it might be worth coming up with a list of policies and guidelines that we want to make to begin with. Currently there are none, and obviously it's quite time consuming to create new policies, but coming up with a set of basic ones would be helpful I think.
+
+Let me know your thoughts. Cheers, &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 19:52, 21 March 2026 (UTC)
+
+:Just had a closer look at Wikifunctions; seems [[f:Wikifunctions:Catalogue/Natural language operations/Global language functions]] might be a good place to link to. &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 20:00, 21 March 2026 (UTC)
+::I support the goal of making it easier to contribute. From my point of view a place where people can write example sentences in specific languages about specific facts and can request a function for it will be useful. So far I it is difficult for me to understand how it is possible to define content in a abstract way and convert it into texts in different natural languages. It seems to me like it requires to much available data at functions and Wikidata Lexemes what is not there for many small languages so far. So I prefer a monolingual approach based on Wikidata statements. Then people can write sentences what explain a specific Wikidata statement or multiple ones and this can be done for many languages. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:49, 21 March 2026 (UTC)
+:I do agree that creating these linguistic functions would be easier if we had a guide, though it's not exactly a cut and paste process (it requires a lot of thinking to figure out edge cases, whether your use case makes sense across languages, what will be included in the scope of your function, what will not be, what the utility will be, etc.). An example of thinking this out poorly is [[f:Z31405]], where it's painfullyy clear that the Abstract Wikipedia team didn't think these questions through well enough, where the description says that they couldn't even decide whether the function would output a phrase or a noun, there is little to no utility in composing articles, and the edge cases are insurmountable with their current approach.
+:It's not exactly the same, but I've noted on the telegram that we should make it easier to make new language versions of existing functions. Unlike object labels, however, that requires either programming experience or a very in-depth tutorial, which we do not have. The lack of language-versions is natural if you think about it (if 1% of the world can make a Wikifunctions function and 1% can translate the concepts effectively between the languages we want, 0.01% can help us here), so the tutorial route seems like the only logical method. Spreading awareness as to contributing this way on the main page could also be helpful  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:35, 22 March 2026 (UTC)
+::Yeah, some kind of tutorial would be phenomenal. There could be some walk-through tutorials for creating some basic linguistic functions. That seems to be the bottleneck to progress here - practically all sentences follow the format "X is Y".
+::I've been looking forward to Abstract for awhile now (finding out it released yesterday, a bit too late), but it's completely unapproachable - it feels like I need a master's degree in both Computer Science and Linguistics in order to contribute to the growth of this project. It's a new project, sure, but it took at least an hour to write two sentences in [[Q711|Q711 (Mongolia)]]. Doesn't help that I only speak English. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 05:41, 27 March 2026 (UTC)
+:I suggest a bot that extract useful information and statistics including which functions are used. [[github:dpriskorn/wf-dump-scripts|See my prototype pipeline]]. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 06:26, 31 March 2026 (UTC)
+
+== Involving small language versions ==
+
+As Abstract Wikipedia can help small Wikipedia language versions offering more content in this language I think it is important to try to get people from such projects involved. From my point of view the highest chance to get it done is if people who know people contributing to small language version talk to the contributors and invite them to contribute to Abstract Wikipedia. In Wikifunctions I expected more involvement of small language versions and I think it is important to make it easier to contribute and find a way how to communicate with people who do not speak English. As it is not the case everyone can speak this language. What do you think how is it possible to get more people from small Wikipedia language versions involved in Abstract Wikipedia and Wikifunctions. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:55, 21 March 2026 (UTC)
+
+: I am interested in using AW/WF with the [[incubator:]], perhaps a workflow could be developed for that. — [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 18:52, 22 March 2026 (UTC)
+
+:: Have you tried to call Wikifunctions functions in the Incubatorwiki. I think adding language specific implementatations is the first step. It seems to me like simple sentences can be generated through calling Wikifunctions functions and so for this no Abstract Wikipedia is required. — [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:38, 22 March 2026 (UTC)
+
+::: I'll try it. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 06:02, 23 March 2026 (UTC)
+
+== URL-Parameter for specific language ==
+
+Is it possible to call an abstract Wikipedia article with a URL-Parameter specifying the language. I looked for random pages and I got examples without a german Implementation. I am interested in sharing an example and for this I want to set a link people can klick on to get the result in the expected language afterwards. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:43, 22 March 2026 (UTC)
+
+:You can add "?uselang=de" to render the article in German, if that is what you mean. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:41, 22 March 2026 (UTC)
+:@[[User:Hogü-456|Hogü-456]]: Yes, like with Wikifunctions you should be able to go to <code>/view/fr/Q123456</code> but that's waiting for some production re-configuration to work. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 13:12, 23 March 2026 (UTC)
+::Great 🤩 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 06:28, 31 March 2026 (UTC)
+
+== Purpose of language-specific functions? ==
+Some functions that produce sentences seem to have language-specific functions for every language, I.e. "Brazilian Sign Language: article-less defining".  Why is this?  What functions have this multiplicity?  I thought one point of AWP was to have language-independend functions, all of which have specifications for how they would render outputs in different languages (where the choice of output language is decided at the client, or at the final step of rendering, not for each function in turn).  [[User:Sj|Sj]] ([[User talk:Sj|talk]]) 21:23, 22 March 2026 (UTC)
+
+:This is just a side effect of how Wikifunctions works. Essentially the generic "Article-less defining fragment" checks which language you want, and then calls the language-specific version. You should only use the generic ones in abstract articles. &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 21:50, 22 March 2026 (UTC)
+::Aha thanks, then the interface should probably not be showing the hundreds of language-specific ones in the selector drop-down for editors. [[User:Sj|Sj]] ([[User talk:Sj|talk]]) 18:55, 23 March 2026 (UTC)
+:::Agreed, although I'm not sure how easy it would be to filter them out; there's not really anything distinguishing them from the general functions, they're both functions that take some input and return monolingual text as output. Maybe worth opening a phabricator ticket to get the opinion of people on the technical side of Abstract Wikipedia. &#123;&#123;[[User:GearsDatapacks|GearsDatapacks]]&#124;[[User talk:GearsDatapacks|talk]]&#124;[[Special:Contributions/GearsDatapacks|contribs]]&#125;&#125; 19:39, 23 March 2026 (UTC)
+::::I think the best way to do it would be to have some sort of tag for "multilingual function"? [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 21:43, 25 March 2026 (UTC)
+:::::Yes. I think this reveals that there are (at least) two kinds of functions on Wikifunctions. Those that are (mainly) helper functions (although they may be useful for external reuse or in abstract articles about a language) and Abstract-ready functions. Having a way to mark them as such on Wikidata, and then by default filter on Wikifunctions would increase usability a lot. <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 08:22, 28 March 2026 (UTC)
+::::::I agree that we need to be able to reduce the noise when finding functions.
+::::::I also agree that it would be very valuable to create function categories and be able to filter when searching.
+::::::I also agree that defaulting on AW to "top-level" functions is a good idea.
+::::::@ainali what do y mean mark them in Wikidata? Functions are not notable there if I understood correctly. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 06:33, 31 March 2026 (UTC)
+:::::::@[[User:So9q|So9q]] Oh, it's my mistake, mind wandering while writing. Instead of "on Wikidata" I meant "in metadata". <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 15:48, 31 March 2026 (UTC)
+::::::::Oh, ok, I agree. My prototype to extract statistics could be used to find sll top level html functions.
+::::::::We could limit it to functions over a certain number to not count the built in functions.
+::::::::We could do quite a lot of work with the data to help people gaps. E.g. most used functions in AW missing support for Swedish for example. 😀 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:17, 31 March 2026 (UTC)
+:::::::::The prototype script used to generate https://www.wikifunctions.org/wiki/Wikifunctions:Statistics/Z8 could rather easily be forked and adapted to AW 😀 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 06:45, 1 April 2026 (UTC)
+
+== "It" in abstract wikipedia ==
+
+How should the concept of "it" be represented in abstract wikipedia? Otherwise it leads to a lot of sentences like "Brussels is the capital of Belgium. Brussels is a large city. Brussels is...". Also, is there any plans for some form of easier to understand "authoring language" or something? The current approach with writing wikifunctions is hard to understand and write. [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 19:35, 23 March 2026 (UTC)
+
+:Every concept is represented in Abstract Wikipedia through its Wikidata item, which would be [[d:Q6091500]] in this case. I'm not exactly sure what you mean by an "authoring language" (some sample texts of your idea would be helpful), but I don't think there's much improvement to be had while still writing in an abstract language (that is to say, most improvements would make the language more concrete). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:18, 23 March 2026 (UTC)
+::I mean more like a format easier to work with than wikifunctions. Like some form of computer-parsable conlang which can be "compiled" into wikifunctions. [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 20:47, 23 March 2026 (UTC)
+:This is a tough problem, because the pronoun you would use is semantically different in different languages. I think we have to make a "refer to previously-mentioned" function that takes a Wikidata item, reads properties like person or object, (linguistic) gender, etc, and spits out a pronoun. Hopefully it can be done that simply. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 18:41, 25 March 2026 (UTC)
+::Yeah that would make sense. I can try to draft one for English (that's the only language I know at least for now) so we can get a proof of concept. [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 18:48, 25 March 2026 (UTC)
+::Ooh. I could be wrong but I think wikidata doesn't have a property for "grammatical gender". For English I'll probably match on P21 and if it's an instance of Q5, and if it doesn't have P21 and is an instance of Q5 do they/them, if not an instance of Q5 and doesn't have P21 it/its, and otherwise match on P21. Also we'll need multiple "refer to" functions for different types of pronouns (possessive, nominative, etc). [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 18:57, 25 March 2026 (UTC)
+:::About the grammatical gender property: yeah, you're probably right. That's the tough part, because we're going to need individual properties for every language with grammatical gender. See the similar discussion about classifier/measure words and articles below. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 19:06, 25 March 2026 (UTC)
+::@[[User:VivianIsBee|VivianIsBee]] We do have [[:d:Property:P5185]], but this is applied only to lexemes and not to items. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 20:49, 25 March 2026 (UTC)
+
+== Supported languages for an article ==
+
+Is there a possiblity to see all languages an article can be displayed in. I looked at [[Q2290517]] and it seems like there is not yet a German version for this article. From my point of view knowing what articles are missing in the language of interest is important for working on abstract articles. As I looked at random pages I got a timeout as my user interface is in German and the generation of the article in German was not sucessful. So I think it is also necessary for checking if the article can be displayed in the user interface language. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 21:17, 24 March 2026 (UTC)
+
+:This is not something that is convenient to check at all. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:55, 24 March 2026 (UTC)
+::It would be great if it were clearer which was the first (or all, if possible) function that failed to render in a language to help the user go make necessary additions on Wikifunctions. <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 08:24, 28 March 2026 (UTC)
+:::I agree, I recently wrote the team and suggested a clear backtrace so the user can see an overview of the chain of functions and steps in which step failed in which function.
+:::I'm imagining something like the GitHub actions job pipeline overview, where you can easily see the process and the output from the failing step. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 06:41, 31 March 2026 (UTC)
+
+== [[f:Z26039|Z26039]] and [[f:Z26095|Z26095]] ==
+
+This is a big mistake, and it's best we fix it now. Anything relating to particular languages or even groups of languages needs to stay all the way out of the generic functions. Languages have different rules for articles, some of them don't even have articles. This kind of thing cannot be reconciled at the general function-level.
+
+As to the alternate way we deal with this, that's a little tougher. My first thought is a bunch of Wikidata properties that tell you whether an article precedes an entity's label in a particular language. That idea could work, but there are some obvious problems:
+*Are there languages where the presence of an article is contextual, too?
+*No one will fill these properties, especially in languages other than English, because we will accumulate dozens of them that have to go on every single word ever
+[[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 13:23, 25 March 2026 (UTC)
+
+:Can you give me an example of a language where this distinction actively prevents the functions from working? Some languages do not have articles, but that just means that the two are interchangeable. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:26, 25 March 2026 (UTC)
+::Trivially. 
+::*[[w:Golf|Golf]] on enwiki: "Golf is a club-and-ball sport in which players use various clubs to hit a ball into a series of holes on a course in as few strokes as possible."
+::*[[w:es:Golf|Golf]] on eswiki: "El golf es un deporte cuyo objetivo es introducir una bola en los hoyos que están distribuidos en el campo con el menor número de golpes, utilizando para cada tipo de golpe uno de entre un conjunto de palos ligeramente diferentes entre sí, ya que la cabeza del palo tiene ángulos distintos, al igual que las varillas tienen longitudes diferentes."
+::[[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 13:34, 25 March 2026 (UTC)
+:::That's not a meaningful difference, though, and both examples use Z26039. Z26039 and Z26095 have different semantic meanings, they aren't stylistic choices. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:01, 25 March 2026 (UTC)
+::::<em>Stylistic choice?</em> Is this a joke? Do you think the word "the" in English is a stylistic choice? [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 16:19, 25 March 2026 (UTC)
+:::::I mean, yes? If you can be understood perfectly without it that's what it is. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:21, 25 March 2026 (UTC)
+::::::You just said "Z26039 and Z26095 have different semantic meanings". [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 16:27, 25 March 2026 (UTC)
+:::::::Yes. "The" has no semantic meaning, but there is a semantic difference between "A bird is a dinosaur" and "Bird is a dinosaur" (The latter is about a specific animal names Bird). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:06, 25 March 2026 (UTC)
+::::::::It does though, no? See Wiktionary's second example:
+::::::::: ''You live on Main Street, don't you? You know, you should tell the mayor '''the''' street needs cleaning.''
+::::::::Generally it's used to refer to a singular identifiable instance (there's more definitions, but this is the primary one), which I think is definitely enough to put it outside of "no semantic meaning". [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 21:18, 25 March 2026 (UTC)
+:::::::::I can understand it perfectly fine if you remove "the", though. The fact that the thing can be obviously identified with "the" means that it can be obviously identified without it. It's convenient, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:21, 25 March 2026 (UTC)
+::::::::::The solution you're proposing to the problem at hand is pretty much "completely abandon grammatical articles in every language except English". You're right that it's not the end of the world, but we should at least try to solve the problem first. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 21:26, 25 March 2026 (UTC)
+:::::::::::No. That's definitely ''not'' what I'm saying. I'm disputing your insinuation that something is wrong with our current approach. We can solve any stylistic problems on a language by language basis, and semantic problems in the abstract content. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:09, 25 March 2026 (UTC)
+:By the way, even a single generic function for "X is a Y" is already too much, it neglects [[w:measure word|measure word]]s in Chinese, Japanese, and Korean. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 13:39, 25 March 2026 (UTC)
+::Oh god... measure words. How the fuck do we deal with measure words?
+::Have a look at the article for [[w:Chinese classifiers|Chinese classifiers]]. I have no idea how to deal with these. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 14:58, 25 March 2026 (UTC)
+:::I would presume Wikidata has those available to find? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:09, 25 March 2026 (UTC)
+::::No, I just checked and Wikidata doesn't have a property for this yet. We would need to do a decent amount of workshopping to define such a property well for the proposal there (it wouldn't just be "Chinese classifier for"; I think something like "Chinese count-classifier for"? The count-classifiers that simply disappear in Germanic languages are the real concern, as the mass-classifiers can generally be paired with the noun to translate into an English word) but I think it could work barring some edge cases.
+::::My main concern is if fundamentally we want to solve these sorts of problems this way. If so, we're going to be asking Wikidata to make hundreds if not thousands of properties over the coming months. Is that the best way to do this? I'm wondering if anyone has a better idea. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 18:15, 25 March 2026 (UTC)
+:::::And... is it going to <em>work?</em> How many Wikidata items only have a label in one or two languages as-is? This is only going to exacerbate that problem by quadrupling the work to translate a word, and putting us basically at square one. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 18:27, 25 March 2026 (UTC)
+::::@[[User:Snowmanonahoe|Snowmanonahoe]] There is [[:d:Property:P5978]] which can be used to say that a particular lexeme sense is used with a specific classifier (not just in Mandarin but also in languages like Malay), as well as [[:d:Property:P10927]] which can indicate the reverse relation (but for parsimony's sake should point to more general classes rather than to every applicable sense in existence). [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 20:53, 25 March 2026 (UTC)
+:::::@[[User:Mahir256|Mahir256]]: Thank you, I didn't know about Wikidata's work on lexemes. This seems a lot more doable now. Question: is there any way to move from an item to a lexeme, e.g. if I had [[d:Q81727]] and I wanted [[d:L:L3965]]? [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 20:58, 25 March 2026 (UTC)
+::::::@[[User:Snowmanonahoe|Snowmanonahoe]] re: your first sentence, I suspect that most people with questions here are clueless about lexemes (something the Abstract Wikipedia team made a grave mistake in not properly having addressed before this launch). In general links go from lexeme senses to items and not the other way around, [[:d:Wikidata:Lexicographical_data/Documentation/Senses#Properties_regarding_relationships_to_Wikidata_items|with several properties available to do so]], and while there is a Wikifunction to go from an item to a lexeme, I cannot endorse the current method of composing abstract articles (<small>see my reply under "Authoring Language" below</small>) enough to mention what Wikifunction that is. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 21:11, 25 March 2026 (UTC)
+::::::The function being referred to by Mahir is [[f:Z6830]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:25, 25 March 2026 (UTC)
+::::::It would be helpful if you read a bit about the project before insisting that we're doing it wrong. [[Special:Contributions/&#126;2026-18667-44|&#126;2026-18667-44]] ([[User talk:&#126;2026-18667-44|talk]]) 22:11, 25 March 2026 (UTC)
+:::::::Could you elaborate? [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 22:15, 25 March 2026 (UTC)
+::::::::You don't even know about Lexemes, much less the complexities of the project. You come into the project chat without the slightest sliver of a clue and then tell everyone that they are "making a big mistake." Perhaps next time you could phrase it like "What is the distinction between these two functions? Does this not present concerns about XYZ?" [[Special:Contributions/&#126;2026-18688-73|&#126;2026-18688-73]] ([[User talk:&#126;2026-18688-73|talk]]) 02:09, 26 March 2026 (UTC)
+:::::::::I'd be happy to hear why I'm wrong. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 02:18, 26 March 2026 (UTC)
+:Is it just me or does 26039 only return void? [[User:MetalBreaksAndBends|MetalBreaksAndBends]] ([[User talk:MetalBreaksAndBends|talk]]) 18:31, 25 March 2026 (UTC)
+::Does for me, too, the English version anyway. [[User:Snowmanonahoe|Snowmanonahoe]] ([[User talk:Snowmanonahoe|talk]]) 18:42, 25 March 2026 (UTC)
+:::If my debugging is right, everything except Russian, Ukrainian, and Belarusian is completely broken. [[User:MetalBreaksAndBends|MetalBreaksAndBends]] ([[User talk:MetalBreaksAndBends|talk]]) 18:44, 25 March 2026 (UTC)
+::::For me, English renders fine now [perhaps due to a recent edit? hard to be sure]. Not sure if it's entirely fixed though. [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 21:08, 25 March 2026 (UTC)
+:I agree there is a problem with the current approach. My proposed solution: I'm hoping the top level call from Abstract Wikipedia will be optionally allowed to send parameters like the grammatical number "plural" of the subject, which could be considered by the specific language alongside other context about the subject/object item to formulate the grammar (e.g. [[f:Z32496]]), and by the time it gets to the English constructor (e.g. [[f:Z32410]]), the English function will have the "subject is plural" boolean set (to decide "has"/"have" as well as the articles). I'm working on this particular example and all the required helper functions. If the English version works, I'll seek to make a configuration that allows similar in other languages. PS off topic, but I also think we will often want these functions to return HTML not monolingual text, so that we can embed hyperlinks. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 02:37, 26 March 2026 (UTC)
+::HTML is ideal because you don't need to convert it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:16, 26 March 2026 (UTC)
+::I’m not sure we want to favour particular features; don’t we simply want to determine the relevant set of lexemes for an item/language pairing? We don’t have selective fetch for lexemes, so the set may need to be limited, but identifying the more salient lexemes still requires considering the full set, unless we filter by “lexical similarity” between the item’s labels and/or aliases and the lexeme’s lemma and/or forms. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:58, 26 March 2026 (UTC)
+:::I don't quite understand what you are objecting to, or what problem you forsee. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 00:22, 27 March 2026 (UTC)
+::::I’m not objecting to anything, although the notion of “sending” is a little alien in a functional context. The problem is knowing which features (predicates) are most salient. I guess it’s simply an optimisation, so further relevant details can be fetched later if the context requires them. But I’d still think in terms of filtered statement sets, and perhaps different filters per language. If we’re going to be language specific, it’s natural to consider extending the selective fetch to include sense-related lexemes. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 11:26, 27 March 2026 (UTC)
+
+== Authoring Language ==
+
+Wikifunctions are kind of a pain to work with directly (no offense to the creators of them, they're an amazing platform and overall very impressive, just kind of by their nature they are built to be more abstract and closer to lambda calculus over "regular" programming languages), and that extends to Abstract Wikipedia. Has it been thought about making a sort of "authoring language" that is easier to work with than directly using Wikifunctions, but then "compiles" directly to Wikifunctions? My idea is sort of making a computer-parsable, natural language-agnostic conlang or even just some sort of custom markup language that could optionally be used to write abwiki articles and then would be stored along with the compiled wikifunctions and a timestamp of last compile so if an update was made then previous articles could be recompiled automatically. I'm of course not one of the abwiki staff members, so if this doesn't fit the "spirit" of it or something let me know, but I think it'd be helpful. [[User:VivianIsBee|VivianIsBee]] ([[User talk:VivianIsBee|talk]]) 19:14, 25 March 2026 (UTC)
+
+:I proposed adding support for Spreadsheetfunctions to Wikifunctions. It is better than defining a new language. From my point of view there are in relation to other programming languages many people who can write spreadsheet functions and they are translated into many different natural languages. In the past I did some experiments regarding the automatical conversion of Spreadsheet functions into the programming language R. I am interested in defining an Abstract Article in an Spreadsheet and I think it is possible. It is from my point of view important to lower the barrer to create an Abstract Article and creating functions in Wikifunctions. Maybe the goal of making it abstract makes it more complicated and language specific functions are easier to create for many people. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:25, 25 March 2026 (UTC)
+:@[[User:VivianIsBee|VivianIsBee]] I have presented to the Abstract Wikipedia team about an abstract content authoring language [[f:Wikifunctions:Status updates/2024-10-17|multiple]] [https://elemwala.toolforge.org/static/nlgsig-nov2025.html times]. It is unfortunate that the current infrastructure does not seek to support this yet. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 20:49, 25 March 2026 (UTC)
+
+== Definite articles ==
+
+Heya! Been working on the page [[Q778]] [and thus the [https://www.wikifunctions.org/view/en/Z26570 Z26570] function] - is there a way to check if a word needs a definite article [i.e. the] or not? Right now it's "''The Bahamas is an island country in Caribbean.''" which is close but needs a definite article [before Caribbean]. But I can't just always add it, since cases like "''Lubeck is a city in the Germany.''" would be wrong. Is there any solution for this yet? [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 21:06, 25 March 2026 (UTC)
+
+:IIRC this has been discussed on the telegram/IRC. Not sure if a solution was found. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:23, 25 March 2026 (UTC)
+:@[[User:99of9|99of9]] is working on this: [[:f:Z32645]] [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:02, 26 March 2026 (UTC)
+::hmm, tried adding this to [[f:Z30397]], but it makes it return an empty string for some reason? presumably i'm doing something wrong but not sure what... :( [faulty implementation at [[f:Z32738]]] [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 19:55, 26 March 2026 (UTC)
+:::The reason was that the argument to Z32645 is a Wikidata item reference, not a Wikidata item. I've fixed it now. But I switched it so that it only adds the definite article when the Kleenean is absolutely True, more than Maybe. I hope I will be able to achieve that for Caribbean, although it doesn't currently do so. I'll keep working on it today. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 00:20, 27 March 2026 (UTC)
+
+== Editing the direct code of pages ==
+
+I find the current GUI editor to be quite clunky and harder for more complex topics.
+
+I'm assuming there is some way that I can edit the code of pages, so I can more quickly write functions without clicking through GUIs. Like I heavily doubt someone wrote [[Q15433043]] by clicking through GUIs.
+
+Also, does anyone know of a function that concats two strings with a space in between? Would I just use [[wikifunctions:Z21394|Z21394]], adding a space between two calls to objects (i.e. "Mars" + " " + "Jupiter")? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:19, 26 March 2026 (UTC)
+
+:For [[Q15433043]], it looks like they just wrote it in plain English and didn't use functions, so that's why it's so long I think. For joining, [[f:Z22504]] looks like a pretty good option. [[User:Infernostars|Infernostars]] ([[User talk:Infernostars|talk]]) 20:40, 26 March 2026 (UTC)
+::Thanks, that looks good. I hope more languages support it down the road. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:45, 26 March 2026 (UTC)
+::When I try to insert this in a [[wikifunctions:Z28016|"defining role sentence"]], it doesn't appear and throws an error. Do you know why? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:51, 26 March 2026 (UTC)
+:There are several, but I think they are best left to language-specific functions on Wikifunctions. How do you know that a space is required? [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 20:42, 26 March 2026 (UTC)
+::For example, in [[Q711|Mongolia]], I would like to write "Ulaanbaatar is the capital and largest city of Mongolia". As of now, I would have to write that in two separate sentences and be very repetitive. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:46, 26 March 2026 (UTC)
+:::There’s a long journey ahead of us. At this stage I’d be thinking more in terms of [[f:Z32163]]. At least that way we can join adjacent sentences more naturally, when we have appropriate functions to do that. And we can implement “paragraph” differently according to the target language, without having to change the existing abstract content. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 21:07, 26 March 2026 (UTC)
+::::Yeah that's what I expected, the project has just started after all. Thanks for this.
+::::How are you finding these functions? I'm having trouble locating them. Also, is there a way that I can copy and paste functions from one article to another in the case of cookie-cutter articles? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 21:45, 26 March 2026 (UTC)
+:::::You can copy individual function calls in edit mode. Just click on the three vertical dots and select Copy to clipboard. This is currently specific to a particular browser and site, so you cannot copy between Wikifunctions and AW. You can also copy parts of calls by clicking on the three horizontal dots [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:26, 26 March 2026 (UTC)
+::::::Great, I didn't see that, thank you! So there is no current way to edit the underlying code of the page? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 22:35, 26 March 2026 (UTC)
+:::::::It depends what you mean by “underlying code”. All articles are a list of one or more sections containing function calls. You can add and remove sections (apart from the first) and move sections up and down. Within a section, you can move function calls up and down, but you can only move a function call (or part of one) from one section to another by using the clipboard. The real underlying code is the functions themselves, and these can be amended on Wikifunctions. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:44, 26 March 2026 (UTC)
+:::::For tips on finding functions, please see [[:f:Wikifunctions:Find]]. It is also helpful to look at other AW articles, of course. On Wikifunctions, you can look at a related function’s implementations or test cases, as these may reference broader or narrower functions. And “What links here” is available from the Tools menu. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:38, 26 March 2026 (UTC)
+::::::Thank you very much for you help. I think that's all I need to know for now, happy editing :) [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 23:07, 26 March 2026 (UTC)
+
+== Code editing ==
+
+I created and am attempting to edit [[Q687168]]. It is difficult to figure out what is going on because I am stuck at a visual editor. I would like to play around with comparing it to code on other pages, but the visual thing makes that pretty difficult. Also is there a way to edit things in a sandbox or something so I can experiment without it being in mainspace? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:25, 27 March 2026 (UTC)
+
+:Code-based (as in, the underlying form articles are stored in, which was temporarily visible due to a bug when the wiki was just being set up) editing is currently not possible, and I'm not sure if the development team has any plan to implement it (cc {{ping|Jdforrester (WMF)}}). As for your issue, you should not be using a literal string, but a function call instead, which allows you to use one of the functions on Wikifunctions (how to pictured). Though the project is in its early days, a general guide on creating articles is available at [[Help:How to create an article]] with links to other helpful pages. As for sandboxes, you can subscribe to the [[phab:T421417| task on Phabricator]] if you have an account there.  [[File:Set literal string to function call guide, Abstract Wikipedia.png|thumb|How to convert to function call]] [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:40, 28 March 2026 (UTC)
+::Well I really hope that they implement code editing because wikidata is okay since it only has properties. But these functions are just too much. I feel like I should be able to relatively easily take code from one article and put it on another one. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 02:58, 28 March 2026 (UTC)
+:::You can use the copying feature! If you click the 3 dots next to a function call you get an option to copy, which you can then paste elsewhere using the same 3 dots. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 03:06, 28 March 2026 (UTC)
+::::Thank you. I do not think that this is the best alternative, but it is better [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:50, 28 March 2026 (UTC)
+
+== Put this on ice ==
+
+How are non-English speakers (who this project is specifically for) meant to develop this wiki's practices and policies if a) all project pages are only available in English, and discussion is largely done in English, and b) there's no attempt to get non-en.wiki communities onboard. At present this looks like it's just going to produce Anglocentric/Eurocentric content, which belies the whole point of having a wiki in one's native language. Yes it's early days and everyone is experimenting and bug-fixing, but the project has already been released to community control, with a predominantly English-speaking/European community. This needs to be put on ice until it can be launched properly with multilingual support and invitations to all wikis, particularly smaller ones. [[User:Kowal2701|Kowal2701]] ([[User talk:Kowal2701|talk]]) 11:44, 28 March 2026 (UTC)
+
+:Just because it's not perfect doesn't mean it needs to be shut down. These are all gradual processes. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:58, 28 March 2026 (UTC)
+::There’s being "not perfect" where things can be improved at a later date, and then there's having antithetical foundations. Also see [https://en.wikipedia.org/wiki/Wikipedia:Village_pump_(WMF)#c-Warudo-20260327114000-Warudo-20260327113600] re functions. [[User:Kowal2701|Kowal2701]] ([[User talk:Kowal2701|talk]]) 16:15, 28 March 2026 (UTC)
+:::You haven't named a single thing that can't be improved at a later date. We're hoping to be able to translate project pages. Non-enwiki communities can be gotten on board later. Function generation already works multilingually in many cases, and those where it does not can be improved. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:57, 28 March 2026 (UTC)
+::::When the practices and policies will have already been developed, and informal positions of authority already filled. [[User:Kowal2701|Kowal2701]] ([[User talk:Kowal2701|talk]]) 17:04, 28 March 2026 (UTC)
+:::::@[[User:Kowal2701|Kowal2701]] Thank you for your concerns. We are already aiming at less-served communities through specific calls to action to create more language functions and abstract content in their language. Just give the time to actually see these changes happen. Cheers, [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 18:55, 28 March 2026 (UTC)
+::::::Hi Sannita, I'm just wondering how are AW project pages planned to be translated in the future? Is there going to be use of some kind of automated tool such as DeepL or Google Translate, or will it be a custom-designed system? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:39, 28 March 2026 (UTC)
+:::::::@[[User:EatingCarBatteries|EatingCarBatteries]] We will enable the Translate extension soon, so everyone will be able to translate project pages into their own languages. Sorry for keeping you waiting on this. [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:41, 29 March 2026 (UTC)
+:@[[User:Kowal2701|Kowal2701]]: thank you for your concern and suggestion. When this Beta started, we have immediately [[:f:Wikifunctions:Status updates/2026-03-19|mentioned that there might be the possibility of restarting the project]]. So that might indeed happen.
+:But so far, this early start of the not fully polished project allows us to learn so incredibly much. In the last few days we have learned so much more than we would have been able without the launch in months! And it helps us to focus on where to put our limited resources, so that we can make the overall project better quicker than would have been possible otherwise. From that perspective, this has been quite a success.
+:I am trying to understand your suggestion: what do you think would need to be in place before a possible relaunch? Which requirements would need to be met? --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 13:53, 29 March 2026 (UTC)
+::Thank you, I wasn't aware of that. Some uninformed thoughts below.
+::Re communication: ideally people would communicate using functions, and there'd be some kind of visual editor where people type in their native language and it gets translated into functions, but I realise that's a pipe dream. Something that allows people who don't have a mutual language to communicate is imo necessary, maybe there could be a tool that machine translates comments. Machine translation ''sucks'', but so long as people get the gist of what is being said, that'd be better than nothing. I dread to think what disputes would be like though.
+::Re invitations, idk what has already been done, but I would've thought now would the time to get some people from smaller wikis editing and experimenting, just an invitation on a wiki's main noticeboard would probably do the trick (is there a [[meta:MassMessage]] service for updates re Abstract wiki that could be recommended?). Then a central or watchlist notice for the actual launch, hopefully by which time there'd already be a small group of editors able to assist the influx of newbies. An intuitive tutorial is also necessary, as well as an intuitive version of [[f:Wikifunctions:Catalogue]]. [[User:Kowal2701|Kowal2701]] ([[User talk:Kowal2701|talk]]) 18:14, 29 March 2026 (UTC)
+:::What do you think about boilerplate templates. So writing a sentence and then marking the parts of the sentence what can be derived from Wikidataitems or the lexeme linked to it. This seems to me like an realistic approach for making it easier to contribute. I am happy you wrote about the predominantly English-speaking/European community involved in this project. It seems like it is different to contribute so far and I had the expectation people from small language versions come on their own and contribute also if they dont speak English. So far it seems to be not the case and I hope it will be easier to contribute. I think for the beginning the goal of Abstract Wikipedia should be generating sentences based on data. So supporting small language versions should be not the goal of the first phase as it seems to take some time and improvements of the structures to make it easier to contribute. Sharing the work and offering people help with creating an function for an specific sentence can be a important way of getting more content in Abstract Wikipedia. Maybe it is unrealistic to find a huge number of people who are interested in writing functions who generate text. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:58, 29 March 2026 (UTC)
+:::[[Abstract Wikipedia:Useful functions for article composition]] is already available, as is [[Help:How to create an article]], but they are not perfect. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:05, 29 March 2026 (UTC)
+
+== Gendered languages ==
+
+I've created [[Q79097672]], an article for a woman singer. In gendered languages however, it defaults to using masculine words. An example: in Portuguese, it reads "Arlo Parks é um cantor", when it should be "Arlo Parks é uma cantora". Is there any fix to this? [[User:Skyshifter|Skyshifter]] ([[User talk:Skyshifter|talk]]) 23:49, 28 March 2026 (UTC)
+
+:Yes. But each language is handled separately. I think Italian is doing it. German was started but got stuck… it should be working here soon. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 00:48, 29 March 2026 (UTC)
+::Italian is not doing it. It is just a happy coincidence that for some reason "cantante" is always treated as feminine (I have to investigate why). [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:59, 7 April 2026 (UTC)
+
+== Why don't we just structure this with wikitemplates? ==
+
+I feel like the project could be done a lot better by using templates kind of like how wikipedia does them. Just the entire thing is templates that can be rendered in many languages. So like [[Q106289265]] would have the content \{\{Z26039|Q7257\}\}\ and could even have some aliasing done across languages so it could be \{\{subject is|Q7257\}\}\. Code would be editable with a regular visual editor or code editor. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 29 March 2026 (UTC)
+
+:This is available in pages when Parsoid rendering is enabled. We don't use this becuase it doesn't make sense for constructing and editing massive articles. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
+::How do you do parsoid rendering? And why wouldn't it make sense? With aliases and everything could work great. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:12, 29 March 2026 (UTC)
+:::I believe it is enabled by default. If you do have it on: {{#function:Z10000|you'll s|ee this}} [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:54, 30 March 2026 (UTC)
+
+== Automatically querying wikidata ==
+
+Is it possible in the future for this project to have things that automatically query wikidata? Like an infobox that gives people's spouses, or a function that queries a specific property on wikidata [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:10, 29 March 2026 (UTC)
+
+:Yes, that is the long term goal. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
+::What’s “long term” about it? We already have functions that query specific properties on Wikidata, [[f:Z32431]] being a simple example. A list of spouses seems like a fairly simple function too, although there might be performance issues if there are a lot of spouses. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:01, 31 March 2026 (UTC)
+
+== Searching for other namespaces in the search bar ==
+
+Something that has always irked me with Wikidata, Wikifunctions, and now Abstract Wiki is that there are no search suggestions when you are searching in other namespaces in the search bar. For example, if I were to type "Abstract Wikipedia:", nothing shows up. Whereas on enwiki, you can do this just fine. Is this because these sites are using a more "modified" version of MediaWiki? [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 04:38, 30 March 2026 (UTC)
+
+:I also find this very annoying. I'm not sure if there's anything that can be done about it or if it is a result of technical limitations ({{ping|Jdforrester (WMF)}}?). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 04:41, 30 March 2026 (UTC)
+::@[[User:EatingCarBatteries|EatingCarBatteries]], @[[User:Feeglgeef|Feeglgeef]]: The search interface indeed is designed to only search the Wikidata concepts that would take up the main namespace. This is conceptually the same as the search on Wikidata.org. We'd welcome Phabricator tasks for ideas on how to additionally provide wikitext community page search, though implementing that might not be a priority. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:11, 30 March 2026 (UTC)
+:::Hint: don’t use the Search bar…
+:::When it is empty, click the adjacent Search button. This takes you to the Search page.
+:::Type the namespace with final colon. You are prompted with available pages and the prompt is refined as you type.
+:::Click a page title in the suggestions or click Search for a full search in the entered namespace.
+:::A search with just a namespace will return no results. A search with a partial identifier will work only [[Special:Search/Talk:Q1*|with an appended asterisk]] (delete the asterisk to see page suggestions). [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:11, 30 March 2026 (UTC)
+
+== List articles ==
+
+I am interested in creating list articles ([[:de:Liste_der_Naturdenkmale_im_Bezirk_Mitte|like this one]]). But I have no idea what it needs and how to start. [[User:GPSLeo|GPSLeo]] ([[User talk:GPSLeo|talk]]) 19:58, 30 March 2026 (UTC)
+
+:An example I've created that you can copy and adapt is [[Q11750]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:27, 3 April 2026 (UTC)
+
+== Logo ==
+
+In vector2009 and monobook, the logo shows as the standard enwiki logo. Which is confusing as this is technically a whole other sisterproject. I suggest [[:File:Wikipedia-logo-blank.svg|this]] be used as a temporary logo for these skins. [[User:Kinopiko|Kinopiko]] ([[User talk:Kinopiko|talk]]) 06:00, 31 March 2026 (UTC)
+
+:There's also the scalable favicon, [[commons:File:Abstract-Wikipedia-favicon.svg|Abstract-Wikipedia-favicon.svg]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:54, 3 April 2026 (UTC)
+
+== Extra spaces between sentences ==
+
+There should be no spaces between two sentences of Chinese and Japanese. —[[User:内存溢出的猫|内存溢出的猫]] ([[User talk:内存溢出的猫|talk]]) 12:38, 2 April 2026 (UTC)
+
+:I'm not sure how we plan to handle this. I'll bring it up on the Telegram/IRC. This applies to Korean too, yes? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:28, 3 April 2026 (UTC)
+{{tracked|T}}
+:Please link to the corresponding Phabricator ticket when it’s raised. (Or I will, when I raise it). I think the technical issue is that the space is inserted between function calls. There may be two, but HTML reduces their appearance to one, which is one too many for certain languages. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 08:58, 3 April 2026 (UTC)
+::No, your sentences should not be individual fragments. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:40, 11 April 2026 (UTC)
+
+== community curation of abstract articles of the week/month/etc. ==
+
+[[wikifunctions:wikifunctions talk:status updates/2026-03-26#Move Status Updates to Abstract Wikipedia?|this thread]] at WF mentions that WMF staff are refraining from content decisions at Abstract Wikipedia; so I thought that it might be a good idea to figure out if and how there will be editathons here focussed on a selection of articles. — [[user:Arlo Barnes|Arlo Barnes]] ([[user talk:Arlo Barnes|talk]]) 20:38, 2 April 2026 (UTC)
+
+: I would support this. — [[user:Feeglgeef|Feeglgeef]] ([[user talk:Feeglgeef|talk]]) 01:29, 3 April 2026 (UTC)
+
+: now I notice [[abstract:featured article]] in the same category as the project chat, so there's a location for a related concept already! (coming at it the other direction: recognizing already good articles versus barnraising that quality) — [[user:Arlo Barnes|Arlo Barnes]] ([[user talk:Arlo Barnes|talk]]) 01:48, 3 April 2026 (UTC)
+::I think it will be quite a while before we can support a “good” article, let a “featured” one. At this stage, I’d settle for “technically interesting”, to include “of archaeological interest” (like the first use of a particular function or function-call pattern). [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 08:51, 3 April 2026 (UTC)
+:::one goal could be to make stubs and grow them for the basic concepts underlying Abstract Wikipedia, in an attempt to self-document. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 02:45, 7 April 2026 (UTC)
+
+== JSON format ==
+
+The JSON format for Wikifunctions is described at [[:f:Wikifunctions:Functions model]].
+
+Is there such a documentation page for Abstract Wikipedia? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:19, 2 April 2026 (UTC)
+
+:I imagine that it would be identical? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:39, 11 April 2026 (UTC)
+::No, they aren't. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 02:50, 11 April 2026 (UTC)
+:::Oh, I see, you're talking about the underlying text format? That isn't and (from what I've gathered, though {{ping|Jdforrester (WMF)}} didn't respond last time I pinged him) will never be editable by users. The function model where the calls are actually made is identical to Wikifunctions. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:36, 11 April 2026 (UTC)
+::::I'm not asking whether it's editable. I'm asking whether there is a page that documents what it is.
+::::The JSON of the function calls is perhaps the same as Wikifunctions compositions, but there are also other things there, which are not the same as Wikifunctions. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 22:40, 11 April 2026 (UTC)
+
+== Bot request ==
+{{Tracked|T421151}}
+Can someone smarter than me please create a bot that connects local items to Wikidata equivalents? Right now, we are growing and there are [[Special:UnconnectedPages|hundreds of unconnected pages]] here that are just 1:1 main namespace entries that have identical names at [[:d:]]. I have connected several of these, but this seems like a very inefficient and silly thing to do manually. Can someone help here by making a bot that checks [[Special:UnconnectedPages]] regularly or even [[Special:NewPages]] and connects pages? [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 06:17, 3 April 2026 (UTC)
+
+:This doesn't sound like something that should be a bot, but like something more automatic and built-in. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 11:27, 3 April 2026 (UTC)
+::@[[User:Amire80|Amire80]] and [[User:Koavf|Koavf]]: Would a bot be a good idea in the interim period before that can be added to the software? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 14:31, 3 April 2026 (UTC)
+:::Yes, please. Granted, Amir, doing it automatically would be nice, but that feature doesn't exist. Until then, a bot would be very helpful and seems like it would be very difficult to cause problems. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 14:57, 3 April 2026 (UTC)
+::::@[[User:Amire80|Amire80]] and [[User:Koavf|Koavf]]: I've written some code for this purpose [[gitlab:toolforge-repos/jjpmaster-bot-wd-t1|here]]. <code>Retrospective.py</code> is meant to be run once, and would connect all existing pages (once the trial run is over). <code>Prospective.py</code> would run once daily and connect any pages that have been created since the previous day. That is, until the Phabricator ticket is resolved, obviously. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 21:42, 3 April 2026 (UTC)
+:::::Boss. I'm so glad that you're smarter than me. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 03:25, 4 April 2026 (UTC)
+:::::{{ping|JJPMaster}} You might want to use <syntaxhighlight lang="python" inline>{ 'action': 'query', 'list': 'querypage', 'qppage': 'UnconnectedPages' }</syntaxhighlight> instead. That way, you won't have to maintain two scripts. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 03:58, 4 April 2026 (UTC)
+::::::@[[User:NguoiDungKhongDinhDanh|NguoiDungKhongDinhDanh]]: This is [[gitlab:toolforge-repos/jjpmaster-bot-wd-t1/-/commit/415688aa6f9e1dcbafa21a8b3249899c07f298e9|done]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 05:01, 4 April 2026 (UTC)
+:::::::{{ping|JJPMaster}} One more problem: You seem to be linking non-mainspace pages as well. Don't forget to check <syntaxhighlight lang="python" inline>page['ns']</syntaxhighlight>. Also, why <syntaxhighlight lang="python" inline>if(i > 2): break</syntaxhighlight>? [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 05:27, 4 April 2026 (UTC)
+::::::::@[[User:NguoiDungKhongDinhDanh|NguoiDungKhongDinhDanh]]: The <code>if not qid.startswith("Q")</code> bit was supposed to address the namespace problem. The break statement is for the trial of the bot. The integer in the if statement will change once the request is made. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 17:04, 4 April 2026 (UTC)
+:::::::::{{ping|JJPMaster}} [[Special:UnconnectedPages]] results are ordered by namespace, so checking for <syntaxhighlight lang="python" inline>page['ns']</syntaxhighlight> will also help prevent unnecessary iterations. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 19:54, 4 April 2026 (UTC)
+:::@[[User:Amire80|Amire80]], [[User:Koavf|Koavf]], and [[User:NguoiDungKhongDinhDanh|NguoiDungKhongDinhDanh]]: Is a Wikidata BRFA in order at this time? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 05:03, 4 April 2026 (UTC)
+::::{{ping|JJPMaster}} Go ahead, please. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 05:25, 4 April 2026 (UTC)
+:::::See [[d:Wikidata:Requests for permissions/Bot/JJPMaster (bot)]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:00, 4 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #242 is out: Request for Discussion: Syntactic tables ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-02|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we introduce a proposal for Natural Language Generation, we introduce a page for function suggestions from Abstract Wikipedia, we inform you that there will be a presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1776101400 April 13, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 13:37, 3 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Way to specify population ==
+
+Hi! I was wondering if there was a function to specify the population of a place, possibly resembling the following:
+:N X live in Y.
+N would be the population size, X would be what comprises the population (e.g., humans, frogs, etc.), and Y would be the location. [[User:Babelball|Babelball]] ([[User talk:Babelball|talk]]) 15:43, 3 April 2026 (UTC)
+
+:I don't believe we do. Thinking about it now, we should probably have a page where users can request linguistic functions in a more viable format than [[f:WF:Suggest a function]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:39, 11 April 2026 (UTC)
+
+== The problem of when "X is a Y" and Y is a phrase ==
+
+Consider [[Q486972]], whose second sentence is supposed to be "A human settlement is a populated place," generated using the "Article-ful instantiating fragment" function. However, it fails, because the implementation [[f:Z23414|Z23414]] inherently checks for a lexeme linked to the superclass ("[[D:Q123964505|populated place]]"). However, since "populated place" is a phrase whose meaning is reducible to the sum of its parts, there is no lexeme for it. Therefore, it's virtually impossible to say "An X is a Y" where Y is a non-idiomatic phrase. 
+
+Additionally, languages with grammatical gender are rendered particularly problematic. Consider [[Q6636]]. The first sentence of this article renders perfectly fine in English: "Homosexuality is a sexual orientation." However, it does not render at all in Spanish. That's because that language's NLG functions use lexicographic data to determine the gender of the phrase "sexual orientation." As there are no such data available for that phrase, it errors out. I did think about using [[f:Z29743|Z29743]] (description of class with adjective and superclass) instead, but that didn't work, since there's no item linked to the adjective "sexual"!
+
+Any ideas for how to avoid this? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 00:21, 4 April 2026 (UTC)
+
+:We'd the co-operation of Wikidata contributors here, I think. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:37, 11 April 2026 (UTC)
+
+== I made a desktop app that helps with editing ==
+
+[[file:Abstract Wikipedia Editor v4.1.0.png|thumb|alt=screenshot|now there's a screenshot available]]
+
+I made a desktop app that helps with creating and editing Abstract Wikipedia pages. It pulls data from wikidata to form templates that it makes into wikitext, and it can round-trip articles into and from the wikitext. Here it is [[User:Immanuelle/Abstract Wikipedia Editor]]. I hope that it helps with editing. — [[user:Immanuelle|Immanuelle]] ([[user talk:Immanuelle|talk]]) 00:51, 6 April 2026 (UTC)
+
+: I've created [[Abstract Wikipedia:Tools]] for tracking these things. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:44, 7 April 2026 (UTC)
+
+: @[[User:Immanuelle|Immanuelle]] But the main namespace is not for wikitext. Are you publishing this content there anyway? <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 15:05, 7 April 2026 (UTC)
+
+:: It's not actual wikitext. It's a custom template syntax that's kind of like wikitext, which gets converted into abstract content when you press "Push to Abstract Wikipedia." [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 16:57, 7 April 2026 (UTC)
+
+::: @[[User:Ainali|Ainali]]@[[User:JJPMaster|JJPMaster]] if you have syntax suggestions I am interested. I was in a rush with implementing this, and I want to in the future implement aliases for wikifunctions and possibly items, so that you can type things out yourself.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:53, 7 April 2026 (UTC)
+
+::: Ah, I see. IT was just the announcement that was ambiguous then. <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 20:03, 7 April 2026 (UTC)
+
+: FYI anything made by a clanker AI robot is not "made by you." Thank you for your attention to this matter. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:18, 7 April 2026 (UTC)
+
+:: Who, then? [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 20:16, 7 April 2026 (UTC)
+
+::: The clanker AI robot. [[User:Babelball|Babelball]] ([[User talk:Babelball|talk]]) 16:42, 8 April 2026 (UTC)
+
+:::: I edited the Wikidata page for the tool to mention Claude. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 21:35, 8 April 2026 (UTC)
+
+::::: FYI that LLM-generated code is not eligible for copyright, and therefore the MIT license by extension. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:59, 9 April 2026 (UTC)
+
+:::::: I think the statements that Wikidata could make are limited by what references can be found. [https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository This help page] makes it sound as if there are limited options for expressing a repo's licensing situation, so I am not surprised that MIT should be the blanket release, even if strictly speaking some of the code contained within is ineligible for copyright, or infringes on an existing copyright (which would need to be demonstrated). But I suppose [https://cpomagazine.com/cyber-security/taking-stock-of-the-anthropic-source-code-leak-ai-agent-compromise-signals-security-issues-claude-copies-ahead-of-massive-ipo turnabout] is fair play? — [[user:Arlo Barnes|Arlo Barnes]] ([[user talk:Arlo Barnes|talk]]) 19:53, 9 April 2026 (UTC)
+
+::::::: @[[User:Arlo Barnes|Arlo Barnes]] I like the idea of the wikidata content being restricted based on sources provided. I will try to implement something like this in the next release. Any ideas of which particular statements are useful and should be imported more readily? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:28, 9 April 2026 (UTC)
+
+:::::::: I meant in [[d:Q138963952|the Wikidata item]] ''for'' AWE, but in general I think our articles should incorporate references early on, since even abstract content needs justification. [[d:help:sources#Language-independent general principles|This help page]] may be handy; '[[d:property:P3680|statement supported by]]' could be useful for linking to biographical articles in the manner "According to [source], [claim]" (obviously adjusted to the relevant language structures in each language for saying such things). — [[user:Arlo Barnes|Arlo Barnes]] ([[user talk:Arlo Barnes|talk]]) 20:42, 9 April 2026 (UTC)
+:::::::::@[[User:Arlo Barnes|Arlo Barnes]] oh that makes sense. But as for the wikidata sources, actually providing the sources is something that is trivially easy as far as accessing wikidata is concerned, but I am not sure how to give sources for claims in wikilambdas. Do you know how? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:44, 9 April 2026 (UTC)
+::::::::::I don't. Currently the distinction between content and format is unclear to me. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 21:48, 9 April 2026 (UTC)
+:::::::::::@[[User:Arlo Barnes|Arlo Barnes]] what do you mean by content vs format? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 21:52, 9 April 2026 (UTC)
+::::::::::::In the most 'abstract' sense, an article would have as irreducible parts semantic content only (from Wikidata), with syntax handled by the group of functions responsible for getting things looking right in a given target language. In practice, the overall structuring of the article largely defines or limits the syntactic structures of language produced. This is sensible for an encyclopedia which has a fairly conventional or constrained sort of prose. Of course, a web encyclopedia needs more than prose. Hence the functions for making links and formatting text (right now directly to HTML, bypassing wikitext). Although this is a MediaWiki installation, no article has had media content added to it yet, since the formatting functions that would enable that aren't in place. So I would say that content and formatting are entangled, currently. A reference could be considered either: the text that provides the sourcing of a statement, or the formatting that enables this semantic content to read as a reference, perhaps inline or as a footnote, end note, or marginal note. [[f:WF:type proposals#Representing abstract content]] has a couple RfCs about this. — [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:45, 10 April 2026 (UTC)
+:::::::::::::Yeah I am very confused about what the intention of Abstract Wikipedia is and how much it lines up with the reality. I had thought that the articles would be mostly directly generated from wikidata. 
+:::::::::::::Only particular direction I see clearly is that I think we need articles on all of these pages [[d:Wikidata:List of articles that Abstract Wikipedia should have]] since they will likely bring a lot of traffic to the site and since they have a lot of information, people will have a lot of reason to come to this site and come up with new ways of expressing things on the pages. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:06, 10 April 2026 (UTC)
+::::::::::::::I am however really liking section headers like the one here [[Q12539]] and I am going to include them in the next release [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:13, 10 April 2026 (UTC)
+:::::::::::::::Yes I think that adding sections to articles might be really the first part of the journey towards actually having somewhat readable articles. Although a lot of this is dependent on the article text actually rendering at all [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:21, 10 April 2026 (UTC)
+::::::::::::::::Yeah I think I am getting the hang of things. Adding sections and paragraph breaks to the new versions. Denoted by
+::::::::::::::::<nowiki>{{p}}</nowiki>
+::::::::::::::::for a paragraph break
+::::::::::::::::and 
+::::::::::::::::==QID==
+::::::::::::::::for a subheading
+::::::::::::::::All content is now generated within paragraphs, and the <nowiki>{{p}}</nowiki> splits the paragraphs up. Feeglgeef mentioned that the paragraphs are a significant accessibility feature, and the paragraphs are also easier to insert with the methods of the app. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:36, 10 April 2026 (UTC)
+:::::::::::::::::I am also implementing "it" to avoid repeating the name of the article constantly, and I am implementing citation preservation on certain things.Meanwhile also trying to fix the accessibility issue that was criticized. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:25, 10 April 2026 (UTC)
+::::::::::::::::::New release is out [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 07:42, 10 April 2026 (UTC)
+::::::::::::::::::I would suggest not to use [[d:Q6091500]] at the moment. In some languages, there might be multiple words for different uses of "it". If you are editing with only the English logic, it won't help build a multilingual wiki. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 17:42, 11 April 2026 (UTC)
+:::::::::::::::::::@[[User:Sun8908|Sun8908]] fair. I had thought it would be dropped in pro-drop languages but I do not think that was a reasonable assumption.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:47, 11 April 2026 (UTC)
+:Nice work. I for one don't care how you made the tool, the important part to me is how it works and if it helps me/us edit AW.  [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:23, 11 April 2026 (UTC)
+
+: I tried to run it on macOS 14.5, but it errored out when I clicked "Pull from Wikidata." It appears that this was because you hardcoded your Python path.
+<code>Error: Error invoking remote method 'generate-wikitext': Error: spawn C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe ENOENT</code> — [[user:JJPMaster|JJP]]<sub>[[user talk:JJPMaster|Mas]]<sub>[[special:contribs/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:56, 6 April 2026 (UTC)
+
+:: For the record, the solution is to go into <code>src/main.ts</code> and change the Python path to something other than <code>C:/Users/Immanuelle/...</code> — [[user:JJPMaster|JJP]]<sub>[[user talk:JJPMaster|Mas]]<sub>[[special:contribs/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 12:05, 6 April 2026 (UTC)
+
+: TYSM!! I did have to debug the code a little first to get it working, but this will be so helpful for me. — [[user:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[user talk:ChaoticVermillion|converse]], [[special:contribs/ChaoticVermillion|contribs]]) 11:59, 6 April 2026 (UTC)
+
+:: I am so sorry and I fixed it so the new release should avoid that problem in the future. — [[user:Immanuelle|Immanuelle]] ([[user talk:Immanuelle|talk]]) 17:55, 6 April 2026 (UTC)
+
+::: @[[User:ChaoticVermillion|ChaoticVermillion]] btw there is an update that has a lot more functions and I am not sure if you are using it. The new one allows you to undo edits or restore revisions. Something that I cannot figure out how to do in regular Abstract Wikipedia. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:55, 8 April 2026 (UTC)
+
+== Wikiprojects ==
+
+Are there wiki projects here? Can I just make some in this namespace? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:12, 10 April 2026 (UTC)
+
+:I don't see why not. It's a wiki, after all :). Please just don't flood the talkspace with templates that don't exist. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:51, 10 April 2026 (UTC)
+::I've created a first Wikiproject ([[Abstract Wikipedia:WikiProject Core articles]]) and an explainer page ([[Abstract Wikipedia:WikiProject]]). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:11, 10 April 2026 (UTC)
+:::I made this one too [[Abstract Wikipedia:WikiProject Quality Prose]] [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:39, 10 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #243 is out: Community proposals for capturing meaning ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-10|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we report on three community proposals on syntactic approaches, we introduce a new Type (Complex numbers), we report on current hiccups on Abstract Wikipedia, we share more information about a presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1776101400 April 13, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:35, 10 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Numerous errors have been introduced, possibly due to the "AWE" tool ==
+
+As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000-Fram-20260408131600|pointed out]] over on the English Wikipedia in his usual style, [[User:Immanuelle]] has been breaking pages such as [[Q711]] with edits such as [[Special:Diff/4383]]. I was able to [[Special:Diff/4415|fix this]] by changing "it" to Wikidata item reference in "defining role sentence".
+@[[User:Immanuelle|Immanuelle]]: Judging by your edit history, you have introduced this error to a lot of pages. Before continuing with your work to make the rest of the articles from your list, [[d:Wikidata:List of articles that Abstract Wikipedia should have]], I kindly ask you to fix the pages you've already made. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 17:16, 10 April 2026 (UTC)
+
+:This is, of course, what happens when you use a slop-machine to write code. See existing discussion on [[User talk:Immanuelle/Abstract Wikipedia Editor#Creates inaccessible content]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:19, 10 April 2026 (UTC)
+::@[[User:Feeglgeef|Feeglgeef]] I thought you wanted everything nested in the paragraph things. That's why I did that, following your request that you linked to. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:45, 10 April 2026 (UTC)
+:::I know. In the future, can you test whatever the slop-machine gives you ''on-wiki'' to ensure you don't mass-vandalize it again? Thank you! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:52, 10 April 2026 (UTC)
+::::@[[User:Feeglgeef|Feeglgeef]] the problem I faced is that I do not know how to actually understand error messages on this wiki. When every page fails to render, it is very difficult to know if I introduced an error, or the program introduced an error. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:18, 10 April 2026 (UTC)
+:::::@[[User:Warudo|Warudo]] I guess my question for you would be how did you figure out that this was an error on the page? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:19, 10 April 2026 (UTC)
+::::::That's a fair question. The way things are now you can't be sure if the error is because of technical issues with the site  or a bad page. In this case it was rather easy though. The "dependency" parameter of [[f:Z28016]] expects a reference to a Wikidata item but you passed the string "it" to it. That is an obvious mistake so it was easy to tell that it's not a random error. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 19:23, 10 April 2026 (UTC)
+:::::::That makes sense. I will try to be a lot more careful with error detection in the future. Hopefully the technical issues with the site are fixed and I can see the content issues more soon [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:08, 10 April 2026 (UTC)
+::::I suggest that “vandalize” is an inappropriate choice of word in this case. Whatever your feelings about the quality of the code or the care with which it is being deployed, I think you could manage to assume good faith on the part of a fellow contributor. Thank you.
+::::At a technical level, there is an issue with simply bracketing multiple calls together to yield a paragraph, since a failure in any one call will lead to the loss of the whole paragraph. In [[:f:Wikifunctions:Status updates/2026-03-26]], the advice given was:
+::::::“By the way, here’s one tip: currently, caching for Abstract Wikipedia happens on the level of the “fragment”. This means that by putting several sentences into a single paragraph, the paragraph as a whole is being run, may cause time-outs, and will be cached. Instead, if, for now, you put one sentence into each fragment, caching and evaluation can be more spread out and should allow for more content.”
+::::[[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:00, 10 April 2026 (UTC)
+:::::@[[User:GrounderUK|GrounderUK]] would you suggest removing the paragraph by default behavior in the editor over this? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:50, 10 April 2026 (UTC)
+::::::What we might try is wrapping each sentence as a paragraph, with occasional pairing of closely related sentences. That keeps failure isolated while preserving at least some natural flow.
+::::::We could consider also implementing a “sentence” or “content unit” function that simply calls “paragraph”, so we can later tell where the intended paragraphs are. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 21:23, 10 April 2026 (UTC)
+:::::::This is not accessible for users with screen-readers, and thus not a viable work-around. Each paragraph must be in a paragraph tag. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:31, 10 April 2026 (UTC)
+::::::::It’s sub-optimal, I agree, but every unit of meaning would be wrapped in p tags, which is more accessible than a series of bare fragments or failed function calls. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 17:07, 11 April 2026 (UTC)
+:::::::::If you do need to make inaccessible articles, please at least give them a category on the talk page. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:21, 11 April 2026 (UTC)
+::::::::::We’d need to agree an accessibility standard first, but I’m not planning on creating any articles until there are suitable functions available. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:36, 11 April 2026 (UTC)
+:::::::::::I agree. Accessibility standards need to be established and not just assumed. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:28, 11 April 2026 (UTC)
+:::::When someone "vandalizes" it is not necessarily intentional, see [[wikt:vandalise]]. I do understand that Immanuelle has good faith, but at the same time, the "deployment" caused tens of articles to be broken, and furthermore I don't suspect something this bad would have slipped through had a human carefully reviewed the code. When a contributor deploys a semi-automated tool and uses it to make edits at the rate {{ping|Immanuelle}} was at this rate, you are morally obligated to test it. This wasn't the first time the slop-machine that they used caused them to mess up tens of articles, and if Immanuelle doesn't exercise extreme care in the future, I don't suspect it will be the last. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 10 April 2026 (UTC)
+::::::It was a silent error that was only discovered by chance. What kind of testing would you have done to avoid this? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:37, 10 April 2026 (UTC)
+::::::@[[User:Feeglgeef|Feeglgeef]]": On Wikipedia, "[[:en:WP:VAND|Vandalism]]" is a technical term that means "editing (or other behavior) '''''deliberately''' intended to [[:en:Wikipedia:DE|obstruct or defeat]] the [[:en:Wikipedia:Five_pillars|project's purpose]]''". Accidental disruptive editing is not considered vandalism. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 22:52, 10 April 2026 (UTC)
+:::::::@[[User:Warudo|Warudo]] on the topic of this glitch. I think I have removed it from all pages that had it. Please tell me if there are more that you see. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:29, 10 April 2026 (UTC)
+::::::::Thanks for cleaning up :) [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:29, 11 April 2026 (UTC)
+:::::::This isn't the English Wikipedia, or even a wikipedia at all, despite the domain. Unless a defined technical term related to Wikifunctions I'd consider words to have their natural language meaning. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:28, 11 April 2026 (UTC)
+::::::::@[[User:Feeglgeef|Feeglgeef]]: Last time I checked, this was the Abstract ''Wikipedia''. But in any case, this is the definition provided in [[f:Wikifunctions:Vandalism|Wikifunctions]] as well as [[meta:meta:Vandalism|meta]]. Vandalism has to be deliberate. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 08:50, 11 April 2026 (UTC)
+:::::::::It's not ''the'' Abstract Wikipedia like ''the'' English Wikipedia, but just Abstract Wikipedia. It isn't a Wikipedia in and of itself (as in, it's not supposed to be viewed by end readers), but rather a tool for Wikipedias. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:33, 11 April 2026 (UTC)
+::::::::::It still has an independent editing community. Just because it draws from Wikidata and Wikifunctions doesn't mean content decisions aren't made here; it necessarily has to have some autonomy just like any language edition. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 19:18, 11 April 2026 (UTC)
+:::::::::“Deliberately” is also the first word of section 3.3 of our Code of Conduct, linked at the foot of every page. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 17:11, 11 April 2026 (UTC)
+:::::+1 Please assume good faith and keep it civil. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:27, 11 April 2026 (UTC)
+:@[[User:Warudo|Warudo]] will hold off on page creation [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:43, 10 April 2026 (UTC)
+:Just a note @[[User:Immanuelle|Immanuelle]], the project is a Beta version, so, in my opinion, it's not a good idea to flood it with a large number of [{{fullurl:Special:Contributions|target=Immanuelle&namespace=0&newOnly=1&limit=250&end=2026-04-10}} article stubs]. Additionally, the natural language functions are still limited.--[[User:Mdktb|Mdktb]] ([[User talk:Mdktb|talk]]) 18:58, 10 April 2026 (UTC)
+::@[[User:Mdktb|Mdktb]] okay that is a good point. I think I was confused since I thought that we were more on the trying to get new users stage. I will stick to fixing up my errors and only making pages on things that I have a lot of stuff to say on. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:20, 10 April 2026 (UTC)
+:::@[[User:Mdktb|Mdktb]] and here is a wikiproject I made and tagged some pages with that is specifically related to developing more natural language [[Abstract Wikipedia:WikiProject Quality Prose]] [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:27, 10 April 2026 (UTC)
+::Would you be willing to raise this in the project chat? I'm thinking we are in an experimentation state that will keep improving incrementally just like the first edition of Wikipedia did since January 15, 2001. Just like back then I don't think it's a good idea to arbitrarily limit good faith editing. We probably will have to revisit these articles later as more and better functions become available but that in itself is not a valid argument for refraining from edits. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:36, 11 April 2026 (UTC)
+:::Already here ;) [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:05, 11 April 2026 (UTC)
+::I agree with your stub-flooding comment, I don't think it's particularly useful to have a bunch of articles that say nothing. The concern right now should be testing. I expect that the way in which we write abstract articles will change drastically eventually, so writing hundreds of articles is not only a waste of time but a debt. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:07, 11 April 2026 (UTC)
+:The error in question was that "it" ended up getting into the jsons as a string instead of the id for "it". This occurred due to an error with the program with function aliasing, functions and items can have aliases that are used to be human readable, and replaced with their codes during insertion. But apparently when you try to insert a nonexistent alias then it just inserts the text and there is no server side validation at all of edits.
+:My guess is that basically they do not have an api since they have no server side validation and were relying on solely client side, and did not anticipate someone building such a tool that accidentally bypassed client side validation through a cache injection which was motivated by UX purposes
+:I plan on attending the Monday volunteer meeting and asking about this issue.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:45, 10 April 2026 (UTC)
+::> But apparently when you try to insert a nonexistent alias then it just inserts the text and there is no server side validation at all of edits.
+::This sounds like a bug. Would you be willing to create a ticket in phab with details? [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:38, 11 April 2026 (UTC)
+:::The team has already declined (or indicated that they had no plans) to do validation in this form, so I don't think a new ticket would be ideal. Either way, this shouldn't affect anyone besides those using a headless browser (or anyone using good, human-reviewed code and a headless browser), so I don't think it would be a priority anyway. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:19, 11 April 2026 (UTC)
+
+== Sandbox page ==
+
+The previous discussion about bot-created pages does raise a question: is it possible to have sandbox pages here? As far as I can tell, one can only create pages in the main namespace, and it has to be one page per Wikidata item. So there's no good place to experiment. Or am I missing something?
+
+The only other thing I can think of is to write the whole abstract article (or a part of it) as a function with a composition implementation on Wikifunctions and then to call it from a user-space sandbox page here. That, however, doesn't actually seem to work: [[User:Amire80/sandbox|I've just tried to call a function from my user space]], and I just see "⏳ Function is being called…". That is possibly a bug that can be fixed (maybe [https://phabricator.wikimedia.org/T422299 T422299]?), but even if it's fixed, it doesn't look like the best user experience. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:48, 10 April 2026 (UTC)
+
+:[[phab:T421417]] [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:52, 10 April 2026 (UTC)
+::For now [[Q3938]] can be used for test edits . [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 02:06, 11 April 2026 (UTC)
+:We have [[Q138864867]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 23:30, 11 April 2026 (UTC)
+
+== I propose Q10693 for featured article ==
+
+I think [[Q10693]] is the best article here. Can I propose it for [[Abstract Wikipedia:Featured article]] [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:24, 10 April 2026 (UTC)
+
+:We'd to come to a consensus on criteria first before we nominate anything. Anyway, the talk page of [[Abstract Wikipedia:Featured article]] would be a better place to decide this, not ''everything'' belongs on the project chat. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:36, 11 April 2026 (UTC)
+
+== REST API for editing? ==
+
+Hi, does anyone know if there is a ticket in phab for a public API endpoint that allows editing of AW content? It would be very useful to improve tooling and content. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:41, 11 April 2026 (UTC)
+
+:I don't believe so. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:03, 11 April 2026 (UTC)

@@ -1,0 +1,24 @@
+<!--
+  Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
+  Fetched:   2026-04-11T23:32:18Z
+  Source:    fetch_discussions.py (auto-updated via GitHub Actions)
+  DO NOT EDIT — any local changes will be overwritten on the next run.
+-->
+== Sonardi ==
+
+You seem to have made several articles that use the Indian village of Sonardi as a predicate in the SPO template. I assume this was an error, as Sonardi did not have an English-language label on Wikidata before today. I do not understand what you were trying to convey with this, and am asking you because of that.
+
+[[User:Alef.person|Alef.person]] ([[User talk:Alef.person|talk]]) 00:49, 5 April 2026 (UTC)
+: Yes that was an error. It was supposed to be "part of". I am fixing it as we speak.[[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 01:44, 5 April 2026 (UTC)
+
+== "If anyone objects..." ==
+
+I wanted to say that I do not object to your goal of creating every article "every Wikipedia should have," and I am working on a similar thing. I came here to recommend that you also look into the [[m:Wiki99|Wiki99]] lists for individual topics, like I have been doing for [[m:Wiki99/LGBT+]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:36, 6 April 2026 (UTC)
+
+:Thank you so much! I will get on it after working on the main list! [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:30, 6 April 2026 (UTC)
+
+== Use of SPO sentence ==
+
+Your program seems to use [[f:Z26955]] for a few properties seemingly incorrectly. E.g. In [[Q1297]], it creates <nowiki>{{Z26955 | Q23492 (official language) | Q1860 (English) | $subject}}</nowiki>, but if I am looking at the tests for [[f:Z26955]] correctly, it would make a sentence like English 'official languages' Chicago. These should probably be changed to [[f:Z28016]] instead. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 12:38, 6 April 2026 (UTC)
+
+:I tried to fix them. I hope I got them  all and updated the app [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:53, 6 April 2026 (UTC)

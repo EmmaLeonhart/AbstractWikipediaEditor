@@ -1,0 +1,56 @@
+name: Fetch Discussion Snapshots
+
+# Keeps discussions/*.wikitext in sync with the live pages on
+# abstract.wikipedia.org so the bot (and anyone reading this repo for
+# context) can see what's been said on the project chat and on
+# Immanuelle's talk pages without having to fetch them live.
+#
+# Runs:
+#   - on every push to master (catches changes alongside other commits)
+#   - daily at 03:30 UTC (catches wiki-side changes between pushes)
+#   - manually via the Actions tab
+#
+# Commits made by this workflow use the default GITHUB_TOKEN, so they
+# do NOT re-trigger this workflow (GitHub skips secondary runs for
+# default-token pushes), avoiding an infinite loop.
+
+on:
+  push:
+    branches: [master]
+    paths-ignore:
+      - 'discussions/**'  # don't re-run when we just committed a snapshot
+  schedule:
+    - cron: '30 3 * * *'  # 03:30 UTC daily (offset from pages.yml's 06:00)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Fetch discussion pages
+        run: python fetch_discussions.py
+
+      - name: Commit snapshot diff
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add discussions/
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Update discussion snapshots"
+          git push

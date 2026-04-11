@@ -1,0 +1,32 @@
+<!--
+  Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle/Abstract_Wikipedia_Editor
+  Fetched:   2026-04-11T23:32:18Z
+  Source:    fetch_discussions.py (auto-updated via GitHub Actions)
+  DO NOT EDIT — any local changes will be overwritten on the next run.
+-->
+== license ==
+
+Could you please add a <code>COPYING</code> file or equivalent to the repo? [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 06:09, 7 April 2026 (UTC)
+
+:It is now MIT licensed [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 09:19, 7 April 2026 (UTC)
+
+== Creates inaccessible content ==
+
+Hello! Your AI thing (unsurprisingly) makes slop articles that fail accessibility standards. They will confuse screen-readers because you're not wrapping content with paragraph tags. Thank you for your attention to this matter! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:27, 8 April 2026 (UTC)
+
+:@[[User:Feeglgeef|Feeglgeef]] can you give some examples of articles that use this correctly? The constant rendering failures make development pretty difficult but I think this is pretty fixable. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:57, 8 April 2026 (UTC)
+::[[Q319]] is probably the best article we have so far. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:49, 8 April 2026 (UTC)
+:::@[[User:Feeglgeef|Feeglgeef]] I am working on implementing paragraph tags [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:07, 8 April 2026 (UTC)
+::::It is done now [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:38, 9 April 2026 (UTC)
+:::::You still left a bunch of slop articles in the mainspace. Do you have any plans to clean them up? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:52, 9 April 2026 (UTC)
+::::::I'll add the paragraph formatting right now [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:17, 9 April 2026 (UTC)
+:::::::It might take a while but I think I am making good progress on making all of the pages into paragraph pages [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:23, 10 April 2026 (UTC)
+::::::::I have decided I think trying to go through articles and clean them up like this is not a good thing to do since it is easy to potentially break articles, and there is no working undo function. So I am not gonna continue on with this. If you find one that needs the paragraph formatting, it is easy to do with this tool. Just remove all of the <nowiki>{{p}}</nowiki> things from the page and it goes into a proper paragraph. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 06:07, 10 April 2026 (UTC)
+:::::::::This editor has an undo function, but the undo function generally only works to go back to versions  of the page also made with the editor [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 06:28, 10 April 2026 (UTC)
+
+== Q762 lists ==
+
+I like [[Q762]] but it has a feature that is not supported yet. Saving this here for later [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:38, 9 April 2026 (UTC)
+
+:Here [[Q12539]] is one I introduced. I plan on making these simple wiki-header like things in the next release [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:14, 10 April 2026 (UTC)
+::Yeah I got it running. So will be in the new release coming soon. Gennerally better formatting and everything. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 10 April 2026 (UTC)

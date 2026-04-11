@@ -204,6 +204,31 @@ ipcMain.handle('convert-article', async (_event, qid: string): Promise<string> =
   return await runPython('convert_article.py', [qid]);
 });
 
+// Render wikitext lines to HTML via the real Wikifunctions evaluator.
+// Replaces the old hand-rolled switch statement in renderer.ts that
+// approximated each sentence locally. See render_wikitext.py for the
+// full pipeline (compile -> substitute Z825K1/K2 -> POST -> extract Z89K1).
+interface RenderLineResult {
+  html: string | null;
+  error: string | null;
+}
+ipcMain.handle('render-wikitext', async (_event, subject: string, lines: string[]): Promise<RenderLineResult[]> => {
+  if (!lines || lines.length === 0) return [];
+  const tmpFile = path.join(os.tmpdir(), `abstractbot_render_${process.pid}_${Date.now()}.json`);
+  fs.writeFileSync(tmpFile, JSON.stringify({ subject, lines }), 'utf-8');
+  try {
+    const stdout = await runPython('render_wikitext.py', ['--input', tmpFile]);
+    return JSON.parse(stdout);
+  } catch (e) {
+    console.error('[render-wikitext]', e);
+    // Degrade gracefully: return null for every line so the preview
+    // shows raw wikitext instead of going blank.
+    return lines.map(() => ({ html: null, error: (e as Error).message }));
+  } finally {
+    try { fs.unlinkSync(tmpFile); } catch {}
+  }
+});
+
 // Push to Abstract Wikipedia - uses editor wikitext directly
 ipcMain.handle('push-article', async (_event, qid: string, wikitext: string, restoreRevId?: string, editSummary?: string): Promise<string> => {
   // Write editor wikitext to a temp file for the Python script

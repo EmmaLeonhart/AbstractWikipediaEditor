@@ -7,6 +7,7 @@ contextBridge.exposeInMainWorld('api', {
   checkArticle: (qid: string) => ipcRenderer.invoke('check-article', qid),
   generateWikitext: (qid: string) => ipcRenderer.invoke('generate-wikitext', qid),
   convertArticle: (qid: string) => ipcRenderer.invoke('convert-article', qid),
+  renderWikitext: (subject: string, lines: string[]) => ipcRenderer.invoke('render-wikitext', subject, lines),
   convertArticleRevision: (qid: string, oldid: string) => ipcRenderer.invoke('convert-article-revision', qid, oldid),
   fetchRevisions: (qid: string) => ipcRenderer.invoke('fetch-revisions', qid),
   pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId, editSummary),

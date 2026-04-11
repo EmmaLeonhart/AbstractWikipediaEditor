@@ -1,39 +1,32 @@
-
-interface ParsedFragment {
-  funcId: string;
-  args: string[];
-}
-
-// Function aliases
-const ALIASES: Record<string, string> = {
-  'location': 'Z26570', 'located in': 'Z26570',
-  'is a': 'Z26039', 'instance of': 'Z26039',
-  'kind of': 'Z26095', 'subclass of': 'Z26095',
-  'role': 'Z28016', 'is the x of': 'Z28016',
-  'describe': 'Z29591', 'adjective class': 'Z29591',
-  'class of class': 'Z27173',
-  'class with adj': 'Z29743',
-  'superlative': 'Z27243',
-  'spo': 'Z26955',
-  'are': 'Z26627', 'plural class': 'Z26627',
-  'album': 'Z28803',
-  'sunset': 'Z30000',
-  'begins': 'Z31405',
-  'auto article': 'Z29822',
-  'comparative measurement': 'Z32229',
-};
-
-const REVERSE_ALIASES: Record<string, string> = {};
-for (const [alias, zid] of Object.entries(ALIASES)) {
-  if (!REVERSE_ALIASES[zid]) REVERSE_ALIASES[zid] = alias;
-}
+// Live preview rendering is now delegated to the real Wikifunctions
+// evaluator via `window.api.renderWikitext` (see render_wikitext.py +
+// the render-wikitext IPC handler in main.ts). The old hand-rolled
+// switch statement that reimplemented each function's English output
+// locally is gone — what you see in the preview is what will publish.
 
 // State
-const labelCache: Record<string, string> = {};
+const labelCache: Record<string, string> = {};             // QID -> English label (for section headers)
+const previewCache: Record<string, RenderLineResult> = {}; // `${subject}::${line}` -> render result
 let currentQid = '';
 let renderTimeout: ReturnType<typeof setTimeout> | null = null;
+let renderSeq = 0;  // used to discard stale responses when the user keeps typing
 let hasCredentials = false;
 let restoringRevId: string | null = null;
+
+function isTemplateLine(trimmed: string): boolean {
+  return trimmed.startsWith('{{') && trimmed.endsWith('}}') && !/^\{\{\s*p\s*\}\}$/i.test(trimmed);
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function stripOuterP(html: string): string {
+  // Z32123 wraps each rendered paragraph in <p>...</p>. For a line-aligned
+  // preview we don't want nested <p> per gutter row — strip one level.
+  const m = /^\s*<p>([\s\S]*)<\/p>\s*$/i.exec(html);
+  return m ? m[1] : html;
+}
 
 // DOM
 const qidInput = document.getElementById('qid-input') as HTMLInputElement;
@@ -167,116 +160,100 @@ previewEl.addEventListener('scroll', () => {
 });
 
 async function renderPreview(): Promise<void> {
+  const seq = ++renderSeq;
   const text = editorEl.value;
   const lines = text.split('\n');
+  const subject = currentQid;
 
-  // Collect all QIDs that need labels (from templates and section headers)
-  const allFragments = parseTemplates(text);
-  const needed = new Set<string>();
-  for (const frag of allFragments) {
-    for (const arg of frag.args) {
-      if (/^Q\d+$/.test(arg) && !labelCache[arg]) needed.add(arg);
-    }
-  }
+  // --- Step 1: fetch Wikidata labels for any section-header QIDs we haven't
+  // resolved yet. The real rendering of section headers (Z31465) is just
+  // "<h2>{label}</h2>", so hitting the evaluator for them would be wasted
+  // round-trips — we look up the label directly. Same goes for the page title.
+  const neededLabels = new Set<string>();
   const sectionHeaderPattern = /^==\s*(Q\d+)\s*==$/gm;
   let shMatch;
   while ((shMatch = sectionHeaderPattern.exec(text)) !== null) {
-    if (!labelCache[shMatch[1]]) needed.add(shMatch[1]);
+    if (!labelCache[shMatch[1]]) neededLabels.add(shMatch[1]);
   }
-
-  if (needed.size > 0) {
-    previewEl.innerHTML = '<span class="placeholder">Resolving labels...</span>';
-    const labels = await window.api.fetchLabels([...needed]);
+  if (neededLabels.size > 0) {
+    const labels = await window.api.fetchLabels([...neededLabels]);
+    if (seq !== renderSeq) return;  // superseded
     Object.assign(labelCache, labels);
   }
 
-  // Render line-by-line so each preview line aligns with each textarea line
+  // --- Step 2: figure out which template lines still need rendering, then
+  // ship the uncached ones off to the Wikifunctions evaluator in one batch.
+  const uncachedIndices: number[] = [];
+  const uncachedLines: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
+    if (!isTemplateLine(trimmed)) continue;
+    const key = `${subject}::${trimmed}`;
+    if (!(key in previewCache)) {
+      uncachedIndices.push(i);
+      uncachedLines.push(trimmed);
+    }
+  }
+
+  if (uncachedLines.length > 0) {
+    // Show a loading indicator only if nothing is cached yet (first render);
+    // otherwise keep the old preview visible to avoid flicker while typing.
+    if (Object.keys(previewCache).length === 0) {
+      previewEl.innerHTML = '<span class="placeholder">Rendering via Wikifunctions…</span>';
+    }
+    try {
+      const results = await window.api.renderWikitext(subject, uncachedLines);
+      if (seq !== renderSeq) return;  // superseded
+      for (let j = 0; j < uncachedLines.length; j++) {
+        previewCache[`${subject}::${uncachedLines[j]}`] = results[j] || { html: null, error: 'no result' };
+      }
+    } catch (e) {
+      console.error('[renderPreview]', e);
+      // Don't cache failures — let the next render retry. Fall through and
+      // the loop below will show raw wikitext for lines that have no cached
+      // result.
+    }
+  }
+
+  // --- Step 3: assemble the preview line by line, keeping alignment with
+  // the textarea gutter.
   let sectionNumber = 0;
   const html = lines.map(line => {
     const trimmed = line.trim();
-    // {{p}} paragraph marker renders as a visual break
+
     if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
       return '<div class="sentence paragraph-break">&nbsp;</div>';
     }
-    // ==...== section header
+
     const sectionMatch = /^==\s*(.+?)\s*==$/.exec(trimmed);
     if (sectionMatch) {
       const content = sectionMatch[1];
       if (/^Q\d+$/.test(content)) {
-        // Valid QID: show label
         const label = labelCache[content] || content;
-        return `<div class="sentence section-header"><h2>${label}</h2></div>`;
-      } else {
-        // Non-QID: show as auto-numbered
-        sectionNumber++;
-        return `<div class="sentence section-header"><h2>${sectionNumber} <em>(${content})</em></h2></div>`;
+        return `<div class="sentence section-header"><h2>${escapeHtml(label)}</h2></div>`;
       }
+      sectionNumber++;
+      return `<div class="sentence section-header"><h2>${sectionNumber} <em>(${escapeHtml(content)})</em></h2></div>`;
     }
-    const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
-    if (tmplMatch) {
-      const parts = tmplMatch[1].trim().split('|').map(s => s.trim());
-      const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
-      const frag: ParsedFragment = { funcId, args: parts.slice(1) };
-      return `<div class="sentence">${renderSentence(frag)}</div>`;
+
+    if (isTemplateLine(trimmed)) {
+      const key = `${subject}::${trimmed}`;
+      const cached = previewCache[key];
+      if (cached && cached.html) {
+        return `<div class="sentence">${stripOuterP(cached.html)}</div>`;
+      }
+      if (cached && cached.error) {
+        // Render the raw wikitext and tag it with the error for hover.
+        return `<div class="sentence render-error" title="${escapeHtml(cached.error)}">${escapeHtml(trimmed)}</div>`;
+      }
+      // In-flight or uncached (race): show raw wikitext.
+      return `<div class="sentence">${escapeHtml(trimmed)}</div>`;
     }
-    // Non-template lines render as empty lines to maintain alignment
+
     return '<div class="sentence">&nbsp;</div>';
   }).join('');
 
   previewEl.innerHTML = html || '<span class="placeholder">No fragments to preview.</span>';
-}
-
-function parseTemplates(text: string): ParsedFragment[] {
-  const fragments: ParsedFragment[] = [];
-  const pattern = /\{\{(.+?)\}\}/gs;
-  let match;
-  while ((match = pattern.exec(text)) !== null) {
-    const parts = match[1].trim().split('|').map(s => s.trim());
-    if (parts.length === 0) continue;
-    const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
-    fragments.push({ funcId, args: parts.slice(1) });
-  }
-  return fragments;
-}
-
-function qLink(qid: string): string {
-  const label = labelCache[qid] || qid;
-  return `<a class="label" href="https://www.wikidata.org/wiki/${qid}" title="${qid}">${label}</a>`;
-}
-
-function resolveArg(a: string): string {
-  if (a === 'SUBJECT') return qLink(currentQid);
-  if (a === '$lang') return '<em>language</em>';
-  if (/^Q\d+$/.test(a)) return qLink(a);
-  return a;
-}
-
-function formatNumber(raw: string): string {
-  if (!raw) return '?';
-  if (raw.includes('/')) {
-    const [n, d] = raw.split('/');
-    return n.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + '/' +
-           d.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  }
-  return raw.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-function renderSentence(frag: ParsedFragment): string {
-  const a = frag.args.map(resolveArg);
-  switch (frag.funcId) {
-    case 'Z26570': return `${a[0]} is a ${a[1]} in ${a[2]}.`;
-    case 'Z26039': return `${a[0]} is a ${a[1]}.`;
-    case 'Z26095': return `A ${a[0]} is a ${a[1]}.`;
-    case 'Z28016': return `${a[0]} is the ${a[1]} of ${a[2]}.`;
-    case 'Z26955': return `${a[1]} is ${a[0]} of ${a[2]}.`;
-    case 'Z29591': return `${a[0]} is a ${a[1]} ${a[2]}.`;
-    case 'Z26627': return `${a[0]} are ${a[1]}.`;
-    case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;
-    case 'Z27173': return `${a[0]} is ${a[1]} ${a[2]}.`;
-    case 'Z29743': return `A ${a[0]} is a ${a[1]} ${a[2]}.`;
-    case 'Z32229': return `${a[0]} has a ${a[2]} ${formatNumber(a[3])} times that of ${a[1]}.`;
-    default: return a.join(' ');
-  }
 }
 
 function normalizeQid(): string {

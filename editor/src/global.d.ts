@@ -7,6 +7,11 @@ interface RevisionInfo {
   size: number;
 }
 
+interface RenderLineResult {
+  html: string | null;
+  error: string | null;
+}
+
 interface ElectronAPI {
   fetchItem: (qid: string) => Promise<unknown>;
   fetchLabel: (qid: string) => Promise<string>;
@@ -17,6 +22,7 @@ interface ElectronAPI {
   convertArticleRevision: (qid: string, oldid: string) => Promise<string>;
   fetchRevisions: (qid: string) => Promise<RevisionInfo[]>;
   pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => Promise<string>;
+  renderWikitext: (subject: string, lines: string[]) => Promise<RenderLineResult[]>;
   getCredentials: () => Promise<{ username: string; mainPassword: string } | null>;
   saveCredentials: (creds: { username: string; mainPassword: string }) => Promise<boolean>;
 }

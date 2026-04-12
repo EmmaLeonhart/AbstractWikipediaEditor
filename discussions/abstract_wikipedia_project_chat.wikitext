@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-11T23:50:46Z
+  Fetched:   2026-04-12T02:41:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -399,6 +399,10 @@ Is there such a documentation page for Abstract Wikipedia? [[User:Amire80|Amir E
 :::Oh, I see, you're talking about the underlying text format? That isn't and (from what I've gathered, though {{ping|Jdforrester (WMF)}} didn't respond last time I pinged him) will never be editable by users. The function model where the calls are actually made is identical to Wikifunctions. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:36, 11 April 2026 (UTC)
 ::::I'm not asking whether it's editable. I'm asking whether there is a page that documents what it is.
 ::::The JSON of the function calls is perhaps the same as Wikifunctions compositions, but there are also other things there, which are not the same as Wikifunctions. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 22:40, 11 April 2026 (UTC)
+:::::I'm saying that I'm not sure why you'd ''need'' or ''want'' to understand it if you can't edit it and it doesn't impact the user experience in any way. Is there a specific problem that you are running into? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:28, 12 April 2026 (UTC)
+::::::I'm a very curious person. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 01:19, 12 April 2026 (UTC)
+:::::::This is an example JSON of an Abstract Wikipedia article, with only the [[f:Z801|Echo function]], if you're curious: { "qid": "Q27318", "sections": { "Q8776414": { "index": 0, "fragments": [ "Z89", { "Z1K1": "Z7", "Z7K1": "Z801" } ] } } }.
+:::::::The base has two key value pairs, "qid" and "sections". "sections" currently only contains one key-value pair as of now, [[d:Q8776414]], aka lead section. "fragments" is where the Wikifunctions compositions are stored. I have no idea what "index" is. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 02:35, 12 April 2026 (UTC)
 
 == Bot request ==
 {{Tracked|T421151}}
@@ -557,6 +561,7 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 :::::::::If you do need to make inaccessible articles, please at least give them a category on the talk page. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:21, 11 April 2026 (UTC)
 ::::::::::We’d need to agree an accessibility standard first, but I’m not planning on creating any articles until there are suitable functions available. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:36, 11 April 2026 (UTC)
 :::::::::::I agree. Accessibility standards need to be established and not just assumed. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:28, 11 April 2026 (UTC)
+:::::::::::I definitely do agree that we need accessibility standards, but this isn't really a nice-to-have that you debate about but rather the floor. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:27, 12 April 2026 (UTC)
 :::::When someone "vandalizes" it is not necessarily intentional, see [[wikt:vandalise]]. I do understand that Immanuelle has good faith, but at the same time, the "deployment" caused tens of articles to be broken, and furthermore I don't suspect something this bad would have slipped through had a human carefully reviewed the code. When a contributor deploys a semi-automated tool and uses it to make edits at the rate {{ping|Immanuelle}} was at this rate, you are morally obligated to test it. This wasn't the first time the slop-machine that they used caused them to mess up tens of articles, and if Immanuelle doesn't exercise extreme care in the future, I don't suspect it will be the last. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 10 April 2026 (UTC)
 ::::::It was a silent error that was only discovered by chance. What kind of testing would you have done to avoid this? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:37, 10 April 2026 (UTC)
 ::::::@[[User:Feeglgeef|Feeglgeef]]": On Wikipedia, "[[:en:WP:VAND|Vandalism]]" is a technical term that means "editing (or other behavior) '''''deliberately''' intended to [[:en:Wikipedia:DE|obstruct or defeat]] the [[:en:Wikipedia:Five_pillars|project's purpose]]''". Accidental disruptive editing is not considered vandalism. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 22:52, 10 April 2026 (UTC)

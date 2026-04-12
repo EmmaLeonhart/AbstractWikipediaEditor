@@ -70,6 +70,7 @@ const loginUsername = document.getElementById('login-username') as HTMLInputElem
 const loginMainPassword = document.getElementById('login-main-password') as HTMLInputElement;
 const loginSave = document.getElementById('login-save') as HTMLButtonElement;
 const loginCancel = document.getElementById('login-cancel') as HTMLButtonElement;
+const loginMigrate = document.getElementById('login-migrate') as HTMLButtonElement;
 const loginStatus = document.getElementById('login-status') as HTMLDivElement;
 
 // --- Pull from Wikidata (uses generate_wikitext.py) ---
@@ -484,6 +485,10 @@ btnLogin.addEventListener('click', async () => {
     loginUsername.value = creds.username;
     loginMainPassword.value = creds.mainPassword;
   }
+
+  // Show migrate button if legacy credentials detected
+  const isLegacy = await window.api.checkLegacyCredentials();
+  loginMigrate.style.display = isLegacy ? 'block' : 'none';
 });
 
 loginCancel.addEventListener('click', () => {
@@ -512,6 +517,19 @@ loginSave.addEventListener('click', async () => {
     setTimeout(() => loginOverlay.classList.remove('visible'), 800);
   } else {
     loginStatus.textContent = 'Failed to save credentials.';
+    loginStatus.className = 'login-status err';
+  }
+});
+
+loginMigrate.addEventListener('click', async () => {
+  const ok = await window.api.migrateCredentials();
+  if (ok) {
+    loginStatus.textContent = 'Credentials encrypted successfully.';
+    loginStatus.className = 'login-status ok';
+    loginMigrate.style.display = 'none';
+    await checkCredentials();
+  } else {
+    loginStatus.textContent = 'Migration failed or no legacy credentials found.';
     loginStatus.className = 'login-status err';
   }
 });

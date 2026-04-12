@@ -19,6 +19,7 @@ import json
 import time
 import argparse
 import requests
+import base64
 
 if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != 'utf-8':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -60,8 +61,8 @@ def find_existing_articles(limit=50):
 
 def browser_login(page):
     """Log in via the browser UI. VPN usage may trigger email verification (not 2FA)."""
-    username = os.environ.get("WIKI_USERNAME", "").split("@")[0]
-    password = os.environ.get("WIKI_MAIN_PASSWORD", "")
+    username = base64.b64decode(os.environ.get("WIKI_USERNAME_B64", "")).decode('utf-8').split("@")[0]
+    password = base64.b64decode(os.environ.get("WIKI_MAIN_PASSWORD_B64", "")).decode('utf-8')
 
     page.goto(f"{WIKI_URL}/w/index.php?title=Special:UserLogin")
     page.wait_for_load_state("networkidle")
@@ -396,9 +397,9 @@ def main():
             print(wikitext, flush=True)
         return
 
-    password = os.environ.get("WIKI_MAIN_PASSWORD", "")
+    password = os.environ.get("WIKI_MAIN_PASSWORD_B64", "")
     if not password:
-        print("ERROR: Set WIKI_MAIN_PASSWORD in .env")
+        print("ERROR: Set WIKI_MAIN_PASSWORD_B64 in .env")
         sys.exit(1)
 
     print(f"\n{len(verified)} articles to edit", flush=True)

@@ -25,6 +25,8 @@ interface ElectronAPI {
   renderWikitext: (subject: string, lines: string[]) => Promise<RenderLineResult[]>;
   getCredentials: () => Promise<{ username: string; mainPassword: string } | null>;
   saveCredentials: (creds: { username: string; mainPassword: string }) => Promise<boolean>;
+  checkLegacyCredentials: () => Promise<boolean>;
+  migrateCredentials: () => Promise<boolean>;
 }
 
 interface Window {

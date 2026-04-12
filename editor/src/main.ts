@@ -54,6 +54,14 @@ function fetchJSON<T>(url: string): Promise<T> {
   });
 }
 
+function fromB64(value: string | undefined): string {
+  if (!value) return '';
+  return Buffer.from(value, 'base64').toString('utf-8');
+}
+function toB64(value: string): string {
+  return Buffer.from(value, 'utf-8').toString('base64');
+}
+
 // Fetch Wikidata item labels, descriptions, and claims
 ipcMain.handle('fetch-item', async (_event, qid: string): Promise<WikidataEntity | null> => {
   const url = `https://www.wikidata.org/w/api.php?action=wbgetentities&ids=${qid}&props=claims|labels|descriptions&languages=en&format=json`;
@@ -139,27 +147,65 @@ const ENV_PATH = path.join(PROJECT_ROOT, '.env');
 
 // --- Credentials (.env) management ---
 
+function readEnvVals(): Record<string, string> {
+  const text = fs.readFileSync(ENV_PATH, 'utf-8');
+  const vals: Record<string, string> = {};
+  for (const line of text.split('\n')) {
+    const eq = line.indexOf('=');
+    if (eq > 0) vals[line.slice(0, eq).trim()] = line.slice(eq + 1).trim();
+  }
+  return vals;
+}
+
+function hasLegacyCredentials(vals: Record<string, string>): boolean {
+  return !!(vals['WIKI_USERNAME'] || vals['WIKI_MAIN_PASSWORD']) && !vals['WIKI_USERNAME_B64'];
+}
+
 ipcMain.handle('get-credentials', async (): Promise<{ username: string; mainPassword: string } | null> => {
   try {
-    const text = fs.readFileSync(ENV_PATH, 'utf-8');
-    const lines = text.split('\n');
-    const vals: Record<string, string> = {};
-    for (const line of lines) {
-      const eq = line.indexOf('=');
-      if (eq > 0) vals[line.slice(0, eq).trim()] = line.slice(eq + 1).trim();
+    const vals = readEnvVals();
+    // Support both legacy (plaintext) and new (base64) formats
+    if (hasLegacyCredentials(vals)) {
+      return {
+        username: vals['WIKI_USERNAME'] || '',
+        mainPassword: vals['WIKI_MAIN_PASSWORD'] || '',
+      };
     }
     return {
-      username: vals['WIKI_USERNAME'] || '',
-      mainPassword: vals['WIKI_MAIN_PASSWORD'] || '',
+      username: fromB64(vals['WIKI_USERNAME_B64']),
+      mainPassword: fromB64(vals['WIKI_MAIN_PASSWORD_B64']),
     };
   } catch {
     return null;
   }
 });
 
+ipcMain.handle('check-legacy-credentials', async (): Promise<boolean> => {
+  try {
+    return hasLegacyCredentials(readEnvVals());
+  } catch {
+    return false;
+  }
+});
+
+ipcMain.handle('migrate-credentials', async (): Promise<boolean> => {
+  try {
+    const vals = readEnvVals();
+    if (!hasLegacyCredentials(vals)) return false;
+    const username = vals['WIKI_USERNAME'] || '';
+    const mainPassword = vals['WIKI_MAIN_PASSWORD'] || '';
+    const content = `WIKI_USERNAME_B64=${toB64(username)}\nWIKI_MAIN_PASSWORD_B64=${toB64(mainPassword)}\n`;
+    fs.writeFileSync(ENV_PATH, content, 'utf-8');
+    return true;
+  } catch (e) {
+    console.error('[migrate-credentials]', e);
+    return false;
+  }
+});
+
 ipcMain.handle('save-credentials', async (_event, creds: { username: string; mainPassword: string }): Promise<boolean> => {
   try {
-    const content = `WIKI_USERNAME=${creds.username}\nWIKI_MAIN_PASSWORD=${creds.mainPassword}\n`;
+    const content = `WIKI_USERNAME_B64=${toB64(creds.username)}\nWIKI_MAIN_PASSWORD_B64=${toB64(creds.mainPassword)}\n`;
     fs.writeFileSync(ENV_PATH, content, 'utf-8');
     return true;
   } catch (e) {

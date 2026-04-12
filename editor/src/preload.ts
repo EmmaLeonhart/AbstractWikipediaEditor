@@ -13,4 +13,6 @@ contextBridge.exposeInMainWorld('api', {
   pushArticle: (qid: string, wikitext: string, restoreRevId?: string, editSummary?: string) => ipcRenderer.invoke('push-article', qid, wikitext, restoreRevId, editSummary),
   getCredentials: () => ipcRenderer.invoke('get-credentials'),
   saveCredentials: (creds: { username: string; mainPassword: string }) => ipcRenderer.invoke('save-credentials', creds),
+  checkLegacyCredentials: () => ipcRenderer.invoke('check-legacy-credentials'),
+  migrateCredentials: () => ipcRenderer.invoke('migrate-credentials'),
 });

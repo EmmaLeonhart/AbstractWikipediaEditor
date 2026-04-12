@@ -173,7 +173,8 @@
       "Bash(echo \"--- exit $? ---\")",
       "Bash(wc -l discussions/*.wikitext)",
       "Bash(git stash:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(gh pr:*)"
     ]
   }
 }

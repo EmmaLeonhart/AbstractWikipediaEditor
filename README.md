@@ -32,6 +32,7 @@ Or double-click `runeditor.bat` on Windows.
 - Enter any Wikidata QID and auto-generate a wikitext template from its properties
 - Live preview renders English sentences with resolved Wikidata labels
 - Pull existing articles from Abstract Wikipedia and edit them
+- **Overwrite protection on Pull from Wikidata.** If the article already exists on Abstract Wikipedia, the first click on "Pull from Wikidata" shows the existing Abstract Wikipedia content instead and displays a warning notice. You have to click "Pull from Wikidata" a second time to actually regenerate from Wikidata and discard what's there. Prevents accidentally nuking hand-edited content.
 - Push articles to Abstract Wikipedia via Playwright browser automation
 - Built-in login screen for Wikimedia credentials
 

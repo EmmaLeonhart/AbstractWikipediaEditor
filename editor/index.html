@@ -85,6 +85,26 @@
     .summary-bar input::placeholder { color: #585b70; font-style: italic; }
     .summary-bar input:focus { outline: none; border-color: #89b4fa; }
 
+    /* Overwrite-confirmation notice for Pull-from-Wikidata when the article
+       already exists on Abstract Wikipedia. Shows a warning, the user has
+       to click Pull from Wikidata a second time to actually overwrite. */
+    .overwrite-notice {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 8px;
+      padding: 8px 12px;
+      background: #3e2723; border: 1px solid #fab387; border-radius: 4px;
+      color: #fab387; font-size: 13px; line-height: 1.4;
+    }
+    .overwrite-notice strong { color: #f9e2af; white-space: nowrap; }
+    .overwrite-notice em { font-style: italic; color: #f9e2af; }
+    .overwrite-notice #overwrite-notice-text { flex: 1; }
+    .btn-notice-dismiss {
+      background: transparent; border: 1px solid #fab387; color: #fab387;
+      width: 26px; height: 26px; padding: 0; border-radius: 3px;
+      font-size: 14px; line-height: 1; cursor: pointer; flex-shrink: 0;
+    }
+    .btn-notice-dismiss:hover { background: #fab387; color: #1e1e2e; }
+
     /* History view */
     .history-header {
       display: flex; align-items: center; justify-content: space-between;
@@ -160,6 +180,15 @@
   <div class="summary-bar" id="summary-bar" style="display: none;">
     <label for="edit-summary">Edit summary:</label>
     <input type="text" id="edit-summary" placeholder="Optional — (AWE) credit appended automatically">
+  </div>
+
+  <div class="overwrite-notice" id="overwrite-notice" style="display: none;">
+    <strong>⚠ Already exists on Abstract Wikipedia.</strong>
+    <span id="overwrite-notice-text">
+      Showing the current Abstract Wikipedia content instead of overwriting it.
+      Click <em>Pull from Wikidata</em> again to regenerate from Wikidata and discard what's here.
+    </span>
+    <button type="button" class="btn-notice-dismiss" id="btn-notice-dismiss" title="Dismiss (keep the Abstract Wikipedia content)">✕</button>
   </div>
 
   <div class="editor-container">

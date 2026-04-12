@@ -34,6 +34,13 @@ let currentQid = '';
 let renderTimeout: ReturnType<typeof setTimeout> | null = null;
 let hasCredentials = false;
 let restoringRevId: string | null = null;
+// Set to a QID when Pull-from-Wikidata has been clicked once for an
+// article that already exists on Abstract Wikipedia. The UI shows the
+// Abstract Wikipedia content + a warning notice; clicking Pull from
+// Wikidata a second time on the same QID actually overwrites.
+// Any action that changes the editor's intent (pushing, switching
+// QID, pulling from AW explicitly) clears this back to null.
+let pendingWikidataOverwriteQid: string | null = null;
 
 // DOM
 const qidInput = document.getElementById('qid-input') as HTMLInputElement;
@@ -48,6 +55,8 @@ const statusEl = document.getElementById('status') as HTMLSpanElement;
 const infoLeft = document.getElementById('info-left') as HTMLSpanElement;
 const summaryBar = document.getElementById('summary-bar') as HTMLDivElement;
 const editSummaryInput = document.getElementById('edit-summary') as HTMLInputElement;
+const overwriteNotice = document.getElementById('overwrite-notice') as HTMLDivElement;
+const btnNoticeDismiss = document.getElementById('btn-notice-dismiss') as HTMLButtonElement;
 
 // History view DOM
 const historyView = document.getElementById('history-view') as HTMLDivElement;
@@ -67,13 +76,71 @@ const loginStatus = document.getElementById('login-status') as HTMLDivElement;
 
 btnWikidata.addEventListener('click', pullFromWikidata);
 qidInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') pullFromWikidata(); });
+// Typing a different QID invalidates the pending overwrite warning
+// immediately — don't wait for the next button click.
+qidInput.addEventListener('input', () => {
+  if (pendingWikidataOverwriteQid && qidInput.value.trim().toUpperCase().replace(/^Q?/, 'Q') !== pendingWikidataOverwriteQid) {
+    hideOverwriteNotice();
+  }
+});
+btnNoticeDismiss.addEventListener('click', () => hideOverwriteNotice());
+
+function showOverwriteNotice(qid: string): void {
+  pendingWikidataOverwriteQid = qid;
+  overwriteNotice.style.display = 'flex';
+}
+
+function hideOverwriteNotice(): void {
+  pendingWikidataOverwriteQid = null;
+  overwriteNotice.style.display = 'none';
+}
 
 async function pullFromWikidata(): Promise<void> {
   const qid = normalizeQid();
   if (!qid) return;
 
   showEditorView();
-  statusEl.textContent = 'Generating from Wikidata...';
+
+  // Two-step overwrite guard. If the user clicked "Pull from Wikidata"
+  // for an article that already exists on Abstract Wikipedia, the first
+  // click shows the AW content and arms the guard; a second click on
+  // the same QID actually overwrites with fresh Wikidata output. This
+  // prevents the #1 foot-gun of silently blowing away an existing
+  // article just because you wanted to refresh the template.
+  const alreadyArmed = pendingWikidataOverwriteQid === qid;
+  if (!alreadyArmed) {
+    statusEl.textContent = 'Checking Abstract Wikipedia…';
+    try {
+      const existing = await window.api.checkArticle(qid);
+      if (existing.exists) {
+        // Show the AW content and arm the guard. Do NOT pull from Wikidata yet.
+        statusEl.textContent = 'Fetching from Abstract Wikipedia…';
+        const wikitext = await window.api.convertArticle(qid);
+        editorEl.value = wikitext;
+        restoringRevId = null;
+        statusEl.textContent = `${qid} - already exists; showing Abstract Wikipedia content`;
+        infoLeft.textContent = 'Converted by convert_article.py';
+        btnPush.disabled = false;
+        btnHistory.disabled = false;
+        summaryBar.style.display = 'flex';
+        showOverwriteNotice(qid);
+        renderPreview();
+        return;
+      }
+    } catch (e) {
+      // If the check itself fails, log it and fall through to the
+      // normal Wikidata pull — better to do the old thing than block
+      // the user entirely on a network blip.
+      console.warn('[pullFromWikidata] check-article failed, pulling from Wikidata anyway:', e);
+    }
+  }
+
+  // Either the article doesn't exist on AW yet, or the user has
+  // explicitly confirmed the overwrite by clicking a second time.
+  statusEl.textContent = alreadyArmed
+    ? 'Overwriting with fresh Wikidata content…'
+    : 'Generating from Wikidata…';
+  hideOverwriteNotice();
   try {
     const wikitext = await window.api.generateWikitext(qid);
     editorEl.value = wikitext;
@@ -98,6 +165,7 @@ async function pullFromAbstract(): Promise<void> {
   if (!qid) return;
 
   showEditorView();
+  hideOverwriteNotice();
   statusEl.textContent = 'Fetching from Abstract Wikipedia...';
   try {
     const wikitext = await window.api.convertArticle(qid);
@@ -121,6 +189,7 @@ btnPush.addEventListener('click', async () => {
   if (!qid) return;
 
   showEditorView();
+  hideOverwriteNotice();
   btnPush.disabled = true;
   if (restoringRevId) {
     statusEl.textContent = `Restoring ${qid} to revision ${restoringRevId} (browser will open)...`;
@@ -284,6 +353,11 @@ function normalizeQid(): string {
   if (!qid) return '';
   if (!qid.startsWith('Q')) qid = 'Q' + qid;
   qidInput.value = qid;
+  // Changing QID invalidates any pending overwrite confirmation — the
+  // warning was about a specific article, not about pulling in general.
+  if (currentQid !== qid && pendingWikidataOverwriteQid !== null && pendingWikidataOverwriteQid !== qid) {
+    hideOverwriteNotice();
+  }
   currentQid = qid;
   return qid;
 }
@@ -365,6 +439,7 @@ btnHistory.addEventListener('click', async () => {
 
 async function restoreRevision(qid: string, revId: string): Promise<void> {
   statusEl.textContent = `Loading revision ${revId}...`;
+  hideOverwriteNotice();
 
   try {
     const wikitext = await window.api.convertArticleRevision(qid, revId);

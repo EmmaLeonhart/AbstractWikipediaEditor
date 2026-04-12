@@ -325,66 +325,20 @@ class TestSectionHeaders:
         assert result[2]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q200"
         assert result[4]["value"]["Z31465K1"]["Z10771K1"]["Z24766K1"]["Z6091K1"]["Z6K1"] == "Q201"
 
-    def test_subject_replaced_with_pronoun_after_first(self):
-        """SUBJECT becomes Q6091500 ("it") after the first mention in a paragraph."""
+    def test_subject_stays_as_subject_throughout_paragraph(self):
+        """All SUBJECT mentions stay as Z825K1 arg refs (no pronoun substitution)."""
         template = """{{Z26039|SUBJECT|Q634}}
 {{Z26570|SUBJECT|Q634|Q544}}
 {{Z26955|Q66305721|SUBJECT|Q87982}}"""
         result = compile_template(template, {"subject": "Q5511"})
         typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
-        # Call 1: first SUBJECT stays as arg ref
         assert typed_list[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        # Call 2: SUBJECT becomes Q6091500 wrapped as a Z6091 entity
-        assert typed_list[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
-        # Call 3: SUBJECT becomes Q6091500 wrapped as a Z6091 entity
-        assert typed_list[5]["Z26955K2"]["Z6091K1"]["Z6K1"] == "Q6091500"
-
-    def test_pronoun_resets_per_paragraph(self):
-        """Pronoun counter resets at {{p}} markers."""
-        template = """{{Z26039|SUBJECT|Q634}}
-{{Z26570|SUBJECT|Q634|Q544}}
-{{p}}
-{{Z26039|SUBJECT|Q515}}
-{{Z26570|SUBJECT|Q515|Q545}}"""
-        result = compile_template(template, {"subject": "Q5511"})
-        # Two paragraphs
-        assert len(result) == 2
-        # Paragraph 1: first SUBJECT stays, second becomes pronoun
-        p1 = result[0]["value"]["Z32123K1"]["Z32234K1"]
-        assert p1[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p1[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
-        # Paragraph 2: counter reset, first SUBJECT stays, second becomes pronoun
-        p2 = result[1]["value"]["Z32123K1"]["Z32234K1"]
-        assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
-
-    def test_pronoun_resets_at_section_header(self):
-        """Pronoun counter resets at ==QID== section headers."""
-        template = """{{Z26039|SUBJECT|Q634}}
-{{Z26570|SUBJECT|Q634|Q544}}
-==Q199==
-{{Z26039|SUBJECT|Q515}}
-{{Z26570|SUBJECT|Q515|Q545}}"""
-        result = compile_template(template, {"subject": "Q5511"})
-        # paragraph, header, paragraph = 3 items
-        assert len(result) == 3
-        # Paragraph 1
-        p1 = result[0]["value"]["Z32123K1"]["Z32234K1"]
-        assert p1[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p1[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
-        # Paragraph 2 after section header — counter reset
-        p2 = result[2]["value"]["Z32123K1"]["Z32234K1"]
-        assert p2[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert p2[3]["Z26570K1"]["Z6091K1"]["Z6K1"] == "Q6091500"
+        assert typed_list[3]["Z26570K1"]["Z18K1"]["Z6K1"] == "Z825K1"
+        assert typed_list[5]["Z26955K2"]["Z18K1"]["Z6K1"] == "Z825K1"
 
     def test_bare_string_in_entity_slot_rejected(self):
-        """A literal that is not a QID, alias, $variable, or SUBJECT must
+        """A literal that is not a QID, $variable, or SUBJECT must
         be rejected at compile time when it appears in an entity slot.
-
-        This is the safety net that prevents the original 'it' bug from
-        recurring: a stray string in a Q-item position used to silently
-        compile to a Z6 plain string and corrupt the published JSON.
-        Now it raises so the editor refuses to push.
         """
         import pytest
         # role expects entity / Q-item args; "garbage" is none of those
@@ -392,20 +346,12 @@ class TestSectionHeaders:
         with pytest.raises(ValueError, match="not a valid value for an entity slot"):
             compile_template(template, {"subject": "Q288312"})
 
-    def test_literal_it_alias_resolves_to_pronoun_qid(self):
-        """The wikitext alias `it` (e.g. from a round-tripped article) must
-        resolve to a Z6091 entity for Q6091500, never a Z6 plain string.
-
-        This is the Q288312 round-trip case: convert_article emits `it`
-        for Q6091500, and pushing the wikitext back must produce a
-        properly typed entity in that slot.
-        """
+    def test_literal_it_rejected_in_entity_slot(self):
+        """The word 'it' in an entity slot is now rejected (no longer an alias)."""
+        import pytest
         template = "{{role|Q813858|Q11591100|it}}"
-        result = compile_template(template, {"subject": "Q288312"})
-        call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
-        # The third arg ("it") must compile to a Z6091 entity, not a Z6 string
-        assert call["Z28016K3"]["Z1K1"]["Z9K1"] == "Z6091"
-        assert call["Z28016K3"]["Z6091K1"]["Z6K1"] == "Q6091500"
+        with pytest.raises(ValueError, match="not a valid value for an entity slot"):
+            compile_template(template, {"subject": "Q288312"})
 
     def test_cite_web_url_only(self):
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""

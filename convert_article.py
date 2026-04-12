@@ -80,14 +80,6 @@ def extract_value(obj):
         qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
-        # Q6091500 is the deliberate exception to literal round-tripping:
-        # pull it as the wikitext alias "it" so the source reads naturally,
-        # and let compile_template resolve "it" back to the Q6091500 entity
-        # on push. This closes the loop — "it" is the only token that ever
-        # appears in source wikitext for the pronoun, whether the author
-        # typed it themselves or it came in from a round-tripped article.
-        if qid == "Q6091500":
-            return "it"
         return qid
 
     if z1k1 == "Z18":

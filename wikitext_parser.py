@@ -365,7 +365,6 @@ IMPLICIT_REFS = {
 # to remember an opaque QID. They compile to a Z6091 entity reference, never
 # a Z6 string — the literal alias word must not appear in the published JSON.
 QID_ALIASES = {
-    "it": "Q6091500",  # third-person neuter singular pronoun
 }
 
 
@@ -383,7 +382,7 @@ def resolve_value(raw_value, variables=None, expected_type=None):
     Resolution rules:
     - "SUBJECT" / "$lang" -> Z18 argument reference
     - "$varname" -> look up in variables dict, then treat result as a value
-    - QID_ALIASES key (e.g. "it") -> Z6091 Wikidata item reference
+    - QID_ALIASES key -> Z6091 Wikidata item reference
     - "Q..." (Wikidata QID) -> Z6091 Wikidata item reference
     - "Z..." that looks like a Z-ID -> Z9 reference
     - Anything else -> Z6 string literal (only allowed if expected_type
@@ -405,7 +404,7 @@ def resolve_value(raw_value, variables=None, expected_type=None):
         # Recurse: the resolved value might be a QID, Z-ID, etc.
         return resolve_value(resolved, variables, expected_type)
 
-    # Wikitext aliases for Wikidata items (e.g. "it" -> Q6091500)
+    # Wikitext aliases for Wikidata items
     if raw_value in QID_ALIASES:
         return z6091(QID_ALIASES[raw_value])
 
@@ -764,24 +763,6 @@ def compile_section_header(qid, variables, origin_qid, index):
     return build_clipboard_item(z31465_call, index=index, origin_qid=origin_qid)
 
 
-def replace_subject_with_pronoun(segment_text):
-    """Replace SUBJECT with the alias "it" after the first occurrence.
-
-    The first SUBJECT in a paragraph stays as SUBJECT (which compiles to
-    the article entity Z825K1). Subsequent SUBJECTs become the alias
-    "it", which `resolve_value()` resolves to Q6091500 (the Wikidata
-    item for the third-person neuter pronoun) and wraps as a Z6091
-    entity reference — the structurally correct shape for slots that
-    expect a Wikidata item. The literal string "it" never lands in the
-    published JSON; only the entity does.
-    """
-    count = [0]
-    def replacer(match):
-        count[0] += 1
-        if count[0] == 1:
-            return match.group(0)
-        return "it"
-    return re.sub(r'\bSUBJECT\b', replacer, segment_text)
 
 
 def compile_template(text, variables=None):
@@ -793,10 +774,6 @@ def compile_template(text, variables=None):
     All content is implicitly one paragraph. ``{{p}}`` midway through
     starts a new paragraph. ``==QID==`` section headers also cause
     paragraph breaks and produce Z31465 section title items.
-
-    Within each paragraph, the first SUBJECT mention stays as SUBJECT;
-    subsequent SUBJECTs become Q6091500 ("it") so the article doesn't
-    keep repeating the subject's name.
 
     Args:
         text: Template string in wikitext format.
@@ -822,16 +799,11 @@ def compile_template(text, variables=None):
     pending_segments = []  # raw text segments accumulating into the current paragraph
 
     def flush_paragraph():
-        """Compile accumulated fragments into a paragraph and add to items.
-
-        SUBJECT-to-pronoun substitution happens here, scoped to the
-        whole paragraph (across all its segments).
-        """
+        """Compile accumulated fragments into a paragraph and add to items."""
         if not pending_segments:
             return
         combined = "\n".join(pending_segments)
-        rewritten = replace_subject_with_pronoun(combined)
-        fragments = parse_template_calls(rewritten)
+        fragments = parse_template_calls(combined)
         if not fragments:
             return
         item = compile_paragraph(

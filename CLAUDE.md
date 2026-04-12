@@ -77,7 +77,7 @@ There is also experimental infrastructure (`render_wikitext.py` + the `render-wi
 
 **What it can do in this project:**
 - **Evaluate individual Wikifunctions calls by ZID.** Useful for validating simple function calls in tests: compile a known wikitext snippet, send the resulting Z-object to `wf.call()`, check the returned Z22. Works well for leaf functions (e.g. a `Z26039` "is a" call with two concrete QIDs and a concrete language).
-- **Future test suite.** A `pytest` file could compile known templates and assert rendering matches expected English. The `"it"` pronoun bug that corrupted 61 articles would have been caught by one such test — a bare string in an entity slot fails the evaluator's type check immediately.
+- **Future test suite.** A `pytest` file could compile known templates and assert rendering matches expected English. A bare string in an entity slot fails the evaluator's type check immediately, and we now reject those at compile time.
 
 **What it can *not* do:**
 - **Render a full Abstract Wikipedia article the way the wiki does.** Abstract Wikipedia articles are rendered by wrapping everything in `Z825` (the article renderer) which binds `Z825K1` = subject, `Z825K2` = language, and handles pronoun substitution, error recovery, and paragraph assembly. Calling the inner function calls directly (which is what `render_wikitext.py` does, bypassing `Z825`) produces noticeably wrong output for non-trivial shapes — `spo` drops its predicate, `it` substitution doesn't match what `Z825` does internally, etc. A correct end-to-end evaluator-based preview would have to call `Z825` itself, and that's what `render_wikitext.py`'s simulation approach got wrong.

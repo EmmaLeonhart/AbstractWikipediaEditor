@@ -172,7 +172,8 @@
       "Bash(\"C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe\" fetch_discussions.py --check)",
       "Bash(echo \"--- exit $? ---\")",
       "Bash(wc -l discussions/*.wikitext)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(grep:*)"
     ]
   }
 }

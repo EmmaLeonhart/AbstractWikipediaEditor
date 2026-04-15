@@ -1,9 +1,10 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-14T05:36:46Z
+  Fetched:   2026-04-15T05:36:44Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
+{{Shortcut|[[Project:PC]]|[[Project:VP]]}}
 __NEWSECTIONLINK__
 [[Category:Abstract Wikipedia administration|Project Chat]]
 This is the Abstract Wikipedia Project chat. This is where discussions on the project happen. Add your discussion below this line. More technical issues should go to [[Abstract Wikipedia:Report a technical problem]].
@@ -622,3 +623,12 @@ Hi, does anyone know if there is a ticket in phab for a public API endpoint that
 :I do not know why there isn't a REST API, but I had to [[Abstract Wikipedia:Project chat#I made a desktop app that helps with editing|specifically work around it with my editing tool]]. It will be very nice in the future to have a REST API. 
 :I think that right now there isn't actually any server-side verification of whether an article is well-structured, and that might be the reason why there isn't a REST API yet.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:46, 11 April 2026 (UTC)
 ::What rest api are you talking about? Checkout [[Special:RestSandbox]]. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 16:50, 12 April 2026 (UTC)
+
+== Spaces between sentences ==
+
+In abstract articles with two sentences or more, I usually see two spaces between the sentences. Why two? I usually write one space, and that's probably what most people do in English. I know that some people write two; I don't like it myself, but this practice does exist. But here, it raises a few more nuanced questions:
+
+# Where is it actually defined that there are supposed to be ''any'' spaces between the sentences? I might be wrong, but it probably comes from the extension code and not from the functions.
+# Can this be customized per language? I don't know all the rules for all the languages, but I strongly suspect that some languages use spaces between sentences differently, and no default is good for all the languages. I'd especially check if it's good for Thai, Burmese, Japanese, and Chinese.
+# When I examine the HTML code of the rendered sentences, each of them is a <code><nowiki><div></nowiki></code>. It's a bit odd—I'd expect <code><nowiki><span></nowiki></code> there.
+[[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 21:07, 14 April 2026 (UTC)

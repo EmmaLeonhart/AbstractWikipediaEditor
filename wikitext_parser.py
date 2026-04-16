@@ -538,6 +538,21 @@ def resolve_function_name(name):
     return _FUNCTION_ALIASES_LC.get(name.lower(), name)
 
 
+# Infix form predicate map. `{{infix|subject|predicate|object}}` is a
+# natural-language shortcut that gets rewritten to a concrete function
+# call at parse time. The predicate determines both the target function
+# (a role Z-ID) and the role QID that fills the middle slot.
+#
+# Example: {{infix|Q4830453|part of|Q50831573}} rewrites to
+# {{Z32982|Q4830453|Q66305721|Q50831573}} — "Coca Cola is a part of in S&P 500".
+#
+# Predicate lookup is case-insensitive. Add entries here as new
+# natural-language relations get wired up.
+INFIX_PREDICATES = {
+    "part of": ("Z32982", "Q66305721"),
+}
+
+
 def parse_template_calls(body):
     """Extract all {{...}} template calls from the body text.
 
@@ -548,6 +563,13 @@ def parse_template_calls(body):
         {{Z26570|SUBJECT|Q845945|Q17}}
         {{location|SUBJECT|Q845945|Q17}}
         {{Z26570|entity=SUBJECT|class=Q845945|location=Q17}}
+
+    Also supports the infix form:
+        {{infix|subject|part of|object}}
+    which rewrites to the appropriate role-sentence function (see
+    INFIX_PREDICATES) before the normal function-registry path runs.
+    Unknown predicates are left alone; the caller gets a "function
+    infix not found" error downstream, which is the right failure mode.
     """
     fragments = []
     # Match {{ ... }} allowing newlines inside
@@ -561,6 +583,18 @@ def parse_template_calls(body):
         parts = [p.strip() for p in inner.split('|')]
         if not parts:
             continue
+
+        # Infix rewrite: {{infix|X|predicate|Y}} -> {{target_zid|X|role_qid|Y}}
+        # Handled here, before resolve_function_name, because the whole
+        # point is that the predicate word (part 2) drives the target
+        # function — a plain alias map can't express "the second argument
+        # decides which function this is".
+        if parts[0].lower() == "infix" and len(parts) >= 4:
+            predicate = parts[2].lower()
+            mapping = INFIX_PREDICATES.get(predicate)
+            if mapping:
+                target_zid, role_qid = mapping
+                parts = [target_zid, parts[1], role_qid, parts[3]] + parts[4:]
 
         func_id = resolve_function_name(parts[0])
         positional_args = []

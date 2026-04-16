@@ -29,6 +29,25 @@ for (const [alias, zid] of Object.entries(ALIASES)) {
   if (!REVERSE_ALIASES[zid]) REVERSE_ALIASES[zid] = alias;
 }
 
+// Infix-form predicate map. Mirrors INFIX_PREDICATES in wikitext_parser.py.
+// {{infix|X|predicate|Y}} rewrites to {{target_zid|X|role_qid|Y}}.
+// Keep this in sync with the Python side (tests/test_paragraphs.py
+// enforces the Python behavior).
+const INFIX_PREDICATES: Record<string, [string, string]> = {
+  'part of': ['Z32982', 'Q66305721'],
+};
+
+// Apply the infix rewrite to a split-up template's parts. Returns the
+// (possibly rewritten) parts. No-op if parts[0] isn't 'infix' or the
+// predicate isn't mapped.
+function applyInfixRewrite(parts: string[]): string[] {
+  if (parts.length < 4 || parts[0].toLowerCase() !== 'infix') return parts;
+  const mapping = INFIX_PREDICATES[parts[2].toLowerCase()];
+  if (!mapping) return parts;
+  const [targetZid, roleQid] = mapping;
+  return [targetZid, parts[1], roleQid, parts[3], ...parts.slice(4)];
+}
+
 // State
 const labelCache: Record<string, string> = {};
 // Evaluator-rendered HTML per line, keyed by `${subject}::${trimmed_line}`.
@@ -273,7 +292,7 @@ function renderLineSync(line: string, sectionRef: { n: number }): string | null 
     }
     // Evaluator hasn't answered yet (or this is a brand new line).
     // Show the fast, approximate local render as a placeholder.
-    const parts = tmplMatch[1].trim().split('|').map(s => s.trim());
+    const parts = applyInfixRewrite(tmplMatch[1].trim().split('|').map(s => s.trim()));
     const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
     const frag: ParsedFragment = { funcId, args: parts.slice(1) };
     return `<div class="sentence pending">${renderSentence(frag)}</div>`;
@@ -368,7 +387,7 @@ function parseTemplates(text: string): ParsedFragment[] {
   const pattern = /\{\{(.+?)\}\}/gs;
   let match;
   while ((match = pattern.exec(text)) !== null) {
-    const parts = match[1].trim().split('|').map(s => s.trim());
+    const parts = applyInfixRewrite(match[1].trim().split('|').map(s => s.trim()));
     if (parts.length === 0) continue;
     const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
     fragments.push({ funcId, args: parts.slice(1) });

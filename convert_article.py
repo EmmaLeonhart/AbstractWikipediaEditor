@@ -38,6 +38,28 @@ except (FileNotFoundError, json.JSONDecodeError):
 
 WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396", "Z32123"}
 
+# Z26955 → Z28016 transformation is role-specific. Z28016 is "[K1] is the
+# [K2] of [K3]" but K1's semantic identity depends on the role (K2):
+#
+# For "naming" roles — where K1 is the VALUE filling the role —
+# Z26955(predicate, subject, object) maps to Z28016(object, predicate, subject)
+# (right-rotate). E.g. shrine rank: Z26955(Q10444029, shrine, Jingu) becomes
+# "Jingu is the shrine rank of shrine".
+#
+# For "topic" roles — where K1 is the entity being described —
+# Z26955(predicate, K2, K3) maps to Z28016(K2, predicate, K3) (K1↔K2 swap).
+# E.g. part-of: Z26955(Q66305721, deity, generations) becomes
+# "deity is a part of generations".
+NAMING_ROLE_QIDS = {
+    "Q5119",      # capital
+    "Q1762010",   # dedication
+    "Q10444029",  # shrine rank
+    "Q23492",     # official language
+    "Q8142",      # currency
+    "Q2285706",   # head of government
+    "Q48352",     # head of state
+}
+
 
 def get_func_id(obj):
     if not isinstance(obj, dict):
@@ -142,17 +164,27 @@ def format_as_wikitext(obj):
     if not fid:
         return None
 
-    # Z26955 is deprecated. Rewrite incoming wiki content as Z28016 by
-    # right-rotating the args: Z26955 was (predicate, subject, object, lang)
-    # with reading "The [pred] of [subj] is [obj]"; Z28016 is
-    # (subject, role, dependency, lang) with reading "[subj] is the [role] of [dep]".
-    # Mapping: newK1=oldK3 (object becomes new subject), newK2=oldK1 (predicate
-    # becomes role), newK3=oldK2 (old subject becomes dependency). Intentionally
-    # lossy: the inverted sentence shape can read awkwardly for some roles.
+    # Z26955 is deprecated. Rewrite as Z28016 with role-specific arg order
+    # (see NAMING_ROLE_QIDS above for the split).
     if fid == "Z26955":
-        new_k1 = extract_value(obj.get("Z26955K3", {}))
-        new_k2 = extract_value(obj.get("Z26955K1", {}))
-        new_k3 = extract_value(obj.get("Z26955K2", {}))
+        role_ref = obj.get("Z26955K1", {})
+        role_qid = None
+        if isinstance(role_ref, dict):
+            qid_inner = role_ref.get("Z6091K1", {})
+            if isinstance(qid_inner, dict):
+                role_qid = qid_inner.get("Z6K1")
+            elif isinstance(qid_inner, str):
+                role_qid = qid_inner
+
+        k2 = extract_value(obj.get("Z26955K2", {}))
+        k3 = extract_value(obj.get("Z26955K3", {}))
+        pred = extract_value(obj.get("Z26955K1", {}))
+
+        if role_qid in NAMING_ROLE_QIDS:
+            new_k1, new_k2, new_k3 = k3, pred, k2
+        else:
+            new_k1, new_k2, new_k3 = k2, pred, k3
+
         alias = FUNCTION_NAMES.get("Z28016", "Z28016")
         return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
 

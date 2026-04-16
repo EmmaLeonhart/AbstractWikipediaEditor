@@ -195,6 +195,14 @@ def extract_function_ids(obj, funcs=None):
 # Wrapper functions that should be stripped to show the inner call
 WRAPPER_FUNCS = {"Z27868", "Z29749", "Z14396", "Z32123"}
 
+# See convert_article.py for the rationale — the Z26955→Z28016 rewrite is
+# role-specific because Z28016's K1 identity (value vs topic) depends on
+# what the role (K2) is.
+NAMING_ROLE_QIDS = {
+    "Q5119", "Q1762010", "Q10444029", "Q23492",
+    "Q8142", "Q2285706", "Q48352",
+}
+
 
 def get_func_id(obj):
     """Extract function ID from a Z7 call."""
@@ -298,14 +306,27 @@ def format_as_wikitext(obj):
     if not fid:
         return str(obj)[:100]
 
-    # Z26955 is deprecated. Rewrite as Z28016 by right-rotating the args.
-    # Z26955 = (predicate, subject, object, lang) reading "The [pred] of [subj] is [obj]";
-    # Z28016 = (subject, role, dependency, lang) reading "[subj] is the [role] of [dep]".
-    # Mapping: newK1=oldK3, newK2=oldK1, newK3=oldK2. Intentionally lossy.
+    # Z26955 is deprecated. Rewrite as Z28016 with role-specific arg order
+    # (see NAMING_ROLE_QIDS above for the split).
     if fid == "Z26955":
-        new_k1 = extract_value(obj.get("Z26955K3", {}))
-        new_k2 = extract_value(obj.get("Z26955K1", {}))
-        new_k3 = extract_value(obj.get("Z26955K2", {}))
+        role_ref = obj.get("Z26955K1", {})
+        role_qid = None
+        if isinstance(role_ref, dict):
+            qid_inner = role_ref.get("Z6091K1", {})
+            if isinstance(qid_inner, dict):
+                role_qid = qid_inner.get("Z6K1")
+            elif isinstance(qid_inner, str):
+                role_qid = qid_inner
+
+        k2 = extract_value(obj.get("Z26955K2", {}))
+        k3 = extract_value(obj.get("Z26955K3", {}))
+        pred = extract_value(obj.get("Z26955K1", {}))
+
+        if role_qid in NAMING_ROLE_QIDS:
+            new_k1, new_k2, new_k3 = k3, pred, k2
+        else:
+            new_k1, new_k2, new_k3 = k2, pred, k3
+
         alias = FUNCTION_NAMES.get("Z28016", "Z28016")
         return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
 

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-15T05:36:44Z
+  Fetched:   2026-04-16T05:42:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -515,6 +515,7 @@ I made a desktop app that helps with creating and editing Abstract Wikipedia pag
 ::::::::::::::::::New release is out [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 07:42, 10 April 2026 (UTC)
 ::::::::::::::::::I would suggest not to use [[d:Q6091500]] at the moment. In some languages, there might be multiple words for different uses of "it". If you are editing with only the English logic, it won't help build a multilingual wiki. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 17:42, 11 April 2026 (UTC)
 :::::::::::::::::::@[[User:Sun8908|Sun8908]] fair. I had thought it would be dropped in pro-drop languages but I do not think that was a reasonable assumption.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:47, 11 April 2026 (UTC)
+::::::::::::::::::::I asked at the Monday meeting. Not sure if anything is being done about it though. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:15, 15 April 2026 (UTC)
 :Nice work. I for one don't care how you made the tool, the important part to me is how it works and if it helps me/us edit AW.  [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:23, 11 April 2026 (UTC)
 
 : I tried to run it on macOS 14.5, but it errored out when I clicked "Pull from Wikidata." It appears that this was because you hardcoded your Python path.
@@ -598,6 +599,7 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 ::> But apparently when you try to insert a nonexistent alias then it just inserts the text and there is no server side validation at all of edits.
 ::This sounds like a bug. Would you be willing to create a ticket in phab with details? [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:38, 11 April 2026 (UTC)
 :::The team has already declined (or indicated that they had no plans) to do validation in this form, so I don't think a new ticket would be ideal. Either way, this shouldn't affect anyone besides those using a headless browser (or anyone using good, human-reviewed code and a headless browser), so I don't think it would be a priority anyway. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:19, 11 April 2026 (UTC)
+::::Not sure what you are talking about. At the meeting they did not seem to be opposed to doing server side validation. They just said that they had a bit of concerns about infrastructure that was stopping it as an immediate thing. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:14, 15 April 2026 (UTC)
 
 == Sandbox page ==
 
@@ -632,3 +634,16 @@ In abstract articles with two sentences or more, I usually see two spaces betwee
 # Can this be customized per language? I don't know all the rules for all the languages, but I strongly suspect that some languages use spaces between sentences differently, and no default is good for all the languages. I'd especially check if it's good for Thai, Burmese, Japanese, and Chinese.
 # When I examine the HTML code of the rendered sentences, each of them is a <code><nowiki><div></nowiki></code>. It's a bit odd—I'd expect <code><nowiki><span></nowiki></code> there.
 [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 21:07, 14 April 2026 (UTC)
+
+:Can you give an example article, please? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:01, 15 April 2026 (UTC)
+::[[Q833]], [[Q11361384]], and probably every other abstract article whose rendered English text has more than sentence. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 14:34, 15 April 2026 (UTC)
+:::No, not every single one (see [[Q333]]), but most of them. This has happened because Denny promoted separating sentences into individual fragments and Immanuel used an AI slop-machine to create an editing tool. Essentially, they're being treated as separate elements (like how one paragraph is different from a section heading), so the UI adds a space. This, of course, should not be done, because it breaks screen-readers and looks weird, but apparently everyone is just OK with it. Like a thousand articles have been created by the afforementioned slop-generated tool (because the person who oversaw the bot that created it seems to care more about quantity than quality), whereas I've only created three myself (because I care more about quality and shaping the direction of the wiki in preparation for when abstract content becomes actually viable). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:02, 15 April 2026 (UTC)
+::::If I understand correctly, [[Q333]] has one fragment, which is one function call, which in turn creates two sentences and joins them using a hardcoded space. If each sentence was created using a separate fragment, they would probably appear with two spaces in practice. Neither option is very good.
+::::The mass creation of abstract articles using that tool is probably not really related to this. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:52, 15 April 2026 (UTC)
+:::::No, one of them is objectively wrong and one of them is correct. You're not ''supposed'' to split two sentences into two fragments. That's the point. The mass creation of articles using that tool ''is'' related, because it's responsible for the proliferation of articles that follow the wrong one. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:36, 15 April 2026 (UTC)
+::::::Why not split sentences into fragments? I can easily imagine some functions that produce several sentences, but it's not universal.
+::::::And why is it ''correct'' to join sentences using a hardcoded space? Joining sentences shouldn't be done using a hardcoded space, but with a generic "join sentences" function, which will be one space for many languages, but probably not for all of them. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 17:55, 15 April 2026 (UTC)
+:::::::Yes, not having to hardcode is the eventual goal. Splitting sentences into fragments is bad because it adds extra spacing (this is a feature, and a good one!), because it's bad for screen-readers, and because it would be impossible to distinguish between paragraphs, the article would just be a collection of sentences. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:03, 15 April 2026 (UTC)
+::::::::I still don't understand why splitting into fragments is bad. What is good about extra spacing? It looks like a bad feature, not a good one. It sounds like a rendering and presentation issue, not a logical issue. Fragments can be inline, and the inline ones should be <code><nowiki><span></nowiki></code>s, not <code><nowiki><div></nowiki></code>s. And there should also be an option for <code><nowiki><div></nowiki></code> fragments. And maybe some others. Forcing every fragment to be a <code><nowiki><div></nowiki></code> sounds like a bad feature. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:46, 15 April 2026 (UTC)
+:::::::::Again, the spacing is good because the correct reason to split is to create two separate paragraphs. Even if the spacing ''was'' removed, it would still not work for screen-readers, and blocking out blind people when the mission is to spread knowledge to neglected languages is incredibly ironic. I'm not sure how else I'm supposed to communicate this to you. It's like asking "why is magma so hot! I want to drink magma instead of water, but it's too hot and not refreshing!" [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:07, 15 April 2026 (UTC)
+::::::::::Maybe I understand what a "fragment" is supposed to be differently. Where is defined what is it supposed to be? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 20:22, 15 April 2026 (UTC)

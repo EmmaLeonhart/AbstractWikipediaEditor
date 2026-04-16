@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-16T19:35:15Z
+  Fetched:   2026-04-16T20:19:52Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -687,6 +687,7 @@ There's been a ''lot'' of activity on here, I'm not sure if this is going to be 
 
 :Simple english wikipedia has almost all discussion happen on its Project chat. I think we should only add nerw things once we really need more chats. Having everything here makes it easier for people to keep up with the news of abstract wikipedia.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:31, 16 April 2026 (UTC)
 ::The place to keep up with news for "abstract [sic] wikipedia [sic]" is the newsletter. I think that separating might actually make it easier to follow the specific discussion that you want, as you can choose which of the three to subscribe to. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:58, 16 April 2026 (UTC)
+::We should at least have a talk page archiving bot, like [[:en:User:lowercase sigmabot III]]. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 20:18, 16 April 2026 (UTC)
 
 == What to do with Z26955 ==
 

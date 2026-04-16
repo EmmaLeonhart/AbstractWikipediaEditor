@@ -8,7 +8,7 @@ interface ParsedFragment {
 const ALIASES: Record<string, string> = {
   'location': 'Z26570', 'located in': 'Z26570',
   'is a': 'Z26039', 'instance of': 'Z26039',
-  'kind of': 'Z26095', 'subclass of': 'Z26095',
+  'kind of': 'Z26039', 'subclass of': 'Z26039',
   'role': 'Z28016', 'is the x of': 'Z28016',
   'describe': 'Z29591', 'adjective class': 'Z29591',
   'class of class': 'Z27173',

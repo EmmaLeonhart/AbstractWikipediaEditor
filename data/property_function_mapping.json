@@ -18,11 +18,11 @@
     },
     "P279": {
       "label": "subclass of",
-      "function": "Z26095",
-      "function_name": "Article-ful instantiating fragment",
-      "example": "An antelope is a mammal.",
-      "template": "{{Z26095|SUBJECT|$value}}",
-      "notes": "For class hierarchy relationships."
+      "function": "Z26039",
+      "function_name": "Article-less instantiating fragment",
+      "example": "Antelope is a mammal.",
+      "template": "{{Z26039|SUBJECT|$value}}",
+      "notes": "For class hierarchy relationships. Migrated from Z26095 (deprecated) to Z26039."
     },
     "P131": {
       "label": "located in the administrative territorial entity",

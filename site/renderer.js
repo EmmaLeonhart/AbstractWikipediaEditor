@@ -25,6 +25,21 @@ for (const [alias, zid] of Object.entries(ALIASES)) {
   if (!REVERSE_ALIASES[zid]) REVERSE_ALIASES[zid] = alias;
 }
 
+// Infix-form predicate map. Mirrors INFIX_PREDICATES in wikitext_parser.py
+// and editor/src/renderer.ts. {{infix|X|predicate|Y}} rewrites to
+// {{target_zid|X|role_qid|Y}}.
+const INFIX_PREDICATES = {
+  'part of': ['Z32982', 'Q66305721'],
+};
+
+function applyInfixRewrite(parts) {
+  if (parts.length < 4 || parts[0].toLowerCase() !== 'infix') return parts;
+  const mapping = INFIX_PREDICATES[parts[2].toLowerCase()];
+  if (!mapping) return parts;
+  const [targetZid, roleQid] = mapping;
+  return [targetZid, parts[1], roleQid, parts[3], ...parts.slice(4)];
+}
+
 const labelCache = {};
 
 function parseTemplates(text) {
@@ -32,7 +47,7 @@ function parseTemplates(text) {
   const pattern = /\{\{(.+?)\}\}/gs;
   let match;
   while ((match = pattern.exec(text)) !== null) {
-    const parts = match[1].trim().split('|').map(s => s.trim());
+    const parts = applyInfixRewrite(match[1].trim().split('|').map(s => s.trim()));
     if (parts.length === 0) continue;
     const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
     fragments.push({ funcId, args: parts.slice(1) });

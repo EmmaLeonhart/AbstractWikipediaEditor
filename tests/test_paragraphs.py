@@ -265,6 +265,48 @@ class TestSubjectResolution:
         assert call["Z28016K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
 
+class TestInfixForm:
+    """{{infix|subject|predicate|object}} rewrites to the appropriate
+    role-sentence function based on the predicate word."""
+
+    def test_infix_part_of_maps_to_z32982(self):
+        """{{infix|X|part of|Y}} -> {{Z32982|X|Q66305721|Y}}."""
+        template = "{{infix|Q4830453|part of|Q50831573}}"
+        result = compile_template(template, {"subject": "Q4830453"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z7K1"]["Z9K1"] == "Z32982"
+        assert inner["Z32982K1"]["Z6091K1"]["Z6K1"] == "Q4830453"
+        assert inner["Z32982K2"]["Z6091K1"]["Z6K1"] == "Q66305721"
+        assert inner["Z32982K3"]["Z6091K1"]["Z6K1"] == "Q50831573"
+
+    def test_infix_predicate_case_insensitive(self):
+        """The predicate lookup ignores case so 'Part Of' also works."""
+        template = "{{infix|Q4830453|Part Of|Q50831573}}"
+        result = compile_template(template, {"subject": "Q4830453"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z7K1"]["Z9K1"] == "Z32982"
+
+    def test_infix_with_subject(self):
+        """SUBJECT resolves normally on both sides of the infix form."""
+        template = "{{infix|SUBJECT|part of|Q50831573}}"
+        result = compile_template(template, {"subject": "Q4830453"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z32982K1"]["Z18K1"]["Z6K1"] == "Z825K1"
+        assert inner["Z32982K3"]["Z6091K1"]["Z6K1"] == "Q50831573"
+
+    def test_infix_unknown_predicate_is_not_rewritten(self):
+        """Unknown predicates leave the call as `infix`, which then fails
+        downstream with the normal 'unknown function' path — better to
+        surface a clear error than to silently guess a mapping."""
+        template = "{{infix|Q4830453|frobnicates|Q50831573}}"
+        # Unknown function "infix" falls through to build_func_call's
+        # best-effort path, which happily builds an `infix` call with
+        # three positional args. Not useful, but not a crash.
+        result = compile_template(template, {"subject": "Q4830453"})
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
+        assert inner["Z7K1"]["Z9K1"] == "infix"
+
+
 class TestCiteWeb:
     def test_cite_web_url_only(self):
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-16T05:42:01Z
+  Fetched:   2026-04-16T19:35:15Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -323,6 +323,7 @@ How are non-English speakers (who this project is specifically for) meant to dev
 ::Re invitations, idk what has already been done, but I would've thought now would the time to get some people from smaller wikis editing and experimenting, just an invitation on a wiki's main noticeboard would probably do the trick (is there a [[meta:MassMessage]] service for updates re Abstract wiki that could be recommended?). Then a central or watchlist notice for the actual launch, hopefully by which time there'd already be a small group of editors able to assist the influx of newbies. An intuitive tutorial is also necessary, as well as an intuitive version of [[f:Wikifunctions:Catalogue]]. [[User:Kowal2701|Kowal2701]] ([[User talk:Kowal2701|talk]]) 18:14, 29 March 2026 (UTC)
 :::What do you think about boilerplate templates. So writing a sentence and then marking the parts of the sentence what can be derived from Wikidataitems or the lexeme linked to it. This seems to me like an realistic approach for making it easier to contribute. I am happy you wrote about the predominantly English-speaking/European community involved in this project. It seems like it is different to contribute so far and I had the expectation people from small language versions come on their own and contribute also if they dont speak English. So far it seems to be not the case and I hope it will be easier to contribute. I think for the beginning the goal of Abstract Wikipedia should be generating sentences based on data. So supporting small language versions should be not the goal of the first phase as it seems to take some time and improvements of the structures to make it easier to contribute. Sharing the work and offering people help with creating an function for an specific sentence can be a important way of getting more content in Abstract Wikipedia. Maybe it is unrealistic to find a huge number of people who are interested in writing functions who generate text. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:58, 29 March 2026 (UTC)
 :::[[Abstract Wikipedia:Useful functions for article composition]] is already available, as is [[Help:How to create an article]], but they are not perfect. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:05, 29 March 2026 (UTC)
+:Wikidata has a project chat in many languages. We can do that in the future. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:28, 16 April 2026 (UTC)
 
 == Gendered languages ==
 
@@ -600,6 +601,7 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 ::This sounds like a bug. Would you be willing to create a ticket in phab with details? [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:38, 11 April 2026 (UTC)
 :::The team has already declined (or indicated that they had no plans) to do validation in this form, so I don't think a new ticket would be ideal. Either way, this shouldn't affect anyone besides those using a headless browser (or anyone using good, human-reviewed code and a headless browser), so I don't think it would be a priority anyway. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:19, 11 April 2026 (UTC)
 ::::Not sure what you are talking about. At the meeting they did not seem to be opposed to doing server side validation. They just said that they had a bit of concerns about infrastructure that was stopping it as an immediate thing. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:14, 15 April 2026 (UTC)
+:::::The volunteer's corner? I unfortunately missed that, but it was more than a year ago that I believe they decided not to pursue it, so you're probably right. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:46, 16 April 2026 (UTC)
 
 == Sandbox page ==
 
@@ -647,3 +649,51 @@ In abstract articles with two sentences or more, I usually see two spaces betwee
 ::::::::I still don't understand why splitting into fragments is bad. What is good about extra spacing? It looks like a bad feature, not a good one. It sounds like a rendering and presentation issue, not a logical issue. Fragments can be inline, and the inline ones should be <code><nowiki><span></nowiki></code>s, not <code><nowiki><div></nowiki></code>s. And there should also be an option for <code><nowiki><div></nowiki></code> fragments. And maybe some others. Forcing every fragment to be a <code><nowiki><div></nowiki></code> sounds like a bad feature. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:46, 15 April 2026 (UTC)
 :::::::::Again, the spacing is good because the correct reason to split is to create two separate paragraphs. Even if the spacing ''was'' removed, it would still not work for screen-readers, and blocking out blind people when the mission is to spread knowledge to neglected languages is incredibly ironic. I'm not sure how else I'm supposed to communicate this to you. It's like asking "why is magma so hot! I want to drink magma instead of water, but it's too hot and not refreshing!" [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:07, 15 April 2026 (UTC)
 ::::::::::Maybe I understand what a "fragment" is supposed to be differently. Where is defined what is it supposed to be? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 20:22, 15 April 2026 (UTC)
+
+== Archiving discussions on this page? ==
+
+We're soon coming up to having a month old messages here, and considering the current length of it and size of the community, perhaps 30 days is a good limit for archiving them. Does anyone know how to get an archive bot running here? <span style="color:#EAA">♥</span>[[User:Ainali|Ainali]] <small><sup>[[User talk:Ainali|discussion]]</sup><sub>[[Special:Contributions/Ainali|contributions]]</sub></small> 06:44, 16 April 2026 (UTC)
+
+:+1 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 09:55, 16 April 2026 (UTC)
+:+1 [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:41, 16 April 2026 (UTC)
+:+1. I think SpBot does archiving on Wikifunctions. Maybe it could be brought here as well? [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 14:18, 16 April 2026 (UTC)
+::+1 [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:24, 16 April 2026 (UTC)
+
+== Importing the q template ==
+
+I really want the {{q|q1}} template here imported from wikidata. It is very helpful with qids. Linking to here instead of wikidata. Might be able to be expanded for lexemes and wikifunctions too. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:26, 16 April 2026 (UTC)
+
+== Caching issues (hopefully) fixed ==
+
+Hey all, I know the caching issues have been a real pain for you. I've just now deployed what (I hope) is a fix that works for calls on Wikifunctions.org, fragments here, and embedded Wikifunctions calls. See for example [https://abstract.wikipedia.org/view/en/Q1344227 view/en/Q1344227] which should load fragments near-immediately for you (not need a retry or time out). You'll also see e.g. that https://test.wikipedia.org/wiki/Wikifunctions now has "stable" results, not just endless "please wait" comments. That said, please tell me where I'm wrong and you're having issues! Much better to hear now than assume it's fixed and start all over again tomorrow. 
+
+I appreciate your feedback and patience over this; it has been very generous of you all. Our next work in this area is to make the cache much more scalable and resilient over time, so it's faster and more reliable for you, and cheaper for us to support. Thank you again. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 14:47, 16 April 2026 (UTC)
+
+:Thank you (and the rest of the team) for your efforts for this new wiki! We really appreciate it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:58, 16 April 2026 (UTC)
+:Wow this is great! Now we can do a lot more verification on whether created pages are working well! Gotta look over a bunch of pages. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:20, 16 April 2026 (UTC)
+::Yes I tried to fix up a bunch of pages. Many of them actually render properly now. But I did need to change quite a few [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:36, 16 April 2026 (UTC)
+
+== Importing templates from wikipedias ==
+
+I think it would be a good idea to set something up so that templates from wikipedia can be represented as wikifunctions.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:59, 16 April 2026 (UTC)
+
+:Already {{done}} on WF, see [[f:WF:MediaWiki parser functions]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:08, 16 April 2026 (UTC)
+
+== Idea for the project chat ==
+
+I've been thinking of some ideas that we could implement related to the project chat. I'm not saying I endorse anything, just throwing out an idea.
+
+There's been a ''lot'' of activity on here, I'm not sure if this is going to be a permanent thing or if it's just because the wiki just started. If it maintains its activity, we might want to divide it up like the English Wikipedia does, perhaps into "Proposals", "Technical and Wikifunctions", and "Miscellaneous." [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:19, 16 April 2026 (UTC)
+
+:Simple english wikipedia has almost all discussion happen on its Project chat. I think we should only add nerw things once we really need more chats. Having everything here makes it easier for people to keep up with the news of abstract wikipedia.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:31, 16 April 2026 (UTC)
+::The place to keep up with news for "abstract [sic] wikipedia [sic]" is the newsletter. I think that separating might actually make it easier to follow the specific discussion that you want, as you can choose which of the three to subscribe to. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:58, 16 April 2026 (UTC)
+
+== What to do with Z26955 ==
+
+There are a lot of articles with {{q|Z26955}} in them, since it has this obvious warning on it, what should we do with existing articles that have it? Just remove it on sight? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:33, 16 April 2026 (UTC)
+
+== Representing "part of" ==
+
+How do I represent that something is part of another thing? I used to use the spo sentence without understanding that it did not work. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:30, 16 April 2026 (UTC)
+
+:I think [[f:Z32982]] can be used, with the role as [[d:Q1310239]]. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 18:55, 16 April 2026 (UTC)

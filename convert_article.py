@@ -60,6 +60,15 @@ NAMING_ROLE_QIDS = {
     "Q48352",     # head of state
 }
 
+# Roles that should be rendered through Z32982 (non-defining / "minor" role)
+# instead of Z28016 (defining role). "Part of" does not define the subject
+# — Honshu is a part of Japan, but being part of Japan isn't what makes
+# Honshu *Honshu*. Z32982's template reads "X is a Y in Z" which matches
+# the informal usage better than Z28016's "X is the Y of Z".
+MINOR_ROLE_QIDS = {
+    "Q66305721",  # part of
+}
+
 
 def get_func_id(obj):
     if not isinstance(obj, dict):
@@ -173,8 +182,9 @@ def format_as_wikitext(obj):
         alias = FUNCTION_NAMES.get("Z26039", "Z26039")
         return "{{" + "|".join([alias, k1, k2]) + "}}"
 
-    # Z26955 is deprecated. Rewrite as Z28016 with role-specific arg order
-    # (see NAMING_ROLE_QIDS above for the split).
+    # Z26955 is deprecated. Rewrite as Z28016 (or Z32982 for minor roles)
+    # with role-specific arg order (see NAMING_ROLE_QIDS above for the
+    # defining-role split).
     if fid == "Z26955":
         role_ref = obj.get("Z26955K1", {})
         role_qid = None
@@ -194,8 +204,29 @@ def format_as_wikitext(obj):
         else:
             new_k1, new_k2, new_k3 = k2, pred, k3
 
-        alias = FUNCTION_NAMES.get("Z28016", "Z28016")
+        target_fid = "Z32982" if role_qid in MINOR_ROLE_QIDS else "Z28016"
+        alias = FUNCTION_NAMES.get(target_fid, target_fid)
         return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
+
+    # Z28016 calls with a minor role (e.g. "part of") should render via
+    # Z32982 — same arg order, just a function-name swap. Historical
+    # articles pushed before this split used Z28016 for everything, so
+    # rewrite on read.
+    if fid == "Z28016":
+        role_ref = obj.get("Z28016K2", {})
+        role_qid = None
+        if isinstance(role_ref, dict):
+            qid_inner = role_ref.get("Z6091K1", {})
+            if isinstance(qid_inner, dict):
+                role_qid = qid_inner.get("Z6K1")
+            elif isinstance(qid_inner, str):
+                role_qid = qid_inner
+        if role_qid in MINOR_ROLE_QIDS:
+            k1 = extract_value(obj.get("Z28016K1", {}))
+            k2 = extract_value(obj.get("Z28016K2", {}))
+            k3 = extract_value(obj.get("Z28016K3", {}))
+            alias = FUNCTION_NAMES.get("Z32982", "Z32982")
+            return "{{" + "|".join([alias, k1, k2, k3]) + "}}"
 
     alias = FUNCTION_NAMES.get(fid, fid)
     args = []

@@ -98,27 +98,27 @@
     },
     "P361": {
       "label": "part of",
-      "function": "Z28016",
-      "function_name": "defining role sentence",
-      "example": "Honshu is part of Japan.",
-      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
-      "notes": "Role=Q66305721 (part of). SUBJECT (part) is K1, $value (whole) is K3. Reads 'SUBJECT is part of $value'."
+      "function": "Z32982",
+      "function_name": "non-defining role sentence",
+      "example": "Honshu is a part of Japan.",
+      "template": "{{Z32982|SUBJECT|Q66305721|$value}}",
+      "notes": "Role=Q66305721 (part of). SUBJECT (part) is K1, $value (whole) is K3. Uses Z32982 (minor role) because 'part of' does not define the subject — unlike 'capital of' which does."
     },
     "P527": {
       "label": "has part(s)",
-      "function": "Z28016",
-      "function_name": "defining role sentence",
-      "example": "Honshu is part of Japan.",
-      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
-      "notes": "Inverse of P361. Role=Q66305721 (part of). $value (part) is K1, SUBJECT (whole) is K3. Reads '$value is part of SUBJECT'."
+      "function": "Z32982",
+      "function_name": "non-defining role sentence",
+      "example": "Honshu is a part of Japan.",
+      "template": "{{Z32982|$value|Q66305721|SUBJECT}}",
+      "notes": "Inverse of P361. Role=Q66305721 (part of). $value (part) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
     },
     "P2670": {
       "label": "has part(s) of the class",
-      "function": "Z28016",
-      "function_name": "defining role sentence",
-      "example": "An arm is part of a human body.",
-      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
-      "notes": "Role=Q66305721 (part of). $value (class of parts) is K1, SUBJECT (whole) is K3. Reads '$value is part of SUBJECT'."
+      "function": "Z32982",
+      "function_name": "non-defining role sentence",
+      "example": "An arm is a part of a human body.",
+      "template": "{{Z32982|$value|Q66305721|SUBJECT}}",
+      "notes": "Role=Q66305721 (part of). $value (class of parts) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
     },
     "P106": {
       "label": "occupation",

@@ -203,6 +203,12 @@ NAMING_ROLE_QIDS = {
     "Q8142", "Q2285706", "Q48352",
 }
 
+# Minor / non-defining roles — render via Z32982 instead of Z28016.
+# See convert_article.py for the rationale.
+MINOR_ROLE_QIDS = {
+    "Q66305721",  # part of
+}
+
 
 def get_func_id(obj):
     """Extract function ID from a Z7 call."""
@@ -315,8 +321,8 @@ def format_as_wikitext(obj):
         alias = FUNCTION_NAMES.get("Z26039", "Z26039")
         return "{{" + "|".join([alias, k1, k2]) + "}}"
 
-    # Z26955 is deprecated. Rewrite as Z28016 with role-specific arg order
-    # (see NAMING_ROLE_QIDS above for the split).
+    # Z26955 is deprecated. Rewrite as Z28016 (or Z32982 for minor roles)
+    # with role-specific arg order.
     if fid == "Z26955":
         role_ref = obj.get("Z26955K1", {})
         role_qid = None
@@ -336,8 +342,26 @@ def format_as_wikitext(obj):
         else:
             new_k1, new_k2, new_k3 = k2, pred, k3
 
-        alias = FUNCTION_NAMES.get("Z28016", "Z28016")
+        target_fid = "Z32982" if role_qid in MINOR_ROLE_QIDS else "Z28016"
+        alias = FUNCTION_NAMES.get(target_fid, target_fid)
         return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
+
+    # Z28016 with a minor role -> Z32982 (same arg order).
+    if fid == "Z28016":
+        role_ref = obj.get("Z28016K2", {})
+        role_qid = None
+        if isinstance(role_ref, dict):
+            qid_inner = role_ref.get("Z6091K1", {})
+            if isinstance(qid_inner, dict):
+                role_qid = qid_inner.get("Z6K1")
+            elif isinstance(qid_inner, str):
+                role_qid = qid_inner
+        if role_qid in MINOR_ROLE_QIDS:
+            k1 = extract_value(obj.get("Z28016K1", {}))
+            k2 = extract_value(obj.get("Z28016K2", {}))
+            k3 = extract_value(obj.get("Z28016K3", {}))
+            alias = FUNCTION_NAMES.get("Z32982", "Z32982")
+            return "{{" + "|".join([alias, k1, k2, k3]) + "}}"
 
     alias = FUNCTION_NAMES.get(fid, fid)
 

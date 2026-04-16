@@ -189,6 +189,17 @@ FUNCTION_REGISTRY = {
         ],
         "returns": "Z11",
     },
+    "Z32982": {
+        "name": "non-defining role sentence",
+        "example": "Honshu is a part of Japan.",
+        "params": [
+            {"key": "K1", "name": "subject", "type": "entity_ref"},
+            {"key": "K2", "name": "role", "type": "Q-item"},
+            {"key": "K3", "name": "dependency", "type": "entity_ref"},
+            {"key": "K4", "name": "language", "type": "language"},
+        ],
+        "returns": "Z11",
+    },
     "Z26039": {
         "name": "Article-less instantiating fragment",
         "example": "Nairobi is a city.",

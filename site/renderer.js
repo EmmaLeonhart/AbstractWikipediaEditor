@@ -11,6 +11,7 @@ const ALIASES = {
   'class with adj': 'Z29743',
   'superlative': 'Z27243',
   'spo': 'Z28016',
+  'minor role': 'Z32982', 'non-defining role': 'Z32982',
   'are': 'Z26627', 'plural class': 'Z26627',
   'album': 'Z28803',
   'sunset': 'Z30000',
@@ -68,6 +69,7 @@ function renderSentence(frag, subjectQid) {
     case 'Z26039': return `${a[0]} is a ${a[1]}.`;
     case 'Z26095': return `A ${a[0]} is a ${a[1]}.`;
     case 'Z28016': return `${a[0]} is the ${a[1]} of ${a[2]}.`;
+    case 'Z32982': return `${a[0]} is a ${a[1]} in ${a[2]}.`;
     case 'Z29591': return `${a[0]} is a ${a[1]} ${a[2]}.`;
     case 'Z26627': return `${a[0]} are ${a[1]}.`;
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;

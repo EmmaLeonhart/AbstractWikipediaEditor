@@ -83,7 +83,8 @@
     "wikilink": "Z32428",
     "join strings": "Z10000",
     "year from statement": "Z28436",
-    "non-defining role": "Z32982"
+    "non-defining role": "Z32982",
+    "minor role": "Z32982"
   },
   "reverse": {
     "Z26570": ["location", "located in"],
@@ -144,6 +145,6 @@
     "Z32428": ["wikilink"],
     "Z10000": ["join strings"],
     "Z28436": ["year from statement"],
-    "Z32982": ["non-defining role"]
+    "Z32982": ["minor role", "non-defining role"]
   }
 }

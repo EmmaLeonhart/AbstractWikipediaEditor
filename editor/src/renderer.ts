@@ -30,6 +30,15 @@ for (const [alias, zid] of Object.entries(ALIASES)) {
 
 // State
 const labelCache: Record<string, string> = {};
+// Evaluator-rendered HTML per line, keyed by `${subject}::${trimmed_line}`.
+// Cached successes live forever (the key contains the full line text, so
+// any edit produces a new key). Errors are not cached so they retry on
+// the next render pass, which recovers from rate limits automatically.
+const renderCache: Record<string, string> = {};
+// Monotonic sequence so a newer renderPreview() can cancel an older one
+// that's still waiting on the evaluator — keeps stale HTML from landing
+// on top of fresh content while the user keeps typing.
+let renderSeq = 0;
 let currentQid = '';
 let renderTimeout: ReturnType<typeof setTimeout> | null = null;
 let hasCredentials = false;
@@ -236,11 +245,62 @@ previewEl.addEventListener('scroll', () => {
   editorEl.scrollTop = previewEl.scrollTop;
 });
 
+// Render one line synchronously — uses cached evaluator output when
+// available, falls back to the local hand-rolled switch in renderSentence().
+// Returns either an HTML string or null for blank lines (legacy {{p}}).
+function renderLineSync(line: string, sectionRef: { n: number }): string | null {
+  const trimmed = line.trim();
+  if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) return null;
+
+  const sectionMatch = /^==\s*(.+?)\s*==$/.exec(trimmed);
+  if (sectionMatch) {
+    const content = sectionMatch[1];
+    if (/^Q\d+$/.test(content)) {
+      const label = labelCache[content] || content;
+      return `<div class="sentence section-header"><h2>${label}</h2></div>`;
+    }
+    sectionRef.n++;
+    return `<div class="sentence section-header"><h2>${sectionRef.n} <em>(${content})</em></h2></div>`;
+  }
+
+  const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
+  if (tmplMatch) {
+    const cacheKey = `${currentQid}::${trimmed}`;
+    const cached = renderCache[cacheKey];
+    if (cached) {
+      return `<div class="sentence">${cached}</div>`;
+    }
+    // Evaluator hasn't answered yet (or this is a brand new line).
+    // Show the fast, approximate local render as a placeholder.
+    const parts = tmplMatch[1].trim().split('|').map(s => s.trim());
+    const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
+    const frag: ParsedFragment = { funcId, args: parts.slice(1) };
+    return `<div class="sentence pending">${renderSentence(frag)}</div>`;
+  }
+
+  return '<div class="sentence">&nbsp;</div>';
+}
+
+// Paint the preview pane from the current cache + local fallback, in one
+// sweep. Called both before and after each evaluator batch.
+function paintPreview(lines: string[]): void {
+  const sectionRef = { n: 0 };
+  const pieces: string[] = [];
+  for (const line of lines) {
+    const rendered = renderLineSync(line, sectionRef);
+    if (rendered !== null) pieces.push(rendered);
+  }
+  previewEl.innerHTML = pieces.join('') ||
+    '<span class="placeholder">No fragments to preview.</span>';
+}
+
 async function renderPreview(): Promise<void> {
+  const seq = ++renderSeq;
   const text = editorEl.value;
   const lines = text.split('\n');
 
-  // Collect all QIDs that need labels (from templates and section headers)
+  // Collect all QIDs that need labels (section headers + template args for
+  // the local fallback render — the evaluator resolves its own labels).
   const allFragments = parseTemplates(text);
   const needed = new Set<string>();
   for (const frag of allFragments) {
@@ -257,45 +317,49 @@ async function renderPreview(): Promise<void> {
   if (needed.size > 0) {
     previewEl.innerHTML = '<span class="placeholder">Resolving labels...</span>';
     const labels = await window.api.fetchLabels([...needed]);
+    if (seq !== renderSeq) return;
     Object.assign(labelCache, labels);
   }
 
-  // Render line-by-line so each preview line aligns with each textarea line
-  let sectionNumber = 0;
-  const html = lines.map(line => {
+  // Initial paint: cached evaluator output where we have it, sloppy local
+  // render otherwise. The local render doubles as a placeholder so the
+  // preview never goes blank while the evaluator is thinking.
+  paintPreview(lines);
+
+  if (!currentQid) return;
+
+  // Gather uncached template lines to hand to the evaluator. Section
+  // headers and {{p}} are rendered locally — no value in routing them
+  // through the Wikifunctions API.
+  const toRender: string[] = [];
+  for (const line of lines) {
     const trimmed = line.trim();
-    // Legacy {{p}} tokens: silently drop. Every function is already its
-    // own paragraph in the compiled output — wikitext no longer controls
-    // paragraphs, so {{p}} in old content is noise we skip over.
-    if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
-      return '';
-    }
-    // ==...== section header
-    const sectionMatch = /^==\s*(.+?)\s*==$/.exec(trimmed);
-    if (sectionMatch) {
-      const content = sectionMatch[1];
-      if (/^Q\d+$/.test(content)) {
-        // Valid QID: show label
-        const label = labelCache[content] || content;
-        return `<div class="sentence section-header"><h2>${label}</h2></div>`;
-      } else {
-        // Non-QID: show as auto-numbered
-        sectionNumber++;
-        return `<div class="sentence section-header"><h2>${sectionNumber} <em>(${content})</em></h2></div>`;
+    if (!/^\{\{.+\}\}$/.test(trimmed)) continue;
+    if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) continue;
+    const cacheKey = `${currentQid}::${trimmed}`;
+    if (renderCache[cacheKey] !== undefined) continue;
+    toRender.push(line);
+  }
+
+  if (toRender.length === 0) return;
+
+  try {
+    const results = await window.api.renderWikitext(currentQid, toRender);
+    if (seq !== renderSeq) return;  // newer render in flight, drop ours
+    for (let i = 0; i < toRender.length; i++) {
+      const r = results[i];
+      if (r && r.html) {
+        const cacheKey = `${currentQid}::${toRender[i].trim()}`;
+        renderCache[cacheKey] = r.html;
       }
     }
-    const tmplMatch = /^\{\{(.+?)\}\}$/.exec(trimmed);
-    if (tmplMatch) {
-      const parts = tmplMatch[1].trim().split('|').map(s => s.trim());
-      const funcId = ALIASES[parts[0].toLowerCase()] || parts[0];
-      const frag: ParsedFragment = { funcId, args: parts.slice(1) };
-      return `<div class="sentence">${renderSentence(frag)}</div>`;
-    }
-    // Non-template lines render as empty lines to maintain alignment
-    return '<div class="sentence">&nbsp;</div>';
-  }).join('');
-
-  previewEl.innerHTML = html || '<span class="placeholder">No fragments to preview.</span>';
+    // Repaint with the newly-cached entries mixed in.
+    paintPreview(lines);
+  } catch (e) {
+    // Evaluator unavailable — the local fallback already on screen is
+    // fine, just log so the bug is findable.
+    console.warn('[renderPreview] evaluator failed:', e);
+  }
 }
 
 function parseTemplates(text: string): ParsedFragment[] {

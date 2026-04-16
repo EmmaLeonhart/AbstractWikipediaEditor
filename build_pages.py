@@ -495,13 +495,13 @@ def build_article_page(article, content):
 
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract wikitext fragments from the Z-object.
-    # Consecutive bare fragments belong to the same paragraph; {{p}} only
-    # appears when transitioning into or out of a Z32234 block. Section
-    # headers (==QID==) are self-delimiting.
+    # Extract wikitext fragments from the Z-object. Every function gets
+    # its own paragraph on the wiki — emit each as its own line, no
+    # {{p}} tokens. Legacy Z32234 combiner blocks are flattened: each
+    # inner call becomes its own line. Section headers (==QID==) are
+    # self-delimiting.
     sections = content.get("sections", {})
     wikitext_parts = []
-    prev_mode = None  # None | 'bare' | 'z32234' | 'header'
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
@@ -514,25 +514,18 @@ def build_article_page(article, content):
                 qid = _extract_section_qid_bp(core)
                 if qid:
                     wikitext_parts.append(f"=={qid}==")
-                    prev_mode = 'header'
                 continue
 
             if fid == "Z32234":
-                if prev_mode in ('bare', 'z32234'):
-                    wikitext_parts.append("{{p}}")
                 for call in extract_paragraph_calls(core):
                     wt = format_as_wikitext(call)
                     if wt and wt != "Z89":
                         wikitext_parts.append(wt)
-                prev_mode = 'z32234'
                 continue
 
             wt = format_as_wikitext(core)
             if wt and wt != "Z89":
-                if prev_mode == 'z32234':
-                    wikitext_parts.append("{{p}}")
                 wikitext_parts.append(wt)
-                prev_mode = 'bare'
     wikitext = "\n".join(wikitext_parts)
 
     # Escape for embedding in JS

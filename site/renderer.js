@@ -99,13 +99,12 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  // Split by {{p}} and ==...== markers into segments.
-  // Everything before the first marker is the first paragraph.
-  // {{p}} starts a new paragraph; ==...== emits a section header and starts a new paragraph.
-  const segments = wikitext.split(new RegExp('(\\{\\{\\s*p\\s*\\}\\}|^==\\s*.+?\\s*==$)', 'gim'));
+  // Each {{...}} call is its own paragraph; wikitext no longer has a
+  // {{p}} marker. Only ==...== section headers split the content.
+  // Stray {{p}} from legacy content is dropped silently.
+  const cleaned = wikitext.replace(/\{\{\s*p\s*\}\}/gi, '');
+  const segments = cleaned.split(new RegExp('(^==\\s*.+?\\s*==$)', 'gim'));
 
-  // segments alternate: text, delimiter, text, delimiter, ...
-  // Build a list of render items
   const items = [];
   let sectionCounter = 0;
   for (let i = 0; i < segments.length; i++) {
@@ -117,16 +116,13 @@ async function renderWikitext(wikitext, subjectQid, targetEl) {
       if (/^Q\d+$/.test(content)) {
         items.push({ type: 'header', qid: content, label: null });
       } else {
-        // Non-QID: auto-assign natural number QID
         sectionCounter++;
         items.push({ type: 'header', qid: 'Q' + (198 + sectionCounter), label: String(sectionCounter) + ' (' + content + ')' });
       }
-    } else if (/^\{\{\s*p\s*\}\}$/i.test(seg)) {
-      continue;
     } else {
       const frags = parseTemplates(seg);
-      if (frags.length > 0) {
-        items.push({ type: 'paragraph', fragments: frags });
+      for (const f of frags) {
+        items.push({ type: 'paragraph', fragments: [f] });
       }
     }
   }

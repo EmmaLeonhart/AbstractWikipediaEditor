@@ -376,8 +376,8 @@ variables:
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
 
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
-        # All templates form one paragraph (no {{p}} markers)
-        assert len(result) == 1
+        # Every call is its own paragraph now
+        assert len(result) == 2
 
         frag0 = result[0]
         assert frag0["resolvingType"] == "Z89"
@@ -399,9 +399,10 @@ variables:
             "deity": "Q111",
             "admin": "Q222",
         })
-        # All three form one paragraph
-        assert len(result) == 1
-        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
+        # Each call is its own paragraph
+        assert len(result) == 3
+        for item in result:
+            assert item["value"]["Z7K1"] == z9s("Z32123")
 
     def test_z6_returning_function_wraps_as_paragraph(self):
         template = "{{Z26039|SUBJECT|Q515}}"

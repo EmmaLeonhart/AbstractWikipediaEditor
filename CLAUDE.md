@@ -12,16 +12,15 @@ The app queries Wikidata for item properties, maps them to Wikifunctions sentenc
 - Authentication uses `.env` credentials and runs through the browser login flow
 - Screenshots saved to `screenshots/` directory
 
-### Paragraph Model (`{{p}}`) and Section Headers (`==QID==`)
-All templates are implicitly within one paragraph. A `{{p}}` midway starts a new paragraph.
-Each paragraph compiles into a single Z32123(Z32234([...])) clipboard item (one paste per paragraph).
+### Paragraph Model and Section Headers (`==QID==`)
+Every `{{...}}` call becomes its own paragraph (its own Z32123(Z32234([Z1, call])) clipboard item). There is no `{{p}}` wikitext marker — explicit paragraph control was dropped because bundling multiple function calls into one Z32234 list caused recursive evaluator errors that hurt debugging, and every function already gets its own paragraph wrapper for accessibility.
 
-Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item.
-They compile to Z31465(Z10771(Z24766(QID, $lang))) and cause implicit paragraph breaks.
+Stray `{{p}}` tokens in legacy content are silently dropped by the parser (`compile_template`), the editor preview, and the site renderer. Don't emit `{{p}}` in new content.
 
-- `generate_wikitext.py` outputs templates without any initial `{{p}}`
-- `convert_article.py` handles Z31465 section titles as `==QID==`
-- `{{p}}` is only used between paragraphs, never at the start
+Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))) and still act as implicit paragraph boundaries. `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
+
+- `generate_wikitext.py` outputs one template call per line, no `{{p}}`
+- `convert_article.py` / `build_pages.py` emit one line per wiki fragment, no `{{p}}`
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.

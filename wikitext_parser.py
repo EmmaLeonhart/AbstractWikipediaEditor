@@ -755,15 +755,26 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 
 
+_STRAY_P_RE = re.compile(r'\{\{\s*p\s*\}\}', re.IGNORECASE)
+
+
 def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
-    This is the main entry point. Takes a template string and variable
-    values, returns a list of clipboard items ready for injection.
+    Every ``{{...}}`` call becomes its own paragraph (its own
+    Z32123(Z32234([Z1, call])) clipboard item). There is no wikitext
+    marker for paragraph breaks — explicit ``{{p}}`` control was
+    dropped because bundling multiple function calls into one Z32234
+    list caused recursive evaluator errors that made debugging painful.
+    Every function already gets its own paragraph wrapper (needed for
+    accessibility), so no source-level control is needed.
 
-    All content is implicitly one paragraph. ``{{p}}`` midway through
-    starts a new paragraph. ``==QID==`` section headers also cause
-    paragraph breaks and produce Z31465 section title items.
+    Stray ``{{p}}`` tokens in legacy content are silently ignored.
+
+    ``==QID==`` section headers still compile to Z31465 items and act
+    as implicit paragraph breaks (they always did). ``==QID==`` uses
+    the QID directly; ``==anything else==`` auto-assigns natural number
+    QIDs starting at Q199.
 
     Args:
         text: Template string in wikitext format.
@@ -776,66 +787,45 @@ def compile_template(text, variables=None):
     _, body = parse_frontmatter(text)
     origin_qid = variables.get("subject", "Q0")
 
-    # Split body into segments separated by {{p}} or ==...== markers.
-    # Each segment becomes a paragraph; ==...== also produces a section header item.
-    # ==QID== uses the QID directly; ==anything else== auto-assigns natural number QIDs.
-    split_pattern = re.compile(
-        r'(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$)',
-        re.IGNORECASE | re.MULTILINE
-    )
+    # Strip stray {{p}} tokens (legacy content) — treat as whitespace.
+    body = _STRAY_P_RE.sub("", body)
+
+    split_pattern = re.compile(r'^==\s*(.+?)\s*==$', re.MULTILINE)
 
     clipboard_items = []
     section_counter = 0  # for auto-numbering non-QID headings
-    pending_segments = []  # raw text segments accumulating into the current paragraph
 
-    def flush_paragraph():
-        """Compile accumulated fragments into a paragraph and add to items."""
-        if not pending_segments:
-            return
-        combined = "\n".join(pending_segments)
-        fragments = parse_template_calls(combined)
-        if not fragments:
-            return
-        item = compile_paragraph(
-            fragments, variables, origin_qid, len(clipboard_items)
-        )
-        clipboard_items.append(item)
+    def emit_segment(segment_text):
+        """Parse a segment's calls and emit one paragraph per call."""
+        fragments = parse_template_calls(segment_text)
+        for frag in fragments:
+            item = compile_paragraph(
+                [frag], variables, origin_qid, len(clipboard_items)
+            )
+            clipboard_items.append(item)
 
     last_end = 0
     for match in split_pattern.finditer(body):
-        # Process any template calls before this marker
         segment = body[last_end:match.start()].strip()
         if segment:
-            pending_segments.append(segment)
+            emit_segment(segment)
 
-        # Check if this is a section header ==...==
-        header_text = match.group(2)
-        if header_text is not None:
-            # Section header: flush current paragraph, emit header, start new paragraph
-            flush_paragraph()
-            pending_segments = []
-            if re.match(r'^Q\d+$', header_text):
-                section_qid = header_text
-            else:
-                # Non-QID heading: assign natural number QID (Q199=1, Q200=2, ...)
-                section_counter += 1
-                section_qid = f"Q{198 + section_counter}"
-            header_item = compile_section_header(
-                section_qid, variables, origin_qid, len(clipboard_items)
-            )
-            clipboard_items.append(header_item)
+        header_text = match.group(1)
+        if re.match(r'^Q\d+$', header_text):
+            section_qid = header_text
         else:
-            # {{p}} marker: flush current paragraph, start new one
-            flush_paragraph()
-            pending_segments = []
+            section_counter += 1
+            section_qid = f"Q{198 + section_counter}"
+        header_item = compile_section_header(
+            section_qid, variables, origin_qid, len(clipboard_items)
+        )
+        clipboard_items.append(header_item)
 
         last_end = match.end()
 
-    # Process remaining content after last marker
     remaining = body[last_end:].strip()
     if remaining:
-        pending_segments.append(remaining)
-    flush_paragraph()
+        emit_segment(remaining)
 
     return clipboard_items
 

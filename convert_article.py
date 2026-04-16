@@ -247,10 +247,9 @@ def convert_article_to_wikitext(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    # Track last emission mode so consecutive bare fragments stay in the
-    # same paragraph (no {{p}} between them). Section headers and Z32234
-    # blocks cause paragraph transitions; bare fragments flow together.
-    prev_mode = None  # None | 'bare' | 'z32234' | 'header'
+    # Every function gets its own paragraph on the wiki side (Z32123 wrap).
+    # Emit each fragment on its own wikitext line — no {{p}} tokens,
+    # because the source wikitext no longer controls paragraphs.
     for section in sections.values():
         for frag in section.get("fragments", []):
             if isinstance(frag, str):
@@ -258,18 +257,16 @@ def convert_article_to_wikitext(qid, oldid=None):
             core = unwrap_fragment(frag)
             fid = get_func_id(core)
 
-            # Z31465 (section title) — ==QID== is self-delimiting, no {{p}}
             if fid == "Z31465":
                 section_qid = _extract_section_qid(core)
                 if section_qid:
                     lines.append(f"=={section_qid}==")
-                    prev_mode = 'header'
                 continue
 
-            # Z32234 (join text to html) is an explicit paragraph combiner
+            # Legacy Z32234 paragraph-combiner blocks: emit each inner
+            # call as its own line (one paragraph per call in the
+            # round-tripped source).
             if fid == "Z32234":
-                if prev_mode in ('bare', 'z32234'):
-                    lines.append("{{p}}")
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):
                         continue
@@ -281,17 +278,11 @@ def convert_article_to_wikitext(qid, oldid=None):
                                 wt = format_as_wikitext(inner)
                                 if wt:
                                     lines.append(wt)
-                prev_mode = 'z32234'
                 continue
 
             wt = format_as_wikitext(core)
             if wt:
-                # Only break paragraph when transitioning out of Z32234;
-                # consecutive bare fragments belong to the same paragraph.
-                if prev_mode == 'z32234':
-                    lines.append("{{p}}")
                 lines.append(wt)
-                prev_mode = 'bare'
 
     return "\n".join(lines)
 

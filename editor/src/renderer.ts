@@ -264,9 +264,11 @@ async function renderPreview(): Promise<void> {
   let sectionNumber = 0;
   const html = lines.map(line => {
     const trimmed = line.trim();
-    // {{p}} paragraph marker renders as a visual break
+    // Legacy {{p}} tokens: silently drop. Every function is already its
+    // own paragraph in the compiled output — wikitext no longer controls
+    // paragraphs, so {{p}} in old content is noise we skip over.
     if (/^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
-      return '<div class="sentence paragraph-break">&nbsp;</div>';
+      return '';
     }
     // ==...== section header
     const sectionMatch = /^==\s*(.+?)\s*==$/.exec(trimmed);

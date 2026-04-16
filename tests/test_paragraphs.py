@@ -329,12 +329,12 @@ class TestSectionHeaders:
         """All SUBJECT mentions stay as Z825K1 arg refs (no pronoun substitution)."""
         template = """{{Z26039|SUBJECT|Q634}}
 {{Z26570|SUBJECT|Q634|Q544}}
-{{Z26955|Q66305721|SUBJECT|Q87982}}"""
+{{Z28016|SUBJECT|Q66305721|Q87982}}"""
         result = compile_template(template, {"subject": "Q5511"})
         typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         assert typed_list[1]["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         assert typed_list[3]["Z26570K1"]["Z18K1"]["Z6K1"] == "Z825K1"
-        assert typed_list[5]["Z26955K2"]["Z18K1"]["Z6K1"] == "Z825K1"
+        assert typed_list[5]["Z28016K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
     def test_bare_string_in_entity_slot_rejected(self):
         """A literal that is not a QID, $variable, or SUBJECT must
@@ -346,12 +346,12 @@ class TestSectionHeaders:
         with pytest.raises(ValueError, match="not a valid value for an entity slot"):
             compile_template(template, {"subject": "Q288312"})
 
-    def test_literal_it_rejected_in_entity_slot(self):
-        """The word 'it' in an entity slot is now rejected (no longer an alias)."""
-        import pytest
-        template = "{{role|Q813858|Q11591100|it}}"
-        with pytest.raises(ValueError, match="not a valid value for an entity slot"):
-            compile_template(template, {"subject": "Q288312"})
+    def test_literal_it_resolves_to_subject(self):
+        """'it' is an alias for SUBJECT — both compile to a Z825K1 arg ref."""
+        template = "{{role|it|Q11591100|Q813858}}"
+        result = compile_template(template, {"subject": "Q288312"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        assert typed_list[1]["Z28016K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
     def test_cite_web_url_only(self):
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""

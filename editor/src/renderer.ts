@@ -14,7 +14,7 @@ const ALIASES: Record<string, string> = {
   'class of class': 'Z27173',
   'class with adj': 'Z29743',
   'superlative': 'Z27243',
-  'spo': 'Z26955',
+  'spo': 'Z28016',
   'are': 'Z26627', 'plural class': 'Z26627',
   'album': 'Z28803',
   'sunset': 'Z30000',
@@ -315,7 +315,7 @@ function qLink(qid: string): string {
 }
 
 function resolveArg(a: string): string {
-  if (a === 'SUBJECT') return qLink(currentQid);
+  if (a === 'SUBJECT' || a === 'it') return qLink(currentQid);
   if (a === '$lang') return '<em>language</em>';
   if (/^Q\d+$/.test(a)) return qLink(a);
   return a;
@@ -338,7 +338,6 @@ function renderSentence(frag: ParsedFragment): string {
     case 'Z26039': return `${a[0]} is a ${a[1]}.`;
     case 'Z26095': return `A ${a[0]} is a ${a[1]}.`;
     case 'Z28016': return `${a[0]} is the ${a[1]} of ${a[2]}.`;
-    case 'Z26955': return `${a[1]} is ${a[0]} of ${a[2]}.`;
     case 'Z29591': return `${a[0]} is a ${a[1]} ${a[2]}.`;
     case 'Z26627': return `${a[0]} are ${a[1]}.`;
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;

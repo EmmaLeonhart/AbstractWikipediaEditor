@@ -165,7 +165,7 @@ def generate_wikitext(qid):
         if citizenship_value:
             first_occ, first_occ_claim = occupation_value_claims[0]
             emit(
-                f"{{{{Z26955|{first_occ}|SUBJECT|{citizenship_value}}}}}",
+                f"{{{{Z28016|SUBJECT|{first_occ}|{citizenship_value}}}}}",
                 first_occ_claim,
             )
             # Cite the citizenship claim too

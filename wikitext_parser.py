@@ -264,17 +264,6 @@ FUNCTION_REGISTRY = {
         ],
         "returns": "Z11",
     },
-    "Z26955": {
-        "name": "SPO sentence, S without and O with article",
-        "example": "English is a language.",
-        "params": [
-            {"key": "K1", "name": "predicate", "type": "Q-item"},
-            {"key": "K2", "name": "subject_item", "type": "Q-item"},
-            {"key": "K3", "name": "object_item", "type": "Q-item"},
-            {"key": "K4", "name": "language", "type": "language"},
-        ],
-        "returns": "Z6",
-    },
     "Z28803": {
         "name": "short description for album",
         "example": "1968 album by The Beatles",
@@ -357,6 +346,7 @@ for _fid, _finfo in FUNCTION_REGISTRY.items():
 # Special variables that map to argument references (Z18)
 IMPLICIT_REFS = {
     "SUBJECT": "Z825K1",    # article entity
+    "it": "Z825K1",         # alias of SUBJECT; "it" is not used in published articles
     "$lang": "Z825K2",      # language
 }
 

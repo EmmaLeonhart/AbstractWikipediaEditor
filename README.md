@@ -51,7 +51,7 @@ variables:
   deity: Q-item
 ---
 {{location|SUBJECT|Q845945|Q17}}
-{{spo|Q1762010|SUBJECT|$deity}}
+{{spo|$deity|Q1762010|SUBJECT}}
 ```
 
 Each `{{...}}` block becomes one article fragment (one sentence). The syntax supports:
@@ -72,7 +72,7 @@ The file `data/property_function_mapping.json` is the core configuration that dr
 |----------|-------------|----------|
 | P31 (instance of) | Z26039 | "Nairobi is a city." |
 | P106 (occupation) | Z26039 | "Marie Curie is a physicist." |
-| P27 (citizenship) | Z26955 | "Marie Curie is a physicist of Poland." (combined with P106 when both exist) |
+| P27 (citizenship) | Z28016 | "Marie Curie is a physicist of Poland." (combined with P106 when both exist) |
 | P131/P17/P30 (location) | Z26570 | "Kashima Shrine is a Shinto shrine in Kashima." |
 | P36 (capital) | Z28016 | "Tokyo is the capital of Japan." |
 | P37 (official language) | Z28016 | "Japanese is the official language of Japan." |

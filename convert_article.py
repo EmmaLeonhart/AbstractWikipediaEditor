@@ -80,6 +80,11 @@ def extract_value(obj):
         qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
+        # Q6091500 is the English pronoun "it" — decided not to be used in
+        # published articles, so we treat it as SUBJECT on round-trip in.
+        # This is a deliberately lossy conversion.
+        if qid == "Q6091500":
+            return "SUBJECT"
         return qid
 
     if z1k1 == "Z18":
@@ -136,6 +141,20 @@ def format_as_wikitext(obj):
     fid = get_func_id(obj)
     if not fid:
         return None
+
+    # Z26955 is deprecated. Rewrite incoming wiki content as Z28016 by
+    # right-rotating the args: Z26955 was (predicate, subject, object, lang)
+    # with reading "The [pred] of [subj] is [obj]"; Z28016 is
+    # (subject, role, dependency, lang) with reading "[subj] is the [role] of [dep]".
+    # Mapping: newK1=oldK3 (object becomes new subject), newK2=oldK1 (predicate
+    # becomes role), newK3=oldK2 (old subject becomes dependency). Intentionally
+    # lossy: the inverted sentence shape can read awkwardly for some roles.
+    if fid == "Z26955":
+        new_k1 = extract_value(obj.get("Z26955K3", {}))
+        new_k2 = extract_value(obj.get("Z26955K1", {}))
+        new_k3 = extract_value(obj.get("Z26955K2", {}))
+        alias = FUNCTION_NAMES.get("Z28016", "Z28016")
+        return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
 
     alias = FUNCTION_NAMES.get(fid, fid)
     args = []
@@ -228,7 +247,10 @@ def convert_article_to_wikitext(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    paragraph_count = 0
+    # Track last emission mode so consecutive bare fragments stay in the
+    # same paragraph (no {{p}} between them). Section headers and Z32234
+    # blocks cause paragraph transitions; bare fragments flow together.
+    prev_mode = None  # None | 'bare' | 'z32234' | 'header'
     for section in sections.values():
         for frag in section.get("fragments", []):
             if isinstance(frag, str):
@@ -236,18 +258,17 @@ def convert_article_to_wikitext(qid, oldid=None):
             core = unwrap_fragment(frag)
             fid = get_func_id(core)
 
-            # Z31465 (section title) — extract QID and emit ==QID==
+            # Z31465 (section title) — ==QID== is self-delimiting, no {{p}}
             if fid == "Z31465":
                 section_qid = _extract_section_qid(core)
                 if section_qid:
                     lines.append(f"=={section_qid}==")
-                    paragraph_count += 1
+                    prev_mode = 'header'
                 continue
 
-            # Z32234 (join text to html) is a paragraph combiner -
-            # decompose into individual sentences
+            # Z32234 (join text to html) is an explicit paragraph combiner
             if fid == "Z32234":
-                if paragraph_count > 0:
+                if prev_mode in ('bare', 'z32234'):
                     lines.append("{{p}}")
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):
@@ -260,15 +281,17 @@ def convert_article_to_wikitext(qid, oldid=None):
                                 wt = format_as_wikitext(inner)
                                 if wt:
                                     lines.append(wt)
-                paragraph_count += 1
+                prev_mode = 'z32234'
                 continue
 
             wt = format_as_wikitext(core)
             if wt:
-                if paragraph_count > 0:
+                # Only break paragraph when transitioning out of Z32234;
+                # consecutive bare fragments belong to the same paragraph.
+                if prev_mode == 'z32234':
                     lines.append("{{p}}")
                 lines.append(wt)
-                paragraph_count += 1
+                prev_mode = 'bare'
 
     return "\n".join(lines)
 

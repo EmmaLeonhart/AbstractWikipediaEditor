@@ -63,7 +63,6 @@ sys.path.insert(0, SCRIPT_DIR)
 from wikitext_parser import compile_template  # noqa: E402
 
 ENGLISH_ZID = "Z1002"
-IT_PRONOUN_QID = "Q6091500"  # Wikidata item for the English pronoun "it"
 RENDER_TIMEOUT = 30  # per-line wall-clock budget (wf.call has no built-in timeout)
 MAX_WORKERS = 6  # be polite to the evaluator
 
@@ -79,17 +78,12 @@ def _substitute_local_args(obj, subject_qid):
     """Walk a Z-object tree and rewrite references the standalone
     evaluator can't resolve on its own.
 
-      Z18K1 == "Z825K1"             ->  Z6091 ref to the subject QID
-      Z18K1 == "Z825K2"             ->  Z9 ref to Z1002 (English)
-      Z6091 ref to Q6091500 ("it")  ->  Z6091 ref to the subject QID
+      Z18K1 == "Z825K1"  ->  Z6091 ref to the subject QID
+      Z18K1 == "Z825K2"  ->  Z9 ref to Z1002 (English)
 
-    The last one mirrors Abstract Wikipedia's own renderer: at publish
-    time it replaces the "it" pronoun entity with whatever the article
-    is about, so the reader sees "A dog is a pet" instead of "An it is
-    a pet." The standalone `wikifunctions_run` evaluator doesn't know
-    about this substitution (it just looks up the English label of
-    Q6091500, which is literally "it"), so we do the swap here for the
-    preview to match production.
+    Z825K1/K2 only exist inside the outer article-renderer scope; the
+    standalone `wikifunctions_run` evaluator rejects them, so we
+    pre-substitute concrete values before sending.
 
     Returns a new tree; does not mutate the input.
     """
@@ -107,15 +101,6 @@ def _substitute_local_args(obj, subject_qid):
                 }
             if ref_val == "Z825K2":
                 return {"Z1K1": {"Z1K1": "Z9", "Z9K1": "Z9"}, "Z9K1": ENGLISH_ZID}
-
-        if inner_type == "Z6091":
-            qid_slot = obj.get("Z6091K1")
-            qid_val = qid_slot.get("Z6K1") if isinstance(qid_slot, dict) else qid_slot
-            if qid_val == IT_PRONOUN_QID and subject_qid:
-                return {
-                    "Z1K1": {"Z1K1": "Z9", "Z9K1": "Z6091"},
-                    "Z6091K1": {"Z1K1": "Z6", "Z6K1": subject_qid},
-                }
 
         return {k: _substitute_local_args(v, subject_qid) for k, v in obj.items()}
     if isinstance(obj, list):

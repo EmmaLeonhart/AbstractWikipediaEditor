@@ -197,7 +197,7 @@ Given a QID, the script fetches the item's claims from the Wikidata API and maps
 For example, Sophocles (Q7235) has P106 (occupation: tragedy writer) and P27 (citizenship: Classical Athens). The mapping produces:
 
 ```
-{{Z26955|Q22073916|SUBJECT|Q844930}}
+{{Z28016|SUBJECT|Q22073916|Q844930}}
 ```
 
 Which renders as: "Sophocles is a tragedy writer of Classical Athens."
@@ -205,7 +205,7 @@ Which renders as: "Sophocles is a tragedy writer of Classical Athens."
 **Deduplication rules** prevent redundant or awkward sentences:
 - **Location priority**: P131 (admin territory) > P17 (country) > P30 (continent) — only the most specific is used
 - **Occupation over instance**: P31 (instance of) is skipped when P106 (occupation) exists, since "X is a human" adds nothing when "X is a physicist" is already there
-- **Occupation + citizenship merge**: When both P106 and P27 exist, they combine into one Z26955 call using the occupation as the predicate, instead of generating two separate sentences
+- **Occupation + citizenship merge**: When both P106 and P27 exist, they combine into one Z28016 call using the occupation as the role, instead of generating two separate sentences
 - **Capital inverse**: P1376 (capital of) is skipped when P36 (capital) exists — they express the same relationship from opposite directions
 
 ### Stage 2: Wikitext → Z-object JSON (`wikitext_parser.py`)

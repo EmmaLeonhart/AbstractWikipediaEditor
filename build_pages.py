@@ -241,6 +241,9 @@ def extract_value(obj):
         qid = obj.get("Z6091K1", {})
         if isinstance(qid, dict):
             qid = qid.get("Z6K1", "?")
+        # Q6091500 ("it") — not used in articles; render as SUBJECT.
+        if qid == "Q6091500":
+            return "SUBJECT"
         return qid
 
     if z1k1 == "Z18":
@@ -294,6 +297,17 @@ def format_as_wikitext(obj):
     fid = get_func_id(obj)
     if not fid:
         return str(obj)[:100]
+
+    # Z26955 is deprecated. Rewrite as Z28016 by right-rotating the args.
+    # Z26955 = (predicate, subject, object, lang) reading "The [pred] of [subj] is [obj]";
+    # Z28016 = (subject, role, dependency, lang) reading "[subj] is the [role] of [dep]".
+    # Mapping: newK1=oldK3, newK2=oldK1, newK3=oldK2. Intentionally lossy.
+    if fid == "Z26955":
+        new_k1 = extract_value(obj.get("Z26955K3", {}))
+        new_k2 = extract_value(obj.get("Z26955K1", {}))
+        new_k3 = extract_value(obj.get("Z26955K2", {}))
+        alias = FUNCTION_NAMES.get("Z28016", "Z28016")
+        return "{{" + "|".join([alias, new_k1, new_k2, new_k3]) + "}}"
 
     alias = FUNCTION_NAMES.get(fid, fid)
 
@@ -481,27 +495,44 @@ def build_article_page(article, content):
 
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract wikitext fragments from the Z-object
-    # Everything is implicitly one paragraph. {{p}} separates paragraphs.
-    # ==QID== section headers also cause paragraph breaks.
+    # Extract wikitext fragments from the Z-object.
+    # Consecutive bare fragments belong to the same paragraph; {{p}} only
+    # appears when transitioning into or out of a Z32234 block. Section
+    # headers (==QID==) are self-delimiting.
     sections = content.get("sections", {})
     wikitext_parts = []
-    part_count = 0
+    prev_mode = None  # None | 'bare' | 'z32234' | 'header'
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
-            wt = format_fragment_neutral(frag)
+            if isinstance(frag, str):
+                continue
+            core = unwrap_fragment(frag)
+            fid = get_func_id(core)
+
+            if fid == "Z31465":
+                qid = _extract_section_qid_bp(core)
+                if qid:
+                    wikitext_parts.append(f"=={qid}==")
+                    prev_mode = 'header'
+                continue
+
+            if fid == "Z32234":
+                if prev_mode in ('bare', 'z32234'):
+                    wikitext_parts.append("{{p}}")
+                for call in extract_paragraph_calls(core):
+                    wt = format_as_wikitext(call)
+                    if wt and wt != "Z89":
+                        wikitext_parts.append(wt)
+                prev_mode = 'z32234'
+                continue
+
+            wt = format_as_wikitext(core)
             if wt and wt != "Z89":
-                is_header = wt.startswith("==") and wt.endswith("==")
-                if is_header:
-                    # Section headers cause implicit paragraph breaks
-                    wikitext_parts.append(wt)
-                else:
-                    # Add {{p}} before non-first paragraphs
-                    if part_count > 0:
-                        wikitext_parts.append("{{p}}")
-                    wikitext_parts.append(wt)
-                part_count += 1
+                if prev_mode == 'z32234':
+                    wikitext_parts.append("{{p}}")
+                wikitext_parts.append(wt)
+                prev_mode = 'bare'
     wikitext = "\n".join(wikitext_parts)
 
     # Escape for embedding in JS

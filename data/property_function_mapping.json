@@ -77,19 +77,19 @@
     },
     "P825": {
       "label": "dedicated to",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Meiji Shrine is dedicated to Emperor Meiji.",
-      "template": "{{Z26955|Q1762010|SUBJECT|$value}}",
-      "notes": "Predicate=Q1762010 (dedication). Subject is the shrine, object is the deity."
+      "template": "{{Z28016|$value|Q1762010|SUBJECT}}",
+      "notes": "Role=Q1762010 (dedication). $value (deity) is the subject, SUBJECT (shrine) is the dependency. Migrated from Z26955 (K3,K1,K2)."
     },
     "P13723": {
       "label": "shrine ranking",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "The shrine rank of Ise Grand Shrine is Jingu.",
-      "template": "{{Z26955|Q10444029|SUBJECT|$value}}",
-      "notes": "Predicate=Q10444029 (shrine rank). Subject is the shrine, object is the rank classification."
+      "template": "{{Z28016|$value|Q10444029|SUBJECT}}",
+      "notes": "Role=Q10444029 (shrine rank). $value (rank) is the subject, SUBJECT (shrine) is the dependency. Migrated from Z26955 (K3,K1,K2)."
     },
     "P138": {
       "label": "named after",
@@ -98,27 +98,27 @@
     },
     "P361": {
       "label": "part of",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z26955|Q66305721|SUBJECT|$value}}",
-      "notes": "Predicate=Q66305721 (part of). Subject is the part, object is the whole."
+      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
+      "notes": "Role=Q66305721 (part of). $value (whole) is K1, SUBJECT (part) is K3. Migrated from Z26955 (K3,K1,K2)."
     },
     "P527": {
       "label": "has part(s)",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z26955|Q66305721|$value|SUBJECT}}",
-      "notes": "Inverse of P361. Predicate=Q66305721 (part of). Value is the part, subject is the whole."
+      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
+      "notes": "Inverse of P361. Role=Q66305721 (part of). SUBJECT (whole) is K1, $value (part) is K3. Migrated from Z26955 (K3,K1,K2)."
     },
     "P2670": {
       "label": "has part(s) of the class",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "An arm is part of a human body.",
-      "template": "{{Z26955|Q66305721|$value|SUBJECT}}",
-      "notes": "Predicate=Q66305721 (part of). Value is the class of parts, subject is the whole."
+      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
+      "notes": "Role=Q66305721 (part of). SUBJECT (whole) is K1, $value (class of parts) is K3. Migrated from Z26955 (K3,K1,K2)."
     },
     "P106": {
       "label": "occupation",
@@ -130,19 +130,19 @@
     },
     "P27": {
       "label": "country of citizenship",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Marie Curie is a citizen of Poland.",
-      "template": "{{Z26955|Q42138|SUBJECT|$value}}",
-      "notes": "Predicate=Q42138 (citizenship). Citizenship is a legal relationship, not a location."
+      "template": "{{Z28016|$value|Q42138|SUBJECT}}",
+      "notes": "Role=Q42138 (citizenship). $value (country) is K1, SUBJECT (person) is K3. Migrated from Z26955 (K3,K1,K2)."
     },
     "P495": {
       "label": "country of origin",
-      "function": "Z26955",
-      "function_name": "SPO sentence, S without and O with article",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
       "example": "Toyota originates from Japan.",
-      "template": "{{Z26955|Q3373417|SUBJECT|$value}}",
-      "notes": "Predicate=Q3373417 (country of origin). Origin is a provenance relationship, not a location."
+      "template": "{{Z28016|$value|Q3373417|SUBJECT}}",
+      "notes": "Role=Q3373417 (country of origin). $value (country) is K1, SUBJECT is K3. Migrated from Z26955 (K3,K1,K2)."
     },
     "P1376": {
       "label": "capital of",

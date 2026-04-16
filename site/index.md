@@ -47,7 +47,7 @@ A wikitext template like this:
 
 ```
 {{location|SUBJECT|Q845945|Q17}}
-{{spo|Q1762010|SUBJECT|Q3080728}}
+{{spo|Q3080728|Q1762010|SUBJECT}}
 ```
 
 Renders in the preview as: "Sasuke Inari Shrine is a Shinto shrine in Japan. Sasuke Inari Shrine is dedicated to Inari."

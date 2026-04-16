@@ -22,7 +22,7 @@
 
     "superlative": "Z27243",
 
-    "spo": "Z26955",
+    "spo": "Z28016",
 
     "are": "Z26627",
     "plural class": "Z26627",
@@ -90,12 +90,11 @@
     "Z26570": ["location", "located in"],
     "Z26039": ["is a", "instance of"],
     "Z26095": ["kind of", "subclass of"],
-    "Z28016": ["role", "is the X of"],
+    "Z28016": ["role", "is the X of", "spo"],
     "Z29591": ["describe", "adjective class"],
     "Z27173": ["class of class"],
     "Z29743": ["class with adj"],
     "Z27243": ["superlative"],
-    "Z26955": ["spo"],
     "Z26627": ["are", "plural class"],
     "Z28803": ["album"],
     "Z30000": ["sunset"],

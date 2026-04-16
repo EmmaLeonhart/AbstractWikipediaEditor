@@ -101,24 +101,24 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
-      "notes": "Role=Q66305721 (part of). $value (whole) is K1, SUBJECT (part) is K3. Migrated from Z26955 (K3,K1,K2)."
+      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
+      "notes": "Role=Q66305721 (part of). SUBJECT (part) is K1, $value (whole) is K3. Reads 'SUBJECT is part of $value'."
     },
     "P527": {
       "label": "has part(s)",
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Honshu is part of Japan.",
-      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
-      "notes": "Inverse of P361. Role=Q66305721 (part of). SUBJECT (whole) is K1, $value (part) is K3. Migrated from Z26955 (K3,K1,K2)."
+      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
+      "notes": "Inverse of P361. Role=Q66305721 (part of). $value (part) is K1, SUBJECT (whole) is K3. Reads '$value is part of SUBJECT'."
     },
     "P2670": {
       "label": "has part(s) of the class",
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "An arm is part of a human body.",
-      "template": "{{Z28016|SUBJECT|Q66305721|$value}}",
-      "notes": "Role=Q66305721 (part of). SUBJECT (whole) is K1, $value (class of parts) is K3. Migrated from Z26955 (K3,K1,K2)."
+      "template": "{{Z28016|$value|Q66305721|SUBJECT}}",
+      "notes": "Role=Q66305721 (part of). $value (class of parts) is K1, SUBJECT (whole) is K3. Reads '$value is part of SUBJECT'."
     },
     "P106": {
       "label": "occupation",
@@ -133,16 +133,16 @@
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Marie Curie is a citizen of Poland.",
-      "template": "{{Z28016|$value|Q42138|SUBJECT}}",
-      "notes": "Role=Q42138 (citizenship). $value (country) is K1, SUBJECT (person) is K3. Migrated from Z26955 (K3,K1,K2)."
+      "template": "{{Z28016|SUBJECT|Q42138|$value}}",
+      "notes": "Role=Q42138 (citizenship). SUBJECT (person) is K1, $value (country) is K3. Reads 'SUBJECT is a citizen of $value'."
     },
     "P495": {
       "label": "country of origin",
       "function": "Z28016",
       "function_name": "defining role sentence",
       "example": "Toyota originates from Japan.",
-      "template": "{{Z28016|$value|Q3373417|SUBJECT}}",
-      "notes": "Role=Q3373417 (country of origin). $value (country) is K1, SUBJECT is K3. Migrated from Z26955 (K3,K1,K2)."
+      "template": "{{Z28016|SUBJECT|Q3373417|$value}}",
+      "notes": "Role=Q3373417 (country of origin). SUBJECT (product) is K1, $value (country) is K3. Reads 'SUBJECT originates from $value'."
     },
     "P1376": {
       "label": "capital of",

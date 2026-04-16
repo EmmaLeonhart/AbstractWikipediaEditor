@@ -6,9 +6,8 @@
 
     "is a": "Z26039",
     "instance of": "Z26039",
-
-    "kind of": "Z26095",
-    "subclass of": "Z26095",
+    "kind of": "Z26039",
+    "subclass of": "Z26039",
 
     "role": "Z28016",
     "is the X of": "Z28016",
@@ -88,8 +87,7 @@
   },
   "reverse": {
     "Z26570": ["location", "located in"],
-    "Z26039": ["is a", "instance of"],
-    "Z26095": ["kind of", "subclass of"],
+    "Z26039": ["is a", "instance of", "kind of", "subclass of"],
     "Z28016": ["role", "is the X of", "spo"],
     "Z29591": ["describe", "adjective class"],
     "Z27173": ["class of class"],

@@ -164,6 +164,15 @@ def format_as_wikitext(obj):
     if not fid:
         return None
 
+    # Z26095 ("A X is a Y") is deprecated. Rewrite as Z26039 ("X is a Y").
+    # Same arg shape (K1=class/entity, K2=super-class/class, K3=lang),
+    # so a name swap is enough.
+    if fid == "Z26095":
+        k1 = extract_value(obj.get("Z26095K1", {}))
+        k2 = extract_value(obj.get("Z26095K2", {}))
+        alias = FUNCTION_NAMES.get("Z26039", "Z26039")
+        return "{{" + "|".join([alias, k1, k2]) + "}}"
+
     # Z26955 is deprecated. Rewrite as Z28016 with role-specific arg order
     # (see NAMING_ROLE_QIDS above for the split).
     if fid == "Z26955":

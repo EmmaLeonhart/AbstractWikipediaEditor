@@ -40,45 +40,28 @@ def check_article_exists(qid):
     return "There is currently no text in this page" not in r.text
 
 
-def add_wikidata_sitelink(qid):
-    """Add an Abstract Wikipedia sitelink to the Wikidata item using bot credentials."""
-    username = base64.b64decode(os.environ.get("WIKI_USERNAME_B64", "")).decode('utf-8')
-    password = base64.b64decode(os.environ.get("WIKI_PASSWORD_B64", "")).decode('utf-8')
-    if not username or not password:
-        print(f"  SITELINK: Skipped (no bot credentials in .env)", flush=True)
-        return False
+def add_wikidata_sitelink(page, qid):
+    """Add an Abstract Wikipedia sitelink to the Wikidata item using the already
+    authenticated Playwright session. Relies on Wikimedia SUL to carry the
+    Abstract Wikipedia login over to wikidata.org."""
+    # Trigger SUL auto-login by visiting wikidata.org while logged in to abstract.wikipedia.org
+    page.goto("https://www.wikidata.org/wiki/Main_Page")
+    page.wait_for_load_state("networkidle")
 
-    session = requests.Session()
-    session.headers.update({"User-Agent": "AbstractTestBot/1.0"})
+    api = page.context.request
 
-    # Step 1: Get login token
-    r = session.get(WIKIDATA_API, params={
-        "action": "query", "meta": "tokens", "type": "login", "format": "json",
-    })
-    login_token = r.json()["query"]["tokens"]["logintoken"]
-
-    # Step 2: Log in with bot credentials
-    r = session.post(WIKIDATA_API, data={
-        "action": "login",
-        "lgname": username,
-        "lgpassword": password,
-        "lgtoken": login_token,
-        "format": "json",
-    })
-    login_result = r.json().get("login", {})
-    if login_result.get("result") != "Success":
-        print(f"  SITELINK: Login failed: {login_result}", flush=True)
-        return False
-    print(f"  SITELINK: Logged in to Wikidata as {login_result.get('lgusername')}", flush=True)
-
-    # Step 3: Get CSRF token
-    r = session.get(WIKIDATA_API, params={
+    # Fetch CSRF token from the authenticated browser session
+    r = api.get(WIKIDATA_API, params={
         "action": "query", "meta": "tokens", "format": "json",
     })
-    csrf_token = r.json()["query"]["tokens"]["csrftoken"]
+    tokens = r.json().get("query", {}).get("tokens", {})
+    csrf_token = tokens.get("csrftoken")
+    if not csrf_token or csrf_token == "+\\":
+        print(f"  SITELINK: Not logged in on wikidata.org (SUL did not carry over)", flush=True)
+        return False
 
-    # Step 4: Set the sitelink
-    r = session.post(WIKIDATA_API, data={
+    # Set the sitelink using the browser's authenticated cookies
+    r = api.post(WIKIDATA_API, form={
         "action": "wbsetsitelink",
         "id": qid,
         "linksite": "abstractwiki",
@@ -280,7 +263,7 @@ def create_article_from_qid(page, qid, wikitext_override=None, extra_summary=Non
         print(f"  SUCCESS: {WIKI_URL}/wiki/{qid}", flush=True)
         # Add Wikidata sitelink now that the page exists
         try:
-            add_wikidata_sitelink(qid)
+            add_wikidata_sitelink(page, qid)
         except Exception as e:
             print(f"  SITELINK: Exception: {e}", flush=True)
         return "created"

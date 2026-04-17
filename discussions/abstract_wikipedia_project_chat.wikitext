@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-16T20:19:52Z
+  Fetched:   2026-04-17T05:40:03Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -324,6 +324,7 @@ How are non-English speakers (who this project is specifically for) meant to dev
 :::What do you think about boilerplate templates. So writing a sentence and then marking the parts of the sentence what can be derived from Wikidataitems or the lexeme linked to it. This seems to me like an realistic approach for making it easier to contribute. I am happy you wrote about the predominantly English-speaking/European community involved in this project. It seems like it is different to contribute so far and I had the expectation people from small language versions come on their own and contribute also if they dont speak English. So far it seems to be not the case and I hope it will be easier to contribute. I think for the beginning the goal of Abstract Wikipedia should be generating sentences based on data. So supporting small language versions should be not the goal of the first phase as it seems to take some time and improvements of the structures to make it easier to contribute. Sharing the work and offering people help with creating an function for an specific sentence can be a important way of getting more content in Abstract Wikipedia. Maybe it is unrealistic to find a huge number of people who are interested in writing functions who generate text. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:58, 29 March 2026 (UTC)
 :::[[Abstract Wikipedia:Useful functions for article composition]] is already available, as is [[Help:How to create an article]], but they are not perfect. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:05, 29 March 2026 (UTC)
 :Wikidata has a project chat in many languages. We can do that in the future. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:28, 16 April 2026 (UTC)
+::Anyone can write on this page in any language. Personally, I’d prefer to see the original and get it translated into English rather than trying to make sense of a poor machine translation without even knowing which language the original was in. For the same reason, I would generally reply in English. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 23:18, 16 April 2026 (UTC)
 
 == Gendered languages ==
 
@@ -663,6 +664,8 @@ We're soon coming up to having a month old messages here, and considering the cu
 
 I really want the {{q|q1}} template here imported from wikidata. It is very helpful with qids. Linking to here instead of wikidata. Might be able to be expanded for lexemes and wikifunctions too. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:26, 16 April 2026 (UTC)
 
+:I've copied it and its dependencies from Wikifunctions: see {{Q|1}} It may need some tweaking to work well here, because we also use QIDs. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 04:51, 17 April 2026 (UTC)
+
 == Caching issues (hopefully) fixed ==
 
 Hey all, I know the caching issues have been a real pain for you. I've just now deployed what (I hope) is a fix that works for calls on Wikifunctions.org, fragments here, and embedded Wikifunctions calls. See for example [https://abstract.wikipedia.org/view/en/Q1344227 view/en/Q1344227] which should load fragments near-immediately for you (not need a retry or time out). You'll also see e.g. that https://test.wikipedia.org/wiki/Wikifunctions now has "stable" results, not just endless "please wait" comments. That said, please tell me where I'm wrong and you're having issues! Much better to hear now than assume it's fixed and start all over again tomorrow. 
@@ -672,6 +675,7 @@ I appreciate your feedback and patience over this; it has been very generous of 
 :Thank you (and the rest of the team) for your efforts for this new wiki! We really appreciate it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:58, 16 April 2026 (UTC)
 :Wow this is great! Now we can do a lot more verification on whether created pages are working well! Gotta look over a bunch of pages. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:20, 16 April 2026 (UTC)
 ::Yes I tried to fix up a bunch of pages. Many of them actually render properly now. But I did need to change quite a few [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 17:36, 16 April 2026 (UTC)
+:::Yes, please give your attention to the quality of pages you've already created rather than expanding the quantity. For example, on [[Q153]] I notice that you used Z28016 a lot, but that "defining" should only be used when it is the only instance of that class in that location (which works fine for a capital city), but not e.g. for hydrogen being "the" part of ethanol. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 04:43, 17 April 2026 (UTC)
 
 == Importing templates from wikipedias ==
 
@@ -691,7 +695,9 @@ There's been a ''lot'' of activity on here, I'm not sure if this is going to be 
 
 == What to do with Z26955 ==
 
-There are a lot of articles with {{q|Z26955}} in them, since it has this obvious warning on it, what should we do with existing articles that have it? Just remove it on sight? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:33, 16 April 2026 (UTC)
+There are a lot of articles with [[:f:Z26955|Z26955]] in them, since it has this obvious warning on it, what should we do with existing articles that have it? Just remove it on sight? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:33, 16 April 2026 (UTC)
+
+:We should only improve articles by fixing the problems, not by removing them. If you can replace a function by a better one, that’s great. Otherwise, please leave it for now so that we can see what needs fixing. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 23:04, 16 April 2026 (UTC)
 
 == Representing "part of" ==
 

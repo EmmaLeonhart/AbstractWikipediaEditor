@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-04-11T23:50:46Z
+  Fetched:   2026-04-17T05:40:03Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -23,3 +23,11 @@ I wanted to say that I do not object to your goal of creating every article "eve
 Your program seems to use [[f:Z26955]] for a few properties seemingly incorrectly. E.g. In [[Q1297]], it creates <nowiki>{{Z26955 | Q23492 (official language) | Q1860 (English) | $subject}}</nowiki>, but if I am looking at the tests for [[f:Z26955]] correctly, it would make a sentence like English 'official languages' Chicago. These should probably be changed to [[f:Z28016]] instead. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 12:38, 6 April 2026 (UTC)
 
 :I tried to fix them. I hope I got them  all and updated the app [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:53, 6 April 2026 (UTC)
+
+== AWE broke [[Q18556697]] ==
+
+It looks like AWE somehow removed the language keys from the functions in [[Q18556697]], breaking the entire page. See [[Special:Diff/5431]]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 21:12, 16 April 2026 (UTC)
+
+:@[[User:JJPMaster|JJPMaster]] I apologize. Did you manage to fix it? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 21:19, 16 April 2026 (UTC)
+::@[[User:Immanuelle|Immanuelle]]: I just reverted your edit for the time being. I'll have to work on the paragraph bit later. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 21:20, 16 April 2026 (UTC)
+:::I think I fixed it but not sure [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 21:24, 16 April 2026 (UTC)

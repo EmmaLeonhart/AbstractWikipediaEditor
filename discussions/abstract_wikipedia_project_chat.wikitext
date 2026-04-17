@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-17T05:40:03Z
+  Fetched:   2026-04-17T21:16:52Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -704,3 +704,14 @@ There are a lot of articles with [[:f:Z26955|Z26955]] in them, since it has this
 How do I represent that something is part of another thing? I used to use the spo sentence without understanding that it did not work. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:30, 16 April 2026 (UTC)
 
 :I think [[f:Z32982]] can be used, with the role as [[d:Q1310239]]. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 18:55, 16 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #244 is out: Milestones; Some major issues hopefully resolved ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-16|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we celebrate 4000 functions on Wikifunctions and 1000 abstract articles on Abstract Wikipedia, we announce that we should have fixed some major issues with the websites, we inform you on our latest outreach activities, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->

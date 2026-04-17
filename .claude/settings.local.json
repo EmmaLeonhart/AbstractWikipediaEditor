@@ -174,7 +174,9 @@
       "Bash(wc -l discussions/*.wikitext)",
       "Bash(git stash:*)",
       "Bash(grep:*)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(ls *.bat)",
+      "Bash(ls runeditor*)"
     ]
   }
 }

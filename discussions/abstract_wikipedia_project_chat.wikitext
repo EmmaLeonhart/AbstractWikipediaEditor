@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-17T21:16:52Z
+  Fetched:   2026-04-18T05:23:11Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -519,6 +519,17 @@ I made a desktop app that helps with creating and editing Abstract Wikipedia pag
 :::::::::::::::::::@[[User:Sun8908|Sun8908]] fair. I had thought it would be dropped in pro-drop languages but I do not think that was a reasonable assumption.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:47, 11 April 2026 (UTC)
 ::::::::::::::::::::I asked at the Monday meeting. Not sure if anything is being done about it though. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:15, 15 April 2026 (UTC)
 :Nice work. I for one don't care how you made the tool, the important part to me is how it works and if it helps me/us edit AW.  [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:23, 11 April 2026 (UTC)
+:[[File:AWE split paragraphs.png|thumb|Article on wheat]] {{ping|Immanuelle}} your tool is back at it again! I've asked you to test it before you use it to create a bunch of articles twice now. You, evidently, haven't listened! I understand you're probably acting in good faith, but you ''have'' to test your tool before you unleash it on the wiki. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:38, 18 April 2026 (UTC)
+::No, I did listen. I am not sure what your objection is, but this looks like intended behaviour. I was asked to make every single sentence into its own paragraph to make it easier to debug maintaining accessibility. Previous the tool grouped many sentences into a single paragraph. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 02:49, 18 April 2026 (UTC)
+:::@[[User:Immanuelle|Immanuelle]]: You were asked to make each actual paragraph into a call of the "paragraph" function. You were not asked to make every individual sentence a paragraph. That is probably even less accessible than what we started with. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 03:06, 18 April 2026 (UTC)
+::::The content itself needs refining. As it is, most articles have no value-added over the Wikidata triples plus labels; basically just slight readability improvements. We require complex structures sooner rather than later. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 03:08, 18 April 2026 (UTC)
+::::I thought that the rule was that we put every single sentence into a paragraph of its own because text readers need a paragraph to read the text. We cannot debug things if there are multiple sentences within a paragraph, because these sentences go up to the top and make it so that the paragraph itself fails to render. 
+::::So this was specifically an accessibility concern for people who are visually impaired, with an accepted reduction in readability for people with regular vision so that it can also be debugged. 
+::::Like this:
+::::{{quote|
+::::What we might try is wrapping each sentence as a paragraph, with occasional pairing of closely related sentences. That keeps failure isolated while preserving at least some natural flow.
+::::We could consider also implementing a “sentence” or “content unit” function that simply calls “paragraph”, so we can later tell where the intended paragraphs are.}} [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:11, 18 April 2026 (UTC)
+:::::We need to import the quote template  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:12, 18 April 2026 (UTC)
 
 : I tried to run it on macOS 14.5, but it errored out when I clicked "Pull from Wikidata." It appears that this was because you hardcoded your Python path.
 <code>Error: Error invoking remote method 'generate-wikitext': Error: spawn C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe ENOENT</code> — [[user:JJPMaster|JJP]]<sub>[[user talk:JJPMaster|Mas]]<sub>[[special:contribs/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:56, 6 April 2026 (UTC)
@@ -577,6 +588,7 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 ::::::::::We’d need to agree an accessibility standard first, but I’m not planning on creating any articles until there are suitable functions available. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:36, 11 April 2026 (UTC)
 :::::::::::I agree. Accessibility standards need to be established and not just assumed. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:28, 11 April 2026 (UTC)
 :::::::::::I definitely do agree that we need accessibility standards, but this isn't really a nice-to-have that you debate about but rather the floor. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:27, 12 April 2026 (UTC)
+::::::::::::I took this thread as consensus that we need to have every sentence as its own paragraph. Is that incorrect? Do people want me to change it back to one paragraph per paragraph break? I removed that one because it covered up errors.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:21, 18 April 2026 (UTC)
 :::::When someone "vandalizes" it is not necessarily intentional, see [[wikt:vandalise]]. I do understand that Immanuelle has good faith, but at the same time, the "deployment" caused tens of articles to be broken, and furthermore I don't suspect something this bad would have slipped through had a human carefully reviewed the code. When a contributor deploys a semi-automated tool and uses it to make edits at the rate {{ping|Immanuelle}} was at this rate, you are morally obligated to test it. This wasn't the first time the slop-machine that they used caused them to mess up tens of articles, and if Immanuelle doesn't exercise extreme care in the future, I don't suspect it will be the last. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 10 April 2026 (UTC)
 ::::::It was a silent error that was only discovered by chance. What kind of testing would you have done to avoid this? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:37, 10 April 2026 (UTC)
 ::::::@[[User:Feeglgeef|Feeglgeef]]": On Wikipedia, "[[:en:WP:VAND|Vandalism]]" is a technical term that means "editing (or other behavior) '''''deliberately''' intended to [[:en:Wikipedia:DE|obstruct or defeat]] the [[:en:Wikipedia:Five_pillars|project's purpose]]''". Accidental disruptive editing is not considered vandalism. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 22:52, 10 April 2026 (UTC)
@@ -595,6 +607,8 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 ::Would you be willing to raise this in the project chat? I'm thinking we are in an experimentation state that will keep improving incrementally just like the first edition of Wikipedia did since January 15, 2001. Just like back then I don't think it's a good idea to arbitrarily limit good faith editing. We probably will have to revisit these articles later as more and better functions become available but that in itself is not a valid argument for refraining from edits. [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 20:36, 11 April 2026 (UTC)
 :::Already here ;) [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:05, 11 April 2026 (UTC)
 ::I agree with your stub-flooding comment, I don't think it's particularly useful to have a bunch of articles that say nothing. The concern right now should be testing. I expect that the way in which we write abstract articles will change drastically eventually, so writing hundreds of articles is not only a waste of time but a debt. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:07, 11 April 2026 (UTC)
+:::We can always use [[Special:AncientPages]] to find them later on. 
+:::My expectation is that things will change, but we’ll be able to change the articles. They aren’t set in stone.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 03:21, 18 April 2026 (UTC)
 :The error in question was that "it" ended up getting into the jsons as a string instead of the id for "it". This occurred due to an error with the program with function aliasing, functions and items can have aliases that are used to be human readable, and replaced with their codes during insertion. But apparently when you try to insert a nonexistent alias then it just inserts the text and there is no server side validation at all of edits.
 :My guess is that basically they do not have an api since they have no server side validation and were relying on solely client side, and did not anticipate someone building such a tool that accidentally bypassed client side validation through a cache injection which was motivated by UX purposes
 :I plan on attending the Monday volunteer meeting and asking about this issue.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:45, 10 April 2026 (UTC)
@@ -665,6 +679,7 @@ We're soon coming up to having a month old messages here, and considering the cu
 I really want the {{q|q1}} template here imported from wikidata. It is very helpful with qids. Linking to here instead of wikidata. Might be able to be expanded for lexemes and wikifunctions too. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:26, 16 April 2026 (UTC)
 
 :I've copied it and its dependencies from Wikifunctions: see {{Q|1}} It may need some tweaking to work well here, because we also use QIDs. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 04:51, 17 April 2026 (UTC)
+::Great! I think we need [[Template:Quote]] too [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:13, 18 April 2026 (UTC)
 
 == Caching issues (hopefully) fixed ==
 
@@ -715,3 +730,19 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== What do you want changed with AWE ==
+
+I have seen sometimes contradictory views on updating AWE and what kinds of things should be done with it. 
+
+Some changes I have made in response to people here
+
+* Fixed hardcoded python path
+* Fixed "it" insertion error
+* Password formatting fix
+* Several function aliases
+* The paragraph organization thing (although I am confused about the consensus and making the first top level comment here be about it)
+
+Can we try to keep proposed changes to it as top level comments here and maybe say something like {{Support}} or {{Oppose}} in response to the top level comments so I can understand better what people generally think about the proposed changes?  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:04, 18 April 2026 (UTC)
+
+:I think that we should generally group logically related sentences into paragraphs using the paragraph function. This helps with readability and screen readers. I think I saw support from @[[User:Feeglgeef|Feeglgeef]] and @[[User:JJPMaster|JJPMaster]], while @[[User:GrounderUK|GrounderUK]] wanted every sentence to be a single paragraph for easy debugging. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:07, 18 April 2026 (UTC)

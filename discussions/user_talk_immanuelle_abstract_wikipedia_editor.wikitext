@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle/Abstract_Wikipedia_Editor
-  Fetched:   2026-04-11T23:50:46Z
+  Fetched:   2026-04-19T05:40:34Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -31,3 +31,30 @@ I like [[Q762]] but it has a feature that is not supported yet. Saving this here
 :Here [[Q12539]] is one I introduced. I plan on making these simple wiki-header like things in the next release [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:14, 10 April 2026 (UTC)
 ::Yeah I got it running. So will be in the new release coming soon. Gennerally better formatting and everything. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 10 April 2026 (UTC)
 :::It is in the new release as of a bit ago [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:42, 11 April 2026 (UTC)
+
+== What do you want changed with AWE ==
+
+I have seen sometimes contradictory views on updating AWE and what kinds of things should be done with it. 
+
+Some changes I have made in response to people here
+
+* Fixed hardcoded python path
+* Fixed "it" insertion error
+* Password formatting fix
+* Several function aliases
+* The paragraph organization thing (although I am confused about the consensus and making the first top level comment here be about it)
+
+Can we try to keep proposed changes to it as top level comments here and maybe say something like {{Support}} or {{Oppose}} in response to the top level comments so I can understand better what people generally think about the proposed changes?  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:04, 18 April 2026 (UTC)
+
+:I think that we should generally group logically related sentences into paragraphs using the paragraph function. This helps with readability and screen readers. I think I saw support from @[[User:Feeglgeef|Feeglgeef]] and @[[User:JJPMaster|JJPMaster]], while @[[User:GrounderUK|GrounderUK]] wanted every sentence to be a single paragraph for easy debugging. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:07, 18 April 2026 (UTC)
+::That’s not what I wanted. Wrapping function calls increases the risk of complete failure of the whole logical unit, and that outcome is undesirable. What constitutes a paragraph is a matter of style and varies by language, so the paragraph function is insufficiently abstract, in my opinion. However, we do not support unbalanced tags in an [[:f:Z89|HTML fragment]], so for any logical unit to be realised in HTML, it must be a single call. 
+::I think that means that when the logical unit as a whole fails (or is likely to), only the first call (or first few calls) in a logical unit should have paragraph tags; subsequent calls in the same logical unit should not be wrapped. The paragraph tags can be realised by differently named functions according to the intended semantics (“opening sentence”, “unformatted headline” or “start of paragraph”, for example). [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 09:38, 18 April 2026 (UTC)
+:::I am going to take this as being consensus enough to move back to what I used to be doing it with, because that one was both significantly easier for the tool to operate with and it seems it's most preferable among people. Wrapping every single sentence in the paragraph tag causes more issues than it's worth, and I think that your proposal is a bit more hypothetical and beyond what I can simply do by editing the tool.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:08, 18 April 2026 (UTC)
+:<small>Moved from the [[Abstract Wikipedia:Project chat|Project chat]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:00, 18 April 2026 (UTC)</small>
+::I think moving this from the project chat was a mistake because the absolute bulk of the discussion was in the project chat, and nobody will see it here.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:15, 18 April 2026 (UTC)
+:::Hmmm… and my own reply has nothing to do with the tool, as such. Perhaps we should have a general topic on the subject of what we do about paragraphs and other content groupings in the event of repeated timeouts? [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 16:32, 18 April 2026 (UTC)
+::::I am going to take this as being a consensus to do auto grouping into paragraphs of multiple statements, and I am going to take your idea as being a speculative long-term idea.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:06, 18 April 2026 (UTC)
+:::::Ideally the user would be able to control what's in a paragraph. But yes, content should be grouped into paragraphs of multiple sentences. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:13, 18 April 2026 (UTC)
+:::We have different places on the wiki for discussion for a good reason. If you'd like to start a new topic on groupings, be my guest, but discussion about one tool doesn't belong on the project chat. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:55, 18 April 2026 (UTC)
+::::I think the problem is that we're fragmenting the discussion too early. This having been moved here, nobody else is going to actually join this discussion. People are just going to get consistently upset about changes that I made, perceived as being consensus, while not knowing where to talk about them and just flooding those two threads that are the de facto places of discussion of the tool.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:05, 18 April 2026 (UTC)
+:::::Part of the problem, I think, is that you're trying to mass-create content when the wiki simply isn't ready, and that might be just for the dopamine release of clicking the publish or whatever button. I get the feeling you, consciously or subconsciously, think that we're in a rush here. Either way, we're trying to make articles like those of a Wikipedia, so if what your tool spits out is drastically different, that's probably a problem. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:11, 18 April 2026 (UTC)

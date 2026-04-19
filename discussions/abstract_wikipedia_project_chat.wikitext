@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-18T05:23:11Z
+  Fetched:   2026-04-19T05:40:34Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -530,6 +530,7 @@ I made a desktop app that helps with creating and editing Abstract Wikipedia pag
 ::::What we might try is wrapping each sentence as a paragraph, with occasional pairing of closely related sentences. That keeps failure isolated while preserving at least some natural flow.
 ::::We could consider also implementing a “sentence” or “content unit” function that simply calls “paragraph”, so we can later tell where the intended paragraphs are.}} [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:11, 18 April 2026 (UTC)
 :::::We need to import the quote template  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:12, 18 April 2026 (UTC)
+:Does anybody want any other changes to be made to this tool? Things are still relatively up in the air about what an optimum article even is, and as a result it kind of makes us limited in what we can do with it. I'm changing the way that the paragraphs work to fit what I now perceive as the consensus.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:11, 18 April 2026 (UTC)
 
 : I tried to run it on macOS 14.5, but it errored out when I clicked "Pull from Wikidata." It appears that this was because you hardcoded your Python path.
 <code>Error: Error invoking remote method 'generate-wikitext': Error: spawn C:/Users/Immanuelle/AppData/Local/Programs/Python/Python313/python.exe ENOENT</code> — [[user:JJPMaster|JJP]]<sub>[[user talk:JJPMaster|Mas]]<sub>[[special:contribs/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:56, 6 April 2026 (UTC)
@@ -617,6 +618,7 @@ As [[User:Fram|Fram]] has [[w:Wikipedia:Village_pump_(WMF)#c-Fram-20260410163000
 :::The team has already declined (or indicated that they had no plans) to do validation in this form, so I don't think a new ticket would be ideal. Either way, this shouldn't affect anyone besides those using a headless browser (or anyone using good, human-reviewed code and a headless browser), so I don't think it would be a priority anyway. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:19, 11 April 2026 (UTC)
 ::::Not sure what you are talking about. At the meeting they did not seem to be opposed to doing server side validation. They just said that they had a bit of concerns about infrastructure that was stopping it as an immediate thing. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 20:14, 15 April 2026 (UTC)
 :::::The volunteer's corner? I unfortunately missed that, but it was more than a year ago that I believe they decided not to pursue it, so you're probably right. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:46, 16 April 2026 (UTC)
+:So I have resolved this issue, as I have resolved most of the issues that people brought up. The whole paragraph debate is something I am returning to the older version of. Does anybody want other changes to the way that it makes articles?  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:09, 18 April 2026 (UTC)
 
 == Sandbox page ==
 
@@ -730,19 +732,3 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-
-== What do you want changed with AWE ==
-
-I have seen sometimes contradictory views on updating AWE and what kinds of things should be done with it. 
-
-Some changes I have made in response to people here
-
-* Fixed hardcoded python path
-* Fixed "it" insertion error
-* Password formatting fix
-* Several function aliases
-* The paragraph organization thing (although I am confused about the consensus and making the first top level comment here be about it)
-
-Can we try to keep proposed changes to it as top level comments here and maybe say something like {{Support}} or {{Oppose}} in response to the top level comments so I can understand better what people generally think about the proposed changes?  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:04, 18 April 2026 (UTC)
-
-:I think that we should generally group logically related sentences into paragraphs using the paragraph function. This helps with readability and screen readers. I think I saw support from @[[User:Feeglgeef|Feeglgeef]] and @[[User:JJPMaster|JJPMaster]], while @[[User:GrounderUK|GrounderUK]] wanted every sentence to be a single paragraph for easy debugging. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 05:07, 18 April 2026 (UTC)

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-19T05:40:34Z
+  Fetched:   2026-04-20T06:01:39Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -644,6 +644,15 @@ Hi, does anyone know if there is a ticket in phab for a public API endpoint that
 :I do not know why there isn't a REST API, but I had to [[Abstract Wikipedia:Project chat#I made a desktop app that helps with editing|specifically work around it with my editing tool]]. It will be very nice in the future to have a REST API. 
 :I think that right now there isn't actually any server-side verification of whether an article is well-structured, and that might be the reason why there isn't a REST API yet.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:46, 11 April 2026 (UTC)
 ::What rest api are you talking about? Checkout [[Special:RestSandbox]]. [[User:Tanbiruzzaman|Tanbiruzzaman]] ([[User talk:Tanbiruzzaman|talk]]) 16:50, 12 April 2026 (UTC)
+:I would like to proudly announce that it can be done. See [[Special:Diff/6102]]. Here was my request:
+:<syntaxhighlight lang="json">{
+  "source": "{\"qid\":\"Q100000\",\"sections\":{\"Q8776414\":{\"index\":0,\"fragments\":[\"Z89\"]}}}",
+  "title": "Q100000",
+  "comment": "Hello from MediaWiki REST API",
+  "content_model": "abstractwiki",
+  "token": "[token]"
+}
+</syntaxhighlight> [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 04:43, 20 April 2026 (UTC)
 
 == Spaces between sentences ==
 
@@ -732,3 +741,13 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== AceWiki: Abstract Wikipedia before Abstract Wikipedia? ==
+
+For those of you not in the know, ACE is [[w:Attempto Controlled English|Attempto Controlled English]]. This is a special subset of English that, unlike regular English, is entirely grammatically unambiguous and is machine-readable. For example, the sentence "Every person has a cat" is ACE, as a computer could easily parse that into a logical structure of the form "for any person P, P has a cat." Well, I found a semantic wiki software called AceWiki, whose articles are written entirely in Attempto Controlled English (see [https://acewiki.petapico.org/acewikigeo/ AceWikiGEO]). The sentence structures seen in AceWiki articles (while I can't link directly to any article, the article on the United States of America, which can be found in the Index in the sidebar, is a good example) are quite similar to those in our existing abstract articles. Using a tool called [https://github.com/Attempto/ACE-in-GF ACE-in-GF], ACE text could be translated into any language. 
+
+I've been thinking about the idea of a tool that allows an editor to write Attempto Controlled English text, and have that text turned into an abstract article. As an example:
+
+'''ACE''' -- "Every antelope is a mammal." &rarr; '''Abstract content''' -- [[f:Z26627|Classifying a class of nouns (Z26627)]]: [[d:Q25894|antelope (Q25894)]], [[d:Q7377|mammal (Q7377)]]
+
+This tool would not be optimized for mass article creation, since it would not include an option to generate articles directly from Wikidata, but I think it could be interesting to see how being able to write abstract articles in natural language might lower the barrier to contributing to this project. Thoughts? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:59, 20 April 2026 (UTC)

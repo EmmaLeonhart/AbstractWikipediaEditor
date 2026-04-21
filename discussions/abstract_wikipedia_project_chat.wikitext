@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-20T06:01:39Z
+  Fetched:   2026-04-21T05:39:33Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -347,6 +347,7 @@ Is it possible in the future for this project to have things that automatically 
 
 :Yes, that is the long term goal. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
 ::What’s “long term” about it? We already have functions that query specific properties on Wikidata, [[f:Z32431]] being a simple example. A list of spouses seems like a fairly simple function too, although there might be performance issues if there are a lot of spouses. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:01, 31 March 2026 (UTC)
+:I had exactly this question. One of the example here is [[Q1033]] where I read "Nigeria is the most populous country in Africa.". The problem is that this concept is hard-coded. What if its population will decrease and it will become the second-most populous country?   [[User:Wiso|Wiso]] ([[User talk:Wiso|talk]]) 08:21, 20 April 2026 (UTC)
 
 == Searching for other namespaces in the search bar ==
 
@@ -371,6 +372,8 @@ I am interested in creating list articles ([[:de:Liste_der_Naturdenkmale_im_Bezi
 In vector2009 and monobook, the logo shows as the standard enwiki logo. Which is confusing as this is technically a whole other sisterproject. I suggest [[:File:Wikipedia-logo-blank.svg|this]] be used as a temporary logo for these skins. [[User:Kinopiko|Kinopiko]] ([[User talk:Kinopiko|talk]]) 06:00, 31 March 2026 (UTC)
 
 :There's also the scalable favicon, [[commons:File:Abstract-Wikipedia-favicon.svg|Abstract-Wikipedia-favicon.svg]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:54, 3 April 2026 (UTC)
+
+:This still appears to be as of yet unfixed. I understand this wiki is still very early in its lifespan so I'm not particularly miffed about it, it looking identical due to the logo is rather confusing at first but with separation with tab groups in my browser it becomes manageable. I am personally excited to see what logo(s) will be devised for this project; seeing the same thing happen for the other sister projects has been very fun to watch in the past. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:49, 20 April 2026 (UTC)
 
 == Extra spaces between sentences ==
 
@@ -550,6 +553,8 @@ Are there wiki projects here? Can I just make some in this namespace? [[User:Imm
 :I don't see why not. It's a wiki, after all :). Please just don't flood the talkspace with templates that don't exist. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:51, 10 April 2026 (UTC)
 ::I've created a first Wikiproject ([[Abstract Wikipedia:WikiProject Core articles]]) and an explainer page ([[Abstract Wikipedia:WikiProject]]). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:11, 10 April 2026 (UTC)
 :::I made this one too [[Abstract Wikipedia:WikiProject Quality Prose]] [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:39, 10 April 2026 (UTC)
+::{{ping|Feeglgeef}} Are WikiProjects for specific languages OK? Responsibility seems to be stretched between maintaining Wikidata labels and lexemes alongside creating and maintaining functions on Wikifunctions, so I'm unsure if Abstract Wikipedia would be considered a good place to coordinate these things. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:56, 20 April 2026 (UTC)
+:::There's no community consensus for or against, so, since this is a wiki, I don't see any reason why anyone would stop you :). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:46, 20 April 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #243 is out: Community proposals for capturing meaning ==
 
@@ -683,11 +688,11 @@ We're soon coming up to having a month old messages here, and considering the cu
 :+1 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 09:55, 16 April 2026 (UTC)
 :+1 [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:41, 16 April 2026 (UTC)
 :+1. I think SpBot does archiving on Wikifunctions. Maybe it could be brought here as well? [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 14:18, 16 April 2026 (UTC)
-::+1 [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:24, 16 April 2026 (UTC)
+:+1 [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:24, 16 April 2026 (UTC)
 
 == Importing the q template ==
 
-I really want the {{q|q1}} template here imported from wikidata. It is very helpful with qids. Linking to here instead of wikidata. Might be able to be expanded for lexemes and wikifunctions too. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:26, 16 April 2026 (UTC)
+I really want the <nowiki>{{q}}</nowiki> template here imported from wikidata. It is very helpful with qids. Linking to here instead of wikidata. Might be able to be expanded for lexemes and wikifunctions too. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 14:26, 16 April 2026 (UTC)
 
 :I've copied it and its dependencies from Wikifunctions: see {{Q|1}} It may need some tweaking to work well here, because we also use QIDs. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 04:51, 17 April 2026 (UTC)
 ::Great! I think we need [[Template:Quote]] too [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:13, 18 April 2026 (UTC)
@@ -751,3 +756,24 @@ I've been thinking about the idea of a tool that allows an editor to write Attem
 '''ACE''' -- "Every antelope is a mammal." &rarr; '''Abstract content''' -- [[f:Z26627|Classifying a class of nouns (Z26627)]]: [[d:Q25894|antelope (Q25894)]], [[d:Q7377|mammal (Q7377)]]
 
 This tool would not be optimized for mass article creation, since it would not include an option to generate articles directly from Wikidata, but I think it could be interesting to see how being able to write abstract articles in natural language might lower the barrier to contributing to this project. Thoughts? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:59, 20 April 2026 (UTC)
+
+== Help with the news section on main page ==
+
+Hi all, I would like to have some help in importing [[:f:Template:Main page/News]] here and inserting it in the main page's module. Can someone help me to do it? [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:26, 20 April 2026 (UTC)
+:I believe [[Template:Main page/News]] is already set up and visible on the main page, unless you mean importing the history of the WF template over. [[User: Tenshi Hinanawi|Tenshi!]] ([[User talk: Tenshi Hinanawi|Talk page]]) 11:12, 20 April 2026 (UTC)
+::Ah, that's great, thanks! [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:53, 20 April 2026 (UTC)
+
+== Layout guidelines? ==
+
+One thing I'm noticing is that there are a ''lot'' of ways to do the same thing. I'd like to know which is preferred in the simple case of making single-sentence articles that just say what they are.
+
+Take [[Q503]] for example. If you look at the edit history of the article, you'll see it went through a few changes:
+* Initially, it was a [[f:Z14396|''string of monolingual text'']] call wrapped inside of a [[f:Z27868|''string to HTML fragment'']] call. The innermost function got the monolingual text returned from [[f:Z26095|''subject is kind of'']], converted it to a string, and then to a HTML fragment.
+* Afterwards the two topmost functions were removed until only the ''subject is kind of'' function call remained, and this was wrapped in a call to [[f:Z29749|''monolingual text as HTML with visible language tag'']].
+* Finally the ''subject is kind of'' call was placed into a typed list provided as an argument to the [[f:Z32234|''join text-like objects into HTML fragment'']] call, which in turn was made into a proper paragraph rather than a standalone <code>&lt;div&gt;</code> as it was previously.
+
+None of these seem like a particularly bad way to approach things, and I have seem all of them in the wild; the first thing I tried I did so as it was the way the first article I stumbled upon chose to render its text.
+
+Since [[Abstract Wikipedia:Useful functions for article composition]] only goes over linguistic functions, and doesn't seem to provide any guidance on ''composition'' functions (i.e. building the HTML contents itself, as you have to do in the plain visual editor online), I thought I'd ask here if there is a preferred way to do things, and if it could perhaps be made clearer on the website if so. It is rather bothersome wanting to build e.g. a wikitable, and needing to peruse the available functions on Wikifunctions instead of having an easily-accessible way to see what is generally recommended for the particular circumstance. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:36, 20 April 2026 (UTC)
+
+:I'm partial to paragraph(join text-like objects into HTML fragment(your sentences)), as not using a paragraph tag is bad for those who use screen readers, and I designed join text-like objects to reduce function calls and therefore speed up the article processing step. The long-term problem with this method is that Japanese and Chinese both do not have spaces between sentences, so I plan to soon create a function that takes a list of text-like objects and then converts it into a paragraph under the correct style of each language. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:51, 20 April 2026 (UTC)

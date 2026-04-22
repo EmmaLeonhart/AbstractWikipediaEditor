@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-21T05:39:33Z
+  Fetched:   2026-04-22T05:38:15Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -757,6 +757,8 @@ I've been thinking about the idea of a tool that allows an editor to write Attem
 
 This tool would not be optimized for mass article creation, since it would not include an option to generate articles directly from Wikidata, but I think it could be interesting to see how being able to write abstract articles in natural language might lower the barrier to contributing to this project. Thoughts? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:59, 20 April 2026 (UTC)
 
+:I'm not sure how we'd actually do the conversion step. If you'd be willing to attempt to make a prototype I'd love to look at it, but I'm skeptical. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:12, 21 April 2026 (UTC)
+
 == Help with the news section on main page ==
 
 Hi all, I would like to have some help in importing [[:f:Template:Main page/News]] here and inserting it in the main page's module. Can someone help me to do it? [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:26, 20 April 2026 (UTC)
@@ -777,3 +779,15 @@ None of these seem like a particularly bad way to approach things, and I have se
 Since [[Abstract Wikipedia:Useful functions for article composition]] only goes over linguistic functions, and doesn't seem to provide any guidance on ''composition'' functions (i.e. building the HTML contents itself, as you have to do in the plain visual editor online), I thought I'd ask here if there is a preferred way to do things, and if it could perhaps be made clearer on the website if so. It is rather bothersome wanting to build e.g. a wikitable, and needing to peruse the available functions on Wikifunctions instead of having an easily-accessible way to see what is generally recommended for the particular circumstance. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:36, 20 April 2026 (UTC)
 
 :I'm partial to paragraph(join text-like objects into HTML fragment(your sentences)), as not using a paragraph tag is bad for those who use screen readers, and I designed join text-like objects to reduce function calls and therefore speed up the article processing step. The long-term problem with this method is that Japanese and Chinese both do not have spaces between sentences, so I plan to soon create a function that takes a list of text-like objects and then converts it into a paragraph under the correct style of each language. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:51, 20 April 2026 (UTC)
+::That sounds good, I have grown more fond of that method as well. What you described would be great to have, I have been adding [[f:Z13128]] references inbetween each sentence to counteract the lack of spacing but something that would do this automatically for English while also obeying the sentence rules of other languages it renders in would be very ideal. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:33, 21 April 2026 (UTC)
+
+== Wikidata problems ==
+
+Sorry for posting two questions here in a row. I'll try to make this brief.
+
+On the bottom of [[Q247237]] is what ''should'' be a list of albums, but on my end it appears as just "''PLUS''" repeated fourteen times. This seems to occur any time I use [[f:Z13464]] on a list of Wikidata item references... is anyone else seeing this? I'm not sure what I could be doing wrong.
+
+Related to this, I wonder if I can avoid needing to explicitly state each of these items? I moved the list to a separately-defined object on Wikifunctions to avoid having to constantly transfer it between websites since I don't think the clipboard works cross-site. Ordinarily, if I were trying to get all Autechre studio albums, I would use Wikidata's SPARQL query feature to do this, by finding every entity whose [[wikidata:P31|P31]] is [[wikidata:Q482994|Q482994]] and whose [[wikidata:P50|P50]] is [[wikidata:Q247237|Q247237]]. This doesn't seem to be doable with Wikifunctions, though, or at least I'm not seeing it... so I don't know how I would do this automatically. We are making articles out of functions here, so I think it would be worthwhile if I tried to future-proof the list using this paradigm. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:30, 21 April 2026 (UTC)
+
+:On your first question, I've [[f:Z33903|tried to replicate this on WF]] and I cannot, which makes it difficult to solve.
+:We cannot currently reverse most WD statements, so your use case is not ''currently'' possible, but we are able to access the statements that are ''on'' an item. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:10, 21 April 2026 (UTC)

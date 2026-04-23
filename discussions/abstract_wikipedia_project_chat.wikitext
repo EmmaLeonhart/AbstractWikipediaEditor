@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-22T05:38:15Z
+  Fetched:   2026-04-23T05:42:38Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -780,6 +780,7 @@ Since [[Abstract Wikipedia:Useful functions for article composition]] only goes 
 
 :I'm partial to paragraph(join text-like objects into HTML fragment(your sentences)), as not using a paragraph tag is bad for those who use screen readers, and I designed join text-like objects to reduce function calls and therefore speed up the article processing step. The long-term problem with this method is that Japanese and Chinese both do not have spaces between sentences, so I plan to soon create a function that takes a list of text-like objects and then converts it into a paragraph under the correct style of each language. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:51, 20 April 2026 (UTC)
 ::That sounds good, I have grown more fond of that method as well. What you described would be great to have, I have been adding [[f:Z13128]] references inbetween each sentence to counteract the lack of spacing but something that would do this automatically for English while also obeying the sentence rules of other languages it renders in would be very ideal. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:33, 21 April 2026 (UTC)
+::{{ping|Feeglgeef}} I noticed [[f:Z33068]]. I decided to hack up an implementation of it that aligns with what you said, I don't know if this is what your original intention for the function was and I apologize if I misconstrued it. At the moment, it just runs the ''join text-like objects'' function I mentioned earlier wrapped in a call to ''paragraph'', but adds spaces if the language is not Japanese or Chinese. I'm not sure if, in this scope, a lack of spaces is the only difference between how certain languages arrange their sentences. This also only accounts for the ZObjects for Chinese and Japanese specifically, I think some sort of switch statement or separate configuration object would be better suited for this—not to mention that there are separate natural language objects for the different scripts of Japanese, so those would have to be blanketed under Japanese when considering the language passed in (which I don't want to chain a bunch of ORs to do at the moment). For now, though, it seems to work fine. I added two different test cases and they both pass, and I have also utilized the function on [[Q241691]]. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 03:31, 23 April 2026 (UTC)
 
 == Wikidata problems ==
 

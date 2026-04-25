@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-24T05:55:13Z
+  Fetched:   2026-04-25T05:27:47Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -40,7 +40,7 @@ I've created [[Q79097672]], an article for a woman singer. In gendered languages
 
 == Why don't we just structure this with wikitemplates? ==
 
-I feel like the project could be done a lot better by using templates kind of like how wikipedia does them. Just the entire thing is templates that can be rendered in many languages. So like [[Q106289265]] would have the content \{\{Z26039|Q7257\}\}\ and could even have some aliasing done across languages so it could be \{\{subject is|Q7257\}\}\. Code would be editable with a regular visual editor or code editor. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 29 March 2026 (UTC)
+I feel like the project could be done a lot better by using templates kind of like how wikipedia does them. Just the entire thing is templates that can be rendered in many languages. So like [[Q106289265]] would have the content <nowiki>{{Z26039|Q7257}}</nowiki> and could even have some aliasing done across languages so it could be <nowiki>{{subject is|Q7257}}</nowiki>. Code would be editable with a regular visual editor or code editor. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 29 March 2026 (UTC)
 
 :This is available in pages when Parsoid rendering is enabled. We don't use this becuase it doesn't make sense for constructing and editing massive articles. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
 ::How do you do parsoid rendering? And why wouldn't it make sense? With aliases and everything could work great. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:12, 29 March 2026 (UTC)
@@ -439,6 +439,9 @@ There are a lot of articles with [[:f:Z26955|Z26955]] in them, since it has this
 How do I represent that something is part of another thing? I used to use the spo sentence without understanding that it did not work. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:30, 16 April 2026 (UTC)
 
 :I think [[f:Z32982]] can be used, with the role as [[d:Q1310239]]. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 18:55, 16 April 2026 (UTC)
+:See Q307, perhaps
+:https://abstract.wikipedia.org/view/en/Q307
+:Middle finger of Galileo's right hand is the part of of Galileo Galilei. [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 03:07, 25 April 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #244 is out: Milestones; Some major issues hopefully resolved ==
 
@@ -500,3 +503,22 @@ Related to this, I wonder if I can avoid needing to explicitly state each of the
 
 ::I'm experiencing the issue again on [[f:Z33997]], it seems. Check the test results of the three-item test, "''programmer''" should not appear twice. I ran into a similar problem earlier in working on the implementation. For the two-item case, using a call to ''[[f:Z13397|get the nth element of a list]]'' on both items (index 1 and 2 respectively) returned the first item twice. I had to use a call to ''[[f:Z811|first element]]'' to fix it.
 ::Could this be a caching issue, perhaps? That seems likely, because I don't know why else this would be happening. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:16, 23 April 2026 (UTC)
+:::I am considering raising this issue on Phabricator if it hasn't been brought up already, this doesn't seem intentional. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:48, 24 April 2026 (UTC)
+
+== What are we called? ==
+
+If editors of Wikipedia are Wikipedians, editors of Wiktionary are Wiktionarians, editors of Wikivoyage are Wikivoyagers, and editors of Wikiversity are Wikiversitarians, what are we? Abstract Wikipedians? Abstracters? Abstractions? AWians? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:54, 24 April 2026 (UTC)
+
+:I don't like Abstractions and AWians. Abstracters sounds cool, it could be our "informal" term, while Abstract Wikipedians is our "formal" one. We could also apply it based on context (in the mainspace you're an abstracter, in the projectspace you're an abstract wikipedian), I'm not sure, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:12, 24 April 2026 (UTC)
+:I think an -or ending for 'abstractor' sounds cooler, personally. Abstract Wikipedians is boring but is the most straightforward option. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:50, 24 April 2026 (UTC)
+::I did mean to spell it as "Abstractors." Sorry about the typo. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:55, 24 April 2026 (UTC)
+
+== Indexed by Google - deliberate? ==
+
+https://www.google.com/search?q=site%3Aabstract.wikipedia.org%2Fwiki%2F
+
+Exposing Qid to Google looks like a mistake. Not likely to attract the public. Might adversely affect Wikipedia's Page rank or whatever?
+
+[[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:20, 25 April 2026 (UTC)
+
+:Indexing may already have stopped, after the 7th April - no recent pages found. [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:26, 25 April 2026 (UTC)

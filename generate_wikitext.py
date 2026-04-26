@@ -31,15 +31,32 @@ def load_mapping():
         return json.load(f)["mappings"]
 
 
+class WikidataItemNotFound(Exception):
+    """Raised when a Wikidata QID has no item (malformed or nonexistent)."""
+
+
 def fetch_item_data(qid):
-    """Fetch claims, labels and description for a Wikidata item."""
+    """Fetch claims, labels and description for a Wikidata item.
+
+    Raises WikidataItemNotFound if the QID is malformed or the item doesn't
+    exist. The Wikidata API has two ways of saying "no such item": for a
+    malformed ID (e.g. "Q51241231241" — out-of-range), the response has no
+    "entities" key and instead returns an "error" object; for a valid-shape
+    but nonexistent ID, the entity is returned with a "missing" key.
+    """
     r = SESSION.get("https://www.wikidata.org/w/api.php", params={
         "action": "wbgetentities", "ids": qid,
         "props": "claims|labels|descriptions",
         "languages": "en", "format": "json",
     }, timeout=30)
     r.raise_for_status()
-    entity = r.json()["entities"][qid]
+    body = r.json()
+    entities = body.get("entities")
+    if not entities or qid not in entities:
+        raise WikidataItemNotFound(qid)
+    entity = entities[qid]
+    if "missing" in entity:
+        raise WikidataItemNotFound(qid)
     return entity
 
 
@@ -258,7 +275,13 @@ def main():
     qid = args.qid.upper()
     print(f"Generating wikitext for {qid}...", flush=True)
 
-    wikitext, used_props, label = generate_wikitext(qid)
+    try:
+        wikitext, used_props, label = generate_wikitext(qid)
+    except WikidataItemNotFound:
+        # Stderr text becomes the Electron app's error toast verbatim
+        # (the renderer already prefixes "Error: ", so we don't repeat it).
+        print(f"No Wikidata item exists for {qid}", file=sys.stderr, flush=True)
+        sys.exit(1)
 
     print(f"\n=== {label} ({qid}) ===", flush=True)
     print(f"Properties mapped: {len(used_props)} ({', '.join(sorted(used_props))})", flush=True)

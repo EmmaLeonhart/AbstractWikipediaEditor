@@ -228,7 +228,26 @@ function runPython(script: string, args: string[]): Promise<string> {
       if (stdout) console.log(`[python] stdout (last 500): ${stdout.slice(-500)}`);
       if (err) {
         console.error(`[python] Error:`, err.message);
-        reject(new Error(stderr || err.message));
+        // Surface the Python script's own stderr (e.g. "No Wikidata item
+        // exists for Q…") to the Electron renderer instead of the Node-level
+        // "Command failed: …" wrapper. Trim trailing newline so the toast
+        // looks clean, and take only the last non-empty line so a Python
+        // traceback still presents as a one-line summary.
+        const cleaned = (stderr || '').trim();
+        // Translate playwright setup failures into a one-line instruction
+        // pointing at `npm run setup`. The bare ModuleNotFoundError /
+        // "Executable doesn't exist" stderr is opaque to anyone who hasn't
+        // already run playwright install (issue #5).
+        if (/No module named ['"]playwright['"]/i.test(cleaned)) {
+          reject(new Error("Playwright is not installed. Run 'npm run setup' in the editor/ directory."));
+          return;
+        }
+        if (/Executable doesn't exist|playwright install/i.test(cleaned)) {
+          reject(new Error("Playwright browsers are not installed. Run 'npm run setup' in the editor/ directory."));
+          return;
+        }
+        const lastLine = cleaned.split('\n').pop()?.trim() || '';
+        reject(new Error(lastLine || cleaned || err.message));
       } else {
         resolve(stdout);
       }

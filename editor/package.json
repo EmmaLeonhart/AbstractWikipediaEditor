@@ -4,6 +4,7 @@
   "description": "Desktop editor for Abstract Wikipedia articles with live preview",
   "main": "dist/main.js",
   "scripts": {
+    "setup": "node scripts/setup.js",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json",
     "start": "npm run build && electron .",
     "dev": "tsc --watch",

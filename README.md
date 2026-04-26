@@ -22,8 +22,15 @@ The Electron app is the main way to use this project.
 ```bash
 cd editor
 npm install
+npm run setup    # one-time: installs Python deps + Playwright browsers
 npm start
 ```
+
+`npm run setup` is required before the first `npm start` because publishing
+to Abstract Wikipedia uses Playwright browser automation. It installs the
+project's Python dependencies and downloads the Playwright browser binaries
+under the same Python launcher (`py` on Windows, `python3` elsewhere) the
+editor invokes at runtime.
 
 Or double-click `runeditor.bat` on Windows.
 

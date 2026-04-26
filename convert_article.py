@@ -360,10 +360,18 @@ def convert_article_to_wikitext(qid, oldid=None):
 
 
 def convert_article(qid, oldid=None):
-    """CLI entry point: fetch and print wikitext (or exit on failure)."""
+    """CLI entry point: fetch and print wikitext (or exit on failure).
+
+    Prints the friendly error to stderr (and exits 1) when no article
+    exists, so the Electron app's runPython rejection surfaces it as
+    "Error: No abstract article exists for {QID}" rather than a Node-level
+    "Command failed" message with no detail.
+    """
     wikitext = convert_article_to_wikitext(qid, oldid=oldid)
     if wikitext is None:
-        print(f"# No article found for {qid}", flush=True)
+        # Stderr text becomes the Electron app's error toast verbatim
+        # (the renderer already prefixes "Error: ", so we don't repeat it).
+        print(f"No abstract article exists for {qid}", file=sys.stderr, flush=True)
         sys.exit(1)
     print(wikitext, flush=True)
 

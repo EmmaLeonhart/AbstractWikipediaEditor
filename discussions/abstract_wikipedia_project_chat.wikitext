@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-04-25T05:27:47Z
+  Fetched:   2026-04-26T02:39:12Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -522,3 +522,24 @@ Exposing Qid to Google looks like a mistake. Not likely to attract the public. M
 [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:20, 25 April 2026 (UTC)
 
 :Indexing may already have stopped, after the 7th April - no recent pages found. [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:26, 25 April 2026 (UTC)
+
+== I can't edit generated text on pages for some reason? ==
+
+why is this? Thank you. [[User:BigKrow|BigKrow]] ([[User talk:BigKrow|talk]]) 07:58, 25 April 2026 (UTC)
+
+:You're not supposed to be able to edit generated text. You can edit the code that makes it, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:58, 25 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #245 is out: The Foundation's search for the perfect language ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-25|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present an academic paper about Abstract Wikipedia, we discuss our latest Type created, and we take a look at the newest created functions.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:54, 25 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Why the editing API doesn't work ==
+
+Immanuelle wrongly stated that there is no REST API for editing. [[#REST API for editing?|There is]]. However, it does not work when called from software outside Abstract Wikipedia. That is because there is no way to grant a bot password or OAuth customer the permission to edit abstract articles (<code>wikilambda-abstract-edit</code>) and create them (<code>wikilambda-abstract-create</code>), since no grant on [[Special:ListGrants]] includes either. Should this be fixed? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:57, 26 April 2026 (UTC)

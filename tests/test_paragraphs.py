@@ -1,11 +1,13 @@
 """Tests for paragraph compilation, section headers, and rendering.
 
 Verifies that:
-- Every ``{{...}}`` call becomes its own paragraph (Z32123(Z32234([Z1, call])))
-- There is no ``{{p}}`` marker — explicit paragraph control was dropped
-  because bundling calls caused recursive evaluator errors
+- Multiple ``{{...}}`` calls within a paragraph bundle into one
+  Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard item
+- Blank lines and ``{{p}}`` markers split paragraphs
 - ==QID== section headers compile to Z31465(Z10771(Z24766(QID, $lang)))
-- One clipboard paste per emitted item
+  and also act as paragraph breaks
+- Citations (``{{cite web|...}}``) bundle into the same paragraph as
+  the sentence they follow
 """
 
 import json
@@ -35,7 +37,7 @@ JUPITER_LABELS = {
     "Q37221": "diameter",
 }
 
-# Jupiter wikitext. No {{p}} — every function is its own paragraph now.
+# Jupiter wikitext as one bundled paragraph: 5 calls, one paragraph.
 JUPITER_WIKITEXT = """{{is a|SUBJECT|Q634}}
 {{superlative|SUBJECT|Q12935276|Q634|Q544}}
 {{is a|SUBJECT|Q121750}}
@@ -43,85 +45,97 @@ JUPITER_WIKITEXT = """{{is a|SUBJECT|Q634}}
 {{comparative measurement|SUBJECT|Q2|Q37221|11}}"""
 
 
-class TestParagraphCompilation:
-    """Each template call compiles to its own Z32123(Z32234([Z1, call]))."""
+class TestBundledParagraphCompilation:
+    """Calls between paragraph breaks bundle into one Z32123(Z32234)."""
 
-    def test_one_paragraph_per_call(self):
+    def test_bundles_into_single_paragraph(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        assert len(result) == 5, "5 calls -> 5 clipboard items"
+        assert len(result) == 1, "5 calls, no breaks -> 1 paragraph"
 
-    def test_each_outer_is_z32123(self):
+    def test_outer_is_z32123(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        for item in result:
-            assert item["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
-    def test_each_inner_is_z32234(self):
+    def test_inner_is_z32234(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        for item in result:
-            assert item["value"]["Z32123K1"]["Z7K1"]["Z9K1"] == "Z32234"
+        assert result[0]["value"]["Z32123K1"]["Z7K1"]["Z9K1"] == "Z32234"
 
-    def test_typed_list_is_single_call(self):
-        """Each paragraph's typed list holds exactly one call: [Z1, call]."""
+    def test_typed_list_holds_all_calls_with_separators(self):
+        """The bundled list is [Z1, call1, "  ", call2, "  ", ...]."""
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        for item in result:
-            typed_list = item["value"]["Z32123K1"]["Z32234K1"]
-            assert typed_list[0] == "Z1"
-            calls = [x for x in typed_list if isinstance(x, dict)]
-            assert len(calls) == 1, "One call per paragraph, no separators"
-            seps = [x for x in typed_list if isinstance(x, str) and x != "Z1"]
-            assert seps == []
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        assert typed_list[0] == "Z1"
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        seps = [x for x in typed_list if isinstance(x, str) and x != "Z1"]
+        assert len(calls) == 5
+        assert seps == ["  "] * 4  # n-1 separators
 
-    def test_inner_calls_are_correct_functions(self):
+    def test_inner_call_function_ids(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        func_ids = [
-            item["value"]["Z32123K1"]["Z32234K1"][1]["Z7K1"]["Z9K1"]
-            for item in result
-        ]
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        func_ids = [x["Z7K1"]["Z9K1"] for x in typed_list if isinstance(x, dict)]
         assert func_ids == ["Z26039", "Z27243", "Z26039", "Z32229", "Z32229"]
 
     def test_clipboard_envelope(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        first = result[0]
-        assert first["itemId"] == "Q319.1#1"
-        assert first["originKey"] == "Q319.1"
-        assert first["originSlotType"] == "Z89"
-        assert first["resolvingType"] == "Z89"
+        item = result[0]
+        assert item["itemId"] == "Q319.1#1"
+        assert item["originKey"] == "Q319.1"
+        assert item["originSlotType"] == "Z89"
+        assert item["resolvingType"] == "Z89"
 
-    def test_item_ids_increment_per_paragraph(self):
+    def test_subject_resolved_in_first_inner_call(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        ids = [item["itemId"] for item in result]
-        assert ids == ["Q319.1#1", "Q319.2#1", "Q319.3#1", "Q319.4#1", "Q319.5#1"]
-
-    def test_subject_resolved_in_first_call(self):
-        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]  # Z26039
+        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert first_call["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
     def test_qids_resolved_in_inner_calls(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]  # Z26039 with Q634
+        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert first_call["Z26039K2"]["Z6091K1"]["Z6K1"] == "Q634"
 
 
-class TestLegacyPMarkersIgnored:
-    """Stray {{p}} from legacy content must be silently dropped."""
+class TestParagraphBreaks:
+    """{{p}} and blank lines split bundled paragraphs."""
 
-    def test_p_markers_do_not_affect_output(self):
-        with_p = """{{p}}
-{{is a|SUBJECT|Q634}}
+    def test_explicit_p_marker_splits(self):
+        template = """{{is a|SUBJECT|Q634}}
 {{p}}
 {{is a|SUBJECT|Q121750}}"""
-        without_p = """{{is a|SUBJECT|Q634}}
-{{is a|SUBJECT|Q121750}}"""
-        a = compile_template(with_p, {"subject": "Q319"})
-        b = compile_template(without_p, {"subject": "Q319"})
-        assert len(a) == len(b) == 2
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2
 
-    def test_stray_p_does_not_become_a_fragment(self):
-        template = "{{p}}\n{{is a|SUBJECT|Q634}}\n{{p}}"
+    def test_blank_line_splits(self):
+        template = """{{is a|SUBJECT|Q634}}
+
+{{is a|SUBJECT|Q121750}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2
+
+    def test_two_calls_in_first_paragraph_one_in_second(self):
+        template = """{{is a|SUBJECT|Q634}}
+{{is a|SUBJECT|Q121750}}
+
+{{is a|SUBJECT|Q515}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2
+        first_calls = [
+            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
+            if isinstance(x, dict)
+        ]
+        second_calls = [
+            x for x in result[1]["value"]["Z32123K1"]["Z32234K1"]
+            if isinstance(x, dict)
+        ]
+        assert len(first_calls) == 2
+        assert len(second_calls) == 1
+
+    def test_leading_p_marker_is_no_op(self):
+        """A {{p}} at the start of the body doesn't create an empty paragraph."""
+        template = """{{p}}
+{{is a|SUBJECT|Q634}}"""
         result = compile_template(template, {"subject": "Q319"})
         assert len(result) == 1
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
 
 class TestSingleTemplateBehavior:
@@ -131,7 +145,7 @@ class TestSingleTemplateBehavior:
         assert len(result) == 1
         assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
-    def test_shrine_template_two_paragraphs(self):
+    def test_shrine_template_one_paragraph_two_calls(self):
         template = """---
 title: Shinto Shrine
 variables:
@@ -140,14 +154,45 @@ variables:
 {{Z26570|SUBJECT|Q845945|Q17}}
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
-        assert len(result) == 2, "Two calls -> two paragraphs"
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
-        assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        assert len(result) == 1, "Two adjacent calls bundle into one paragraph"
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        assert len(calls) == 2
+
+
+class TestCitationsBundle:
+    """{{cite web|...}} fragments bundle into the same paragraph as the
+    sentence they follow, instead of becoming standalone paragraphs."""
+
+    def test_sentence_with_citation_is_one_paragraph(self):
+        template = """{{is a|SUBJECT|Q634}}
+{{cite web|https://example.com/source}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 1
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
+        calls = [x for x in typed_list if isinstance(x, dict)]
+        assert len(calls) == 2
+        assert calls[0]["Z7K1"]["Z9K1"] == "Z26039"
+        assert calls[1]["Z7K1"]["Z9K1"] == "Z32053"
+
+    def test_two_claims_with_citations_split_on_blank_line(self):
+        template = """{{is a|SUBJECT|Q634}}
+{{cite web|https://a.example.com}}
+
+{{is a|SUBJECT|Q121750}}
+{{cite web|https://b.example.com}}"""
+        result = compile_template(template, {"subject": "Q319"})
+        assert len(result) == 2
+        for item in result:
+            calls = [
+                x for x in item["value"]["Z32123K1"]["Z32234K1"]
+                if isinstance(x, dict)
+            ]
+            assert len(calls) == 2  # claim + citation
 
 
 class TestCompileParagraphDirect:
-    """compile_paragraph still accepts multiple fragments (used internally),
-    but compile_template now only passes one at a time."""
+    """compile_paragraph bundles fragments — used by compile_template."""
 
     def test_compile_paragraph_single_fragment(self):
         frags = parse_template_calls("{{Z26039|SUBJECT|Q634}}")
@@ -195,11 +240,17 @@ class TestSectionHeaders:
 ==Q1310239==
 {{Z26039|SUBJECT|Q515}}"""
         result = compile_template(template, {"subject": "Q319"})
-        # 2 paragraphs + header + 1 paragraph = 4 items
-        assert len(result) == 4
+        # 1 bundled paragraph (2 calls) + header + 1 paragraph = 3 items
+        assert len(result) == 3
         assert [r["value"]["Z7K1"]["Z9K1"] for r in result] == [
-            "Z32123", "Z32123", "Z31465", "Z32123",
+            "Z32123", "Z31465", "Z32123",
         ]
+        # First paragraph holds both calls bundled.
+        first_calls = [
+            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
+            if isinstance(x, dict)
+        ]
+        assert len(first_calls) == 2
 
     def test_non_qid_heading_gets_natural_number(self):
         template = """{{Z26039|SUBJECT|Q634}}

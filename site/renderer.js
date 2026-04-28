@@ -136,33 +136,39 @@ async function fetchLabels(qids) {
 }
 
 async function renderWikitext(wikitext, subjectQid, targetEl) {
-  // Each {{...}} call is its own paragraph; wikitext no longer has a
-  // {{p}} marker. Only ==...== section headers split the content.
-  // Stray {{p}} from legacy content is dropped silently.
-  const cleaned = wikitext.replace(/\{\{\s*p\s*\}\}/gi, '');
-  const segments = cleaned.split(new RegExp('(^==\\s*.+?\\s*==$)', 'gim'));
+  // Multiple {{...}} calls between paragraph breaks bundle into one
+  // paragraph. Paragraph breaks are blank lines or {{p}} markers.
+  // ==QID== section headers also break paragraphs and emit a header.
+  const splitRe = /(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$|\n[ \t]*\n)/gim;
 
   const items = [];
   let sectionCounter = 0;
-  for (let i = 0; i < segments.length; i++) {
-    const seg = segments[i].trim();
-    if (!seg) continue;
-    const headerMatch = /^==\s*(.+?)\s*==$/.exec(seg);
-    if (headerMatch) {
-      const content = headerMatch[1];
-      if (/^Q\d+$/.test(content)) {
-        items.push({ type: 'header', qid: content, label: null });
+  let lastEnd = 0;
+  let m;
+
+  function pushParagraph(text) {
+    const frags = parseTemplates(text);
+    if (frags.length === 0) return;
+    items.push({ type: 'paragraph', fragments: frags });
+  }
+
+  while ((m = splitRe.exec(wikitext)) !== null) {
+    const segment = wikitext.slice(lastEnd, m.index);
+    if (segment.trim()) pushParagraph(segment);
+
+    const headerText = m[2];
+    if (headerText !== undefined) {
+      if (/^Q\d+$/.test(headerText)) {
+        items.push({ type: 'header', qid: headerText, label: null });
       } else {
         sectionCounter++;
-        items.push({ type: 'header', qid: 'Q' + (198 + sectionCounter), label: String(sectionCounter) + ' (' + content + ')' });
-      }
-    } else {
-      const frags = parseTemplates(seg);
-      for (const f of frags) {
-        items.push({ type: 'paragraph', fragments: [f] });
+        items.push({ type: 'header', qid: 'Q' + (198 + sectionCounter), label: String(sectionCounter) + ' (' + headerText + ')' });
       }
     }
+    lastEnd = m.index + m[0].length;
   }
+  const tail = wikitext.slice(lastEnd);
+  if (tail.trim()) pushParagraph(tail);
 
   if (items.length === 0) {
     targetEl.innerHTML = '<em>No fragments to render.</em>';

@@ -13,14 +13,19 @@ The app queries Wikidata for item properties, maps them to Wikifunctions sentenc
 - Screenshots saved to `screenshots/` directory
 
 ### Paragraph Model and Section Headers (`==QID==`)
-Every `{{...}}` call becomes its own paragraph (its own Z32123(Z32234([Z1, call])) clipboard item). There is no `{{p}}` wikitext marker — explicit paragraph control was dropped because bundling multiple function calls into one Z32234 list caused recursive evaluator errors that hurt debugging, and every function already gets its own paragraph wrapper for accessibility.
+Multiple `{{...}}` calls between paragraph breaks bundle into a single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard item. Citations (`{{cite web|URL}}`) are just regular calls, so they bundle into the paragraph of the sentence they follow — exactly where their `<sup>`-style refs belong.
 
-Stray `{{p}}` tokens in legacy content are silently dropped by the parser (`compile_template`), the editor preview, and the site renderer. Don't emit `{{p}}` in new content.
+A paragraph break is any of:
+- a blank line in the source,
+- an explicit `{{p}}` token, or
+- a `==QID==` section header (which also emits a Z31465 item).
 
-Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))) and still act as implicit paragraph boundaries. `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
+Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))). `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
 
-- `generate_wikitext.py` outputs one template call per line, no `{{p}}`
-- `convert_article.py` / `build_pages.py` emit one line per wiki fragment, no `{{p}}`
+- `generate_wikitext.py` emits one paragraph per claim (sentence + its citations), separated by blank lines
+- `convert_article.py` / `build_pages.py` emit each Z32123 paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same structure
+
+**History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. That was a misread of the WF Project chat (Immanuelle's words: "some guy gave a confusing objection so I switched it, and then everybody hated it, including that guy"). The community wanted multi-sentence paragraphs with paragraph breaks; this file previously locked in the wrong rule. If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.

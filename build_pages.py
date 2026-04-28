@@ -549,13 +549,15 @@ def build_article_page(article, content):
 
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract wikitext fragments from the Z-object. Every function gets
-    # its own paragraph on the wiki — emit each as its own line, no
-    # {{p}} tokens. Legacy Z32234 combiner blocks are flattened: each
-    # inner call becomes its own line. Section headers (==QID==) are
-    # self-delimiting.
+    # Extract wikitext fragments from the Z-object. Each top-level
+    # fragment is a Z32123 paragraph wrapper around a Z32234 list of
+    # calls; emit those inner calls on consecutive lines, with a blank
+    # line between successive paragraphs so the source-form parser
+    # re-bundles them correctly. Section headers (==QID==) act as their
+    # own paragraph breaks.
     sections = content.get("sections", {})
     wikitext_parts = []
+    last_was_paragraph = False
     for section_id, section in sections.items():
         fragments = section.get("fragments", [])
         for frag in fragments:
@@ -568,18 +570,28 @@ def build_article_page(article, content):
                 qid = _extract_section_qid_bp(core)
                 if qid:
                     wikitext_parts.append(f"=={qid}==")
+                last_was_paragraph = False
                 continue
 
             if fid == "Z32234":
+                paragraph_lines = []
                 for call in extract_paragraph_calls(core):
                     wt = format_as_wikitext(call)
                     if wt and wt != "Z89":
-                        wikitext_parts.append(wt)
+                        paragraph_lines.append(wt)
+                if paragraph_lines:
+                    if last_was_paragraph:
+                        wikitext_parts.append("")
+                    wikitext_parts.extend(paragraph_lines)
+                    last_was_paragraph = True
                 continue
 
             wt = format_as_wikitext(core)
             if wt and wt != "Z89":
+                if last_was_paragraph:
+                    wikitext_parts.append("")
                 wikitext_parts.append(wt)
+                last_was_paragraph = True
     wikitext = "\n".join(wikitext_parts)
 
     # Escape for embedding in JS

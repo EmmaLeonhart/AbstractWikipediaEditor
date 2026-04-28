@@ -376,14 +376,18 @@ variables:
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
 
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
-        # Every call is its own paragraph now
-        assert len(result) == 2
+        # Adjacent calls bundle into a single paragraph
+        assert len(result) == 1
 
         frag0 = result[0]
         assert frag0["resolvingType"] == "Z89"
         assert frag0["itemId"] == "Q12345.1#1"
-        # Wrapped as Z32123 paragraph
         assert frag0["value"]["Z7K1"] == z9s("Z32123")
+        inner_calls = [
+            x for x in frag0["value"]["Z32123K1"]["Z32234K1"]
+            if isinstance(x, dict)
+        ]
+        assert len(inner_calls) == 2
 
     def test_no_frontmatter(self):
         template = "{{Z26570|SUBJECT|Q845945|Q17}}"
@@ -399,10 +403,14 @@ variables:
             "deity": "Q111",
             "admin": "Q222",
         })
-        # Each call is its own paragraph
-        assert len(result) == 3
-        for item in result:
-            assert item["value"]["Z7K1"] == z9s("Z32123")
+        # Three adjacent calls bundle into one paragraph
+        assert len(result) == 1
+        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
+        inner_calls = [
+            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
+            if isinstance(x, dict)
+        ]
+        assert len(inner_calls) == 3
 
     def test_z6_returning_function_wraps_as_paragraph(self):
         template = "{{Z26039|SUBJECT|Q515}}"

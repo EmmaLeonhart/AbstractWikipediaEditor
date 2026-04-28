@@ -136,15 +136,28 @@ def generate_wikitext(qid):
 
     # Collect variables we'll need
     variables = {}
-    fragments = []
+    # paragraphs is a list of paragraphs, where each paragraph is a list
+    # of fragment strings (one sentence's call, followed by any cite-web
+    # calls for that claim). Paragraphs serialize joined with blank lines
+    # so compile_template re-bundles each one as a single Z32123 item.
+    paragraphs = []
     used_props = set()
     seen_urls = set()  # global dedupe for cite-web URLs
 
     def emit(frag, claim=None):
-        """Append a fragment, then any cite-web fragments from its source claim."""
-        fragments.append(frag)
+        """Start a new paragraph with `frag` and that claim's citations."""
+        para = [frag]
         if claim is not None:
-            fragments.extend(cite_fragments_for_claim(claim, seen_urls))
+            para.extend(cite_fragments_for_claim(claim, seen_urls))
+        paragraphs.append(para)
+
+    def append_to_last(frag):
+        """Tack a fragment onto the most recent paragraph (e.g. an extra
+        citation that belongs with the preceding sentence)."""
+        if paragraphs:
+            paragraphs[-1].append(frag)
+        else:
+            paragraphs.append([frag])
 
     # Determine which location property to use (most specific wins)
     # P131 (admin territory) > P17 (country) > P30 (continent)
@@ -185,8 +198,9 @@ def generate_wikitext(qid):
                 f"{{{{Z28016|SUBJECT|{first_occ}|{citizenship_value}}}}}",
                 first_occ_claim,
             )
-            # Cite the citizenship claim too
-            fragments.extend(cite_fragments_for_claim(citizenship_claim, seen_urls))
+            # Cite the citizenship claim too — append to the same paragraph.
+            for cite in cite_fragments_for_claim(citizenship_claim, seen_urls):
+                append_to_last(cite)
             # Remaining occupations as standalone "is a" fragments
             for occ_v, occ_claim in occupation_value_claims[1:]:
                 emit(f"{{{{Z26039|SUBJECT|{occ_v}}}}}", occ_claim)
@@ -259,9 +273,13 @@ def generate_wikitext(qid):
     lines.append("---")
     lines.append("")
 
-    # Add fragments (everything is implicitly one paragraph)
-    for frag in fragments:
-        lines.append(frag)
+    # Emit each paragraph's fragments on consecutive lines, with a blank
+    # line between paragraphs so compile_template re-bundles them.
+    for i, para in enumerate(paragraphs):
+        if i > 0:
+            lines.append("")
+        for frag in para:
+            lines.append(frag)
 
     return "\n".join(lines), used_props, label
 

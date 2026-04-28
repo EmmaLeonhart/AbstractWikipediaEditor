@@ -800,26 +800,38 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 
 
-_STRAY_P_RE = re.compile(r'\{\{\s*p\s*\}\}', re.IGNORECASE)
+# Paragraph-break markers in wikitext: a blank line, an explicit
+# {{p}} token, or a ==QID== section header. The first two split the
+# body into bundled paragraphs (multi-call Z32123(Z32234) items);
+# section headers also emit a Z31465 item.
+_PARAGRAPH_SPLIT_RE = re.compile(
+    r'(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$|\n[ \t]*\n)',
+    re.IGNORECASE | re.MULTILINE,
+)
 
 
 def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
-    Every ``{{...}}`` call becomes its own paragraph (its own
-    Z32123(Z32234([Z1, call])) clipboard item). There is no wikitext
-    marker for paragraph breaks — explicit ``{{p}}`` control was
-    dropped because bundling multiple function calls into one Z32234
-    list caused recursive evaluator errors that made debugging painful.
-    Every function already gets its own paragraph wrapper (needed for
-    accessibility), so no source-level control is needed.
+    Multiple ``{{...}}`` calls within a paragraph are bundled into a
+    single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard
+    item. Paragraph breaks are introduced by:
 
-    Stray ``{{p}}`` tokens in legacy content are silently ignored.
+    * a blank line in the source,
+    * an explicit ``{{p}}`` token,
+    * or a ``==QID==`` section header (which also emits a Z31465 item).
 
-    ``==QID==`` section headers still compile to Z31465 items and act
-    as implicit paragraph breaks (they always did). ``==QID==`` uses
-    the QID directly; ``==anything else==`` auto-assigns natural number
-    QIDs starting at Q199.
+    Citations (e.g. ``{{cite web|URL}}``) are just regular calls, so
+    they bundle into the same paragraph as the sentence they follow,
+    matching how ``<sup>``-style refs are meant to render.
+
+    History note: there was a brief period where every call became its
+    own paragraph. That was a misread of the WF Project chat — the
+    consensus is multi-sentence paragraphs with paragraph breaks, not
+    one paragraph per sentence.
+
+    ``==QID==`` uses the QID directly; ``==anything else==`` auto-
+    assigns natural number QIDs starting at Q199.
 
     Args:
         text: Template string in wikitext format.
@@ -832,45 +844,43 @@ def compile_template(text, variables=None):
     _, body = parse_frontmatter(text)
     origin_qid = variables.get("subject", "Q0")
 
-    # Strip stray {{p}} tokens (legacy content) — treat as whitespace.
-    body = _STRAY_P_RE.sub("", body)
-
-    split_pattern = re.compile(r'^==\s*(.+?)\s*==$', re.MULTILINE)
-
     clipboard_items = []
     section_counter = 0  # for auto-numbering non-QID headings
 
-    def emit_segment(segment_text):
-        """Parse a segment's calls and emit one paragraph per call."""
+    def emit_paragraph(segment_text):
+        """Compile a paragraph's calls into one bundled Z32123 item."""
         fragments = parse_template_calls(segment_text)
-        for frag in fragments:
-            item = compile_paragraph(
-                [frag], variables, origin_qid, len(clipboard_items)
-            )
-            clipboard_items.append(item)
+        if not fragments:
+            return
+        item = compile_paragraph(
+            fragments, variables, origin_qid, len(clipboard_items)
+        )
+        clipboard_items.append(item)
 
     last_end = 0
-    for match in split_pattern.finditer(body):
-        segment = body[last_end:match.start()].strip()
-        if segment:
-            emit_segment(segment)
+    for match in _PARAGRAPH_SPLIT_RE.finditer(body):
+        segment = body[last_end:match.start()]
+        if segment.strip():
+            emit_paragraph(segment)
 
-        header_text = match.group(1)
-        if re.match(r'^Q\d+$', header_text):
-            section_qid = header_text
-        else:
-            section_counter += 1
-            section_qid = f"Q{198 + section_counter}"
-        header_item = compile_section_header(
-            section_qid, variables, origin_qid, len(clipboard_items)
-        )
-        clipboard_items.append(header_item)
+        header_text = match.group(2)
+        if header_text is not None:
+            if re.match(r'^Q\d+$', header_text):
+                section_qid = header_text
+            else:
+                section_counter += 1
+                section_qid = f"Q{198 + section_counter}"
+            header_item = compile_section_header(
+                section_qid, variables, origin_qid, len(clipboard_items)
+            )
+            clipboard_items.append(header_item)
+        # {{p}} or blank line: just a flush, nothing to emit for the marker itself.
 
         last_end = match.end()
 
-    remaining = body[last_end:].strip()
-    if remaining:
-        emit_segment(remaining)
+    remaining = body[last_end:]
+    if remaining.strip():
+        emit_paragraph(remaining)
 
     return clipboard_items
 

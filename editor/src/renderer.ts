@@ -303,13 +303,39 @@ function renderLineSync(line: string, sectionRef: { n: number }): string | null 
 
 // Paint the preview pane from the current cache + local fallback, in one
 // sweep. Called both before and after each evaluator batch.
+//
+// Sentences group into paragraphs visually (a wrapping <div class=
+// "paragraph">) so the preview reflects the bundled-paragraph model the
+// compiler now uses. Blank lines and {{p}} markers end the current
+// paragraph; ==QID== section headers also end it (and stand alone).
 function paintPreview(lines: string[]): void {
   const sectionRef = { n: 0 };
   const pieces: string[] = [];
-  for (const line of lines) {
-    const rendered = renderLineSync(line, sectionRef);
-    if (rendered !== null) pieces.push(rendered);
+  let para: string[] = [];
+
+  function flushPara(): void {
+    if (para.length === 0) return;
+    pieces.push(`<div class="paragraph">${para.join('')}</div>`);
+    para = [];
   }
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (trimmed === '' || /^\{\{\s*p\s*\}\}$/i.test(trimmed)) {
+      flushPara();
+      continue;
+    }
+    if (/^==\s*(.+?)\s*==$/.test(trimmed)) {
+      flushPara();
+      const rendered = renderLineSync(line, sectionRef);
+      if (rendered !== null) pieces.push(rendered);
+      continue;
+    }
+    const rendered = renderLineSync(line, sectionRef);
+    if (rendered !== null) para.push(rendered);
+  }
+  flushPara();
+
   previewEl.innerHTML = pieces.join('') ||
     '<span class="placeholder">No fragments to preview.</span>';
 }

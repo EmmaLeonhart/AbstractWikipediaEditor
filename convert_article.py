@@ -319,9 +319,13 @@ def convert_article_to_wikitext(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    # Every function gets its own paragraph on the wiki side (Z32123 wrap).
-    # Emit each fragment on its own wikitext line — no {{p}} tokens,
-    # because the source wikitext no longer controls paragraphs.
+    # Each fragment on the wiki side is a Z32123 paragraph wrapper. Round-
+    # tripping it: emit its inner calls on consecutive lines (a single
+    # paragraph in source form), and put a blank line between successive
+    # paragraphs so compile_template re-bundles them correctly. Section
+    # headers (Z31465) act as their own paragraph breaks and don't need
+    # extra blank lines around them.
+    last_was_paragraph = False
     for section in sections.values():
         for frag in section.get("fragments", []):
             if isinstance(frag, str):
@@ -333,12 +337,14 @@ def convert_article_to_wikitext(qid, oldid=None):
                 section_qid = _extract_section_qid(core)
                 if section_qid:
                     lines.append(f"=={section_qid}==")
+                last_was_paragraph = False
                 continue
 
-            # Legacy Z32234 paragraph-combiner blocks: emit each inner
-            # call as its own line (one paragraph per call in the
-            # round-tripped source).
+            # Z32234 paragraph: emit each inner call on its own line. If
+            # a paragraph just preceded this one, prepend a blank line so
+            # the two don't merge back together on recompile.
             if fid == "Z32234":
+                paragraph_lines = []
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):
                         continue
@@ -349,12 +355,20 @@ def convert_article_to_wikitext(qid, oldid=None):
                                 inner = unwrap_fragment(item)
                                 wt = format_as_wikitext(inner)
                                 if wt:
-                                    lines.append(wt)
+                                    paragraph_lines.append(wt)
+                if paragraph_lines:
+                    if last_was_paragraph:
+                        lines.append("")
+                    lines.extend(paragraph_lines)
+                    last_was_paragraph = True
                 continue
 
             wt = format_as_wikitext(core)
             if wt:
+                if last_was_paragraph:
+                    lines.append("")
                 lines.append(wt)
+                last_was_paragraph = True
 
     return "\n".join(lines)
 

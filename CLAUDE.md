@@ -32,6 +32,7 @@ Section headers use wiki-style `==QID==` syntax, where the QID references a Wiki
 - **Do not enter planning-only modes.** All thinking must produce files and commits.
 - **Keep this file up to date.** As the project takes shape, record architectural decisions, conventions, and anything needed to work effectively in this repo.
 - **Update README.md regularly.** It should always reflect the current state of the project.
+- **Release notes describe software changes only.** A GitHub release covers what the editor does differently for users — parser/compiler behavior, preview rendering, publish flow, UX, bug fixes. Skip repo-side housekeeping (discussion-snapshot tracking, CI/workflow tweaks, doc edits, tooling) unless it directly changes editor behavior. If a commit only affects how the repo is maintained, it doesn't earn a bullet in the release notes.
 
 ## Testing
 - **Write unit tests early.** Use `pytest` for Python.

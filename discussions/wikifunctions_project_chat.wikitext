@@ -1,0 +1,406 @@
+<!--
+  Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
+  Fetched:   2026-04-28T00:45:29Z
+  Source:    fetch_discussions.py (auto-updated via GitHub Actions)
+  DO NOT EDIT — any local changes will be overwritten on the next run.
+-->
+{{shortcut|[[WF:CHAT]]|[[WF:PC]]|[[WF:VP]]}}
+__NEWSECTIONLINK__
+[[Category:Help]] <!-- please do not remove this line -->
+Welcome to the Project chat, a place to discuss any and all aspects of Wikifunctions: the project itself, policy and proposals, individual data items, technical issues, etc.
+
+Other places to find help:
+* [[Wikifunctions:Administrators' noticeboard]]
+* [[Wikifunctions:Report a technical problem]]
+* [[Wikifunctions:FAQ]]
+
+{{Autoarchive resolved section
+ |age = 1
+ |archive = ((FULLPAGENAME))/Archive/((year))/((month:##))
+ |timeout=30
+}}
+{{Archives|{{#tag:div|<br />{{Flatlist|{{Special:PrefixIndex/WF:Project chat/Archive/|stripprefix=1|hideredirects=1}}
+|class=mw-collapsible-content|style=font-size:92%;}}|class="mw-collapsible mw-collapsible-toggle mw-collapsed"}}
+|prefix=WF:Project chat/Archive/
+}}
+
+== Wikifunctions & Abstract Wikipedia Newsletter #238 is out: Citations and Copy and Paste ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-03-06|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we introduce the possibility of creating a function that deals with references and a Wikifunctions internal clipboard, where you can temporarily store any piece of code in order to paste it somewhere else, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 17:28, 6 March 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30119120 -->
+:Is there a function in Wikifunctions to get all sources to a statement in a Wikidata item. At the moment my main activity in the Wikimedia projects is adding sources to Wikidata statements. For this case I got the following kind of [https://w.wiki/JFec query] to get all qualifiers and sources for a specific statment in explicit mentioned items in the query. There are already templates for citing sources in different Wikipedia language versions. For example the template [https://en.wikipedia.org/wiki/Template:Cite_web Cite web] is used in 298 Wikipedia language versions. So it is a widely used template and I wish a implementation for it in Wikifunctions. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 21:31, 8 March 2026 (UTC)
+::{{Z|31984}} [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 15:08, 9 March 2026 (UTC)
+{{tracked|T404652}}
+::Yes and no. Importing of Wikidata references is currently turned off. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 15:27, 9 March 2026 (UTC)
+<br clear="all"/>{{phab|T419350}}
+:I found [[phab:T419350|a bug]] where the clipboard feature becomes unusable.<!-- --><br>Also, it's a bit disappointing that it doesn't use the real clipboard, not even as an option for egress. If you're invoking a function and you can get it to "compile", then "Copy result link" already lets you copy out the full canonical form... [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 02:58, 10 March 2026 (UTC)
+::@[[User:YoshiRulz|YoshiRulz]] Thanks for reporting, I noticed the team about it. I will see if we can fix it soon. [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:26, 11 March 2026 (UTC)
+:::It's fixed 🤩 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 14:38, 31 March 2026 (UTC)
+
+== "language" argument for certain functions ==
+
+Hello. I am relatively new to Wikifunctions. Recently, I tried to create functions for Chinese translation of {{Z|Z26570}} and {{Z|Z26095}} (which became [[Z32788]] and [[Z32900]]). During the creation of these functions, I was trying to take {{Z|Z32212}} as reference. And I realized that the defining role sentence function is taking <code>language</code> as an argument (and the test case of the Chinese-language function already contains two varieties of Chinese). This makes it possible to output monolingual text in <code>zh-hant</code>, <code>zh-hans</code>, <code>zh-tw</code>, or any varieties of the language. I think for this reason, it is better to have <code>language</code> as arguments for the implementation of Z26570 and Z26095, and potentially more functions that require {{Z|Z14294}}, since it would output the varieties code instead of just saying <code>zh</code> for <code>zh-hant</code>, <code>zh-hans</code>, <code>zh-tw</code> in the output of type {{Z|Z11}}. I am not sure how the fallback mechanism works if one of the language (varieties) do not have a labels/lexemes, but to me, it is reasonable to have a <code>language</code> argument. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 09:38, 31 March 2026 (UTC)
+
+:The functions you mention do have a language argument. For Wikifunctions, the {{Z|Z60}} can be at a higher or lower level; whether a {{Z|Z11}} is for a language or a variant is determined by the function that constructs it. Please see {{Z|Z26565}} for an example and feel free to add test cases in Chinese. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 17:54, 11 April 2026 (UTC)
+::Hello @[[User:GrounderUK|GrounderUK]], thanks for the answer. I understand that whether {{Z|Z11}} is for a language or a variant depends on the function. But that is exactly what I am asking for. It is true that [[Z26570]] and [[Z26095]] takes [[Z60]] as argument, but the language-specific functions in {{Z|Z29843}} and {{Z|Z26096}} don't.
+::Let me give you an example: INPUT to [[Z26570]]: <code>entity</code>: Tokyo, <code>class</code>: city, <code>location</code>: Japan, <code>language</code>: zh-cn, the config would select [[Z33030]] (created after my previous comment by elseone) as the implementation, and it would RETURN 东京是日本的一个城市。(zh-hans), which is not zh-cn as requested in the INPUT. It would also be using the term not for the variant (when it is different) because it is hardcoded to use the term in zh-hans. However, if we have the implementation like [[Z32790]] (which was created by me but a natural language argument was added by elseone) or [[Z32213]] (that works in the defining role sentence function because of the extra argument), it could cater for different variant.
+::If we don't have the language argument in the language-specific function, the desire for article creation on Abstract Wikipedia would be to create a function for every variant. Is it then better to create functions for every variant? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:18, 11 April 2026 (UTC)
+:::I forgot to mention that there are some hardcoding in {{Z|Z32790}} as well, but I cannot fix it because it is a connected function and I am not a functioneer. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:31, 11 April 2026 (UTC)
+::::Okay, I think it’s safe to disconnect this one as the function is not yet configured for use on Abstract Wikipedia. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:04, 11 April 2026 (UTC)
+:::Ah, sorry… I misunderstood you. I agree that the called function should be able to accept the original language argument. That is simpler in theory than in practice, because the configured functions all have to have the same argument types, as I understand it. I’m not sure which the best approach is, really, but we probably want to avoid two levels of configuration. That suggests that all language-specific functions would need to accept the additional argument, which is unrewarding work for someone. @[[User:99of9|99of9]], @[[User:Jdforrester (WMF)|Jdforrester (WMF)]], @[[User:DVrandecic (WMF)|DVrandecic (WMF)]] Any thoughts? [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 18:57, 11 April 2026 (UTC)
+::::I mean, we would need to modify all the functions in each language, which could take some time. But we are still in an early stage. If we don't fix it now and we want to fix it later, it would be a disaster. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 19:25, 11 April 2026 (UTC)
+:::::Agreed. And we probably want them converted to HTML too, with separate language spans for text in different languages. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:35, 11 April 2026 (UTC)
+::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
+::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
+:I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
+
+== Special:CreateObject doesn't let me create a typed list ==
+
+Hello. I tried to create a typed list with all English varieties on Wikifunctions, to create consistency between different configs, but [[Special:CreateObject]] doesn't show typed list as an option for creating. Is this a bug or an intentional restriction? [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 08:24, 2 April 2026 (UTC)
+
+:@[[User:ChaoticVermillion|ChaoticVermillion]]: A typed list is an instance of a function call, which is prohibited as a persisted Object. Maybe you want an enum? See [[Wikifunctions:Type proposals]] for the process for creating such a thing. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:01, 2 April 2026 (UTC)
+::I don't want any sort of enum for this, I just want a list of English varieties (English, American English, Australian English, etc.) as an object that I can put in configs. I tried making an object as a function call, but apparently I have to be a member of the staff to do it. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 12:07, 2 April 2026 (UTC)
+:::I’ve started this with {{Z|Z33034}}. I’m guessing you were trying to create an object of type {{Z|Z7}} rather than an object whose type is a [[Z7]]. There’s a subtle but important difference. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 12:29, 2 April 2026 (UTC)
+::::How do you create a object whose type is a [[Z7]] then? I can't see any option to do this. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 12:32, 2 April 2026 (UTC)
+:::::When you are creating an object you must specify its type. By default, the UI expects you to provide a reference to the type, so you can just type in the selector box and click the type you want. For an object like a typed list, the type is specified as a function call, so you click the menu dots beside “type” and choose “function call” instead of “reference”. The selector now allows you to search for functions that can return a type object. You start entering “typed list” and select it in the normal way. Then the UI will allow you to specify the argument to the function call, which is the type shared by all elements in the list. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:12, 2 April 2026 (UTC)
+
+== Unable to use the Z32643 function. ==
+
+I'm trying to use the [[Z32643]] (Article-less multi instantiating fragment) function to edit an article in Abstract Wikipedia, but it looks like it's missing connected implementations, and it looks like i don't have the permissions to connect the function with the implementation and use it in ab.wiki.
+
+Since i'm not familiar with Wikifunctions, i would like to get help for this specific problem.
+
+Thanks. --[[User:Mattiz6276|Mattiz6276]] ([[User talk:Mattiz6276|talk]]) 13:50, 2 April 2026 (UTC)
+
+:@[[User:Mattiz6276|Mattiz6276]]: Hey there, it looks like that's a work-in-progress by @[[User:MetalBreaksAndBends|MetalBreaksAndBends]]. There's only a fall-back implementation, Z32652, which fails its own test for a second item. I can connect the items together but it might not work as you expect? [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 14:06, 2 April 2026 (UTC)
+::Maybe… I don’t think functions without implementations should be appearing on AW so I have amended the label to avoid giving the impression that this function is available. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:23, 2 April 2026 (UTC)
+
+== Being able to use edit summaries  ==
+
+I have wanted to use edit summaries a few times when connecting or disconnecting implementations or tests, and I have found that the only way to do that is to use the [[:User:%D7%9E%D7%A7%D7%A3/wikilambda_editsource.js|wikilambda editsource]] tool. I feel like it would be a lot more convenient to be able to make these edit summaries without having to use that tool. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 08:40, 3 April 2026 (UTC)
+
+== Definite forms ==
+
+[[Talk:Z32162|I've noticed an incomplete implementation and would like to work on fixing it, but need advice.]]  [[User:Ijon|Ijon]] ([[User talk:Ijon|talk]]) 21:05, 3 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #243 is out: Community proposals for capturing meaning ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-10|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we report on three community proposals on syntactic approaches, we introduce a new Type (Complex numbers), we report on current hiccups on Abstract Wikipedia, we share more information about a presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1776101400 April 13, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:35, 10 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Help me understand why test passes but running function with same input errors ==
+
+I've been working on a function that I thought I had working correctly: {{Z+|Z31108}}.
+
+It has a test which is passing, but when I enter the same Wikidata item as the test uses (or any other relevant item that it ought to work for), it errors. I can't figure out what's wrong (and the function itself seemed to be working as expected the last time worked on it, a month ago), and I don't know how to interpret the error info.
+
+The error output is:
+
+<code>
+Error type: Unspecified error
+Error data:
+error information: "cannot read property 'Z6003K4' of undefined"
+Execution debug logs:
+Z12696K2 (find this) ==> ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6007'},Z6007K1:ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6092'},Z6092K1:P3831>,Z6007K2:ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6091'},Z6091K1:Q7380503>,Z6007K3:ZReference<Z6021>>
+</code>
+
+-- [[User:Ragesoss|Ragesoss]] ([[User talk:Ragesoss|talk]]) 18:02, 10 April 2026 (UTC)
+
+:Hmm… I’ve had a quick look and found a comparable error with {{Z|Z29937}}, which was passing “4 months ago”. The debug comes from {{Z|Z12863}}, after it fails to find a match. This is probably because Z6007K3 is ZReference("Z6021") rather than a Z6020 object, as it appears in the debug logs for your test “28 days ago”:
+:"Z6007K3":{"Z1K1":{"Z1K1":"Z9","Z9K1":"Z6020"},"Z6020K1":{"Z9K1":"Z6021"}}
+:This means it’s probably a bug introduced by a recent software change. I’ll take a closer look over the weekend, but the actual error for your test case now is:
+:Unspecified error (error information: "cannot read property 'Z6003K4' of undefined")
+:I’m guessing that’s from there being no guard against an empty array in {{Z|Z23681}}, but we’ll see. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 23:22, 10 April 2026 (UTC)
+:I tracked down the bug to [[Z29869]] and fixed that, but the tests for [[Z31659]] are still failing. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 05:44, 11 April 2026 (UTC)
+::Thanks. I’ve re-implemented {{Z|Z23680}} with {{Z|Z33331}} so we at least get a meaningful error in {{Z|Z31108}}. The new implementation explicitly caters for the alternative representation of {{Z|Z6040}} and errors on the empty list it gets from {{Z|Z31659}}.
+::I also made a [[Z33332|simple Python implementation]], which seems to work. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 16:29, 11 April 2026 (UTC)
+
+== No place to ask to activate a function? ==
+
+I just discovered the {{Z|Z11390}} function and decided to make an overarching language-selecting function for it. After some fiddling around and studying how {{Z|Z32321}} and its set works, I now have {{Z|Z33439}} which has a config object ({{Z|Z33441}}) that selects between the two preexisting language-specific versions I found (English and Malayalam) and the new one I created for my other native language, {{Z|Z33440}}.
+
+Except I can't get these to work, because, from what I understand, only [[Wikifunctions:Functioneers|functioneers]] can activate newly created functions and implementations?
+
+So where do I apply for the {{Z|Z33439}} and {{Z|Z33440}} functions to be activated? Perhaps we should have a place to ask for it, a la [[w:WP:NPP]] — call it [[Project:New Functions Patrol|New Functions Patrol]] if you will. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] ([[User talk:UndueMarmot|talk]]) 08:58, 14 April 2026 (UTC)
+
+:There's [[Wikifunctions:Community portal]] for this. By the way, {{Z|Z33445}} doesn't work because all the code must be inside the main function in Python code. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 09:19, 14 April 2026 (UTC)
+::Huh. How could I have missed that?
+::But anyway, I've moved the code in {{Z|Z33445}} into inside the main function block.
+::Is there any reason why WF decided not to simply allow anyone to write functions? After all, that's how it works with wikitext templates, and these functions are fundamentally serving the same purposes as templates, just written in a different way. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] <small>([[User talk:UndueMarmot|talk]])</small> 11:25, 14 April 2026 (UTC)
+:::I've fixed a couple of technical issues, but tests still fail. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 11:28, 14 April 2026 (UTC)
+::::The tests pass now after some more changes to the code: [[Special:Diff/265232/cur]]. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] <small>([[User talk:UndueMarmot|talk]])</small> 12:01, 14 April 2026 (UTC)
+:::::{{D|Connected}} [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:02, 14 April 2026 (UTC)
+:::I think it's a security issue, since Wikifunctions implementations could teoretically be malicious. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 11:29, 14 April 2026 (UTC)
+::::This ^^^. We're very lenient, though, once you've created a few working functions you can apply for the right, per [[WF:Functioneer]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:26, 14 April 2026 (UTC)
+::::That explanation [[phab:T343559#11421293|doesn't add up]]. A reason to limit ''connection powers'' to Functioneers might be to prevent vandalism, considering Functions can be used across wikis. But user-provided code is already being executed even without a Functioneer connecting it. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 20:01, 16 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #244 is out: Milestones; Some major issues hopefully resolved ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-16|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we celebrate 4000 functions on Wikifunctions and 1000 abstract articles on Abstract Wikipedia, we announce that we should have fixed some major issues with the websites, we inform you on our latest outreach activities, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Actual difference between {{Z|Z26039}} and {{Z|Z26095}} ==
+
+What is the actual difference between these two functions? I ask, since it seems to me that the current distinction is more or less that the first one doesn't use an indefinite article in English, while the second does. Which is not a good distinction in a project that should be language neutral. This doubt emerged from my use of the first one in [[abstract:Q124441]], which @[[User:Hogü-456|Hogü-456]] made me notice that is probably wrong. My question is: why is it wrong? How could we clarify the difference? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:46, 19 April 2026 (UTC)
+
+:I think the difference is if there is an indefinite article like a or an before the subject or not. In German there can be cases where a definite article is necessary before the subject. I looked at the functions and before the object both times an article is mentioned. As it depends on the language and the word what is the correct function to use I hope it will be clarified and it is an example of the necessity to have a human with understanding in a specific language check it. I hope there will be longer functions what generate more content about a specific kind of item. Then it is necessary to write one such function per language and it can be then applied to several items. It still requires checks and so maybe it is better to write down what item category needs what kind of introduction sentence function for what language. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:05, 19 April 2026 (UTC)
+::The point of these two functions (and of the entire Abstract Wikipedia project) is that they should be defined in a purely language-independent way, so that the translation to actual language can be done automatically. This is the reason why these functions have been renamed; I think that this attempt was not succesful, since meaning is still unclear. My proposal to clarify them would be to invoke the concept of [[w:specificity (linguistics)|specificity]]: {{Z|Z26039}} should be named "specific subject is instance of (string)", and should be used only when the QID of the subject uniquely identifies a single thing; {{Z|Z26095}} should instead be renamed in "non-specific subject is kind of (Monolingual text)", and should be used when the QID refers to a multitude of real life items, and we are specifying the class that all these item belong to. This clarification would not still be enough, since it doesn't explain how mass nouns are handled (is water a unique thing? Does {{Q|Q7802}} refer to a single piece of bread or to the entirety of bread, like water?). This problem is very tricky, since mass noun are language-specific and blurry the line between these two functions. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 20:58, 19 April 2026 (UTC)
+:Simply put, one corresponds to P31 and the other to P279. Paris is an {{Q|P31}} a {{Q|Q1549591}}
+:whereas a {{Q|Q1549591}} is a {{Q|P279}} (alias “kind of”) {{Q|Q515}}. Whether the Wikidata knowledge representation will be sufficient to resolve into fluent natural language representations in all languages is, of course, a crucial question. Where it is not, the Abstract Wikipedia knowledge representation will need to supplement the Wikidata content with additional details about the relation between the participants or the participants themselves, and these details should be language-neutral, to the extent that this is practicable. The item {{Q|Q124441}} has no [[:d:Q124441#P31|P31]] statements; it has only [[:d:Q124441#P279|P279]]s, including one relating it to {{Q|Q212920}}, which suggests {{Z|Z26095}} is the appropriate choice here even if the rendering in some languages is the same. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:52, 19 April 2026 (UTC)
+::Thanks for explaining it. I think that I'll change the implementation of {{Z|Z26095}}, so that in Italian it produces more or less the same output of {{Z|Z26039}} (both with the definite article). [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 11:24, 20 April 2026 (UTC)
+
+== Equivalent of Z6830 for lexemes ==
+
+Is there an equivalent of {{Z|Z6830}} that enables retrieving all lexemes pointing to a particular lexeme using a specific property? [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 21:06, 20 April 2026 (UTC)
+
+:There's {{Z|6831}} but I think that's slightly different again to what you're after. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 12:31, 21 April 2026 (UTC)
+::Thanks for sharing that one, I did not know it existed. But you are right, it’s not quite what I am looking for. I want a function that would take a Wikidata property reference (like P5191, which is ‘derived from lexeme’) and a Wikidata lexeme reference, and return a list of lexemes that reference that lexeme using that property. [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 13:23, 21 April 2026 (UTC)
+
+== Storing huge datasets ==
+
+It is not a necessity I suppose, but an idea came to me earlier to write a function that would give the corresponding [[en:Shavian alphabet|Shavian alphabet representation]] of an English word written with the Latin alphabet, or perhaps apply that operation to an entire sentence. However, just trying to guess as to what the IPA pronunciation of each word passed into it could be is is both not ideal (pronunciations obviously can and will vary widely between accents) and infeasible <s>(Wikidata lexemes don't really seem to account for pronunciation)</s>. It happens, though, that a comprehensive Shavian dictionary exists named the [https://readlex.pythonanywhere.com/ ''Read Lexicon''], which uses pronunciation and spelling similar to that used by the creator of the alphabet himself. This would be a good dataset to use in performing this translation in the function, but it appears that, all in all, the total size of the dictionary is [https://github.com/Shavian-info/readlex/blob/main/readlex.json ''nearly 26MB''] when formatted as JSON, which would certainly be larger when converted into a typed list.
+
+I am wondering if this will ever be feasible or admissible, or if there is really a way around this if importing such a large set of data is deemed impractical. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 22:30, 20 April 2026 (UTC)
+:{{re|Theki}} "Wikidata lexemes don't really seem to account for pronunciation"" is patently untrue; not only does every Bokmål lexeme form have IPA attached to it (thanks to Jon Harald Søby), but there are lots of languages--including English--that have pronunciation information, whether through IPA or otherwise, indicated on their forms. The big issue of course is that adding this data is not always possible to perform efficiently--for instance, I'd love to have Yiddish pronunciation respellings from Paul Abelson's dictionary on as many English forms as possible, but this dictionary not being previously processed makes this difficult. The data set you have brought up, if a suitable reading of [[:m:Wikilegal/Lexicographical_Data]] allows it, could be added as {{P|7243}} statements on various English forms. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 23:20, 20 April 2026 (UTC)
+::Well, sorry... I haven't witnessed these pronunciation statements before, I wasn't aware of their existence until you pointed it out. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 15:02, 21 April 2026 (UTC)
+:I got 1,900,000 characters into [[Z33875]] before the UI gave up on me. I'm not sure what the limit is. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:21, 21 April 2026 (UTC)
+
+== Could not serialize input JS object: Number <small><small>[insert tested number here]</small></small> ==
+
+I'm not one to throw my problems at others, but I have no idea how to fix this. Am implementing {{Z|Z24602}} in JavaScript, which requires returning a typed map. It now works for every type of value except numbers. Tried explicitly converting the numbers to float64, but either way it throws the error above. Would appreciate it if anyone could diagnose or fix the problem, as my knowledge of Wikifunctions is amateur at best. Thank you. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 00:32, 23 April 2026 (UTC)
+
+:The quick answer is that like some list-related functions, code implementations returning typed maps are not possible unless the type of the objects in the map is specified in the function signature (e.g. if it was a map from Strings to Natural numbers only). So unfortunately, I think you've chosen a function that is not really possible at the moment. There are a few ideas of how we might address this, but for the moment, work on something else. Sorry! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 13:21, 23 April 2026 (UTC)
+:Maybe explicitly using [[Z13518|natural numbers]] would work? I would try using <code>{ "Z1K1": "Z13518", "Z13518K1": "[number]" }</code> to represent numbers, perhaps, and seeing if that works. Of course, you would also probably have to adapt this for other types that cannot be serialized, and I'm not sure how easy that would be to generalize (assuming [[w:Don't repeat yourself|DRYness]] is desired). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:39, 23 April 2026 (UTC)
+
+== Help with creating a function for Abstract Wikipedia ==
+
+Hello! I was inspired by {{Z|Z26570}} to create {{Z|Z33975}}, however I'm not sure how I add specific language implementations here. Can anybody help me? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 10:41, 23 April 2026 (UTC)
+: I think I figured it out, I created a new object with the language config type, added {{Z|Z14310}} to my implementation, and added a new function for English... At least I think that's how it works... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 13:16, 23 April 2026 (UTC)
+::You have the right idea, as far as I know. I went ahead and connected the implementations you created as they appear to work fine for English, and added a test for {{Z|Z33975}} (which passes [[File:Twemoji 1f601.svg|24px]]). I also corrected an error you made on the config object where you appear to have accidentally connected English to {{Z|Z33975}} instead of {{Z|Z33977}}. Thank you for contributing! &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 13:45, 23 April 2026 (UTC)
+::: {{re|Theki}} Thank you so much for you help! Could you please kindly also connect the implementations for {{Z|Z33986}} which I just made, which is going to be used for the Hebrew implementation of {{Z|Z33975}}. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:11, 23 April 2026 (UTC)
+::::You seem to be returning the wrong type in both implementations. Functioneers should not connect implementations that don't work for non-functioneers. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:13, 23 April 2026 (UTC)
+::::: {{re|Feeglgeef}} Oh thank you for pointing that out! I am still a bit new to this project and confused, so I need to read up some more about this. How do I return a monolingual text object? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:17, 23 April 2026 (UTC)
+::::::I'm trying to fix it for you, the construction of ZObjects in code implementations is a bit difficult right now. Since the State origin using entity and class function will (presumably) be composition, perhaps {{Z|33975}} can be adjusted to return a string, using {{Z|26107}} and {{Z|26107}}? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:21, 23 April 2026 (UTC)
+:::::I did not notice any discrepancies from looking at the functions by themselves, and it seemed to work fine on my end. Is it bad practice for NLG functions to return the monolingual text type? I had assumed it was logical. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:24, 23 April 2026 (UTC)
+::::::Both implementations are failing all three tests on my end. No consensus has been established as to whether monolingual texts or strings should be used, so it's like the [[w:War of the currents|war of the currents]] but for Wikifunctions. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:27, 23 April 2026 (UTC)
+:::::::Oh, you were referring to {{Z|Z33986}}. I assumed you were stating that something was wrong in the earlier English functions that I missed; I apologize for the misunderstanding. Has there been any centralized discussion on this string vs. monolingual text issue? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:31, 23 April 2026 (UTC)
+::::::::Not that I'm aware of, I've brought it up on the telegram twice before, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:49, 23 April 2026 (UTC)
+::::::::The centralised discussion is at [[WT:Abstract Wikipedia/2025 fragment experiments#Proposed recommendation: Fragments should return Z11/monolingual strings]]. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 07:19, 24 April 2026 (UTC)
+::::::: {{re|Theki|Feeglgeef}} Can only functioneers test implementations? For me I can't test it at all... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:32, 23 April 2026 (UTC)
+::::::::AFAIK, test cases are only immediately testable during editing of a function if they are connected. This is one of my personal pain points with Wikifunctions, iterating on functions without exhaustive connected test cases makes debugging practically impossible for non-functioneers working on newly-created functions... I (or Feeglgeef) can quickly connect the tests you need for you if you want, although if they are not well-formed they may need to be disconnected again afterwards. Additionally, I could temporarily connect the implementation you are writing so that you can test it on the sidebar as you work, but I'm not sure if this is advisable. That functionality is also something that unfortunately only works when not disconnected. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:43, 23 April 2026 (UTC)
+:::::::::Yup, agree with you on all points, thanks. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:48, 23 April 2026 (UTC)
+
+== Please disconnect implementation ==
+
+I think I've fixed my issue with {{Z|Z33986}}, but I can't edit an actively connected implementations with my rights. I must admit it is an AI-aided fix, I feel very strongly about disclosing that.
+
+Courtesy pinging [[User:Theki]] and [[User:Feeglgeef]]. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:51, 23 April 2026 (UTC)
+: Additionally, I think the JS might be working. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:52, 23 April 2026 (UTC)
+: Just to clarify, I mean disconnect the Python implementation please. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:53, 23 April 2026 (UTC)
+:{{Done}} I've disconnected the Python implementation.
+:I've also added a couple of tests. The rule is a bit more complicated than adding a maqaf before every character that is not a Hebrew letter. Unfortunately, I don't think I'll have time to fix the implementations any time soon. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:03, 23 April 2026 (UTC)
+:: Thank you! 
+:: Also, for some reason I thought you put a maqaf before all gershayim, so thanks for correcting me. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:09, 23 April 2026 (UTC)
+:::No, that's not the rule.
+:::The rest of this reply is an [[:wikt:info-dump|infodump]], feel free to ignore it :)
+:::In [https://hebrew-academy.org.il/topic/hahlatot/punctuation/ the Academy's punctuation rules], the rule for adding a maqaf is written kind of badly: שמים מקף ברצף שיש בו שני סוגי גופנים, כגון אותיות ומספרים ("maqaf is added in a sequence in which there are two types of fonts, such as letters and numerals"). These are not different types of "fonts", but different types of characters, and I should email them about it. It gives the examples <span lang="he" dir="rtl">ה־12</span> and <span lang="he" dir="rtl">ב־DNA</span>. It doesn't say anything explicitly about quotation marks, but in other places on the same page, you have stuff like <span lang="he" dir="rtl">ב"הארץ"</span>, and from that I deduce that a maqaf is not needed before double quotes if there are Hebrew letters inside the double quotes.
+:::That said, a few people do think that there must be a maqaf before double quotes. I have a somewhat surprising example of somebody who always does it: translators of Scientology materials into Hebrew. At least that's what they did last time I looked at them, about ten years ago. Those people are certainly prolific, and they get points from me for consistency, but this not the prevalent standard. (And if I recall correctly, they use the minus and not the proper Hebrew maqaf, and they don't get any points from me for that!)
+:::Also, the name of the character is just "double quotes" and not "gershayim". Gershayim are mostly for abbreviations, although most people use the same character for them. I use ״ for gershayim, as do a few other nerds, but we're the minority. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:35, 23 April 2026 (UTC)
+:::: {{re|Amire80}} Yeah, "font" is a weird choice of wording here by the Academy...<br> I think I'll follow your guidance and not use a maqaf for quotes beginning with Hebrew letters. <br> I should also add more tests for different types of quotes, like straight (", '), curly (“, ”, ‘, ’), gershayim (״, ׳), including single quotes.<br> P.S. gotta deduct points from Scientology for being a cult but that's neither here nor there [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:49, 23 April 2026 (UTC)
+:::: {{re|Amire80}} Courtesy ping because I mistyped your username on the last message. Anyways I'm also gonna do that tomorrow because I'm tired now... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:50, 23 April 2026 (UTC)
+
+== Connect implementations ==
+
+Hello! 
+
+I'm done with the implementations of {{Z|Z33986}} both in JS and Python, and all tests pass. 
+
+Pinging @[[User:Amire80|Amire80]] to check if all the tests I've added are alright. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 15:24, 24 April 2026 (UTC)
+
+:Connected. It's possible that some more changes will be needed, but it looks OK now.
+:Another little comment: It should be called "clitic" and not "prefix". [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:56, 24 April 2026 (UTC)
+: {{re|Amire80}} Thanks for your comment! Luckily labels are easy to edit, so I'll get to it.
+: Currently I'm working on Bulgarian {{z|Z34072}} and {{z|Z34084}}, along with other Bulgarian functions. After I'm finished with those I'll take your advice. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 16:01, 24 April 2026 (UTC)
+
+== Please connect my Bulgarian implementations ==
+
+I recently created the following Bulgarian functions:
+* {{Z|Z34070}} (currently broken, I think because another function I built it upon is unimplemented)
+* {{Z|Z34088}}
+* {{Z|Z34105}}
+* {{Z|Z34072}}
+* {{Z|Z34084}}
+
+Can somebody please connect these functions, and perhaps suggest other functions I could localize? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:03, 24 April 2026 (UTC)
+: Specifically, [[Z34070]] is based on [[Z34072]] [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:05, 24 April 2026 (UTC)
+:{{done}} for everything that passes, [[Z34070]] still does not work after purging WF's cache, though. For future reference, please request on the [[WF:Community portal|community portal]] instead of the project chat. Thank you for your work! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:03, 24 April 2026 (UTC)
+:: {{re|Feeglgeef}} Thank you for your help! I will keep in mind to go to the [[project: community portal| community portal]] in future instead for this.
+:: I still don't understand why {{Z|Z34070}} fails... It's implementation is almost completely identical to [[Z30399]] from {{Z|Z30397}}, unless I messed something up... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:11, 24 April 2026 (UTC)
+:::{{done}} No, it was mostly just timing out. It is better to use selective fetches where possible. One case is failing to match the expected results, but at least it is returning something. For all I know, it might even be acceptable! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 20:35, 24 April 2026 (UTC)
+:::: {{re|GrounderUK}} Thank you so much for your help! The one failed case is with a definite article, so I feel like that might be fixed in the future... <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:43, 24 April 2026 (UTC)
+
+== Editor experience suggestions ==
+
+I'm a bit frustrated with the editing experience on Wikifunctions, and I have suggestions based on pain points I've had contributing to this project: 
+* Adding a wizard to create functions, implementations, and tests in one flow, somewhat like Wikimedia Commons' upload wizard
+* A sandbox for experimenting without changing mainspace functions, and maybe letting non-functioneers connect implementations ([[Project: Sandbox]] doesn't seem to fit this) 
+* We could have functions for creation based on the sandbox, like how Wikipedia has articles for creation and edit requests,
+* Maybe even another test instance of Wikifunctions, like how Wikidata has [[testwikidata:|Test Wikidata]]
+
+I really like this project and I don't mean to whine, but it certainly has a lot of pain points both for technical and non-technical people. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:41, 24 April 2026 (UTC)
+: It's also really complicated to localize functions, so maybe we should add another wizard for that, where you can choose a language, and then create the new function with the aforementioned function wizard, and it just automatically adds it to the related language configuration object of the related function. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:48, 24 April 2026 (UTC)
+:# Sounds good to me.
+:# A sandbox available is [[Z10119]], though an extension-provided sandbox that allows you to manipulate the types, code, and tests easily without interfering with the mainspace would be nice. 
+:# [[WF:Suggest a function|This page]] works to some extent, though it's too messy in my opinion.
+:# We used to have a "beta cluster" but it [[phab:rOMWC5f625c5846b5f779473fa32c9a02d87e59215dfa|got shut down]] just over a year ago because it was broken. 
+:[[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:07, 24 April 2026 (UTC)
+
+== Language parameters in language-specific functions ==
+
+I think that an effort should be made to give the different natural language options corresponding to different English dialects, Chinese scripts, etc. more of a use 
+(I added the test {{Z|Z34119}} to {{Z|Z26095}} and unsurprisingly it fails). There are two main problems with this approach that I can identify:
+* If you ask the majority of these functions to make a sentence in British English, much of the time it will give you an output with missing words, because it does not fallback to English labels in the case of a British English label for that item missing. The same applies for every other English dialect, British English is just an example here.
+* Uninformed editors will probably see the presence of a language parameter on these functions, consider it redundant, and remove it. [[Special:Diff/268074|I have made this mistake before]].
+In my opinion, in a perfect world, all of these language generation functions would output monolingual text, and if the user asks for American English text, then American English text is what they'll get. If the user asks for Japanese text in hiragana specifically, then that's what they'll get in return. This is not as high-priority as just rendering text in the language plainly in the first place, but it's something that I feel is still worth devoting some effort to.
+
+Right now switching functions to use this paradigm is difficult because, on the one hand, I don't know if consensus tends towards this direction being ideal or advisable, and I don't want to make changes like this without at least notifying the wider community. In addition, all tests break once a parameter is added or removed, and the function editor does not recognize the change in number of parameters and therefore you have to remove the function call, re-add it along with all of its parameters it had previously (which is a tedious cut-and-paste job), and then it will work again. This is something that you can do in five seconds by just adding a few lines of JSON to the test source, but this is not directly editable from the Web browser. This tedium is largely what's preventing me from doing this on a larger scale, besides asking for comments first.
+
+If anyone has any insights or comments on this, then that would be appreciated. If a reference of functions with and without the support for language variants is needed, of course [[WF:NLG]] can be perused, but I've also my own list cataloged at [[User:Theki/functions#language]]...
+
+Of course, this thread has many similarities to [[#"language" argument for certain functions|the one above]], but this concerns me going out and making this consistent across these NLG functions. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:09, 24 April 2026 (UTC)
+:I've created {{Z|Z34122}} as an extension to {{Z|Z34039}} for larger functions. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:34, 24 April 2026 (UTC)
+:Just to confirm that I, for one, support a Natural language parameter for all natural-language functions. The concern about getting them all aligned is just that we haven’t finally settled on {{Z|Z11}} being preferred to {{Z|Z89}} or some other type that conserves the text’s provenance, so we risk having to change them all again. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 10:07, 25 April 2026 (UTC)
+
+== “Key not found ()”? ==
+
+What am I doing wrong in {{Z|Z34137}}? [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 00:39, 25 April 2026 (UTC)
+
+:You were passing a [[Z6091]] to {{Z|32290}}, but it takes a [[Z6001]]. Fixed. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 07:10, 26 April 2026 (UTC)
+::{{done|Thank you}}! [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 14:13, 26 April 2026 (UTC)
+
+== Why is my test failing? ==
+
+Hello! I recently made {{Z|Z34139}} based on [[wikt:Module:bg-translit]], and the test case {{Z|Z34141}} is failing on both implementations, despite the expected output and actual output being the same as far as I can tell.
+
+I tried looking at the Unicode codepoints of the output, but those are also identical. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 06:21, 25 April 2026 (UTC)
+
+:Yes, it’s a tricky one. I’ve added a normalize step to the result validation in {{Z|Z34141}}, which confirms it is a normalization issue. It looks like it is in the code but I don’t know whether simply normalizing the result is the way to go. Logically, you would normalize both the input and the result. The implementations of {{Z|Z10384}} show you how to do this. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 09:41, 25 April 2026 (UTC)
+
+== Edit request ==
+
+Hello! I have an edit request for {{Z|Z23752}} and {{Z|Z23414}}.
+
+Please replace all the "an/a" logic with <code>Z21739(Argument reference)</code>, both for readability and for more accuracy ("a university is an institution") <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 09:50, 25 April 2026 (UTC)
+
+:{{D}} [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:24, 25 April 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #245 is out: The Foundation's search for the perfect language ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-25|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present an academic paper about Abstract Wikipedia, we discuss our latest Type created, and we take a look at the newest created functions.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:54, 25 April 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+:@[[User:Sannita (WMF)|Sannita (WMF)]], @[[User:DVrandecic (WMF)|DVrandecic (WMF)]], technical meta-question: the newsletter quotes the article:
+::the only way to contest its algorithm is to click 👍 or 👎 (Crawford and Gillespie 2016)
+:This quotation sounds sensible, but the article's [https://link.springer.com/article/10.1007/s00146-026-02899-w web version], and the PDF that is downloadable from the same page doesn't actually show the emojis. It rather shows text that looks lacking:
+::the only way to contest its algorithm is to click  or  (Crawford and Gillespie [https://link.springer.com/article/10.1007/s00146-026-02899-w#ref-CR14 2016])
+:Where did you get the emojis? Is it your (probably correct) guess or is there a version somewhere that actually shows the emojis? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:16, 25 April 2026 (UTC)
+::Scratch that. I've found a version with correct emojis: https://wikihistories.github.io/wikilambda-the-ultimate/ [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:37, 25 April 2026 (UTC)
+
+== Requested deletion of test ==
+
+Please delete {{Z|Z34143}}. this was never valid Bulgarian, I messed up. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:19, 25 April 2026 (UTC)
+
+:[[WF:RFD]] please. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:40, 25 April 2026 (UTC)
+
+== Request for comment (global AI policy) ==
+
+<bdi lang="en" dir="ltr" class="mw-content-ltr">
+
+A [[:m:Requests for comment/Artificial intelligence policy|request for comment]] is currently being held to decide on a global AI policy. {{int:Feedback-thanks-title}}
+[[User:MediaWiki message delivery|MediaWiki message delivery]] ([[User talk:MediaWiki message delivery|talk]]) 00:57, 26 April 2026 (UTC)
+</bdi>
+<!-- Message sent by User:Codename Noreste@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Distribution_list/Global_message_delivery&oldid=30424282 -->
+
+== Is it OK to connect the implementation? ==
+
+Hello! 
+
+I recently applied for functioneer on [[WF:RFG]], and I was wondering whether I could connect the implementation for {{Z|Z34165}} despite its dependency {{Z|Z34149}} being currently unimplemented. That is <em>if</em> I get accepted.
+
+I am planning on implementing it based on [[wikt:module:bg-nominal]], but am still having trouble figuring it out for now. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 09:04, 26 April 2026 (UTC)
+
+== Past tense function ==
+
+Is there a function like {{Z|Z26039}}, but for the past tense (e.g. "Leo Tolstoy <em>was</em> a writer.")?
+
+If not, I will create it myself, I just want to make sure there's not a duplicate. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:10, 26 April 2026 (UTC)
+: {{Done}} with {{Z|Z34224}}, but I have a few kinks to work out with it. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:35, 26 April 2026 (UTC)
+:: I need to create some other similar functions for the past tense, I have some ideas:
+::* {{Z|Z26095}}
+::* {{Z|Z32643}}
+::* {{Z|Z28016}}
+::* {{Z|Z26570}}
+::* {{Z|Z33975}}
+::* {{Z|Z27243}}
+::* <ins>{{Z|Z26627}}</ins>
+::* <ins>{{Z|Z27627}}</ins>
+::* <ins>{{Z|Z27173}}</ins>
+::* <ins>{{Z|Z29591}}</ins>
+:: 
+:: Are there any I have missed? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:57, 26 April 2026 (UTC)
+:I think that here we are starting to walk on dangerous waters: what does past mean? Is it a recent o a far past? Does it have ripercussions on the present or not? Is it just a thing that happened once, many times or for a continuative period of time?
+:Consider that various languages distinguish between many different types of past. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:38, 26 April 2026 (UTC)
+:: {{re|Dv103}} That is a fair point...
+:: How do we go about solving this problem though? I don't think having every sentence on Abstract Wikipedia be "X is a Y" is a very good idea.
+:: Maybe we have different functions for all these variations of past you mentioned that just map into "X was a Y." in English? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 13:31, 26 April 2026 (UTC)
+:::To properly solve this problem, we should use a more complete abstract content representation model, like for example the proposal of [[Wikifunctions:Type proposals/Semantic unit|Semantic units]] (look at [[Wikifunctions:Type proposals/Semantic unit/Douglas Adams|the example]] to see how times could be handled). For now, since we're still stuck with single fragment generation functions (that I hope will be slowly replaced with the complete represenation model, when available), we could just restrict your function to a very specific meaning, like "subject was an instance of, for most of its existence" (which means for example that it could be used to say "Douglas Adams was a writer", but not "Abraham Lincoln was a president", since he only was a president for 4 years). Probably my definition is still too vague, and this is why we need to go beyond these fragment generating functions. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:47, 26 April 2026 (UTC)
+::Nitpick... I don't like that it outputs a string instead of monolingual text. With {{Z|Z26039}} it's used so much that I think it's unfixable in that case beyond deprecating it if people care that much, but {{Z|Z34224}} doesn't even have any connected implementations yet. Consider it, maybe?
+::Nitpick 2... {{Z|Z34227}} is missing a language parameter. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:08, 26 April 2026 (UTC)
+::: I will consider that!
+::: I just did that because that's what {{Z|Z26039}} does, so I assumed I should follow suit with it. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:48, 26 April 2026 (UTC)
+
+== Legacy functions ==
+
+If and when more robust methods of abstractly representing and generating linguistic content come around, and more efficient ways of creating abstract content are devised and implemented, I suspect that our current methods will require some form of deprecation. This is a significant source of concern for me in relation to WF and AW, questioning how prone our current methods of doing things are and eventually will be prone to obsolescence, and how it will be worked around when it comes. We have over 1 250 articles on AW presently, and these are rather all over the place. I suspect the maintenance burden from keeping these articles up to code will eventually, err, creep up on us, I suppose, and some kind of major refactoring will be necessary. We are definitely in a period of experimentation and whatnot right now but eventually, like with enwiki, some sort of structure and rigor will form and I suspect it will start to become rather boring for me...
+
+I, for one, very much enjoy experimenting with new and better ways to do things here. I don't personally mind changing things to use a new and better paradigm if need be, that sort of thing highly excites me, but of course there will be things that are left behind, and I suspect maybe bots will be employed to deal with this? A lot of Wikipedia sister sites seem to do that, e.g. going and fixing up use of deprecated templates. Considering the nature of Wikifunctions and Abstract Wikipedia I suspect certain maintenance tasks will be made simpler or even trivial by the typical uniformity of our implementations.
+
+I guess I am just concerned if Wikifunctions or Abstract Wikipedia will ever accrue its own kind of "technical debt" with how we are plowing through things presently, and if there is a plan for how we will eventually seek to mitigate that. Maybe too early to ask this question, but I am a notoriously anxious person, so I thought it wouldn't hurt to raise the question regardless... &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:30, 26 April 2026 (UTC)
+
+:I very much agree, thank you for expressing my position so well. {{ping|Immanuelle}} has been using an AI-generated tool (well, they haven't edited in a week, perhaps it's a break or perhaps they don't wish to contribute to the project any more) to create a bunch of articles en masse, which I have warned them multiple times is a bad idea (on top of evolving functions, all of the articles are one-sentence-per-paragraph, [[abstract:Q12184|like so]]). That's why That's why I've been avoiding creating articles recently, I'd say I have a good fourth (no data to support, rough guess) of the comments on the wiki, yet less than a percentage of the article count (only three, including the [[abstract:Q319|first article]], though, so perhaps I'm the next [[w:Special:Permalink/908493298|office.bomis.com]]). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:41, 27 April 2026 (UTC)
+:: I feel that the overwhelming presence of these low-quality articles (which I admit I myself am [[abstract:Q1710970|guilty]]/[[abstract:Q7601858|of]]/[[abstract:Q39338|creating]], usually as testbeds) may incur a large maintenance burden. I do expect them to be easy to detect, however, as searching for the presence of "deprecated" NLG functions is trivial, and it is possible that replacing them with their future ''even abstracter&trade;'' counterparts could be done automatically since they all have the same signatures and can be expected to create the same form of sentence. If it needs to be done manually for a while or for certain delinquent instances, my hope is that it will be fun, at least for a while.
+:: I just hope that these hypothetical future waves of "this new and versatile way of abstractly representing linguistic content" obsoleting previous methods and requiring refactoring across all articles is only a one-time thing. We should strive to be as robust and flexible as possible from the outset as each brand new paradigm of abstraction is also a brand new maintenance burden for updating old articles. At the end of the day, at least ''some'' of these articles will still render to many different languages even if their methods of creating those sentences of theirs is completely outdated. Ergo, the time it takes for the switchover to be performed across our articles should not be a persistent inconvenience for users (as, of course, they will always still be able to read the content as it was before since these legacy functions aren't being deleted outright), and the increased availability that the new methods will bring about will likely act as motivation for them to join the effort in refactoring (&#x300C;You're telling me that if I rewrite this article in this cool Lisp-looking stuff then I can probably read it in [[Q9307|Galician]]?? COOL!&#x300D;). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 20:26, 27 April 2026 (UTC)
+
+== Filtering types of objects ==
+
+Hello! 
+
+I have tried to comb through my own edit history several times, but it's really hard to search for specifics because there's no differentiation between different types of objects (functions, implementations, tests, etc.) in the logs as far as I can tell. 
+
+Am I missing anything? I want it to work sort of like how filtering by namespace works. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:48, 27 April 2026 (UTC)
+:There is differentiation, it's just rather hard to look through. Since all ZObjects are just JSON data at their core, you can search for instances of <code>{ "Z1K1": "Z[type]"</code>. I haven't tried this so I'm not sure how well it would work and I know MediaWiki search syntax treats quotation marks as a special character, but I have seen Wikifunctions pages link to searches using this before. There is also [[Special:ListObjectsByType]] but it is sitewide rather than specific to your edit history in particular. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 18:59, 27 April 2026 (UTC)

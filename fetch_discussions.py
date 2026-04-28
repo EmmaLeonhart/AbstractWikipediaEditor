@@ -1,16 +1,17 @@
-"""Snapshot Abstract Wikipedia discussion pages into discussions/ so the
-bot (and anything reading this repo for context) can see what has been
-said on the project chat and on Immanuelle's talk pages without having
-to fetch them live.
+"""Snapshot Abstract Wikipedia and Wikifunctions discussion pages into
+discussions/ so the bot (and anything reading this repo for context)
+can see what has been said on the project chats and on Immanuelle's
+talk pages without having to fetch them live.
 
 Run by .github/workflows/fetch-discussions.yml every day and on every
 push to master; the workflow commits the diff if any page has changed
 since the last snapshot. There is nothing authenticated here — the
 pages are public and we're just pulling their current wikitext.
 
-The pages we track are hardcoded in PAGES below. To add a new page,
-append its title (same form as the URL: `User_talk:Foo` not
-`User talk:Foo`) and the corresponding output filename.
+The pages we track are hardcoded in PAGES below as (host, title,
+filename) tuples. To add a new page, append a tuple with the wiki
+host (e.g. `abstract.wikipedia.org`), the page title in URL form
+(`User_talk:Foo`, not `User talk:Foo`), and the output filename.
 
 Usage:
     python fetch_discussions.py                  # fetch + write
@@ -30,20 +31,30 @@ import requests
 if not isinstance(sys.stdout, io.TextIOWrapper) or sys.stdout.encoding != "utf-8":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-API_URL = "https://abstract.wikipedia.org/w/api.php"
-
-# (page title on the wiki, output filename under discussions/)
+# (host, page title on the wiki, output filename under discussions/)
 # Title must be in the URL-style form with underscores — this is what
-# MediaWiki accepts as titles= and what the wiki URL bar shows.
+# MediaWiki accepts as titles= and what the wiki URL bar shows. Each
+# host gets its own batched API call; pages from different wikis can't
+# share a query.
 PAGES = [
-    ("Abstract_Wikipedia:Project_chat",
+    ("abstract.wikipedia.org",
+     "Abstract_Wikipedia:Project_chat",
      "abstract_wikipedia_project_chat.wikitext"),
-    ("Abstract_Wikipedia:Report_a_technical_problem",
+    ("abstract.wikipedia.org",
+     "Abstract_Wikipedia:Report_a_technical_problem",
      "abstract_wikipedia_report_a_technical_problem.wikitext"),
-    ("User_talk:Immanuelle",
+    ("abstract.wikipedia.org",
+     "User_talk:Immanuelle",
      "user_talk_immanuelle.wikitext"),
-    ("User_talk:Immanuelle/Abstract_Wikipedia_Editor",
+    ("abstract.wikipedia.org",
+     "User_talk:Immanuelle/Abstract_Wikipedia_Editor",
      "user_talk_immanuelle_abstract_wikipedia_editor.wikitext"),
+    # Wikifunctions community is also relevant — the editor compiles to
+    # Wikifunctions calls and most natural-language-generation issues
+    # surface there first.
+    ("www.wikifunctions.org",
+     "Wikifunctions:Project_chat",
+     "wikifunctions_project_chat.wikitext"),
 ]
 
 SESSION = requests.Session()
@@ -52,12 +63,13 @@ SESSION.headers.update({
 })
 
 
-def fetch_wikitext(titles):
-    """Batch-fetch the current wikitext of each title. Returns a dict
-    title -> wikitext (str) or None if the page is missing. The wiki
-    normalizes titles on our behalf (e.g. underscores <-> spaces) so we
-    map results back to the input titles via both the raw title we sent
-    and the normalizations list the API returns."""
+def fetch_wikitext(host, titles):
+    """Batch-fetch the current wikitext of each title from the given
+    wiki host. Returns a dict title -> wikitext (str) or None if the
+    page is missing. The wiki normalizes titles on our behalf (e.g.
+    underscores <-> spaces) so we map results back to the input titles
+    via both the raw title we sent and the normalizations list the API
+    returns."""
     params = {
         "action": "query",
         "titles": "|".join(titles),
@@ -67,7 +79,7 @@ def fetch_wikitext(titles):
         "format": "json",
         "formatversion": "2",
     }
-    r = SESSION.get(API_URL, params=params, timeout=60)
+    r = SESSION.get(f"https://{host}/w/api.php", params=params, timeout=60)
     r.raise_for_status()
     data = r.json()
 
@@ -92,14 +104,14 @@ def fetch_wikitext(titles):
     return out
 
 
-def header_block(title, fetched_at):
+def header_block(host, title, fetched_at):
     """A small provenance header prepended to each snapshot so a reader
     can tell when it was captured and where from. Kept as wiki-style
     HTML comments so copying the file back to the wiki would still
     render cleanly."""
     return (
         "<!--\n"
-        f"  Snapshot of https://abstract.wikipedia.org/wiki/{title}\n"
+        f"  Snapshot of https://{host}/wiki/{title}\n"
         f"  Fetched:   {fetched_at}\n"
         "  Source:    fetch_discussions.py (auto-updated via GitHub Actions)\n"
         "  DO NOT EDIT — any local changes will be overwritten on the next run.\n"
@@ -107,15 +119,15 @@ def header_block(title, fetched_at):
     )
 
 
-def build_snapshot(title, wikitext, fetched_at):
+def build_snapshot(host, title, wikitext, fetched_at):
     if wikitext is None:
-        return header_block(title, fetched_at) + f"<!-- page missing or not yet created -->\n"
+        return header_block(host, title, fetched_at) + f"<!-- page missing or not yet created -->\n"
     # Normalize line endings so a CRLF checkout on Windows doesn't show
     # spurious diffs against a LF-fetched body.
     body = wikitext.replace("\r\n", "\n").replace("\r", "\n")
     if not body.endswith("\n"):
         body += "\n"
-    return header_block(title, fetched_at) + body
+    return header_block(host, title, fetched_at) + body
 
 
 def strip_header(content):
@@ -137,23 +149,31 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
 
-    titles = [t for t, _ in PAGES]
-    print(f"Fetching {len(titles)} discussion page(s)...", flush=True)
-    try:
-        contents = fetch_wikitext(titles)
-    except requests.RequestException as e:
-        print(f"ERROR: fetch failed: {e}", flush=True)
-        sys.exit(2)
+    # Group pages by host so we make one batched API call per wiki.
+    by_host = {}
+    for host, title, _ in PAGES:
+        by_host.setdefault(host, []).append(title)
+
+    print(f"Fetching {len(PAGES)} discussion page(s) from {len(by_host)} wiki(s)...", flush=True)
+    contents = {}
+    for host, titles in by_host.items():
+        try:
+            host_contents = fetch_wikitext(host, titles)
+        except requests.RequestException as e:
+            print(f"ERROR: fetch from {host} failed: {e}", flush=True)
+            sys.exit(2)
+        for title, wikitext in host_contents.items():
+            contents[(host, title)] = wikitext
 
     fetched_at = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
     changed = []
     unchanged = []
     missing = []
-    for title, filename in PAGES:
-        wikitext = contents.get(title)
+    for host, title, filename in PAGES:
+        wikitext = contents.get((host, title))
         path = os.path.join(args.out, filename)
-        new_content = build_snapshot(title, wikitext, fetched_at)
+        new_content = build_snapshot(host, title, wikitext, fetched_at)
 
         # Compare against the existing file (ignoring the provenance
         # header, which always differs because of the fetched_at stamp).

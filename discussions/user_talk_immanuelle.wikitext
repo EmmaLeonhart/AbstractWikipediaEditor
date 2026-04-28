@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-04-28T00:45:29Z
+  Fetched:   2026-04-28T06:18:43Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -39,3 +39,13 @@ Hello!
 I seemed to notice you use citations on AWE, but it places them on separate paragraphs.
 
 I suggest you just append them to the corresponding paragraph like so: {{Q|Q7243}}. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:06, 26 April 2026 (UTC)
+
+:@[[User:QuickQuokka|QuickQuokka]] I fixed that. Paragraphs should be restored too but gotta do some testing for it. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 01:28, 28 April 2026 (UTC)
+
+== Three points regarding paragraphs ==
+
+Apologies if this sounds condescending, but I believe it is important to clarify these:
+# Don't have separate paragraphs for each sentence.
+# Only add a paragraph break when you otherwise would add one in real English.
+# Use [[f:Z33068|the paragraph from sentences function]] so that no hard-coded spaces are needed.
+[[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 03:39, 28 April 2026 (UTC)

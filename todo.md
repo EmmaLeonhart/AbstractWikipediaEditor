@@ -23,12 +23,14 @@
 - [x] Edit summaries linking to editor user page
 - [x] Named 38 undocumented top-level functions from article scan
 - [x] Skip P138 (named after) — always bad
+- [x] Migrated P279 mapping from Z26095 to Z26039 to avoid "A X is a Y" misrenders on instance-shaped items (see `data/property_function_mapping.json`). Note: GrounderUK on the WF Project chat argues Z26095 is the semantically correct function for P279; revisit if that becomes consensus.
+- [x] Migrated dedicated-to / shrine-rank / citizenship / etc. from Z26955 (deprecated) to Z28016 (defining role sentence) per ChaoticVermillion's note on User_talk:Immanuelle.
+- [x] Track Wikifunctions Project chat in `discussions/` so feedback there flows into this repo.
+- [x] Local preview "a" vs "an" article selection (mirrors Z21739 on Wikifunctions; raised by QuickQuokka on the WF Project chat).
 
 ## Known Issues
 
-- [ ] **P279 (subclass of) → Z26095 is almost always wrong.** Z26095 produces "A X is a Y" which is only correct for class-to-class relationships (e.g. "An antelope is a mammal"). But P279 gets applied to all kinds of items where this phrasing is nonsensical. Need to either skip P279 entirely or add strict filtering to only use it when the item is genuinely a class/type, not an instance.
-- [ ] **Z26955 renderer produces broken English.** The local preview renders Z26955 as `"X is Y of Z"` with no article, producing sentences like "Marie Curie is citizenship of Poland" instead of "Marie Curie is a citizen of Poland." The Wikifunctions Z26955 function handles articles intelligently per-predicate, but our simplified renderer cannot. Need to either make the renderer smarter about articles or use per-property overrides in the mapping.
-- [ ] Edit all previously published articles to fix errors from old wrong QIDs
+- [ ] Edit all previously published articles to fix errors from old wrong QIDs (in progress; tracked alongside the Z26955→Z28016 and "it"→SUBJECT cleanups already done on-wiki).
 
 ## In Progress
 

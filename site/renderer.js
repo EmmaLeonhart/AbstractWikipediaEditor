@@ -67,6 +67,25 @@ function resolveArg(a, subjectQid) {
   return a;
 }
 
+// Plain-text label used to pick "a" vs "an" in renderSentence. resolveArg
+// returns HTML, which we can't read the first letter off, so we look up
+// the underlying label (or use the raw arg if it isn't a QID).
+function rawArg(a, subjectQid) {
+  if (a === 'SUBJECT' || a === 'it') return labelCache[subjectQid] || subjectQid;
+  if (a === '$lang') return 'language';
+  if (/^Q\d+$/.test(a)) return labelCache[a] || a;
+  return a;
+}
+
+function articleFor(label) {
+  const first = (label || '').trim().charAt(0).toLowerCase();
+  return 'aeiou'.includes(first) ? 'an' : 'a';
+}
+
+function cap(s) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 function formatNumber(raw) {
   if (!raw) return '?';
   if (raw.includes('/')) {
@@ -79,18 +98,19 @@ function formatNumber(raw) {
 
 function renderSentence(frag, subjectQid) {
   const a = frag.args.map(arg => resolveArg(arg, subjectQid));
+  const r = frag.args.map(arg => rawArg(arg, subjectQid));
   switch (frag.funcId) {
-    case 'Z26570': return `${a[0]} is a ${a[1]} in ${a[2]}.`;
-    case 'Z26039': return `${a[0]} is a ${a[1]}.`;
-    case 'Z26095': return `A ${a[0]} is a ${a[1]}.`;
+    case 'Z26570': return `${a[0]} is ${articleFor(r[1])} ${a[1]} in ${a[2]}.`;
+    case 'Z26039': return `${a[0]} is ${articleFor(r[1])} ${a[1]}.`;
+    case 'Z26095': return `${cap(articleFor(r[0]))} ${a[0]} is ${articleFor(r[1])} ${a[1]}.`;
     case 'Z28016': return `${a[0]} is the ${a[1]} of ${a[2]}.`;
-    case 'Z32982': return `${a[0]} is a ${a[1]} in ${a[2]}.`;
-    case 'Z29591': return `${a[0]} is a ${a[1]} ${a[2]}.`;
+    case 'Z32982': return `${a[0]} is ${articleFor(r[1])} ${a[1]} in ${a[2]}.`;
+    case 'Z29591': return `${a[0]} is ${articleFor(r[1])} ${a[1]} ${a[2]}.`;
     case 'Z26627': return `${a[0]} are ${a[1]}.`;
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;
     case 'Z27173': return `${a[0]} is ${a[1]} ${a[2]}.`;
-    case 'Z29743': return `A ${a[0]} is a ${a[1]} ${a[2]}.`;
-    case 'Z32229': return `${a[0]} has a ${a[2]} ${formatNumber(a[3])} times that of ${a[1]}.`;
+    case 'Z29743': return `${cap(articleFor(r[0]))} ${a[0]} is ${articleFor(r[1])} ${a[1]} ${a[2]}.`;
+    case 'Z32229': return `${a[0]} has ${articleFor(r[2])} ${a[2]} ${formatNumber(a[3])} times that of ${a[1]}.`;
     default: return a.join(' ');
   }
 }

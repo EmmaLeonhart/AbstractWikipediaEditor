@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-04-28T06:18:43Z
+  Fetched:   2026-04-29T06:11:54Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -406,6 +406,12 @@ I have tried to comb through my own edit history several times, but it's really 
 Am I missing anything? I want it to work sort of like how filtering by namespace works. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:48, 27 April 2026 (UTC)
 :There is differentiation, it's just rather hard to look through. Since all ZObjects are just JSON data at their core, you can search for instances of <code>{ "Z1K1": "Z[type]"</code>. I haven't tried this so I'm not sure how well it would work and I know MediaWiki search syntax treats quotation marks as a special character, but I have seen Wikifunctions pages link to searches using this before. There is also [[Special:ListObjectsByType]] but it is sitewide rather than specific to your edit history in particular. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 18:59, 27 April 2026 (UTC)
 :See the feature requests [[phab:T399244]]/[[phab:T373735]]. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 06:06, 28 April 2026 (UTC)
+:The lack of filtering edits by namespace is exactly the problem that I was trying to solve with the [[User:Amire80/wikifunctionsanalytics]] tool.
+:I even kind of succeeded, but it has two major problems:
+:# It doesn't have any real frontend, so you have to know some SQL to use it (or ask other people who know SQL).
+:# It doesn't get information from the live site, but from the dump, which appears to be updated once a month.
+:I've made a [https://quarry.wmcloud.org/query/104794 sample query for you]. Unfortunately, it won't do anything at the moment because of the second problem—your edits started in April 2026, which isn't over yet, so the dump for it hasn't been processed. But I hope that early in May you'll be able to use the same query and see something useful.
+:(I plan to add support for recent edits, but I haven't done it yet. Now that I more or less figured out how to process Wikifunctions edits, I'm focused on trying to understand Abstract Wikipedia edits. Processing up-to-date edits from both sites will possibly be the next thing I work on, but if you know some Python and want to try doing it yourself, don't wait for me—[https://gitlab.wikimedia.org/toolforge-repos/wikifunctions-analytics Patches welcome].) [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:51, 28 April 2026 (UTC)
 
 == [[Z34213]] ==
 
@@ -416,3 +422,43 @@ I'm not quite sure why this implementation is failing. Could someone take a look
 :* create more testcases: sometimes it is a random error, so try to see how consistent it is between testcases
 :* your implementation is very inefficient, since it fetches items and lexemes a lot of times. Ideally, each item and each lexeme should be only fetched once in all the execution tree.
 :[[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 06:06, 28 April 2026 (UTC)
+::Caching (''should?'') means that the lexeme and item data are cached, so the call doesn't actually execute multiple times. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:51, 28 April 2026 (UTC)
+:::Are lexemes and items actually cached within the same function execution? Even if they are only partially fetched and/or fetched in bulk? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 17:54, 28 April 2026 (UTC)
+::::I don't have any evidence to prove that it works but that's definitely A. what's supposed to happen and B. the ideal behavior. This happens because the Z680X functions can be cached just like any other. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:02, 28 April 2026 (UTC)
+
+== Question about cardinal numbers ==
+
+I was about to edit {{Z|Z16435}} to add my function {{Z|Z34308}}, but I noticed that none of the other functions have a gender parameter. 
+
+Should I create a new wrapper function "Bulgarian cardinal, neuter", or should I just remove the gender parameter and always return neuter? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:39, 28 April 2026 (UTC)
+
+:The “cardinal” functions should return the words used for “counting” numbers in the abstract.
+:We should consider converting them to return a {{Z|Z11}} rather than a {{Z|Z6}}. It may even be appropriate to return a {{Z|Z12}} to cater for language variants. Either way, I think that would be the approach to adopt for inflected forms, unless reference to specific lexeme-forms is required. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 12:52, 28 April 2026 (UTC)
+::This. If a native of your language were to count up, which form would they be most likely to use? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:29, 28 April 2026 (UTC)
+::: {{re|GrounderUK|Feeglgeef}} Thanks for both your input! 
+::: I relabeled the aforementioned function to {{Z|Z34308}}, and created a new wrapper function {{Z|Z34457}}.
+::: Should I specify that my old function is a monolingual text in parentheses? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:26, 28 April 2026 (UTC)
+::::You don't have to, unless you think that is something that would require distinction when viewing the function in a list of search results &c. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:36, 28 April 2026 (UTC)
+
+== Optional/nullable function parameters ==
+
+Hello! 
+
+Recently, I was informed that Wikifunctions has no optional/nullable function parameters as of now.
+
+Are there any future plans to support this, and/or workarounds? Maybe create a union type system like "{{Z|6}} or {{Z|23}}". <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 17:53, 28 April 2026 (UTC)
+
+:What I do for this is use an "is empty" function corresponding to the type of the parameter in an If statement. If it isn't empty, the function works as intended. Otherwise, it does something else. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 17:58, 28 April 2026 (UTC)
+:Unions are not a thing (yet) on Wikifunctions, but you can always define an argument of type {{Z|Z1}}, which means that all types are allowed (I already did this for {{Z|Z26737}}; note that it is still a ugly workaround, don't use it for high level functions). Also, note that usually on Wikifunctions we use {{Z|Z24}} as the null value. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 18:00, 28 April 2026 (UTC)
+:: {{re|JJPMaster|Dv103}} Thanks for your help! 
+:: @[[User:Dv103|Dv103]] told me a function call with a missing parameter is treated as an invalid function call, so how does the "is empty" function work with that? 
+:: Also, setting the type to {{Z|1}} seems naive, like setting the type as <code>any</code> in TypeScript...
+:: Related question: Are there plans to add default values to parameters (outside of "if empty")? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 18:19, 28 April 2026 (UTC)
+:::Setting the type to {{Z|Z1}} is actually naive, and that's why I advised you to only use it for low-level functions. Currently there is nothing better. Sometimes, type correctness is not actually checked, so it might seem that nullable types are possible. But it is still an hack, and it could broke anytime since it is not intended behavior.
+:::I don't think that there are current plans to add default values (but correct me if I'm wrong). The closest thing that comes to my mind is that, if you incorporate Wikifunctions into Wikitext, you can leave empty some fields (only of some specific types) and Parsoid will replace them to their default value. This is done only depending on the type, and not on the functions. For example, {{Z|Z6091}} and {{Z|Z6001}} are assigned the QID associated to the page, and {{Z|Z20420}} is assigned the current date. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 18:56, 28 April 2026 (UTC)
+:::@[[User:QuickQuokka|QuickQuokka]]: At the very least, [[Z10008]] accepts a null input. Maybe that feature is unique to the String type—I am not sure. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 19:10, 28 April 2026 (UTC)
+::::I think it's just not checked, but it shouldn't be intended. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:20, 28 April 2026 (UTC)
+::::Strings and typed lists can be “empty” in the sense that their length can be zero. Typed pairs may also be “empty” in a degenerate sense, but such an object will not be returned from a code implementation. A typed map with no entries will also fail to be returned from code, although it is fine in compositions.
+::::For a genuinely optional parameter, I prefer a properly typed list, which at least encourages an argument of the correct type. {{Z|Z813}} is also typically faster than {{Z|Z10008}}. Quite a good example of this approach is {{Z|Z23723}}, where it helps to resolve the type union (using [[Z1]]) for both Z6003K1 and Z6003K3. Of course, there’s nothing to prevent more than one element in the list, but additional elements are easily ignored. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:55, 28 April 2026 (UTC)
+:Pinging {{ping|Jdforrester (WMF)|prefix=|p=}}, I believe there are no current plans. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:02, 28 April 2026 (UTC)
+::@[[User:QuickQuokka|QuickQuokka]]: I'm afraid there are no current plans to build out optional params, indeed; we would be happy to review this if a compelling case was made, but it'd be a lot of work to re-build the [[Wikifunctions:Function model|function model]] with that support and ensure we don't break (too many) things. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:11, 28 April 2026 (UTC)

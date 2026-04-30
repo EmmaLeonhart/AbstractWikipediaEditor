@@ -13,7 +13,7 @@ The app queries Wikidata for item properties, maps them to Wikifunctions sentenc
 - Screenshots saved to `screenshots/` directory
 
 ### Paragraph Model and Section Headers (`==QID==`)
-Multiple `{{...}}` calls between paragraph breaks bundle into a single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard item. Citations (`{{cite web|URL}}`) are just regular calls, so they bundle into the paragraph of the sentence they follow — exactly where their `<sup>`-style refs belong.
+Multiple `{{...}}` calls between paragraph breaks bundle into a single Z33068([Z1, call1, call2, ...]) clipboard item. Z33068 ("paragraph from sentences") inserts inter-sentence spacing itself, so we no longer store hard-coded `"  "` separator strings between calls. Citations (`{{cite web|URL}}`) are just regular calls, so they bundle into the paragraph of the sentence they follow — exactly where their `<sup>`-style refs belong.
 
 A paragraph break is any of:
 - a blank line in the source,
@@ -23,9 +23,9 @@ A paragraph break is any of:
 Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))). `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
 
 - `generate_wikitext.py` emits one paragraph per claim (sentence + its citations), separated by blank lines
-- `convert_article.py` / `build_pages.py` emit each Z32123 paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same structure
+- `convert_article.py` / `build_pages.py` emit each paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same structure. Both decoders accept either Z33068 (new shape) or the legacy Z32123(Z32234(...)) wrapper, so older articles still round-trip correctly
 
-**History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. That was a misread of the WF Project chat (Immanuelle's words: "some guy gave a confusing objection so I switched it, and then everybody hated it, including that guy"). The community wanted multi-sentence paragraphs with paragraph breaks; this file previously locked in the wrong rule. If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
+**History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. That was a misread of the WF Project chat (Immanuelle's words: "some guy gave a confusing objection so I switched it, and then everybody hated it, including that guy"). The community wanted multi-sentence paragraphs with paragraph breaks; this file previously locked in the wrong rule. The current shape uses Z33068 per JJPMaster's request on 28 April 2026 ("Use Z33068 (the paragraph from sentences function) so that no hard-coded spaces are needed"). If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.

@@ -382,9 +382,9 @@ variables:
         frag0 = result[0]
         assert frag0["resolvingType"] == "Z89"
         assert frag0["itemId"] == "Q12345.1#1"
-        assert frag0["value"]["Z7K1"] == z9s("Z32123")
+        assert frag0["value"]["Z7K1"] == z9s("Z33068")
         inner_calls = [
-            x for x in frag0["value"]["Z32123K1"]["Z32234K1"]
+            x for x in frag0["value"]["Z33068K1"]
             if isinstance(x, dict)
         ]
         assert len(inner_calls) == 2
@@ -405,9 +405,9 @@ variables:
         })
         # Three adjacent calls bundle into one paragraph
         assert len(result) == 1
-        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
+        assert result[0]["value"]["Z7K1"] == z9s("Z33068")
         inner_calls = [
-            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
+            x for x in result[0]["value"]["Z33068K1"]
             if isinstance(x, dict)
         ]
         assert len(inner_calls) == 3
@@ -415,8 +415,8 @@ variables:
     def test_z6_returning_function_wraps_as_paragraph(self):
         template = "{{Z26039|SUBJECT|Q515}}"
         result = compile_template(template)
-        # Single template wraps as Z32123 paragraph
-        assert result[0]["value"]["Z7K1"] == z9s("Z32123")
+        # Single template wraps as Z33068 paragraph
+        assert result[0]["value"]["Z7K1"] == z9s("Z33068")
 
 
 # ============================================================
@@ -432,15 +432,11 @@ class TestMatchesExistingOutput:
         result = compile_template(template, {"deity": "Q99999"})
         para = result[0]["value"]
 
-        # Outer: Z32123 paragraph
-        assert para["Z7K1"]["Z9K1"] == "Z32123"
-
-        # Z32234 inside
-        z32234 = para["Z32123K1"]
-        assert z32234["Z7K1"]["Z9K1"] == "Z32234"
+        # Outer: Z33068 paragraph (no Z32234 wrapper anymore)
+        assert para["Z7K1"]["Z9K1"] == "Z33068"
 
         # Inner call list: [Z1, Z28016_call]
-        typed_list = z32234["Z32234K1"]
+        typed_list = para["Z33068K1"]
         inner = typed_list[1]
         assert inner["Z7K1"]["Z9K1"] == "Z28016"
 
@@ -459,12 +455,10 @@ class TestMatchesExistingOutput:
         result = compile_template(template)
         para = result[0]["value"]
 
-        # Outer: Z32123 paragraph
-        assert para["Z7K1"]["Z9K1"] == "Z32123"
+        # Outer: Z33068 paragraph
+        assert para["Z7K1"]["Z9K1"] == "Z33068"
 
-        # Inner call inside Z32234
-        z32234 = para["Z32123K1"]
-        typed_list = z32234["Z32234K1"]
+        typed_list = para["Z33068K1"]
         inner = typed_list[1]
         assert inner["Z7K1"]["Z9K1"] == "Z26570"
 
@@ -527,8 +521,8 @@ class TestTemplateFiles:
             "subject": "Q513",
         })
         assert len(result) == 1
-        # Single template wraps as Z32123 paragraph
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
+        # Single template wraps as Z33068 paragraph
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z33068"
 
 
 class TestFunctionRegistry:

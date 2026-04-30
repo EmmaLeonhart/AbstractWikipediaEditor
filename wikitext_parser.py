@@ -748,29 +748,21 @@ def parse_template(text):
 def compile_paragraph(fragment_defs, variables, origin_qid, index):
     """Compile a group of fragments into a single paragraph clipboard item.
 
-    Wraps multiple function calls in Z32123(Z32234([Z1, call1, "  ", call2, ...])).
-    Each inner call is NOT individually wrapped — Z32234 handles text
-    concatenation and Z32123 produces the final Z89 HTML paragraph.
+    Wraps multiple function calls in Z33068([Z1, call1, call2, ...]).
+    Z33068 ("paragraph from sentences") takes a typed list of sentences
+    and produces the Z89 HTML paragraph directly — no separator strings
+    needed, because the function inserts spacing between sentences itself.
     """
     inner_calls = []
     for frag_def in fragment_defs:
         func_call, _return_type = build_func_call(frag_def, variables)
         inner_calls.append(func_call)
 
-    # Build typed list with whitespace separators between sentences
-    typed_list = ["Z1"]
-    for i, call in enumerate(inner_calls):
-        if i > 0:
-            typed_list.append("  ")
-        typed_list.append(call)
+    typed_list = ["Z1", *inner_calls]
 
-    # Z32234 (join text to html) wraps the list
-    z32234_call = z7_call("Z32234", {"Z32234K1": typed_list})
+    z33068_call = z7_call("Z33068", {"Z33068K1": typed_list})
 
-    # Z32123 (paragraph) wraps Z32234 to produce Z89
-    z32123_call = z7_call("Z32123", {"Z32123K1": z32234_call})
-
-    return build_clipboard_item(z32123_call, index=index, origin_qid=origin_qid)
+    return build_clipboard_item(z33068_call, index=index, origin_qid=origin_qid)
 
 
 def compile_section_header(qid, variables, origin_qid, index):
@@ -802,8 +794,8 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 # Paragraph-break markers in wikitext: a blank line, an explicit
 # {{p}} token, or a ==QID== section header. The first two split the
-# body into bundled paragraphs (multi-call Z32123(Z32234) items);
-# section headers also emit a Z31465 item.
+# body into bundled paragraphs (multi-call Z33068 items); section
+# headers also emit a Z31465 item.
 _PARAGRAPH_SPLIT_RE = re.compile(
     r'(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$|\n[ \t]*\n)',
     re.IGNORECASE | re.MULTILINE,
@@ -814,8 +806,10 @@ def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
     Multiple ``{{...}}`` calls within a paragraph are bundled into a
-    single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard
-    item. Paragraph breaks are introduced by:
+    single Z33068([Z1, call1, call2, ...]) clipboard item — Z33068
+    ("paragraph from sentences") inserts spacing between sentences
+    itself, so no separator strings are stored. Paragraph breaks are
+    introduced by:
 
     * a blank line in the source,
     * an explicit ``{{p}}`` token,

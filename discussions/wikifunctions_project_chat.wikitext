@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-04-29T06:11:54Z
+  Fetched:   2026-04-30T06:16:31Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -396,6 +396,9 @@ I guess I am just concerned if Wikifunctions or Abstract Wikipedia will ever acc
 :: I feel that the overwhelming presence of these low-quality articles (which I admit I myself am [[abstract:Q1710970|guilty]]/[[abstract:Q7601858|of]]/[[abstract:Q39338|creating]], usually as testbeds) may incur a large maintenance burden. I do expect them to be easy to detect, however, as searching for the presence of "deprecated" NLG functions is trivial, and it is possible that replacing them with their future ''even abstracter&trade;'' counterparts could be done automatically since they all have the same signatures and can be expected to create the same form of sentence. If it needs to be done manually for a while or for certain delinquent instances, my hope is that it will be fun, at least for a while.
 :: I just hope that these hypothetical future waves of "this new and versatile way of abstractly representing linguistic content" obsoleting previous methods and requiring refactoring across all articles is only a one-time thing. We should strive to be as robust and flexible as possible from the outset as each brand new paradigm of abstraction is also a brand new maintenance burden for updating old articles. At the end of the day, at least ''some'' of these articles will still render to many different languages even if their methods of creating those sentences of theirs is completely outdated. Ergo, the time it takes for the switchover to be performed across our articles should not be a persistent inconvenience for users (as, of course, they will always still be able to read the content as it was before since these legacy functions aren't being deleted outright), and the increased availability that the new methods will bring about will likely act as motivation for them to join the effort in refactoring (&#x300C;You're telling me that if I rewrite this article in this cool Lisp-looking stuff then I can probably read it in [[abstract:Q9307|Galician]]?? COOL!&#x300D;). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 20:26, 27 April 2026 (UTC)
 :::Totally agree. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:54, 28 April 2026 (UTC)
+:::My vague plan is to implement a default function returning an {{Z|Z89}}, for each language-neutral function. A single function would convert any of these to a {{Z|Z11}}, so that a composition of the two can be implemented as the current default until such time as the language-neutral function is ready to return a [[Z89]]. We can already convert a [[Z11]] to a [[Z89]] so, although there is more to be done in this space, existing language-specific functions could be adapted to return a [[Z89]] quite mechanistically.
+:::Although we certainly could deliver parallel Z89 functions for each existing Z11 function, I don’t think we should assume that particular outcome. Provided the Z89 captures a lang attribute from the Z11’s language tag, the two representations should be largely interchangeable, although I am expecting a Z89 to carry additional attributes at the span level that would be lost on conversion to a Z11 (along with any higher-level tags and attributes).
+:::When I say there is “more to be done in this space”, I am referring to a new type that would allow HTML fragments to be represented as tractable Wikifunctions objects, but this is currently drafted only in my head! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 11:21, 29 April 2026 (UTC)
 
 == Filtering types of objects ==
 
@@ -405,6 +408,7 @@ I have tried to comb through my own edit history several times, but it's really 
 
 Am I missing anything? I want it to work sort of like how filtering by namespace works. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:48, 27 April 2026 (UTC)
 :There is differentiation, it's just rather hard to look through. Since all ZObjects are just JSON data at their core, you can search for instances of <code>{ "Z1K1": "Z[type]"</code>. I haven't tried this so I'm not sure how well it would work and I know MediaWiki search syntax treats quotation marks as a special character, but I have seen Wikifunctions pages link to searches using this before. There is also [[Special:ListObjectsByType]] but it is sitewide rather than specific to your edit history in particular. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 18:59, 27 April 2026 (UTC)
+::''[It doesn’t help directly here, but please see [[WF:Find]] for more details of how this works.]'' [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 10:24, 29 April 2026 (UTC)
 :See the feature requests [[phab:T399244]]/[[phab:T373735]]. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 06:06, 28 April 2026 (UTC)
 :The lack of filtering edits by namespace is exactly the problem that I was trying to solve with the [[User:Amire80/wikifunctionsanalytics]] tool.
 :I even kind of succeeded, but it has two major problems:
@@ -425,6 +429,11 @@ I'm not quite sure why this implementation is failing. Could someone take a look
 ::Caching (''should?'') means that the lexeme and item data are cached, so the call doesn't actually execute multiple times. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:51, 28 April 2026 (UTC)
 :::Are lexemes and items actually cached within the same function execution? Even if they are only partially fetched and/or fetched in bulk? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 17:54, 28 April 2026 (UTC)
 ::::I don't have any evidence to prove that it works but that's definitely A. what's supposed to happen and B. the ideal behavior. This happens because the Z680X functions can be cached just like any other. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:02, 28 April 2026 (UTC)
+::::It is unclear. In general, I believe identical branches are resolved only once in orchestration, but there is also independent caching of Wikidata fetches.
+::::According to @[[User:DMartin (WMF)|DMartin (WMF)]] ([https://t.me/Wikifunctions/30374 on Telegram]):
+::::<blockquote>Well, no.  We have caching of Wikidata entities that have been retrieved, but not of the results of nested function calls.  There is a proposal for doing this in the context of the V2 composition language, when it's a bit more mature, and it's regarded as a relatively high priority.</blockquote>
+::::It’s hard to tell whether fetches in nested calls are, in fact, cached and available for other nested calls in the same call, since it is not generally the actual fetch that consumes the most resources. Rather (I believe), it is construction and transmission of the result object, which is currently repeated afresh in each nested call (unless it is in an identical branch).
+::::I hope that’s clear, and I apologise in advance if it happens to be inaccurate! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 10:16, 29 April 2026 (UTC)
 
 == Question about cardinal numbers ==
 

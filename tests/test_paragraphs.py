@@ -2,9 +2,7 @@
 
 Verifies that:
 - Multiple ``{{...}}`` calls within a paragraph bundle into one
-  Z33068([Z1, call1, call2, ...]) clipboard item — Z33068 is the
-  "paragraph from sentences" function and inserts inter-sentence
-  spacing itself, so no hard-coded separator strings are stored
+  Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard item
 - Blank lines and ``{{p}}`` markers split paragraphs
 - ==QID== section headers compile to Z31465(Z10771(Z24766(QID, $lang)))
   and also act as paragraph breaks
@@ -48,29 +46,33 @@ JUPITER_WIKITEXT = """{{is a|SUBJECT|Q634}}
 
 
 class TestBundledParagraphCompilation:
-    """Calls between paragraph breaks bundle into one Z33068."""
+    """Calls between paragraph breaks bundle into one Z32123(Z32234)."""
 
     def test_bundles_into_single_paragraph(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
         assert len(result) == 1, "5 calls, no breaks -> 1 paragraph"
 
-    def test_outer_is_z33068(self):
+    def test_outer_is_z32123(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z33068"
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
-    def test_typed_list_holds_all_calls_no_separators(self):
-        """The bundled list is [Z1, call1, call2, ...] with no string seps."""
+    def test_inner_is_z32234(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        typed_list = result[0]["value"]["Z33068K1"]
+        assert result[0]["value"]["Z32123K1"]["Z7K1"]["Z9K1"] == "Z32234"
+
+    def test_typed_list_holds_all_calls_with_separators(self):
+        """The bundled list is [Z1, call1, "  ", call2, "  ", ...]."""
+        result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         assert typed_list[0] == "Z1"
         calls = [x for x in typed_list if isinstance(x, dict)]
         seps = [x for x in typed_list if isinstance(x, str) and x != "Z1"]
         assert len(calls) == 5
-        assert seps == []  # Z33068 inserts spacing itself
+        assert seps == ["  "] * 4  # n-1 separators
 
     def test_inner_call_function_ids(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        typed_list = result[0]["value"]["Z33068K1"]
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         func_ids = [x["Z7K1"]["Z9K1"] for x in typed_list if isinstance(x, dict)]
         assert func_ids == ["Z26039", "Z27243", "Z26039", "Z32229", "Z32229"]
 
@@ -84,12 +86,12 @@ class TestBundledParagraphCompilation:
 
     def test_subject_resolved_in_first_inner_call(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        first_call = result[0]["value"]["Z33068K1"][1]
+        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert first_call["Z26039K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
     def test_qids_resolved_in_inner_calls(self):
         result = compile_template(JUPITER_WIKITEXT, {"subject": "Q319"})
-        first_call = result[0]["value"]["Z33068K1"][1]
+        first_call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert first_call["Z26039K2"]["Z6091K1"]["Z6K1"] == "Q634"
 
 
@@ -118,11 +120,11 @@ class TestParagraphBreaks:
         result = compile_template(template, {"subject": "Q319"})
         assert len(result) == 2
         first_calls = [
-            x for x in result[0]["value"]["Z33068K1"]
+            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
             if isinstance(x, dict)
         ]
         second_calls = [
-            x for x in result[1]["value"]["Z33068K1"]
+            x for x in result[1]["value"]["Z32123K1"]["Z32234K1"]
             if isinstance(x, dict)
         ]
         assert len(first_calls) == 2
@@ -141,7 +143,7 @@ class TestSingleTemplateBehavior:
         template = "{{Z26039|SUBJECT|Q634}}"
         result = compile_template(template, {"subject": "Q319"})
         assert len(result) == 1
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z33068"
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
     def test_shrine_template_one_paragraph_two_calls(self):
         template = """---
@@ -153,7 +155,7 @@ variables:
 {{Z28016|$deity|Q11591100|SUBJECT}}"""
         result = compile_template(template, {"deity": "Q99999", "subject": "Q12345"})
         assert len(result) == 1, "Two adjacent calls bundle into one paragraph"
-        typed_list = result[0]["value"]["Z33068K1"]
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         calls = [x for x in typed_list if isinstance(x, dict)]
         assert len(calls) == 2
 
@@ -167,7 +169,7 @@ class TestCitationsBundle:
 {{cite web|https://example.com/source}}"""
         result = compile_template(template, {"subject": "Q319"})
         assert len(result) == 1
-        typed_list = result[0]["value"]["Z33068K1"]
+        typed_list = result[0]["value"]["Z32123K1"]["Z32234K1"]
         calls = [x for x in typed_list if isinstance(x, dict)]
         assert len(calls) == 2
         assert calls[0]["Z7K1"]["Z9K1"] == "Z26039"
@@ -183,7 +185,7 @@ class TestCitationsBundle:
         assert len(result) == 2
         for item in result:
             calls = [
-                x for x in item["value"]["Z33068K1"]
+                x for x in item["value"]["Z32123K1"]["Z32234K1"]
                 if isinstance(x, dict)
             ]
             assert len(calls) == 2  # claim + citation
@@ -195,13 +197,13 @@ class TestCompileParagraphDirect:
     def test_compile_paragraph_single_fragment(self):
         frags = parse_template_calls("{{Z26039|SUBJECT|Q634}}")
         item = compile_paragraph(frags, {}, "Q319", 0)
-        assert item["value"]["Z7K1"]["Z9K1"] == "Z33068"
+        assert item["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
     def test_compile_paragraph_inner_not_wrapped(self):
         """Inner calls should NOT have Z29749/Z27868 wrappers."""
         frags = parse_template_calls("{{Z26039|SUBJECT|Q634}}")
         item = compile_paragraph(frags, {}, "Q319", 0)
-        typed_list = item["value"]["Z33068K1"]
+        typed_list = item["value"]["Z32123K1"]["Z32234K1"]
         inner_call = typed_list[1]
         assert inner_call["Z7K1"]["Z9K1"] == "Z26039"
 
@@ -228,9 +230,9 @@ class TestSectionHeaders:
 {{Z26039|SUBJECT|Q515}}"""
         result = compile_template(template, {"subject": "Q319"})
         assert len(result) == 3
-        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z33068"
+        assert result[0]["value"]["Z7K1"]["Z9K1"] == "Z32123"
         assert result[1]["value"]["Z7K1"]["Z9K1"] == "Z31465"
-        assert result[2]["value"]["Z7K1"]["Z9K1"] == "Z33068"
+        assert result[2]["value"]["Z7K1"]["Z9K1"] == "Z32123"
 
     def test_multiple_calls_around_section_header(self):
         template = """{{Z26039|SUBJECT|Q634}}
@@ -241,11 +243,11 @@ class TestSectionHeaders:
         # 1 bundled paragraph (2 calls) + header + 1 paragraph = 3 items
         assert len(result) == 3
         assert [r["value"]["Z7K1"]["Z9K1"] for r in result] == [
-            "Z33068", "Z31465", "Z33068",
+            "Z32123", "Z31465", "Z32123",
         ]
         # First paragraph holds both calls bundled.
         first_calls = [
-            x for x in result[0]["value"]["Z33068K1"]
+            x for x in result[0]["value"]["Z32123K1"]["Z32234K1"]
             if isinstance(x, dict)
         ]
         assert len(first_calls) == 2
@@ -293,11 +295,8 @@ class TestSubjectResolution:
 {{Z26570|SUBJECT|Q634|Q544}}
 {{Z28016|SUBJECT|Q66305721|Q87982}}"""
         result = compile_template(template, {"subject": "Q5511"})
-        # All three calls bundle into one Z33068 paragraph
-        typed_list = result[0]["value"]["Z33068K1"]
-        for call in typed_list:
-            if not isinstance(call, dict):
-                continue
+        for item in result:
+            call = item["value"]["Z32123K1"]["Z32234K1"][1]
             fid = call["Z7K1"]["Z9K1"]
             assert call[f"{fid}K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
@@ -313,7 +312,7 @@ class TestSubjectResolution:
         """'it' is an alias for SUBJECT — both compile to a Z825K1 arg ref."""
         template = "{{role|it|Q11591100|Q813858}}"
         result = compile_template(template, {"subject": "Q288312"})
-        call = result[0]["value"]["Z33068K1"][1]
+        call = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert call["Z28016K1"]["Z18K1"]["Z6K1"] == "Z825K1"
 
 
@@ -325,7 +324,7 @@ class TestInfixForm:
         """{{infix|X|part of|Y}} -> {{Z32982|X|Q66305721|Y}}."""
         template = "{{infix|Q4830453|part of|Q50831573}}"
         result = compile_template(template, {"subject": "Q4830453"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z7K1"]["Z9K1"] == "Z32982"
         assert inner["Z32982K1"]["Z6091K1"]["Z6K1"] == "Q4830453"
         assert inner["Z32982K2"]["Z6091K1"]["Z6K1"] == "Q66305721"
@@ -335,14 +334,14 @@ class TestInfixForm:
         """The predicate lookup ignores case so 'Part Of' also works."""
         template = "{{infix|Q4830453|Part Of|Q50831573}}"
         result = compile_template(template, {"subject": "Q4830453"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z7K1"]["Z9K1"] == "Z32982"
 
     def test_infix_with_subject(self):
         """SUBJECT resolves normally on both sides of the infix form."""
         template = "{{infix|SUBJECT|part of|Q50831573}}"
         result = compile_template(template, {"subject": "Q4830453"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z32982K1"]["Z18K1"]["Z6K1"] == "Z825K1"
         assert inner["Z32982K3"]["Z6091K1"]["Z6K1"] == "Q50831573"
 
@@ -355,7 +354,7 @@ class TestInfixForm:
         # best-effort path, which happily builds an `infix` call with
         # three positional args. Not useful, but not a crash.
         result = compile_template(template, {"subject": "Q4830453"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z7K1"]["Z9K1"] == "infix"
 
 
@@ -364,7 +363,7 @@ class TestCiteWeb:
         """{{cite web|URL}} fills in defaults: title=URL, site=domain, date=today, lang=$lang."""
         template = "{{cite web|https://example.com/foo}}"
         result = compile_template(template, {"subject": "Q319"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z7K1"]["Z9K1"] == "Z32053"
         assert inner["Z32053K1"]["Z6K1"] == "https://example.com/foo"
         assert inner["Z32053K2"]["Z6K1"] == "https://example.com/foo"
@@ -376,7 +375,7 @@ class TestCiteWeb:
         """{{cite web|URL|Title|Site|YYYY-MM-DD}} parses date into Z20420."""
         template = "{{cite web|https://en.wikipedia.org/wiki/Foo|Foo|Wikipedia|2026-03-14}}"
         result = compile_template(template, {"subject": "Q319"})
-        inner = result[0]["value"]["Z33068K1"][1]
+        inner = result[0]["value"]["Z32123K1"]["Z32234K1"][1]
         assert inner["Z32053K1"]["Z6K1"] == "https://en.wikipedia.org/wiki/Foo"
         assert inner["Z32053K2"]["Z6K1"] == "Foo"
         assert inner["Z32053K3"]["Z6K1"] == "Wikipedia"

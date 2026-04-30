@@ -319,10 +319,8 @@ def convert_article_to_wikitext(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    # Each paragraph on the wiki side is either a Z33068 ("paragraph from
-    # sentences") that holds a list of sentences directly, or a legacy
-    # Z32123(Z32234(...)) wrapper from before the switchover. Round-
-    # tripping: emit the inner calls on consecutive lines (a single
+    # Each fragment on the wiki side is a Z32123 paragraph wrapper. Round-
+    # tripping it: emit its inner calls on consecutive lines (a single
     # paragraph in source form), and put a blank line between successive
     # paragraphs so compile_template re-bundles them correctly. Section
     # headers (Z31465) act as their own paragraph breaks and don't need
@@ -342,11 +340,10 @@ def convert_article_to_wikitext(qid, oldid=None):
                 last_was_paragraph = False
                 continue
 
-            # Z33068 (new) and Z32234 (legacy) both hold a typed list of
-            # sentences. Emit each inner call on its own line; if a
-            # paragraph just preceded this one, prepend a blank line so
+            # Z32234 paragraph: emit each inner call on its own line. If
+            # a paragraph just preceded this one, prepend a blank line so
             # the two don't merge back together on recompile.
-            if fid in ("Z33068", "Z32234"):
+            if fid == "Z32234":
                 paragraph_lines = []
                 for key in sorted(core.keys()):
                     if key in ("Z1K1", "Z7K1"):

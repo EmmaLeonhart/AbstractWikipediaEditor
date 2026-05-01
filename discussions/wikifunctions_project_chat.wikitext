@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-04-30T06:16:31Z
+  Fetched:   2026-05-01T06:26:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -23,25 +23,6 @@ Other places to find help:
 |class=mw-collapsible-content|style=font-size:92%;}}|class="mw-collapsible mw-collapsible-toggle mw-collapsed"}}
 |prefix=WF:Project chat/Archive/
 }}
-
-== Wikifunctions & Abstract Wikipedia Newsletter #238 is out: Citations and Copy and Paste ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-03-06|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we introduce the possibility of creating a function that deals with references and a Wikifunctions internal clipboard, where you can temporarily store any piece of code in order to paste it somewhere else, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 17:28, 6 March 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30119120 -->
-:Is there a function in Wikifunctions to get all sources to a statement in a Wikidata item. At the moment my main activity in the Wikimedia projects is adding sources to Wikidata statements. For this case I got the following kind of [https://w.wiki/JFec query] to get all qualifiers and sources for a specific statment in explicit mentioned items in the query. There are already templates for citing sources in different Wikipedia language versions. For example the template [https://en.wikipedia.org/wiki/Template:Cite_web Cite web] is used in 298 Wikipedia language versions. So it is a widely used template and I wish a implementation for it in Wikifunctions. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 21:31, 8 March 2026 (UTC)
-::{{Z|31984}} [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 15:08, 9 March 2026 (UTC)
-{{tracked|T404652}}
-::Yes and no. Importing of Wikidata references is currently turned off. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 15:27, 9 March 2026 (UTC)
-<br clear="all"/>{{phab|T419350}}
-:I found [[phab:T419350|a bug]] where the clipboard feature becomes unusable.<!-- --><br>Also, it's a bit disappointing that it doesn't use the real clipboard, not even as an option for egress. If you're invoking a function and you can get it to "compile", then "Copy result link" already lets you copy out the full canonical form... [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 02:58, 10 March 2026 (UTC)
-::@[[User:YoshiRulz|YoshiRulz]] Thanks for reporting, I noticed the team about it. I will see if we can fix it soon. [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:26, 11 March 2026 (UTC)
-:::It's fixed 🤩 [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 14:38, 31 March 2026 (UTC)
 
 == "language" argument for certain functions ==
 
@@ -471,3 +452,7 @@ Are there any future plans to support this, and/or workarounds? Maybe create a u
 ::::For a genuinely optional parameter, I prefer a properly typed list, which at least encourages an argument of the correct type. {{Z|Z813}} is also typically faster than {{Z|Z10008}}. Quite a good example of this approach is {{Z|Z23723}}, where it helps to resolve the type union (using [[Z1]]) for both Z6003K1 and Z6003K3. Of course, there’s nothing to prevent more than one element in the list, but additional elements are easily ignored. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:55, 28 April 2026 (UTC)
 :Pinging {{ping|Jdforrester (WMF)|prefix=|p=}}, I believe there are no current plans. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:02, 28 April 2026 (UTC)
 ::@[[User:QuickQuokka|QuickQuokka]]: I'm afraid there are no current plans to build out optional params, indeed; we would be happy to review this if a compelling case was made, but it'd be a lot of work to re-build the [[Wikifunctions:Function model|function model]] with that support and ensure we don't break (too many) things. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:11, 28 April 2026 (UTC)
+
+== Z6830 for Chinese ==
+
+I was trying to use {{Z|Z6830}} for implementation in the Chinese-language. And turns out most of the Lexeme on Wikidata is using [[d:Q727694]] as the language instead of [[d:Q7850]]. This makes it impossible to use the mentioned function above, since Standard Chinese is not available (or did I miss something?). Is there a way to fetch lexemes with language=[[d:Q727694]] from item? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:20, 30 April 2026 (UTC)

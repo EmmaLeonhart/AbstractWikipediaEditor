@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-01T06:26:02Z
+  Fetched:   2026-05-02T05:53:45Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -73,7 +73,7 @@ I am interested in creating list articles ([[:de:Liste_der_Naturdenkmale_im_Bezi
 :An example I've created that you can copy and adapt is [[Q11750]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:27, 3 April 2026 (UTC)
 
 == Logo ==
-
+{{Tracked|T424781}}
 In vector2009 and monobook, the logo shows as the standard enwiki logo. Which is confusing as this is technically a whole other sisterproject. I suggest [[:File:Wikipedia-logo-blank.svg|this]] be used as a temporary logo for these skins. [[User:Kinopiko|Kinopiko]] ([[User talk:Kinopiko|talk]]) 06:00, 31 March 2026 (UTC)
 
 :There's also the scalable favicon, [[commons:File:Abstract-Wikipedia-favicon.svg|Abstract-Wikipedia-favicon.svg]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:54, 3 April 2026 (UTC)
@@ -551,3 +551,49 @@ Immanuelle wrongly stated that there is no REST API for editing. [[#REST API for
 The page [[Q884]] has inaccurate statements about the head of government and the head of state of South Korea. Part of what it returns in English is "Lee Ju-ho is the head of government of South Korea.Park Geun-hye is the head of state of South Korea." However, neither Lee Ju-ho nor Park Geun-hye currently have their respective roles mentioned here. How should these statements be turned into ones using the past tense? [[User:Intolerable situation|Intolerable situation]] ([[User talk:Intolerable situation|talk]]) 14:44, 30 April 2026 (UTC)
 
 :not currently possible :((((( [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:46, 30 April 2026 (UTC)
+:Feeglgeef is correct, past tense sentence generation is something we are sorely lacking at the moment. If you look at [[f:WF:Type proposals#Representing abstract content|Wikifunctions' type proposals]] you can see some initiatives that could hopefully mitigate this. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 13:49, 1 May 2026 (UTC)
+
+== Abstract Wikipedia should use a different mw-wiki-logo than Wikipedia for Vector 2010 skin ==
+
+{{Tracked|T424781}}
+
+Hello friends. I've been asked to start a community conversation about this. I'd like to propose that Abstract Wikipedia create its own logo, so that folks visiting this wiki don't get it mixed up with Wikipedia. Even though this project is under the Wikipedia domain, I think it's pretty unique and it'd make sense to make sure it doesn't get mixed up with enwiki or other Wikipedias by newbies googling for Wikipedia articles. Thoughts? Thanks. [[User:Novem Linguae|Novem Linguae]] ([[User talk:Novem Linguae|talk]]) 12:02, 1 May 2026 (UTC)
+
+:Isn't there already one? Are we talking about a logo in a different context? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:25, 1 May 2026 (UTC)
+::Looks like this is just for the Vector 2010 skin. [https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Main_page?useskin=vector Example.] I'll edit this section and the ticket to clarify that. [[User:Novem Linguae|Novem Linguae]] ([[User talk:Novem Linguae|talk]]) 12:28, 1 May 2026 (UTC)
+:::Ah, thank you, I'd {{s}} this then. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:31, 1 May 2026 (UTC)
+:This has been raised before above in [[#Logo]], the same problem appears on Monobook. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 13:45, 1 May 2026 (UTC)
+::Would you support using [https://abstract.wikipedia.org/static/images/mobile/copyright/abstractwiki-wordmark.svg the Vector 2022 logo] on Vector 2010 and Monobook? That'd be a simple technical solution. [[User:Novem Linguae|Novem Linguae]] ([[User talk:Novem Linguae|talk]]) 14:02, 1 May 2026 (UTC)
+:::Yes, I see no issue with using that for the moment. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:04, 1 May 2026 (UTC)
+
+== What would it take for AW to catch up to (English) Resonator? Porting over functions? ==
+
+The Wikidata tool [https://reasonator.toolforge.org Resonator] already automatically creates several sentences in English describing human Wikidata items using [https://codeberg.org/magnusmanske/reasonator/commit/b506362c3c2e90b32de32708ec668eee49603cb0 auto_long_desc.js] under [https://codeberg.org/magnusmanske/reasonator/src/commit/a6ee9095c3accfb67845caf438ce83c98c19e38e/LICENSE a GPL 2.0 free software license] without using any large language model or other AI.
+
+Abstract Wikipedia, on the other hand, requires [[Help:How to create an article/en|a several step process just to create a lead sentence]]. Does Resonator have functions in [https://codeberg.org/magnusmanske/reasonator/src/commit/a6ee9095c3accfb67845caf438ce83c98c19e38e/public_html/auto_long_desc.js#L406 the English section of auto_long_desc.js] that Wikifunctions doesn't have at the moment? Is that what's preventing Abstract Wikipedia from auto-generating substantial text (at least in English) based off of Wikidata like Resonator does? 
+
+Below is [https://reasonator.toolforge.org/?q=Q1339&lang=en an example of what Resonator can generate from Wikidata] without needing human edits the way Abstract Wikipedia does. (Though I omitted some children for the sake of brevity.)
+
+<blockquote>
+
+'''Johann Sebastian Bach''' was a [https://reasonator.toolforge.org/?&q=696651 Saxe-Eisenach]-[https://reasonator.toolforge.org/?&q=12548 Holy Roman Empire]-[https://reasonator.toolforge.org/?&q=183 German] [https://reasonator.toolforge.org/?&q=36834 composer], [https://reasonator.toolforge.org/?&q=765778 organist], [https://reasonator.toolforge.org/?&q=5371902 harpsichordist], [https://reasonator.toolforge.org/?&q=1259917 violinist], [https://reasonator.toolforge.org/?&q=899758 violist], [https://reasonator.toolforge.org/?&q=158852 conductor], [https://reasonator.toolforge.org/?&q=1076502 choir director], [https://reasonator.toolforge.org/?&q=691031 concertmaster], [https://reasonator.toolforge.org/?&q=14915627 musicologist], [https://reasonator.toolforge.org/?&q=16145150 music educator], [https://reasonator.toolforge.org/?&q=214970 virtuoso], and [https://reasonator.toolforge.org/?&q=2251335 school teacher].
+
+He was born on [https://reasonator.toolforge.org/?date=1685-03-21 March 21, 1685] in [https://reasonator.toolforge.org/?&q=7070 Eisenach] to [https://reasonator.toolforge.org/?&q=309470 Johann Ambrosius Bach] and [https://reasonator.toolforge.org/?&q=66671 Maria Elisabeth Lämmerhirt].
+
+He studied at [https://reasonator.toolforge.org/?&q=1930161 St. Michael's School] until [https://reasonator.toolforge.org/?date=1702-04 April 1702]. His field of work included [https://reasonator.toolforge.org/?&q=8361 Baroque music] and [https://reasonator.toolforge.org/?&q=9730 classical music]. He was [https://reasonator.toolforge.org/?&q=215793 chapelmaster] from [https://reasonator.toolforge.org/?date=1717-12 December 1717] until [https://reasonator.toolforge.org/?date=1723-04 April 1723] and [https://reasonator.toolforge.org/?&q=641457 Thomaskantor] from [https://reasonator.toolforge.org/?date=1723 1723] until [https://reasonator.toolforge.org/?date=1750 1750]. He worked for [https://reasonator.toolforge.org/?&q=117540 Collegium Musicum], for [https://reasonator.toolforge.org/?&q=1230608 Saint Blaise], for [https://reasonator.toolforge.org/?&q=61689 Leopold, Prince of Anhalt-Köthen], for [https://reasonator.toolforge.org/?&q=61972 Johann Ernst III, Duke of Saxe-Weimar] from [https://reasonator.toolforge.org/?date=1703-01 January 1703] until [https://reasonator.toolforge.org/?date=1703-08 August 1703], for [https://reasonator.toolforge.org/?&q=699668 Thomasschule zu Leipzig], and for [https://reasonator.toolforge.org/?&q=798194 Bachkirche Arnstadt] from [https://reasonator.toolforge.org/?date=1703-08 August 1703] until [https://reasonator.toolforge.org/?date=1707 1707].
+
+He married [https://reasonator.toolforge.org/?&q=57487 Maria Barbara Bach] on [https://reasonator.toolforge.org/?date=1707-10-17 October 17, 1707] (married until on [https://reasonator.toolforge.org/?date=1720-07-07 July 7, 1720] ) and [https://reasonator.toolforge.org/?&q=57212 Anna Magdalena Bach] on [https://reasonator.toolforge.org/?date=1721-12-03 December 3, 1721] (married until on [https://reasonator.toolforge.org/?date=1750-07-28 July 28, 1750] ). His children include [https://reasonator.toolforge.org/?&q=15079141 Catharina Dorothea Bach], [https://reasonator.toolforge.org/?&q=107277 Wilhelm Friedemann Bach], […]
+
+He died of [https://reasonator.toolforge.org/?&q=12202 stroke] on [https://reasonator.toolforge.org/?date=1750-07-28 July 28, 1750] in [https://reasonator.toolforge.org/?&q=2079 Leipzig]. He was buried at [https://reasonator.toolforge.org/?&q=170402 St. Thomas Church].
+
+</blockquote>
+[[User:Lovelano|Lovelano]] ([[User talk:Lovelano|talk]]) 18:41, 1 May 2026 (UTC)
+
+== Project scope ==
+
+Might be a stupid question but what articles are/will be allowed on Abstract Wikipedia? How far is it meant to expand? The language Wikipedias have some differing policies, so might not be as simple as copying those. Personally I find the idea of creating an article for any and every Wikidata item really cool and a good ''baseline'' for what can have an article, but wouldn't ~120 million abstract articles become unwieldy? If the only requirement is that the article topic has a Wikidata item, then there are many interesting possibilities; one could write about individual dates, Wikidata test items, even Wikimedia disambiguation pages. Have not found where this is explained, if anywhere. This may be up to common sense, but trouble is, couldn't one create an encyclopedically meaningful article on just about anything? Pretty important policy not to have if it's undecided, though is not a problem at the moment. Just wondering. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 23:36, 1 May 2026 (UTC)
+
+:This isn't a stupid question and I don't think this is entirely settled. Have you seen [[Abstract Wikipedia:About]]? [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 23:57, 1 May 2026 (UTC)
+::Ah, I forgot about that page. So it is meant to abstract information from existing Wikipedia articles? Makes sense, though it still raises the question of creating new articles. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 00:41, 2 May 2026 (UTC)
+:::At this juncture, I don't think anyone has in mind drafting anything new here as such: this is just responding to existing Wikidata items and the possibility of new Wikipedia articles drafted from them, using Wikifunctions. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 00:51, 2 May 2026 (UTC)
+:I don't think we ever get any article an existing wiki does not have. Even if abstract content creation gets as fast as reasonably possible, it will never beat out typing text, so we will never catch up with, say, enwiki or eswiki. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:10, 2 May 2026 (UTC)

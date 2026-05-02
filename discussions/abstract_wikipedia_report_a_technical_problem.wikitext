@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-04-11T23:50:46Z
+  Fetched:   2026-05-02T05:53:45Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -103,3 +103,12 @@ I tried to add the function [[f:Z28016|Z28016]] on the page [[Q628]], but the se
 :@[[User:Mattiz6276|Mattiz6276]]: The problem here is that [[f:Z28016|Z28016]] doesn't return a type that can be cast as HTML raw content, but rather monolingual text. Also, it looks like you wanted [[f:Z26570|Z26570]], so I changed it to use that. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 20:07, 3 April 2026 (UTC)
 ::Hi, i haven't been active on Abstract Wikipedia for a while (i mainly edit it.wiki), so sorry to not have answered you sooner.
 ::Thank you for helping me fix [[Q628]] and showing me what functions to use. [[User:Mattiz6276|Mattiz6276]] ([[User talk:Mattiz6276|talk]]) 07:54, 6 April 2026 (UTC)
+
+== A language selector should be available, even for users not logged in ==
+
+Abstract Wikipedia should have a language selector like [https://www.wikifunctions.org/ Wikifunctions] does, even for users not logged in to a Wikimedia account.
+
+Without a language selector, it is not at all clear how people can even read the main page's introduction of Abstract Wikipedia in a language besides English.
+
+The only way I see to change language is to add <code>uselang=[xx]</code> at the end of a URL with a language code like [https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Main_page?uselang=de <code>uselang=[de]]</code> for German. But that is not easy for many users to discover.
+[[User:Lovelano|Lovelano]] ([[User talk:Lovelano|talk]]) 00:45, 2 May 2026 (UTC)

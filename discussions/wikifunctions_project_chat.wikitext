@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-01T06:26:02Z
+  Fetched:   2026-05-02T05:53:45Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -415,6 +415,8 @@ I'm not quite sure why this implementation is failing. Could someone take a look
 ::::<blockquote>Well, no.  We have caching of Wikidata entities that have been retrieved, but not of the results of nested function calls.  There is a proposal for doing this in the context of the V2 composition language, when it's a bit more mature, and it's regarded as a relatively high priority.</blockquote>
 ::::It’s hard to tell whether fetches in nested calls are, in fact, cached and available for other nested calls in the same call, since it is not generally the actual fetch that consumes the most resources. Rather (I believe), it is construction and transmission of the result object, which is currently repeated afresh in each nested call (unless it is in an identical branch).
 ::::I hope that’s clear, and I apologise in advance if it happens to be inaccurate! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 10:16, 29 April 2026 (UTC)
+:::::Oh, I should clarify.  There is a lot of caching going on, in several different places.  Lexemes and items ''are'' cached by the orchestrator within the same function execution, even if they are only partially fetched and/or fetched in bulk.  When I said that we don't have caching of the results of nested function calls, I meant that's not happening in general, for all nested function calls in compositions.  But fetching of Wikidata entities gets special treatment, so yes, fetched content from Wikidata is cached, regardless if it was fetched by a top-level call or a nested call.
+:::::It is also true that the construction of a ZObject from the fetched JSON might happen more than once within the same function execution, depending on how a composition has been structured. However, the construction of the ZObject is actually very fast, compared to the elapsed time of getting the JSON from Wikidata. [[User:DMartin (WMF)|DMartin (WMF)]] ([[User talk:DMartin (WMF)|talk]]) 18:04, 1 May 2026 (UTC)
 
 == Question about cardinal numbers ==
 
@@ -456,3 +458,10 @@ Are there any future plans to support this, and/or workarounds? Maybe create a u
 == Z6830 for Chinese ==
 
 I was trying to use {{Z|Z6830}} for implementation in the Chinese-language. And turns out most of the Lexeme on Wikidata is using [[d:Q727694]] as the language instead of [[d:Q7850]]. This makes it impossible to use the mentioned function above, since Standard Chinese is not available (or did I miss something?). Is there a way to fetch lexemes with language=[[d:Q727694]] from item? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:20, 30 April 2026 (UTC)
+
+== Key not found error ==
+
+Is there a reason why I am getting key not found error for this [[Z34677|function]]  {{Z|Z34677}}? All the underlying functions run and all the test cases work. The debug information does not give more details. Any pointers? Thanks in advance [[User:Jsamwrites|John Samuel]] 19:24, 1 May 2026 (UTC)
+
+:It was passing the [[Z6091]] to {{Z|34641}} when that takes a [[Z6001]]. I've fixed that, but there's some other problem with the logic, so I've left it disconnected. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 19:42, 1 May 2026 (UTC)
+::@[[User:YoshiRulz|YoshiRulz]] Thanks a lot. [[User:Jsamwrites|John Samuel]] 20:21, 1 May 2026 (UTC)

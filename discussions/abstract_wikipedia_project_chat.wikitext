@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-02T05:53:45Z
+  Fetched:   2026-05-03T06:16:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -566,9 +566,9 @@ Hello friends. I've been asked to start a community conversation about this. I'd
 ::Would you support using [https://abstract.wikipedia.org/static/images/mobile/copyright/abstractwiki-wordmark.svg the Vector 2022 logo] on Vector 2010 and Monobook? That'd be a simple technical solution. [[User:Novem Linguae|Novem Linguae]] ([[User talk:Novem Linguae|talk]]) 14:02, 1 May 2026 (UTC)
 :::Yes, I see no issue with using that for the moment. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:04, 1 May 2026 (UTC)
 
-== What would it take for AW to catch up to (English) Resonator? Porting over functions? ==
+== What would it take for AW to catch up to (English) Reasonator? Porting over functions? ==
 
-The Wikidata tool [https://reasonator.toolforge.org Resonator] already automatically creates several sentences in English describing human Wikidata items using [https://codeberg.org/magnusmanske/reasonator/commit/b506362c3c2e90b32de32708ec668eee49603cb0 auto_long_desc.js] under [https://codeberg.org/magnusmanske/reasonator/src/commit/a6ee9095c3accfb67845caf438ce83c98c19e38e/LICENSE a GPL 2.0 free software license] without using any large language model or other AI.
+The Wikidata tool [https://reasonator.toolforge.org Reasonator] already automatically creates several sentences in English describing human Wikidata items using [https://codeberg.org/magnusmanske/reasonator/commit/b506362c3c2e90b32de32708ec668eee49603cb0 auto_long_desc.js] under [https://codeberg.org/magnusmanske/reasonator/src/commit/a6ee9095c3accfb67845caf438ce83c98c19e38e/LICENSE a GPL 2.0 free software license] without using any large language model or other AI.
 
 Abstract Wikipedia, on the other hand, requires [[Help:How to create an article/en|a several step process just to create a lead sentence]]. Does Resonator have functions in [https://codeberg.org/magnusmanske/reasonator/src/commit/a6ee9095c3accfb67845caf438ce83c98c19e38e/public_html/auto_long_desc.js#L406 the English section of auto_long_desc.js] that Wikifunctions doesn't have at the moment? Is that what's preventing Abstract Wikipedia from auto-generating substantial text (at least in English) based off of Wikidata like Resonator does? 
 
@@ -597,3 +597,94 @@ Might be a stupid question but what articles are/will be allowed on Abstract Wik
 ::Ah, I forgot about that page. So it is meant to abstract information from existing Wikipedia articles? Makes sense, though it still raises the question of creating new articles. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 00:41, 2 May 2026 (UTC)
 :::At this juncture, I don't think anyone has in mind drafting anything new here as such: this is just responding to existing Wikidata items and the possibility of new Wikipedia articles drafted from them, using Wikifunctions. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 00:51, 2 May 2026 (UTC)
 :I don't think we ever get any article an existing wiki does not have. Even if abstract content creation gets as fast as reasonably possible, it will never beat out typing text, so we will never catch up with, say, enwiki or eswiki. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:10, 2 May 2026 (UTC)
+::It's also a question of policy. There are topics about which things could be said, but which wouldn't meet the baseline notability or other criteria of the big monolingual wikis. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 20:22, 2 May 2026 (UTC)
+:::This is true, if we keep [[d:]]'s notability policy (which seems like the most natural one) then there are many subjects that we theoretically talk about that don't meet the [[w:WP:GNG|GNG]] and similar guidelines. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 2 May 2026 (UTC)
+
+== How many articles in how many languages are actually fully available without errors ==
+
+This is a response to the call in [[:f:Wikifunctions:Status updates/2026-05-02]].
+
+The most important thing to count is already listed there: '''How many articles in how many languages are actually fully available without errors?''' It should be not just a count, but a list: I want to see which articles are readable in which languages; which articles are readable in some languages, but not others (which ones?); which articles are not readable in any language; etc.
+
+An even more relevant, but much harder to measure thing is how many of those articles are actually more useful than not having an article at all. There is no article about Boston in many languages, but [[Q100]], which currently says "Boston is the capital of Massachusetts.Boston is the largest city of Massachusetts." is not significantly more useful than nothing at all even if it's fully rendered in another language in which there is no concrete article about it. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 12:12, 2 May 2026 (UTC)
+
+:Perhaps this should have been on the talk page of that status update instead of the project chat? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:25, 2 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #246 is out: Request for input: what should we count for Abstract Wikipedia ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-02|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we ask you what would be the relevant metrics for Abstract Wikipedia, we discuss our latest news on Composition Language v2, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:21, 2 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Spaces between sentences, another attempt ==
+
+[[Abstract Wikipedia:Project chat#Extra spaces between sentences|A month ago]], @[[User:内存溢出的猫|内存溢出的猫]]<ref group="spaces3>According to Google Translate, it's pronounced "Nèicún yìchū de māo". Please correct me if it's wrong. When I write, I want to know how are things that I write pronounced aloud, and very unfortunately, I never learned to read Chinese characters, and even if I did, most English speakers probably didn't. Come to think of it, is there a function that ''reliably'' transliterates Chinese characters?</ref> That discussion doesn't seem to have yielded any fixes or meaningful discussions, at least not that I can see.
+
+[[Abstract Wikipedia:Project chat#Spaces between sentences|Two weeks ago]], I tried to bring up a similar topic, but that discussion somehow got derailed and also didn't yield anything useful.
+
+Now, the problem looks differently, but it's still a problem. When I look at [[Q10251]], for example, what I see is four sentences that ''appear'' with ''no'' spaces between them. Not one, not two—none at all. It looks like this:
+:Plasma is a fundamental state of matter.Plasma is a classical state of matter.A plasma is a gas.A plasma is a matter.
+
+Note that I emphasized ''appear'': When I see them rendered on the screen, they have no spaces between them. In the HTML, however, they are represented as four <code><nowiki><div></nowiki></code>s, and their inline positioning is handled by CSS. This means, for example, that if I copy and paste them, I don't get a long string with no spaces after full stops, but four sentences with a single line break after each full stop:
+
+<poem>
+Plasma is a fundamental state of matter.
+Plasma is a classical state of matter.
+A plasma is a gas.
+A plasma is a matter.
+</poem>
+
+This is not how it is supposed to be done. <code><nowiki><div></nowiki></code>s are supposed to be used for block elements and not hacked into appearing as if they are inline (also known as phrasing). Spaces between sentences are supposed to be real characters rather than HTML and CSS tricks, they may be different in different languages, and in some languages they may be nothing at all.
+
+I hope that the definition of the problem is clear.
+
+<references group="spaces3"></references> [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 12:49, 2 May 2026 (UTC)
+:Hi, have a look at it [[Special:PermanentLink/7132|now]]. Does this match your expectations? I think it's not rendering right now for whatever reason, but there are other examples of it being done this way that you can see: [[Q241691]]. The article renders properly in both English (spaces between sentences) and Japanese (no spaces at all).
+:
+:'''English:'''
+:<blockquote>Programmed Data Processor is a computer model series by Digital Equipment Corporation. PDP-8 is a Programmed Data Processor.</blockquote>
+:'''Japanese:'''
+:<blockquote>PDPシリーズはディジタル・イクイップメント・コーポレーションによるコンピュータ・モデル・シリーズである。PDP-8はPDPシリーズである。</blockquote>
+:
+:I have some, err, strong opinions about [[User:Immanuelle|Immanuelle]]'s 「Abstract Wikipedia Editor」 tool, which is the predominant cause for all of these very janky and poorly-laid-out articles that you see. This is not how an article ought to be written on Abstract Wikipedia, and I and other editors are aware of this. If you see these problems, please do fix them! The wiki will be all the better for it.
+:
+:In the absence of consensus on such things as these (and awaiting any official policy pages) I have written [[f:User:Theki/best practices]] on my Wikifunctions userpage. You are welcome to read it if you wish. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:20, 2 May 2026 (UTC)
+::The output of [[Q241691]] looks OK to me in this regard. How was it done?
+::[[Q10251]] gives me an error. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:10, 2 May 2026 (UTC)
+:::WikiLambda is doing WikiLambda things. This WASI time limit error happens intermittently on Abstract Wikipedia articles and it usually goes away after a short while. The only thing is that it doesn't really seem like purging these articles does anything to force the orchestrator to retry its evaluation so the article might not render that paragraph until someone comes in and pokes at it by editing it somehow.
+:::
+:::The working article uses the [[f:Z33068|''paragraph from sentences'']] function to lay out its individual sentence content. This function automatically handles converting any and all text-like objects (strings, HTML fragments, and monolingual text) to a consistent form, so sentence fragments can all be supplied verbatim to its list input. When the function is putting the sentences together it defaults to using a single space to separate them, but first checks if the requested language is in the [[f:Z33984|''languages without spaces between sentences'']] list. If it is, it doesn't add spaces at all, and just concatenates the sentences normally. I hope this explanation makes sense. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 18:19, 2 May 2026 (UTC)
+::::It makes some sense, but earlier, you suggested: "If you see these problems, please do fix them", and I'm not entirely sure how to do it. How would I fix it in [[Q100]], for example? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:41, 2 May 2026 (UTC)
+:::::In this case you would do the following:
+:::::# At the bottom, click the plus and then 「Add empty fragment」.
+:::::# Set the function to [[f:Z33068]], as mentioned earlier.
+:::::# Now go through each sentence fragment, find the innermost sentence-generation function, click on the three dots, and copy it. Do not copy the calls to [[f:Z29749]] or similar, these are not necessary.
+:::::# Go to the ''paragraph with sentences'' function call and add an element to the list.
+:::::# Click on the three dots next to the new element, and paste in the earlier sentence fragment.
+:::::# You can now delete the original fragment and repeat the process in the same list for the one after it.
+:::::&mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:46, 2 May 2026 (UTC)
+::@[[User:Theki|Theki]] I intend on fixing it, I recently made an attempt but the suggested fixes made problems worse. Do you have any practical suggestions of how to structure the templates? I will try to implement them when I have more time.
+::Also your name is very confusing, are you in the process of getting it changed wiki-wide?  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:36, 2 May 2026 (UTC)
+:::Um, are you referring to my signature not matching my wiki username? I have considered for a long time changing it from ''theki'', but I don't feel like putting in the effort when it seems to be perfectly ignorable for most people. The user 「''Rae''」 can't be usurped because they made, like, two or three articles on the Persian Wikipedia two decades ago or something, I don't know. If that weren't the case I would be User:Rae right now but after that failed to go through I just decided to stop bothering. Maybe at some point I'll come up with a username I'm happy with keeping for the foreseeable future but I have other concerns at the moment.
+:::Could you explain how your attempted fixes 「made problems worse」? Presently I side with Feeglgeef's sentiments and prefer to wait for abstract content to actually be feasible to make on a reasonably descriptive scale (see: the type proposals) before I go around making articles willy-nilly, which is what AWE has been doing—making a bunch of pretty low-quality articles on a massive scale when it probably ''really'' would have been better to, err, hold off on that.
+:::And I honestly know very little about the actual workings of your editor, I don't really use it nor am I familiar with its template syntax or whatever it may use, so I'm going to look over how it actually works and then get back to you on that. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 23:28, 2 May 2026 (UTC)
+::::Using this {{q|Z33068}} made things worse [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:44, 3 May 2026 (UTC)
+:::::That did not go through correctly but I do not think we have a proper thing for it. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:45, 3 May 2026 (UTC)
+::::::What? Could you elaborate? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:00, 3 May 2026 (UTC)
+
+== Most used fragments ==
+
+[[:f:Wikifunctions:Status updates/2026-05-02|The latest status update]] lists the most used fragments: "[[:f:Z32123]] with 1452, followed by [[:f:Z27868]] with 736 and [[:f:Z29749]] with 650)".
+
+How was this calculated? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 13:44, 2 May 2026 (UTC)
+
+:Again, this should definitely have been on the talk page for that status update. This isn't the everything page, it should be used for discussion relating to the wiki. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:26, 2 May 2026 (UTC)
+::It's not a question just about the status update, even if it was prompted by it. It's a question about Abstract Wikipedia that can be relevant beyond the status update.
+::Stop policing how people use discussion pages without a particularly good reason. If you don't have an answer to the actual question, don't write anything. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:38, 2 May 2026 (UTC)
+:::I have to agree with Feeglgeef that this would be better raised on the status update's talk page itself. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:42, 2 May 2026 (UTC)
+:::I'm "policing" which discussion pages are being used for the same reason different discussion spaces exist in the first place. And your distinction between "just about" and "prompted by" is irrelevant. If I want to ask someone how they did something, I would ask them first, not go to a general discussion board. This is still the project ''chat'', not a Q&A zone. {{ping|DVrandecic (WMF)|p=,}} can you please answer the question? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:22, 2 May 2026 (UTC)

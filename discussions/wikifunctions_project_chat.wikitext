@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-02T05:53:45Z
+  Fetched:   2026-05-03T06:16:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -40,27 +40,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
-
-== Special:CreateObject doesn't let me create a typed list ==
-
-Hello. I tried to create a typed list with all English varieties on Wikifunctions, to create consistency between different configs, but [[Special:CreateObject]] doesn't show typed list as an option for creating. Is this a bug or an intentional restriction? [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 08:24, 2 April 2026 (UTC)
-
-:@[[User:ChaoticVermillion|ChaoticVermillion]]: A typed list is an instance of a function call, which is prohibited as a persisted Object. Maybe you want an enum? See [[Wikifunctions:Type proposals]] for the process for creating such a thing. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 12:01, 2 April 2026 (UTC)
-::I don't want any sort of enum for this, I just want a list of English varieties (English, American English, Australian English, etc.) as an object that I can put in configs. I tried making an object as a function call, but apparently I have to be a member of the staff to do it. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 12:07, 2 April 2026 (UTC)
-:::I’ve started this with {{Z|Z33034}}. I’m guessing you were trying to create an object of type {{Z|Z7}} rather than an object whose type is a [[Z7]]. There’s a subtle but important difference. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 12:29, 2 April 2026 (UTC)
-::::How do you create a object whose type is a [[Z7]] then? I can't see any option to do this. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 12:32, 2 April 2026 (UTC)
-:::::When you are creating an object you must specify its type. By default, the UI expects you to provide a reference to the type, so you can just type in the selector box and click the type you want. For an object like a typed list, the type is specified as a function call, so you click the menu dots beside “type” and choose “function call” instead of “reference”. The selector now allows you to search for functions that can return a type object. You start entering “typed list” and select it in the normal way. Then the UI will allow you to specify the argument to the function call, which is the type shared by all elements in the list. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:12, 2 April 2026 (UTC)
-
-== Unable to use the Z32643 function. ==
-
-I'm trying to use the [[Z32643]] (Article-less multi instantiating fragment) function to edit an article in Abstract Wikipedia, but it looks like it's missing connected implementations, and it looks like i don't have the permissions to connect the function with the implementation and use it in ab.wiki.
-
-Since i'm not familiar with Wikifunctions, i would like to get help for this specific problem.
-
-Thanks. --[[User:Mattiz6276|Mattiz6276]] ([[User talk:Mattiz6276|talk]]) 13:50, 2 April 2026 (UTC)
-
-:@[[User:Mattiz6276|Mattiz6276]]: Hey there, it looks like that's a work-in-progress by @[[User:MetalBreaksAndBends|MetalBreaksAndBends]]. There's only a fall-back implementation, Z32652, which fails its own test for a second item. I can connect the items together but it might not work as you expect? [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 14:06, 2 April 2026 (UTC)
-::Maybe… I don’t think functions without implementations should be appearing on AW so I have amended the label to avoid giving the impression that this function is available. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:23, 2 April 2026 (UTC)
 
 == Being able to use edit summaries  ==
 
@@ -397,6 +376,7 @@ Am I missing anything? I want it to work sort of like how filtering by namespace
 :# It doesn't get information from the live site, but from the dump, which appears to be updated once a month.
 :I've made a [https://quarry.wmcloud.org/query/104794 sample query for you]. Unfortunately, it won't do anything at the moment because of the second problem—your edits started in April 2026, which isn't over yet, so the dump for it hasn't been processed. But I hope that early in May you'll be able to use the same query and see something useful.
 :(I plan to add support for recent edits, but I haven't done it yet. Now that I more or less figured out how to process Wikifunctions edits, I'm focused on trying to understand Abstract Wikipedia edits. Processing up-to-date edits from both sites will possibly be the next thing I work on, but if you know some Python and want to try doing it yourself, don't wait for me—[https://gitlab.wikimedia.org/toolforge-repos/wikifunctions-analytics Patches welcome].) [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 18:51, 28 April 2026 (UTC)
+::@[[User:QuickQuokka|QuickQuokka]], I've just updated the data until the end of April. Now the query to which I linked above gives some results. You can also try running other queries if you know SQL. (Or try asking for other queries if you don't.) [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 03:26, 3 May 2026 (UTC)
 
 == [[Z34213]] ==
 
@@ -465,3 +445,14 @@ Is there a reason why I am getting key not found error for this [[Z34677|functio
 
 :It was passing the [[Z6091]] to {{Z|34641}} when that takes a [[Z6001]]. I've fixed that, but there's some other problem with the logic, so I've left it disconnected. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 19:42, 1 May 2026 (UTC)
 ::@[[User:YoshiRulz|YoshiRulz]] Thanks a lot. [[User:Jsamwrites|John Samuel]] 20:21, 1 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #246 is out: Request for input: what should we count for Abstract Wikipedia ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-02|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we ask you what would be the relevant metrics for Abstract Wikipedia, we discuss our latest news on Composition Language v2, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:21, 2 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->

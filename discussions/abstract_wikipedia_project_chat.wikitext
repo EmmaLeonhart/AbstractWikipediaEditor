@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-03T06:16:02Z
+  Fetched:   2026-05-04T06:26:23Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -673,7 +673,7 @@ I hope that the definition of the problem is clear.
 :::Um, are you referring to my signature not matching my wiki username? I have considered for a long time changing it from ''theki'', but I don't feel like putting in the effort when it seems to be perfectly ignorable for most people. The user 「''Rae''」 can't be usurped because they made, like, two or three articles on the Persian Wikipedia two decades ago or something, I don't know. If that weren't the case I would be User:Rae right now but after that failed to go through I just decided to stop bothering. Maybe at some point I'll come up with a username I'm happy with keeping for the foreseeable future but I have other concerns at the moment.
 :::Could you explain how your attempted fixes 「made problems worse」? Presently I side with Feeglgeef's sentiments and prefer to wait for abstract content to actually be feasible to make on a reasonably descriptive scale (see: the type proposals) before I go around making articles willy-nilly, which is what AWE has been doing—making a bunch of pretty low-quality articles on a massive scale when it probably ''really'' would have been better to, err, hold off on that.
 :::And I honestly know very little about the actual workings of your editor, I don't really use it nor am I familiar with its template syntax or whatever it may use, so I'm going to look over how it actually works and then get back to you on that. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 23:28, 2 May 2026 (UTC)
-::::Using this {{q|Z33068}} made things worse [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:44, 3 May 2026 (UTC)
+::::Using this [[f:Z33068]] made things worse [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:44, 3 May 2026 (UTC)
 :::::That did not go through correctly but I do not think we have a proper thing for it. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:45, 3 May 2026 (UTC)
 ::::::What? Could you elaborate? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:00, 3 May 2026 (UTC)
 

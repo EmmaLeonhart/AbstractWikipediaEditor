@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-03T06:16:02Z
+  Fetched:   2026-05-04T06:26:23Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -41,14 +41,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
 
-== Being able to use edit summaries  ==
-
-I have wanted to use edit summaries a few times when connecting or disconnecting implementations or tests, and I have found that the only way to do that is to use the [[:User:%D7%9E%D7%A7%D7%A3/wikilambda_editsource.js|wikilambda editsource]] tool. I feel like it would be a lot more convenient to be able to make these edit summaries without having to use that tool. [[User:ChaoticVermillion|ChaoticVermillion]] ([[User talk:ChaoticVermillion|talk]]) 08:40, 3 April 2026 (UTC)
-
-== Definite forms ==
-
-[[Talk:Z32162|I've noticed an incomplete implementation and would like to work on fixing it, but need advice.]]  [[User:Ijon|Ijon]] ([[User talk:Ijon|talk]]) 21:05, 3 April 2026 (UTC)
-
 == Wikifunctions & Abstract Wikipedia Newsletter #243 is out: Community proposals for capturing meaning ==
 
 There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-10|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
@@ -61,7 +53,7 @@ Also, we remind you that if you have questions or ideas to discuss, the next '''
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:35, 10 April 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-
+{{Section resolved|1=[[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 13:12, 3 May 2026 (UTC)}}
 == Help me understand why test passes but running function with same input errors ==
 
 I've been working on a function that I thought I had working correctly: {{Z+|Z31108}}.
@@ -118,7 +110,7 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-
+{{Section resolved|1=[[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 13:12, 3 May 2026 (UTC)}}
 == Actual difference between {{Z|Z26039}} and {{Z|Z26095}} ==
 
 What is the actual difference between these two functions? I ask, since it seems to me that the current distinction is more or less that the first one doesn't use an indefinite article in English, while the second does. Which is not a good distinction in a project that should be language neutral. This doubt emerged from my use of the first one in [[abstract:Q124441]], which @[[User:Hogü-456|Hogü-456]] made me notice that is probably wrong. My question is: why is it wrong? How could we clarify the difference? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:46, 19 April 2026 (UTC)
@@ -456,3 +448,25 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:21, 2 May 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
+
+== Any formal process for deletion of pages ==
+
+Does a formal process exist for the deletion of functions, implementations, and tests that includes a notification system for creators, analogous to Wikidata’s process, explaining the rationale behind the deletion (or proposal for deletion)? [[User:Jsamwrites|John Samuel]] 12:36, 3 May 2026 (UTC)
+
+:Does [[Wikifunctions:Requests for deletions]] work? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 13:00, 3 May 2026 (UTC)
+:Please see the discussion at [[Wikifunctions talk:Requests for deletions#Should we expect Objects' creators to get pinged on deletion proposals?]].
+:As I see it, it is the proposer’s responsibility to consult appropriately before making a request and we expect our administrators to act only when satisfied that appropriate consultation has occurred. In many cases, no consultation is required. Administrators may delete their own contributions without making a request, but this is not a practice I would encourage. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:51, 3 May 2026 (UTC)
+
+== Implementation of rational number in JS doesn't match in Z19677 (Rational number) and Z28579 (RGBA colour) ==
+
+In {{Z|19677}} it's
+<syntaxhighlight lang=js>
+{
+	"K1": sign * numerator,
+	"K2": denominator
+}
+</syntaxhighlight>
+but in {{Z|28579}} it's
+<syntaxhighlight lang=js>
+[ sign * numerator, denominator ]
+</syntaxhighlight> '''<span style="font-family:Iosevka,monospace">[[User:沈澄心|<span style="color:#9f3526">dring</span>]][[User talk:沈澄心|<span style="color:#534fa3">sim</span>]]</span>''' 05:15, 4 May 2026 (UTC)

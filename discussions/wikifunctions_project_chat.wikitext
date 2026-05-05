@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-04T06:26:23Z
+  Fetched:   2026-05-05T06:02:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -41,19 +41,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
 
-== Wikifunctions & Abstract Wikipedia Newsletter #243 is out: Community proposals for capturing meaning ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-10|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we report on three community proposals on syntactic approaches, we introduce a new Type (Complex numbers), we report on current hiccups on Abstract Wikipedia, we share more information about a presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1776101400 April 13, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:35, 10 April 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-{{Section resolved|1=[[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 13:12, 3 May 2026 (UTC)}}
 == Help me understand why test passes but running function with same input errors ==
 
 I've been working on a function that I thought I had working correctly: {{Z+|Z31108}}.
@@ -100,17 +87,6 @@ So where do I apply for the {{Z|Z33439}} and {{Z|Z33440}} functions to be activa
 ::::This ^^^. We're very lenient, though, once you've created a few working functions you can apply for the right, per [[WF:Functioneer]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:26, 14 April 2026 (UTC)
 ::::That explanation [[phab:T343559#11421293|doesn't add up]]. A reason to limit ''connection powers'' to Functioneers might be to prevent vandalism, considering Functions can be used across wikis. But user-provided code is already being executed even without a Functioneer connecting it. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 20:01, 16 April 2026 (UTC)
 
-== Wikifunctions & Abstract Wikipedia Newsletter #244 is out: Milestones; Some major issues hopefully resolved ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-16|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we celebrate 4000 functions on Wikifunctions and 1000 abstract articles on Abstract Wikipedia, we announce that we should have fixed some major issues with the websites, we inform you on our latest outreach activities, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:22, 17 April 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-{{Section resolved|1=[[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 13:12, 3 May 2026 (UTC)}}
 == Actual difference between {{Z|Z26039}} and {{Z|Z26095}} ==
 
 What is the actual difference between these two functions? I ask, since it seems to me that the current distinction is more or less that the first one doesn't use an indefinite article in English, while the second does. Which is not a good distinction in a project that should be language neutral. This doubt emerged from my use of the first one in [[abstract:Q124441]], which @[[User:Hogü-456|Hogü-456]] made me notice that is probably wrong. My question is: why is it wrong? How could we clarify the difference? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:46, 19 April 2026 (UTC)

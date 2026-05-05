@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-04T06:26:23Z
+  Fetched:   2026-05-05T06:02:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -609,6 +609,8 @@ The most important thing to count is already listed there: '''How many articles 
 An even more relevant, but much harder to measure thing is how many of those articles are actually more useful than not having an article at all. There is no article about Boston in many languages, but [[Q100]], which currently says "Boston is the capital of Massachusetts.Boston is the largest city of Massachusetts." is not significantly more useful than nothing at all even if it's fully rendered in another language in which there is no concrete article about it. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 12:12, 2 May 2026 (UTC)
 
 :Perhaps this should have been on the talk page of that status update instead of the project chat? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:25, 2 May 2026 (UTC)
+::The status update is about two projects and so I can understand if there are comments here. What do you think about creating a status update overview page with links to the status updates in Abstract Wikipedia to offer the possibility to discuss the status updates and especially things related to Abstract Wikipedia there. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 18:57, 4 May 2026 (UTC)
+:::I don't think that's necessary. You can just include your abstractwiki (as in, the live wiki, not the project) related comments on the page on [[f:]], or, if for some reason that's not possible, as a reply to the newsletter announcement here. The point is, the project chat is crowded enough with topics as it is, ideally it should be more focussed on general matters of discussion than close-ended enquiries about topics that have their own talk page. I find Amire80's use of a new == heading here to be improper. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:32, 4 May 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #246 is out: Request for input: what should we count for Abstract Wikipedia ==
 
@@ -676,6 +678,7 @@ I hope that the definition of the problem is clear.
 ::::Using this [[f:Z33068]] made things worse [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:44, 3 May 2026 (UTC)
 :::::That did not go through correctly but I do not think we have a proper thing for it. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 00:45, 3 May 2026 (UTC)
 ::::::What? Could you elaborate? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:00, 3 May 2026 (UTC)
+::::::{{ping|Immanuelle}} I checked. Your issue is that your editor is not providing the article language to Z33068K2; that is, the ''paragraph from sentences'' function has a second argument, and your editor was omitting it. If you properly specify it, it will work. Please, next time, actually tell me what went wrong instead of going quiet and forcing me to look after it myself. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:06, 4 May 2026 (UTC)
 
 == Most used fragments ==
 
@@ -688,3 +691,5 @@ How was this calculated? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|t
 ::Stop policing how people use discussion pages without a particularly good reason. If you don't have an answer to the actual question, don't write anything. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:38, 2 May 2026 (UTC)
 :::I have to agree with Feeglgeef that this would be better raised on the status update's talk page itself. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:42, 2 May 2026 (UTC)
 :::I'm "policing" which discussion pages are being used for the same reason different discussion spaces exist in the first place. And your distinction between "just about" and "prompted by" is irrelevant. If I want to ask someone how they did something, I would ask them first, not go to a general discussion board. This is still the project ''chat'', not a Q&A zone. {{ping|DVrandecic (WMF)|p=,}} can you please answer the question? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:22, 2 May 2026 (UTC)
+:I have a local script that I have run on a local copy. Nothing more complicated than that. Could also be very wrong -- the script hasn't been peer-reviewed or anything. --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 08:54, 4 May 2026 (UTC)
+::Thanks, @[[User:DVrandecic (WMF)|DVrandecic (WMF)]]. Can you share the code, please? I'll be happy to review it. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:30, 4 May 2026 (UTC)

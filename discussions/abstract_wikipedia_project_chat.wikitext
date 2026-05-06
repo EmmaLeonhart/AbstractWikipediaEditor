@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-05T06:02:26Z
+  Fetched:   2026-05-06T06:17:48Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -541,10 +541,12 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
 
 == Why the editing API doesn't work ==
-
+{{tracked|T423542}}
 Immanuelle wrongly stated that there is no REST API for editing. [[#REST API for editing?|There is]]. However, it does not work when called from software outside Abstract Wikipedia. That is because there is no way to grant a bot password or OAuth customer the permission to edit abstract articles (<code>wikilambda-abstract-edit</code>) and create them (<code>wikilambda-abstract-create</code>), since no grant on [[Special:ListGrants]] includes either. Should this be fixed? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:57, 26 April 2026 (UTC)
 
 :Yes I think the rights should be added. I think the number of automated edits should be low at the moment as Abstract Wikipedia is still in an early phase and so far there is not much support for small languages and so many functions will maybe change to cover more languages. As automatic editing using a Bot Account requires an formal request it is no problem if the option exists. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 18:17, 26 April 2026 (UTC)
+:Sounds good to me. Could we add a bot section to [[Abstract Wikipedia:Requests for permissions]]? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:35, 5 May 2026 (UTC)
+::[[Abstract_Wikipedia:Requests_for_permissions#Bot]] ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 23:56, 5 May 2026 (UTC)
 
 == Q884 ==
 

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-05T06:02:26Z
+  Fetched:   2026-05-06T06:17:48Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -407,6 +407,9 @@ Are there any future plans to support this, and/or workarounds? Maybe create a u
 
 I was trying to use {{Z|Z6830}} for implementation in the Chinese-language. And turns out most of the Lexeme on Wikidata is using [[d:Q727694]] as the language instead of [[d:Q7850]]. This makes it impossible to use the mentioned function above, since Standard Chinese is not available (or did I miss something?). Is there a way to fetch lexemes with language=[[d:Q727694]] from item? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:20, 30 April 2026 (UTC)
 
+:@[[User:Sun8908|Sun8908]] There is [[Z1006]] for Chinese and it has the language code zh. There is an overview of languages in [[Module:Wikifunctions label]] so you can search there for chinese versions and choose the one you need. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 20:53, 5 May 2026 (UTC)
+::I know that. The problem is when using the function [[Z6830]], it cannot retrieve lexeme with language [[d:Q727694]] (but it is the "Chinese language" with the most current Wikidata lexemes, see [https://ordia.toolforge.org/language/ ordia]). I think it should be a Wikidata problem, I might fix it (possibly by creating the same lexemes with language code zh) on Wikidata. Thanks anyway. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 05:39, 6 May 2026 (UTC)
+
 == Key not found error ==
 
 Is there a reason why I am getting key not found error for this [[Z34677|function]]  {{Z|Z34677}}? All the underlying functions run and all the test cases work. The debug information does not give more details. Any pointers? Thanks in advance [[User:Jsamwrites|John Samuel]] 19:24, 1 May 2026 (UTC)
@@ -446,3 +449,7 @@ but in {{Z|28579}} it's
 <syntaxhighlight lang=js>
 [ sign * numerator, denominator ]
 </syntaxhighlight> '''<span style="font-family:Iosevka,monospace">[[User:沈澄心|<span style="color:#9f3526">dring</span>]][[User talk:沈澄心|<span style="color:#534fa3">sim</span>]]</span>''' 05:15, 4 May 2026 (UTC)
+
+== Nested functions in compositions ==
+
+I wish it will be easier to a add another function about a specific existing function in a function implementation based on a composition. When I write long functions in spreadsheets I usually stat with a small part and then I try to go further and after important steps I test if the output is as expected. I created [[Z34826]] to get the German gender specific occupation lexeme for a specific person based on their gender. I wanted to add a function around the existing one and it was not successful. It is not very easy to implement as it requires the possibily to move a part to another section but I think it can be helpful if it will be implemented. So far I spend more time as expected on the function. Describing it with words what the function needs to do is much easier than implementing it here in Wikifunctions. So I think there needs to be improvement to make Wikifunctions more accessible. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 21:10, 5 May 2026 (UTC)

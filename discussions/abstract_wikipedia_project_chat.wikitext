@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-06T06:17:48Z
+  Fetched:   2026-05-07T06:22:53Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -600,7 +600,7 @@ Might be a stupid question but what articles are/will be allowed on Abstract Wik
 :::At this juncture, I don't think anyone has in mind drafting anything new here as such: this is just responding to existing Wikidata items and the possibility of new Wikipedia articles drafted from them, using Wikifunctions. [[User:Koavf|Koavf]] ([[User talk:Koavf|talk]]) 00:51, 2 May 2026 (UTC)
 :I don't think we ever get any article an existing wiki does not have. Even if abstract content creation gets as fast as reasonably possible, it will never beat out typing text, so we will never catch up with, say, enwiki or eswiki. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:10, 2 May 2026 (UTC)
 ::It's also a question of policy. There are topics about which things could be said, but which wouldn't meet the baseline notability or other criteria of the big monolingual wikis. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 20:22, 2 May 2026 (UTC)
-:::This is true, if we keep [[d:]]'s notability policy (which seems like the most natural one) then there are many subjects that we theoretically talk about that don't meet the [[w:WP:GNG|GNG]] and similar guidelines. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 2 May 2026 (UTC)
+:::This is true, if we keep [[d:]]'s notability policy (which seems like the most natural one) then there are many subjects that we theoretically can talk about that don't meet the [[w:WP:GNG|GNG]] and similar guidelines. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:25, 2 May 2026 (UTC)
 
 == How many articles in how many languages are actually fully available without errors ==
 
@@ -695,3 +695,12 @@ How was this calculated? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|t
 :::I'm "policing" which discussion pages are being used for the same reason different discussion spaces exist in the first place. And your distinction between "just about" and "prompted by" is irrelevant. If I want to ask someone how they did something, I would ask them first, not go to a general discussion board. This is still the project ''chat'', not a Q&A zone. {{ping|DVrandecic (WMF)|p=,}} can you please answer the question? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:22, 2 May 2026 (UTC)
 :I have a local script that I have run on a local copy. Nothing more complicated than that. Could also be very wrong -- the script hasn't been peer-reviewed or anything. --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 08:54, 4 May 2026 (UTC)
 ::Thanks, @[[User:DVrandecic (WMF)|DVrandecic (WMF)]]. Can you share the code, please? I'll be happy to review it. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:30, 4 May 2026 (UTC)
+==Wiktionary integration==
+I was trying out a few functions recently, such as [https://www.wikifunctions.org/view/en/Z27243 the new superlative function], and I noticed that ''every adjective'' has to be a Wikidata item.  For example, I couldn't type in the inputs "Bugatti Veyron", "fast", "Earth" because "fast" as an adjective is not a Wikidata item.  This doesn't really make sense, given that Wiktionary already has the word for "fast" and its superlative form in many different languages.  Would it be possible to integrate Wiktionary into the function, so the user can type an adjective or verb from Wiktionary instead of having to deal with Wikidata (which consists almost entirely of nouns)?  [[User:Somepinkdude|Somepinkdude]] ([[User talk:Somepinkdude|talk]]) 16:49, 6 May 2026 (UTC)
+
+:No, sadly. I would try "speed" as the adjective, though, you have to use abstract qualities instead of concrete English terms. [[File:Wikifunctions Superlative speed example.png|thumb|Here's an example of the word being used.]]  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:02, 6 May 2026 (UTC)
+:Wikidata has standard items as well as lexeme data, so if anything, we should try to integrate those. E.g. [[:d:Lexeme:L1029]]. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 19:48, 6 May 2026 (UTC)
+::I tried this, and it gave "Bugatti Veyron is the speedest car on Earth", which is laughably bad.  The problem is that Wikidata does not "know" what the superlative form is, while Wiktionary does.  Speed is a fairly common descriptor, but what about less common adjectives which aren't on Wikidata?  Will there need to be a bot to copy all of this information from Wiktionary?  [[User:Somepinkdude|Somepinkdude]] ([[User talk:Somepinkdude|talk]]) 22:14, 6 May 2026 (UTC)
+:::I'm not suggesting that the functionality works <em>now</em>, but that we need to integrate the funcationality. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 22:17, 6 May 2026 (UTC)
+:::Well, no, the superlative form is chosen by [[f:Z12203]]. I think there's a bug with the English implementation that calls that function wrong.  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:19, 6 May 2026 (UTC)
+:@[[User:Somepinkdude|Somepinkdude]] I did find the item {{Q|Q19807466}} which was linked to a concept database's entry for "fast"; I have at least linked it to the English lexeme "fast" and will try to add more links at a better hour. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 04:18, 7 May 2026 (UTC)

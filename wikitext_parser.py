@@ -748,29 +748,28 @@ def parse_template(text):
 def compile_paragraph(fragment_defs, variables, origin_qid, index):
     """Compile a group of fragments into a single paragraph clipboard item.
 
-    Wraps multiple function calls in Z32123(Z32234([Z1, call1, "  ", call2, ...])).
-    Each inner call is NOT individually wrapped — Z32234 handles text
-    concatenation and Z32123 produces the final Z89 HTML paragraph.
+    Wraps multiple function calls in Z33068([Z1, sentence1, sentence2, ...], $lang).
+    Z33068 ("paragraph from sentences") joins sentences with the right
+    separator for the article's language — a single space in English,
+    nothing at all in CJK languages — instead of the old hardcoded "  "
+    that left CJK output looking right but copy-pasted with stray spaces.
     """
     inner_calls = []
     for frag_def in fragment_defs:
         func_call, _return_type = build_func_call(frag_def, variables)
         inner_calls.append(func_call)
 
-    # Build typed list with whitespace separators between sentences
-    typed_list = ["Z1"]
-    for i, call in enumerate(inner_calls):
-        if i > 0:
-            typed_list.append("  ")
-        typed_list.append(call)
+    # Z33068K1 is a typed list of sentences; first element is the
+    # type marker "Z1". No separator strings — Z33068 emits them itself
+    # based on K2 (the language).
+    typed_list = ["Z1"] + inner_calls
 
-    # Z32234 (join text to html) wraps the list
-    z32234_call = z7_call("Z32234", {"Z32234K1": typed_list})
+    z33068_call = z7_call("Z33068", {
+        "Z33068K1": typed_list,
+        "Z33068K2": z18(IMPLICIT_REFS["$lang"]),
+    })
 
-    # Z32123 (paragraph) wraps Z32234 to produce Z89
-    z32123_call = z7_call("Z32123", {"Z32123K1": z32234_call})
-
-    return build_clipboard_item(z32123_call, index=index, origin_qid=origin_qid)
+    return build_clipboard_item(z33068_call, index=index, origin_qid=origin_qid)
 
 
 def compile_section_header(qid, variables, origin_qid, index):
@@ -802,8 +801,8 @@ def compile_section_header(qid, variables, origin_qid, index):
 
 # Paragraph-break markers in wikitext: a blank line, an explicit
 # {{p}} token, or a ==QID== section header. The first two split the
-# body into bundled paragraphs (multi-call Z32123(Z32234) items);
-# section headers also emit a Z31465 item.
+# body into bundled paragraphs (multi-call Z33068 items); section
+# headers also emit a Z31465 item.
 _PARAGRAPH_SPLIT_RE = re.compile(
     r'(\{\{\s*p\s*\}\}|^==\s*(.+?)\s*==$|\n[ \t]*\n)',
     re.IGNORECASE | re.MULTILINE,
@@ -814,7 +813,7 @@ def compile_template(text, variables=None):
     """Compile a wikitext template into clipboard-ready JSON.
 
     Multiple ``{{...}}`` calls within a paragraph are bundled into a
-    single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard
+    single Z33068([Z1, sentence1, sentence2, ...], $lang) clipboard
     item. Paragraph breaks are introduced by:
 
     * a blank line in the source,
@@ -848,7 +847,7 @@ def compile_template(text, variables=None):
     section_counter = 0  # for auto-numbering non-QID headings
 
     def emit_paragraph(segment_text):
-        """Compile a paragraph's calls into one bundled Z32123 item."""
+        """Compile a paragraph's calls into one bundled Z33068 item."""
         fragments = parse_template_calls(segment_text)
         if not fragments:
             return

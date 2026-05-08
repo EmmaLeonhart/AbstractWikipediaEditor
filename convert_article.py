@@ -319,9 +319,10 @@ def convert_article_to_wikitext(qid, oldid=None):
     lines.append("")
 
     sections = content.get("sections", {})
-    # Each fragment on the wiki side is a Z32123 paragraph wrapper. Round-
-    # tripping it: emit its inner calls on consecutive lines (a single
-    # paragraph in source form), and put a blank line between successive
+    # Each fragment on the wiki side is a paragraph wrapper. New articles
+    # use Z33068 ("paragraph from sentences"); older articles use the
+    # legacy Z32123(Z32234([...spaces...])) shape — both round-trip back
+    # to the same per-line wikitext, with a blank line between successive
     # paragraphs so compile_template re-bundles them correctly. Section
     # headers (Z31465) act as their own paragraph breaks and don't need
     # extra blank lines around them.
@@ -340,22 +341,24 @@ def convert_article_to_wikitext(qid, oldid=None):
                 last_was_paragraph = False
                 continue
 
-            # Z32234 paragraph: emit each inner call on its own line. If
-            # a paragraph just preceded this one, prepend a blank line so
-            # the two don't merge back together on recompile.
-            if fid == "Z32234":
+            # Z33068 (new) and Z32234 (legacy) paragraph wrappers: emit
+            # each inner sentence call on its own line. The two shapes
+            # differ only in whether the typed list contains separator
+            # strings (Z32234 does, Z33068 doesn't) — we just skip non-
+            # dict entries either way. If a paragraph just preceded
+            # this one, prepend a blank line so they don't merge back
+            # together on recompile.
+            if fid in ("Z33068", "Z32234"):
+                list_key = f"{fid}K1"
                 paragraph_lines = []
-                for key in sorted(core.keys()):
-                    if key in ("Z1K1", "Z7K1"):
-                        continue
-                    val = core[key]
-                    if isinstance(val, list):
-                        for item in val:
-                            if isinstance(item, dict):
-                                inner = unwrap_fragment(item)
-                                wt = format_as_wikitext(inner)
-                                if wt:
-                                    paragraph_lines.append(wt)
+                val = core.get(list_key)
+                if isinstance(val, list):
+                    for item in val:
+                        if isinstance(item, dict):
+                            inner = unwrap_fragment(item)
+                            wt = format_as_wikitext(inner)
+                            if wt:
+                                paragraph_lines.append(wt)
                 if paragraph_lines:
                     if last_was_paragraph:
                         lines.append("")

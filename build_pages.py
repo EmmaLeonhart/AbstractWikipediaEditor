@@ -382,11 +382,14 @@ def format_as_wikitext(obj):
 
 
 def extract_paragraph_calls(obj):
-    """Extract inner function calls from a Z32234 paragraph combiner.
+    """Extract inner function calls from a Z33068 or Z32234 paragraph wrapper.
 
-    Z32234 takes a typed list ['Z1', {call}, ' ', {call}, ...] of inner
-    function calls separated by whitespace strings.  Returns a list of
-    the inner Z-object calls (unwrapped).
+    Z33068 ("paragraph from sentences") takes a typed list
+    ['Z1', call, call, ...] in K1 with no separator strings.
+    Legacy Z32234 ("join text to html") takes ['Z1', call, ' ', call, ...]
+    with whitespace separators between the calls. We just walk the list
+    and pick out the dicts (i.e. the function calls), which works for
+    both shapes.
     """
     for key in sorted(obj.keys()):
         if key in ("Z1K1", "Z7K1"):
@@ -443,8 +446,9 @@ def format_fragment_neutral(fragment):
             return f"=={qid}=="
         return None
 
-    # Z32234 is a paragraph combiner - decompose into inner sentences
-    if fid == "Z32234":
+    # Z33068 (new) and Z32234 (legacy) are paragraph combiners; decompose
+    # both into per-sentence wikitext lines.
+    if fid in ("Z33068", "Z32234"):
         inner_calls = extract_paragraph_calls(core)
         lines = []
         for call in inner_calls:
@@ -549,12 +553,13 @@ def build_article_page(article, content):
 
     label = get_label(title) if title.startswith("Q") else title
 
-    # Extract wikitext fragments from the Z-object. Each top-level
-    # fragment is a Z32123 paragraph wrapper around a Z32234 list of
-    # calls; emit those inner calls on consecutive lines, with a blank
-    # line between successive paragraphs so the source-form parser
-    # re-bundles them correctly. Section headers (==QID==) act as their
-    # own paragraph breaks.
+    # Extract wikitext fragments from the Z-object. New articles use
+    # Z33068 ("paragraph from sentences"); legacy articles wrap a
+    # Z32234 list inside Z32123 (which unwrap_fragment strips). Either
+    # way, emit the inner sentence calls on consecutive lines, with a
+    # blank line between successive paragraphs so the source-form
+    # parser re-bundles them correctly. Section headers (==QID==) act
+    # as their own paragraph breaks.
     sections = content.get("sections", {})
     wikitext_parts = []
     last_was_paragraph = False
@@ -573,7 +578,7 @@ def build_article_page(article, content):
                 last_was_paragraph = False
                 continue
 
-            if fid == "Z32234":
+            if fid in ("Z33068", "Z32234"):
                 paragraph_lines = []
                 for call in extract_paragraph_calls(core):
                     wt = format_as_wikitext(call)

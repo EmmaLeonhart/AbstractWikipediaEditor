@@ -92630,22 +92630,28 @@
     "Z33068": {
       "zid": "Z33068",
       "label": "paragraph from sentences",
-      "description": "Takes a list of sentences and creates a paragraph",
+      "description": "Takes a list of sentences and a language and creates a paragraph, joining the sentences with the language-appropriate separator (e.g. a space in English, nothing in CJK).",
       "arguments": [
         {
           "key": "Z33068K1",
           "type": "Z881(Z1)",
           "label": "sentences"
+        },
+        {
+          "key": "Z33068K2",
+          "type": "Z60",
+          "label": "language"
         }
       ],
       "return_type": "Z89",
       "input_types": [
-        "Z881(Z1)"
+        "Z881(Z1)",
+        "Z60"
       ],
       "num_tests": 0,
-      "num_implementations": 0,
-      "used_in_bot": false,
-      "bot_usage_note": ""
+      "num_implementations": 1,
+      "used_in_bot": true,
+      "bot_usage_note": "AWE wraps every paragraph in Z33068 (replaced legacy Z32123(Z32234([..., '  ', ...])) shape on 2026-05-08)."
     },
     "Z33071": {
       "zid": "Z33071",

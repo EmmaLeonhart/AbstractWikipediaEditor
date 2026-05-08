@@ -13,7 +13,9 @@ The app queries Wikidata for item properties, maps them to Wikifunctions sentenc
 - Screenshots saved to `screenshots/` directory
 
 ### Paragraph Model and Section Headers (`==QID==`)
-Multiple `{{...}}` calls between paragraph breaks bundle into a single Z32123(Z32234([Z1, call1, "  ", call2, ...])) clipboard item. Citations (`{{cite web|URL}}`) are just regular calls, so they bundle into the paragraph of the sentence they follow — exactly where their `<sup>`-style refs belong.
+Multiple `{{...}}` calls between paragraph breaks bundle into a single `Z33068([Z1, sentence1, sentence2, ...], $lang)` clipboard item. `Z33068` ("paragraph from sentences") joins sentences with the right separator for the article's language — a single space in English, nothing in CJK — so the editor no longer hardcodes `"  "` between sentences. Citations (`{{cite web|URL}}`) are just regular calls, so they bundle into the paragraph of the sentence they follow — exactly where their `<sup>`-style refs belong.
+
+**Legacy shape:** Articles published before 2026-05-08 use `Z32123(Z32234([Z1, call1, "  ", call2, ...]))`. `convert_article.py` and `build_pages.py` recognize both shapes so existing on-wiki articles still round-trip; only newly compiled paragraphs use Z33068.
 
 A paragraph break is any of:
 - a blank line in the source,
@@ -23,7 +25,7 @@ A paragraph break is any of:
 Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))). `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
 
 - `generate_wikitext.py` emits one paragraph per claim (sentence + its citations), separated by blank lines
-- `convert_article.py` / `build_pages.py` emit each Z32123 paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same structure
+- `convert_article.py` / `build_pages.py` emit each Z33068 (or legacy Z32123) paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same Z33068 structure
 
 **History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. That was a misread of the WF Project chat (Immanuelle's words: "some guy gave a confusing objection so I switched it, and then everybody hated it, including that guy"). The community wanted multi-sentence paragraphs with paragraph breaks; this file previously locked in the wrong rule. If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
 

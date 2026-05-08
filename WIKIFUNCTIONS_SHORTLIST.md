@@ -214,9 +214,9 @@ Renders a single main Wikidata statement.
 
 ### Z33068: paragraph from sentences
 
-Takes a list of sentences and creates a paragraph.
+Takes a list of sentences and a language and creates a paragraph, joining sentences with the language-appropriate separator (a space in English, nothing in CJK). Used by AWE as the standard paragraph wrapper since 2026-05-08.
 
-`(sentences: list of Z1)` -> HTML fragment | [View](https://www.wikifunctions.org/view/en/Z33068)
+`(sentences: list of Z1, language: Z60)` -> HTML fragment | [View](https://www.wikifunctions.org/view/en/Z33068)
 
 ### Z32163: paragraph from list of sentences, space separated
 

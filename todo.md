@@ -48,4 +48,3 @@
 - [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts)
 - [ ] Expand property-to-function mapping further (P19, P20, P569, P570 — these need a "born sentence"-style multi-property bundle, which the current 1:1 mapping shape does not support)
 - [ ] Re-watch `Z29822` ("ArticlePlaceholder render article") for an implementation; it has the right input shape (`language, item, include_no_best_statements`) for a one-click article shortcut, but has no implementations connected as of 2026-05-08
-- [ ] Re-edit Q705547, Q11639721, Q245734, Q335618, Q11366822, Q172382, Q246447 through AWE to clear the stuck Z33068 renders from the April rollback — pause and confirm before running the batch (per saved feedback on real wiki edits)

@@ -2,6 +2,7 @@
   "name": "abstract-wiki-editor",
   "version": "1.0.0",
   "description": "Desktop editor for Abstract Wikipedia articles with live preview",
+  "author": "Immanuelle <immanuelleleonhart@gmail.com>",
   "main": "dist/main.js",
   "scripts": {
     "setup": "node scripts/setup.js",
@@ -52,11 +53,9 @@
       "allowToChangeInstallationDirectory": false
     }
   },
-  "dependencies": {
-    "electron": "^33.0.0"
-  },
   "devDependencies": {
     "@types/node": "^22.0.0",
+    "electron": "^33.0.0",
     "electron-builder": "^25.1.8",
     "typescript": "^5.7.0"
   }

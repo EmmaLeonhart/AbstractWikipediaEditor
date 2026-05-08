@@ -385,3 +385,27 @@ class TestCiteWeb:
         assert inner["Z32053K4"]["Z20420K1"]["Z20159K2"]["Z13518K1"] == "2026"
         assert inner["Z32053K4"]["Z20420K2"]["Z20342K1"]["Z16098K1"] == "Z16103"
         assert inner["Z32053K4"]["Z20420K2"]["Z20342K2"]["Z13518K1"] == "14"
+
+
+class TestBornSentence:
+    """Z32473 born sentence: bundles person, date, place, language into one
+    'X was born on <date> in <place>' fragment."""
+
+    def test_born_sentence_full_compile(self):
+        # Jimmy Wales born 1966-08-08 in Huntsville (Q79860)
+        template = "{{Z32473|SUBJECT|1966-08-08|Q79860}}"
+        result = compile_template(template, {"subject": "Q1894"})
+        assert len(result) == 1
+        inner = result[0]["value"]["Z33068K1"][1]
+        assert inner["Z7K1"]["Z9K1"] == "Z32473"
+        # K1 (person) resolves SUBJECT to Z825K1
+        assert inner["Z32473K1"]["Z18K1"]["Z6K1"] == "Z825K1"
+        # K2 (date) is a Z20420 with year=1966, month=Z16108 (August), day=8
+        assert inner["Z32473K2"]["Z1K1"] == "Z20420"
+        assert inner["Z32473K2"]["Z20420K1"]["Z20159K2"]["Z13518K1"] == "1966"
+        assert inner["Z32473K2"]["Z20420K2"]["Z20342K1"]["Z16098K1"] == "Z16108"
+        assert inner["Z32473K2"]["Z20420K2"]["Z20342K2"]["Z13518K1"] == "8"
+        # K3 (place) is Q79860 (Huntsville) as Z6091
+        assert inner["Z32473K3"]["Z6091K1"]["Z6K1"] == "Q79860"
+        # K4 (language) auto-fills to $lang -> Z825K2
+        assert inner["Z32473K4"]["Z18K1"]["Z6K1"] == "Z825K2"

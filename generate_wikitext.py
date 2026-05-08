@@ -81,6 +81,35 @@ def extract_qid_value(claim):
     return None
 
 
+def extract_date_value(claim):
+    """Extract a YYYY-MM-DD date string from a claim's mainsnak.
+
+    Returns None unless the claim has full year/month/day precision
+    (Wikidata "precision" 11). Z32473 produces a "born on <date>"
+    sentence and a year-only date would render as "born on year 1966"
+    or worse — better to fall back to plain P31/P19 sentences than
+    to emit a malformed date.
+    """
+    snak = claim.get("mainsnak", {})
+    if snak.get("snaktype") != "value":
+        return None
+    dv = snak.get("datavalue", {})
+    if dv.get("type") != "time":
+        return None
+    val = dv.get("value", {})
+    if val.get("precision", 0) < 11:  # 11 = day precision
+        return None
+    raw = val.get("time", "")  # "+1966-08-08T00:00:00Z"
+    if raw.startswith("+"):
+        raw = raw[1:]
+    if "T" in raw:
+        raw = raw.split("T", 1)[0]
+    parts = raw.split("-")
+    if len(parts) < 3 or not all(parts):
+        return None
+    return raw  # "1966-08-08"
+
+
 # Wikidata reference properties that hold URLs
 URL_REFERENCE_PROPS = [
     "P854",   # reference URL
@@ -167,6 +196,37 @@ def generate_wikitext(qid):
         if pid in claims and pid in mapping:
             best_location = pid
             break
+
+    # Check if P569 (date of birth) and P19 (place of birth) both exist
+    # with day-precision dates — if so, emit a single Z32473 born sentence
+    # instead of two separate P569/P19 fragments. Year-only dates fall
+    # through to the regular per-property path.
+    if "P569" in claims and "P19" in claims:
+        birth_date = None
+        birth_date_claim = None
+        for c in claims["P569"]:
+            d = extract_date_value(c)
+            if d:
+                birth_date = d
+                birth_date_claim = c
+                break
+        birth_place = None
+        birth_place_claim = None
+        for c in claims["P19"]:
+            v = extract_qid_value(c)
+            if v:
+                birth_place = v
+                birth_place_claim = c
+                break
+        if birth_date and birth_place:
+            emit(
+                f"{{{{Z32473|SUBJECT|{birth_date}|{birth_place}}}}}",
+                birth_date_claim,
+            )
+            for cite in cite_fragments_for_claim(birth_place_claim, seen_urls):
+                append_to_last(cite)
+            used_props.add("P569")
+            used_props.add("P19")
 
     # Check if P106 (occupation) exists — if so, skip P31 ("is a human" is useless)
     has_occupation = "P106" in claims and "P106" in mapping

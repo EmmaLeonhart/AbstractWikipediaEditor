@@ -316,6 +316,19 @@ FUNCTION_REGISTRY = {
         ],
         "returns": "Z6",
     },
+    # Born sentence: bundles P569 (date of birth) and P19 (place of birth)
+    # into a single "<person> was born on <date> in <place>" sentence.
+    "Z32473": {
+        "name": "Born sentence",
+        "example": "Jimmy Wales was born on August 8, 1966 in Huntsville.",
+        "params": [
+            {"key": "K1", "name": "person", "type": "entity_ref"},
+            {"key": "K2", "name": "date_of_birth", "type": "date"},
+            {"key": "K3", "name": "place_of_birth", "type": "Q-item"},
+            {"key": "K4", "name": "language", "type": "language"},
+        ],
+        "returns": "Z6",
+    },
     # Structural / rendering functions (return Z89 directly)
     "Z29822": {
         "name": "ArticlePlaceholder render article",

@@ -6,6 +6,7 @@
 - [x] Switched paragraph emission from `Z32123(Z32234([..., '  ', ...]))` to `Z33068([sentences], $lang)` — Theki/rae diagnosed the prior failure on the Project chat (May 4 2026) as a missing `K2` (language) argument. `convert_article.py` and `build_pages.py` still decode the legacy shape so already-published articles round-trip cleanly.
 - [x] Added P50 (author), P57 (director), P112 (founded by) to the property mapping. Verified each role QID against the Wikidata API — Q4479442 is "founder" (Q3736439 looks similar but is "duck", which is the kind of mistake CLAUDE.md's CRITICAL rule warns against).
 - [x] Investigated `Z29822` (ArticlePlaceholder render article) and `Z30106` (ArticlePlaceholder format String). `Z29822` is the right shape for an "auto-article from QID" shortcut but currently has no connected implementations, so it cannot be wired up until someone connects one. `Z30106` is a small formatting primitive, not useful as an article shortcut.
+- [x] Bundled P569 (date of birth) + P19 (place of birth) into a single `{{Z32473|SUBJECT|YYYY-MM-DD|<place>}}` born sentence in `generate_wikitext.py`, mirroring how P106+P27 already collapse into one occupation-of-citizenship sentence. Year-only dates fall through to the regular per-property path so we don't emit a malformed "born on year 1929" sentence. Verified end-to-end against Q181659 (Ursula K. Le Guin): output starts with `{{Z32473|SUBJECT|1929-10-21|Q484678}}`.
 
 ## Completed
 
@@ -46,5 +47,5 @@
 ## Next Steps
 
 - [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts)
-- [ ] Expand property-to-function mapping further (P19, P20, P569, P570 — these need a "born sentence"-style multi-property bundle, which the current 1:1 mapping shape does not support)
+- [ ] Bundle P570 (date of death) + P20 (place of death) into a death sentence the same way P569 + P19 now bundle into Z32473 — needs a corresponding Wikifunction (no Z32473 equivalent exists yet for "died on X in Y")
 - [ ] Re-watch `Z29822` ("ArticlePlaceholder render article") for an implementation; it has the right input shape (`language, item, include_no_best_statements`) for a one-click article shortcut, but has no implementations connected as of 2026-05-08

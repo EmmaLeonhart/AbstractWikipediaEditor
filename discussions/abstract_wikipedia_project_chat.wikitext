@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-07T06:22:53Z
+  Fetched:   2026-05-08T05:39:25Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -704,3 +704,13 @@ I was trying out a few functions recently, such as [https://www.wikifunctions.or
 :::I'm not suggesting that the functionality works <em>now</em>, but that we need to integrate the funcationality. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 22:17, 6 May 2026 (UTC)
 :::Well, no, the superlative form is chosen by [[f:Z12203]]. I think there's a bug with the English implementation that calls that function wrong.  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:19, 6 May 2026 (UTC)
 :@[[User:Somepinkdude|Somepinkdude]] I did find the item {{Q|Q19807466}} which was linked to a concept database's entry for "fast"; I have at least linked it to the English lexeme "fast" and will try to add more links at a better hour. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 04:18, 7 May 2026 (UTC)
+
+== Showcase ==
+
+I was wondering if there's a curated list of decent articles to learn by example here on Abstract Wikipedia? [[User:Fgnievinski|Fgnievinski]] ([[User talk:Fgnievinski|talk]]) 02:02, 8 May 2026 (UTC)
+
+:Unfortunately not, and, honestly, I wouldn't recommend article creation at the moment, it's likely to need significant refactoring as the way we represent abstract content changes, but, I can point you to [[Q668]] as a reasonably good example at the moment. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:39, 8 May 2026 (UTC)
+::Thank you. "308 languages" blew my mind – well done! [[User:Fgnievinski|Fgnievinski]] ([[User talk:Fgnievinski|talk]]) 02:54, 8 May 2026 (UTC)
+:::308 is the number of ''concrete'' Wikipedias in which a manually-written article about India is available.
+:::The abstract article renders for me in English as "India is a country in Asia. India is a republic. New Delhi is the capital of India. India is the most populous country in world." Switching to another language to get rendered as an abstract article is done by typing the language's name in the box above the rendered text. I tried French, German, and Dutch, and got errors in all of them. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 03:12, 8 May 2026 (UTC)
+::::So it goes. The paragraph has quite a lot of distinct sentence generation functions, all of which of course have to be implemented in the target language. This will be rounded out once we're able to more effectively generalize linguistic content. I view these functions as sort of patchy temporary solutions to the sentence generation problem while we figure out something more robust, which I hope is soon to come. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 04:15, 8 May 2026 (UTC)

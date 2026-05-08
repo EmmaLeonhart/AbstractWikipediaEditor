@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-08T05:39:25Z
+  Fetched:   2026-05-08T22:10:33Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -714,3 +714,16 @@ I was wondering if there's a curated list of decent articles to learn by example
 :::308 is the number of ''concrete'' Wikipedias in which a manually-written article about India is available.
 :::The abstract article renders for me in English as "India is a country in Asia. India is a republic. New Delhi is the capital of India. India is the most populous country in world." Switching to another language to get rendered as an abstract article is done by typing the language's name in the box above the rendered text. I tried French, German, and Dutch, and got errors in all of them. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 03:12, 8 May 2026 (UTC)
 ::::So it goes. The paragraph has quite a lot of distinct sentence generation functions, all of which of course have to be implemented in the target language. This will be rounded out once we're able to more effectively generalize linguistic content. I view these functions as sort of patchy temporary solutions to the sentence generation problem while we figure out something more robust, which I hope is soon to come. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 04:15, 8 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #247 is out: References from Wikidata now available ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-08|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we announce that is now possible to pass references in Wikidata statements, we introduce the [https://abstract-data.toolforge.org/ Abstract Data dashboard], we report you on the presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1778520600 May 11, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 11:16, 8 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->

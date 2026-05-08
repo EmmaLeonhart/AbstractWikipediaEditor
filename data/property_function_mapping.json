@@ -168,6 +168,30 @@
       "example": "The yen is the currency of Japan.",
       "template": "{{Z28016|$value|Q8142|SUBJECT}}",
       "notes": "Value is the currency, role=Q8142 (currency), dependency is the country/region."
+    },
+    "P50": {
+      "label": "author",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
+      "example": "Mark Twain is the author of The Adventures of Huckleberry Finn.",
+      "template": "{{Z28016|$value|Q482980|SUBJECT}}",
+      "notes": "Value is the person, role=Q482980 (author), dependency is the work."
+    },
+    "P57": {
+      "label": "director",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
+      "example": "Christopher Nolan is the director of Inception.",
+      "template": "{{Z28016|$value|Q3455803|SUBJECT}}",
+      "notes": "Value is the person, role=Q3455803 (director), dependency is the creative work."
+    },
+    "P112": {
+      "label": "founded by",
+      "function": "Z28016",
+      "function_name": "defining role sentence",
+      "example": "Bill Gates is the founder of Microsoft.",
+      "template": "{{Z28016|$value|Q4479442|SUBJECT}}",
+      "notes": "Value is the founder, role=Q4479442 (founder), dependency is the organization. Q4479442 verified — Q3736439 looks similar in number but is 'duck'."
     }
   }
 }

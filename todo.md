@@ -1,5 +1,12 @@
 # Abstract Wikipedia Editor Roadmap
 
+## Completed (2026-05-08 batch)
+
+- [x] Built distributable `.exe` installer via electron-builder (`editor/dist/Abstract Wikipedia Editor Setup 1.0.0.exe`). Required moving `electron` from `dependencies` to `devDependencies` and adding an `author` field to `editor/package.json`.
+- [x] Switched paragraph emission from `Z32123(Z32234([..., '  ', ...]))` to `Z33068([sentences], $lang)` — Theki/rae diagnosed the prior failure on the Project chat (May 4 2026) as a missing `K2` (language) argument. `convert_article.py` and `build_pages.py` still decode the legacy shape so already-published articles round-trip cleanly.
+- [x] Added P50 (author), P57 (director), P112 (founded by) to the property mapping. Verified each role QID against the Wikidata API — Q4479442 is "founder" (Q3736439 looks similar but is "duck", which is the kind of mistake CLAUDE.md's CRITICAL rule warns against).
+- [x] Investigated `Z29822` (ArticlePlaceholder render article) and `Z30106` (ArticlePlaceholder format String). `Z29822` is the right shape for an "auto-article from QID" shortcut but currently has no connected implementations, so it cannot be wired up until someone connects one. `Z30106` is a small formatting primitive, not useful as an article shortcut.
+
 ## Completed
 
 - [x] Shrine article creation via Playwright clipboard injection
@@ -34,10 +41,11 @@
 
 ## In Progress
 
-- [ ] Build distributable .exe installer via electron-builder
+(none)
 
 ## Next Steps
 
 - [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts)
-- [ ] Expand property-to-function mapping as more functions are tested
-- [ ] Explore ArticlePlaceholder functions (Z29822, Z29786) as shortcuts
+- [ ] Expand property-to-function mapping further (P19, P20, P569, P570 — these need a "born sentence"-style multi-property bundle, which the current 1:1 mapping shape does not support)
+- [ ] Re-watch `Z29822` ("ArticlePlaceholder render article") for an implementation; it has the right input shape (`language, item, include_no_best_statements`) for a one-click article shortcut, but has no implementations connected as of 2026-05-08
+- [ ] Re-edit Q705547, Q11639721, Q245734, Q335618, Q11366822, Q172382, Q246447 through AWE to clear the stuck Z33068 renders from the April rollback — pause and confirm before running the batch (per saved feedback on real wiki edits)

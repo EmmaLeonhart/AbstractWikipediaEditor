@@ -24,10 +24,10 @@ A paragraph break is any of:
 
 Section headers use wiki-style `==QID==` syntax, where the QID references a Wikidata item. They compile to Z31465(Z10771(Z24766(QID, $lang))). `==anything non-QID==` auto-assigns natural-number QIDs starting at Q199.
 
-- `generate_wikitext.py` emits one paragraph per claim (sentence + its citations), separated by blank lines
+- `generate_wikitext.py` bundles every auto-emitted sentence (and its citations) into a single paragraph — one Z33068 per article. The user can still split paragraphs in the editor with `{{p}}`, a blank line, or a `==QID==` header.
 - `convert_article.py` / `build_pages.py` emit each Z33068 (or legacy Z32123) paragraph's calls on consecutive lines, separated from the next paragraph by a blank line — round-tripping back through `compile_template` reproduces the same Z33068 structure
 
-**History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. That was a misread of the WF Project chat (Immanuelle's words: "some guy gave a confusing objection so I switched it, and then everybody hated it, including that guy"). The community wanted multi-sentence paragraphs with paragraph breaks; this file previously locked in the wrong rule. If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
+**History note:** there was a brief period (commit `ab06ead`) where every `{{...}}` call became its own paragraph and `{{p}}` was stripped. After that, the generator went back to one-paragraph-per-claim — which the May 2026 chat threads (JJP's three points on User_talk:Immanuelle 2026-04-28; Theki's Q100 / Q10251 walkthrough on Project chat 2026-05-02 / 2026-05-04) again pushed back on. The current rule (single bundled paragraph by default) reflects that latest consensus. If you find another section of CLAUDE.md that asserts a specific editorial choice, cross-check it against `discussions/` before treating it as gospel.
 
 ## Workflow Rules
 - **Commit early and often.** Every meaningful change gets a commit with a clear message explaining *why*, not just what.

@@ -166,27 +166,30 @@ def generate_wikitext(qid):
     # Collect variables we'll need
     variables = {}
     # paragraphs is a list of paragraphs, where each paragraph is a list
-    # of fragment strings (one sentence's call, followed by any cite-web
-    # calls for that claim). Paragraphs serialize joined with blank lines
-    # so compile_template re-bundles each one as a single Z32123 item.
-    paragraphs = []
+    # of fragment strings (sentence call followed by any cite-web calls
+    # for that claim). Auto-generation puts every sentence in a single
+    # paragraph so they bundle into one Z33068 — JJP's three points on
+    # User_talk:Immanuelle (2026-04-28) and the Project chat thread on
+    # spaces between sentences (2026-05-02) both pushed back on the
+    # earlier one-paragraph-per-sentence layout. The user can still
+    # insert {{p}} or a blank line in the editor to force a break.
+    paragraphs = [[]]
     used_props = set()
     seen_urls = set()  # global dedupe for cite-web URLs
 
     def emit(frag, claim=None):
-        """Start a new paragraph with `frag` and that claim's citations."""
-        para = [frag]
+        """Append `frag` (and that claim's citations) to the current
+        paragraph. Auto-generation never opens a new paragraph; section
+        headers and explicit user-inserted breaks are the only ways
+        to split paragraphs in the round-tripped wikitext."""
+        paragraphs[-1].append(frag)
         if claim is not None:
-            para.extend(cite_fragments_for_claim(claim, seen_urls))
-        paragraphs.append(para)
+            paragraphs[-1].extend(cite_fragments_for_claim(claim, seen_urls))
 
     def append_to_last(frag):
-        """Tack a fragment onto the most recent paragraph (e.g. an extra
+        """Tack a fragment onto the current paragraph (e.g. an extra
         citation that belongs with the preceding sentence)."""
-        if paragraphs:
-            paragraphs[-1].append(frag)
-        else:
-            paragraphs.append([frag])
+        paragraphs[-1].append(frag)
 
     # Determine which location property to use (most specific wins)
     # P131 (admin territory) > P17 (country) > P30 (continent)
@@ -334,8 +337,10 @@ def generate_wikitext(qid):
     lines.append("")
 
     # Emit each paragraph's fragments on consecutive lines, with a blank
-    # line between paragraphs so compile_template re-bundles them.
-    for i, para in enumerate(paragraphs):
+    # line between paragraphs so compile_template re-bundles them. Skip
+    # empty paragraphs (the initial `[[]]` is empty when no claims map).
+    non_empty = [p for p in paragraphs if p]
+    for i, para in enumerate(non_empty):
         if i > 0:
             lines.append("")
         for frag in para:

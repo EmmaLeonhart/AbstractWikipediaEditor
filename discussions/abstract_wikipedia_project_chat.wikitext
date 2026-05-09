@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-08T22:10:33Z
+  Fetched:   2026-05-09T23:58:28Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -45,6 +45,7 @@ I feel like the project could be done a lot better by using templates kind of li
 :This is available in pages when Parsoid rendering is enabled. We don't use this becuase it doesn't make sense for constructing and editing massive articles. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
 ::How do you do parsoid rendering? And why wouldn't it make sense? With aliases and everything could work great. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:12, 29 March 2026 (UTC)
 :::I believe it is enabled by default. If you do have it on: {{#function:Z10000|you'll s|ee this}} [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:54, 30 March 2026 (UTC)
+:you may be interested in reading this old [[m:Abstract_Wikipedia/Google.org_Fellows_evaluation|Google report]].  [[User:BrokenSegue|BrokenSegue]] ([[User talk:BrokenSegue|talk]]) 14:32, 9 May 2026 (UTC)
 
 == Automatically querying wikidata ==
 

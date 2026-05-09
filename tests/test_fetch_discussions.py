@@ -53,6 +53,42 @@ class TestMentionsAwe:
             "the most used fragments."
         )
 
+    def test_immanuelle_signature_counts(self):
+        # The most common form on the wiki is the four-tilde signature
+        # rendered out as `[[User:Immanuelle|Immanuelle]]`. Even one
+        # signature on an otherwise unrelated page is a strong AWE
+        # signal because she's the editor's author.
+        assert mentions_awe(
+            "Some unrelated thread.\n"
+            "[[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]])"
+        )
+
+    def test_immanuelle_partial_word_does_not_match(self):
+        # "Emmanuelle" / "immanuelles" shouldn't trigger; we anchor
+        # the proper noun to word boundaries.
+        assert not mentions_awe("Emmanuelle and others spoke.")
+
+    def test_slop_machine_pejorative(self):
+        assert mentions_awe("the slop-machine that they used")
+
+    def test_slop_machine_with_space(self):
+        assert mentions_awe("the slop machine generated bad output")
+
+    def test_slop_generated_pejorative(self):
+        assert mentions_awe("a slop-generated tool was used")
+
+    def test_clanker_pejorative(self):
+        assert mentions_awe("anything made by a clanker AI robot")
+
+    def test_clanker_only_whole_word(self):
+        # Avoid accidental matches inside longer tokens.
+        assert not mentions_awe("the rclankerbase library")
+
+    def test_repo_url_form(self):
+        assert mentions_awe(
+            "see github.com/EmmaLeonhart/AbstractWikipediaEditor"
+        )
+
 
 class TestShouldSkip:
     def test_missing_file_does_not_skip(self):

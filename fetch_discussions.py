@@ -149,22 +149,52 @@ def strip_header(content):
     return content
 
 
-# Whole-word "AWE" so we don't match aware/award/awe-inspiring; the
-# phrase match is case-insensitive because the wiki uses both "Abstract
-# Wikipedia Editor" and "abstract wikipedia editor" in different places.
-_AWE_ACRONYM = re.compile(r"\bAWE\b")
-_AWE_PHRASE = re.compile(r"abstract wikipedia editor", re.IGNORECASE)
+# Things people actually call AWE on the wiki. Built from a survey of
+# discussions/* — every entry below appears in those snapshots referring
+# to the editor or its author. The broad set deliberately errs toward
+# false positives (page stays synced when AWE isn't really being talked
+# about) over false negatives (skipping a page that has AWE discussion
+# under one of its many names — "slop-machine", "clanker", etc).
+#
+# Case-sensitive items: "AWE" (whole word, to skip aware/award) and
+# "Immanuelle" (proper noun; she signs every comment with this name and
+# her appearance on a page is by far the most reliable AWE-relevance
+# signal — even a single signature in the WF chat turned out to be
+# Feeglgeef discussing the AI-generated tool).
+_KEYWORDS_CASE_SENSITIVE = [
+    re.compile(r"\bAWE\b"),
+    re.compile(r"\bImmanuelle\b"),
+    re.compile(r"\bAbstractWikipediaEditor\b"),  # repo/URL form
+]
+
+# Case-insensitive items: the spelled-out name plus the pejoratives
+# Feeglgeef and others have used for AWE in heated threads.
+_KEYWORDS_CASE_INSENSITIVE = [
+    re.compile(r"abstract wikipedia editor", re.IGNORECASE),
+    re.compile(r"slop[- ]machine", re.IGNORECASE),
+    re.compile(r"slop[- ]generated", re.IGNORECASE),
+    re.compile(r"\bclanker\b", re.IGNORECASE),
+]
 
 
 def mentions_awe(body):
     """True if `body` (a snapshot's wikitext, header already stripped)
-    references the Abstract Wikipedia Editor by name or by acronym.
+    references the Abstract Wikipedia Editor under any name we've seen
+    in the on-wiki discussions — explicit name, acronym, repo form,
+    pejoratives, or Immanuelle's signature.
 
     Used to decide whether to keep refreshing a page. Once a saved
-    snapshot stops mentioning the editor, we stop pulling new revisions
-    from that page — the assumption is that the AWE-relevant threads
-    have been archived off and further updates aren't useful here."""
-    return bool(_AWE_PHRASE.search(body) or _AWE_ACRONYM.search(body))
+    snapshot stops matching every one of these, we stop pulling new
+    revisions from that page. The assumption: if none of these tokens
+    appears, the AWE-relevant threads have been archived off and
+    further updates aren't useful in this repo."""
+    for pat in _KEYWORDS_CASE_SENSITIVE:
+        if pat.search(body):
+            return True
+    for pat in _KEYWORDS_CASE_INSENSITIVE:
+        if pat.search(body):
+            return True
+    return False
 
 
 def should_skip(path):

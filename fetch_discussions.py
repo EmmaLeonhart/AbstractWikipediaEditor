@@ -13,6 +13,15 @@ filename) tuples. To add a new page, append a tuple with the wiki
 host (e.g. `abstract.wikipedia.org`), the page title in URL form
 (`User_talk:Foo`, not `User talk:Foo`), and the output filename.
 
+Auto-stop rule: once a synced snapshot of a page no longer mentions
+the editor (case-insensitive "abstract wikipedia editor", or the
+acronym "AWE" as a whole word), we stop refreshing it. The signal
+is the local file body, not the live wiki — so once the project
+chat archives off the last AWE thread and we save that snapshot,
+the next run treats the page as quiesced and skips the fetch. This
+keeps the snapshot directory from accumulating noise that has
+nothing to do with the editor anymore.
+
 Usage:
     python fetch_discussions.py                  # fetch + write
     python fetch_discussions.py --check          # exit 1 if any file would change
@@ -23,6 +32,7 @@ import argparse
 import io
 import json
 import os
+import re
 import sys
 import time
 
@@ -139,6 +149,39 @@ def strip_header(content):
     return content
 
 
+# Whole-word "AWE" so we don't match aware/award/awe-inspiring; the
+# phrase match is case-insensitive because the wiki uses both "Abstract
+# Wikipedia Editor" and "abstract wikipedia editor" in different places.
+_AWE_ACRONYM = re.compile(r"\bAWE\b")
+_AWE_PHRASE = re.compile(r"abstract wikipedia editor", re.IGNORECASE)
+
+
+def mentions_awe(body):
+    """True if `body` (a snapshot's wikitext, header already stripped)
+    references the Abstract Wikipedia Editor by name or by acronym.
+
+    Used to decide whether to keep refreshing a page. Once a saved
+    snapshot stops mentioning the editor, we stop pulling new revisions
+    from that page — the assumption is that the AWE-relevant threads
+    have been archived off and further updates aren't useful here."""
+    return bool(_AWE_PHRASE.search(body) or _AWE_ACRONYM.search(body))
+
+
+def should_skip(path):
+    """If a snapshot already exists locally and its body no longer
+    mentions AWE, skip the fetch. Returns (skip: bool, reason: str)."""
+    if not os.path.exists(path):
+        return False, ""
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            body = strip_header(f.read())
+    except OSError:
+        return False, ""
+    if mentions_awe(body):
+        return False, ""
+    return True, "no AWE mention in last snapshot"
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default="discussions",
@@ -149,12 +192,31 @@ def main():
 
     os.makedirs(args.out, exist_ok=True)
 
+    # Filter out pages whose existing snapshot no longer mentions AWE
+    # so we don't keep pulling revisions of pages that have moved on.
+    # See module docstring for the auto-stop rule.
+    active_pages = []
+    skipped_pages = []
+    for host, title, filename in PAGES:
+        skip, reason = should_skip(os.path.join(args.out, filename))
+        if skip:
+            skipped_pages.append((title, reason))
+        else:
+            active_pages.append((host, title, filename))
+
+    for title, reason in skipped_pages:
+        print(f"  {title}: skipped ({reason})", flush=True)
+
+    if not active_pages:
+        print("All tracked pages have been quiesced — nothing to fetch.", flush=True)
+        return
+
     # Group pages by host so we make one batched API call per wiki.
     by_host = {}
-    for host, title, _ in PAGES:
+    for host, title, _ in active_pages:
         by_host.setdefault(host, []).append(title)
 
-    print(f"Fetching {len(PAGES)} discussion page(s) from {len(by_host)} wiki(s)...", flush=True)
+    print(f"Fetching {len(active_pages)} discussion page(s) from {len(by_host)} wiki(s)...", flush=True)
     contents = {}
     for host, titles in by_host.items():
         try:
@@ -170,7 +232,7 @@ def main():
     changed = []
     unchanged = []
     missing = []
-    for host, title, filename in PAGES:
+    for host, title, filename in active_pages:
         wikitext = contents.get((host, title))
         path = os.path.join(args.out, filename)
         new_content = build_snapshot(host, title, wikitext, fetched_at)

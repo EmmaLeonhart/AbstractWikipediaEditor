@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-08T22:10:33Z
+  Fetched:   2026-05-11T06:54:23Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -497,3 +497,4 @@ Anyways, do consider this if you wish... again, I don't suppose this will garner
 :This is a multilingual project; the <code>en</code> label is <code>RGBA colour</code> and the <code>en-us</code> label is <code>RGBA color</code>. Though I'm not able to switch to <code>en-us</code> via the language picker so that would need to be fixed.<!--
 --><br>edit after reading your whole comment: The same is true of {{Q|1075}}, there are labels specified for multiple English variants. (In {{Q|2325624}} it's only an alias.) I agree that other websites' choices aren't binding on us, but from that, I conclude that the more widespread British/Commonwealth spellings should be used for the generic <code>en</code>. As for myself, I'm Aussie and I will continue to use the BrE spellings ([[w:en:Oxford_spelling#Language_tag_comparison|+ "routing"]], TIL) if only by muscle memory.<!--
 --><br>[[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 17:42, 8 May 2026 (UTC)
+:Hi @[[User:Theki|rae]]! I have no opinion nor preference on this, and given my background, I am just entirely confused about my spelling preferences myself, as you can tell from my inconsistent usage. I learned British English in school and used that for maybe two decades or so, but moved to the US and lived there for more than a decade, enough to be naturalized, but now I am back in Europe and I am technically a professor at King's College London, soooo.... honestly, I do not know. I don't remember having put too much thought into it at the moment I created it. The good thing is that in Wikifunctions, just as in Wikidata, it is easy to change, without messing things up too much (unlike in Wikipedia), so my suggestion is, just make the change, see if anyone complains, and if they do, discuss it more. I don't know if there is a guideline already in Wikifunctions about the variants. I am happy either way, and honestly, I keep forgetting which variant is which most of the time. --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 18:16, 10 May 2026 (UTC)

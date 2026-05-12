@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-11T06:54:23Z
+  Fetched:   2026-05-12T06:25:36Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -735,7 +735,12 @@ The use of [[f:Z33068]] (en: paragraph from sentences) <s>always</s> most of the
 
 :It previously worked, so I'm hoping whatever the issue is will be fixed soon. The current state of the wiki makes [[m:Immediatism|immediatism]] an illogical philosophy to have at the moment, in my opinion. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:16, 10 May 2026 (UTC)
 ::This issue seems to no longer exist, you might need to clear the cache by making a dummy edit on affected articles. I implemented the function in Python (instead of composition), which has increased the speed by about 2000 ms. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 04:31, 11 May 2026 (UTC)
+:::Seems like working. Thank you. -- [[User:Asked42|Asked42]] ([[User talk:Asked42|talk]]) 19:06, 11 May 2026 (UTC)
 
 == Manual of Style ==
 
 I've created a [[Abstract Wikipedia:Manual of Style|draft for a Manual of Style]]. Please feel free to comment on or make bold edits to the page. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 03:29, 11 May 2026 (UTC)
+
+== Proposals on the architecture of Abstract Content rendering ==
+
+Starting from a discussion born on the Wikifunctions Telegram chat, I've explained two different proposals on how the NLG on Abstract Wikipedia should be organized in the page [[User:Dv103/Abstract articles architectures]]. Please come to contribute to the discussion, or to propose alternatives. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 14:32, 11 May 2026 (UTC)

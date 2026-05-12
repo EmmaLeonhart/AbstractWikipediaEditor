@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-11T06:54:23Z
+  Fetched:   2026-05-12T06:25:36Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -40,33 +40,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
-
-== Help me understand why test passes but running function with same input errors ==
-
-I've been working on a function that I thought I had working correctly: {{Z+|Z31108}}.
-
-It has a test which is passing, but when I enter the same Wikidata item as the test uses (or any other relevant item that it ought to work for), it errors. I can't figure out what's wrong (and the function itself seemed to be working as expected the last time worked on it, a month ago), and I don't know how to interpret the error info.
-
-The error output is:
-
-<code>
-Error type: Unspecified error
-Error data:
-error information: "cannot read property 'Z6003K4' of undefined"
-Execution debug logs:
-Z12696K2 (find this) ==> ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6007'},Z6007K1:ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6092'},Z6092K1:P3831>,Z6007K2:ZObject<Z1K1:{'Z1K1': 'Z9', 'Z9K1': 'Z6091'},Z6091K1:Q7380503>,Z6007K3:ZReference<Z6021>>
-</code>
-
--- [[User:Ragesoss|Ragesoss]] ([[User talk:Ragesoss|talk]]) 18:02, 10 April 2026 (UTC)
-
-:Hmm… I’ve had a quick look and found a comparable error with {{Z|Z29937}}, which was passing “4 months ago”. The debug comes from {{Z|Z12863}}, after it fails to find a match. This is probably because Z6007K3 is ZReference("Z6021") rather than a Z6020 object, as it appears in the debug logs for your test “28 days ago”:
-:"Z6007K3":{"Z1K1":{"Z1K1":"Z9","Z9K1":"Z6020"},"Z6020K1":{"Z9K1":"Z6021"}}
-:This means it’s probably a bug introduced by a recent software change. I’ll take a closer look over the weekend, but the actual error for your test case now is:
-:Unspecified error (error information: "cannot read property 'Z6003K4' of undefined")
-:I’m guessing that’s from there being no guard against an empty array in {{Z|Z23681}}, but we’ll see. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 23:22, 10 April 2026 (UTC)
-:I tracked down the bug to [[Z29869]] and fixed that, but the tests for [[Z31659]] are still failing. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 05:44, 11 April 2026 (UTC)
-::Thanks. I’ve re-implemented {{Z|Z23680}} with {{Z|Z33331}} so we at least get a meaningful error in {{Z|Z31108}}. The new implementation explicitly caters for the alternative representation of {{Z|Z6040}} and errors on the empty list it gets from {{Z|Z31659}}.
-::I also made a [[Z33332|simple Python implementation]], which seems to work. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 16:29, 11 April 2026 (UTC)
 
 == No place to ask to activate a function? ==
 
@@ -498,3 +471,11 @@ Anyways, do consider this if you wish... again, I don't suppose this will garner
 --><br>edit after reading your whole comment: The same is true of {{Q|1075}}, there are labels specified for multiple English variants. (In {{Q|2325624}} it's only an alias.) I agree that other websites' choices aren't binding on us, but from that, I conclude that the more widespread British/Commonwealth spellings should be used for the generic <code>en</code>. As for myself, I'm Aussie and I will continue to use the BrE spellings ([[w:en:Oxford_spelling#Language_tag_comparison|+ "routing"]], TIL) if only by muscle memory.<!--
 --><br>[[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 17:42, 8 May 2026 (UTC)
 :Hi @[[User:Theki|rae]]! I have no opinion nor preference on this, and given my background, I am just entirely confused about my spelling preferences myself, as you can tell from my inconsistent usage. I learned British English in school and used that for maybe two decades or so, but moved to the US and lived there for more than a decade, enough to be naturalized, but now I am back in Europe and I am technically a professor at King's College London, soooo.... honestly, I do not know. I don't remember having put too much thought into it at the moment I created it. The good thing is that in Wikifunctions, just as in Wikidata, it is easy to change, without messing things up too much (unlike in Wikipedia), so my suggestion is, just make the change, see if anyone complains, and if they do, discuss it more. I don't know if there is a guideline already in Wikifunctions about the variants. I am happy either way, and honestly, I keep forgetting which variant is which most of the time. --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 18:16, 10 May 2026 (UTC)
+
+== Proposals on the architecture of Abstract Content rendering ==
+
+Starting from a discussion born on the Telegram chat, I've explained two different proposals on how the NLG on Abstract Wikipedia should be organized in the page [[abstract:User:Dv103/Abstract articles architectures]]. Please come to contribute to the discussion, or to propose alternatives. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 14:31, 11 May 2026 (UTC)
+
+== Display function for HTML fragment ==
+
+Currently, any collapsed Z89 literal appears as<blockquote>&lt;&gt; [[Z89|HTML fragment]]</blockquote>If I were to create a new Function which returned something like<blockquote>&lt;&gt; 123-byte HTML fragment <q><nowiki><td><span lang=</nowiki>&hellip;</q></blockquote>could that be connected to replace the collapsed form, or would it require changes to the Wikilambda software? [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 16:14, 11 May 2026 (UTC)

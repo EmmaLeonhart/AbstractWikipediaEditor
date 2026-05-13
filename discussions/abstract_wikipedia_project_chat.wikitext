@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-12T06:25:36Z
+  Fetched:   2026-05-13T06:38:13Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -744,3 +744,37 @@ I've created a [[Abstract Wikipedia:Manual of Style|draft for a Manual of Style]
 == Proposals on the architecture of Abstract Content rendering ==
 
 Starting from a discussion born on the Wikifunctions Telegram chat, I've explained two different proposals on how the NLG on Abstract Wikipedia should be organized in the page [[User:Dv103/Abstract articles architectures]]. Please come to contribute to the discussion, or to propose alternatives. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 14:32, 11 May 2026 (UTC)
+
+== [[MediaWiki:Wikimedia-copyright-footer]] ==
+
+The copyright message has a few issues, mainly that it does not address abstract content (which is not "text"), nor object labels (which are under CC0). Proposed text:
+
+"<nowiki>
+Text and abstract content are available under the [https://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike License]; the labels of objects from [[f:|Wikifunctions]] are available under the [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 License]; additional terms may apply. See [https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use Terms of Use] for details.
+</nowiki>"
+
+Which, when rendered, looks like: 
+
+Text and abstract content are available under the [https://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike License]; the labels of objects from [[f:|Wikifunctions]] are available under the [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 License]; additional terms may apply. See [https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use Terms of Use] for details.
+
+The message is somewhat inspired by the current one and WF's. Thoughts? Thank you! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:30, 12 May 2026 (UTC)
+
+:@[[User:Feeglgeef|Feeglgeef]]: As you probably imagine, this text is very tightly controlled by the Wikimedia Foundation's Legal department. I think the first port of call should be a discussion about why you might want to change things, rather than a rush to specific re-wordings, before approaching them for sign-off. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 14:28, 12 May 2026 (UTC)
+::Well I briefly summarized my justification, my proposed text was just an idea for a starting point. Basically, the abstract content is not really "text", so the footer doesn't actually tell the reader what they're allowed to do with it, and I argue that the current wording implies that the labels are licensed under CC-BY-SA 4, when they aren't. I think a change is critical as otherwise we're not showing the reader a license, or, arguably, in the case of labels, showing users a license that ''does not apply'', which is a pretty bad thing. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:51, 12 May 2026 (UTC)
+
+== [[MediaWiki:Abstractwiki-suggested-functions.json]] ==
+
+I'd think we should add [[f:Z33068]] here. The function allows you to form a paragraph out of sentences and handles languages having different standards of whether to add a space between them, and adding it here would make finding it easier. I'm not sure what policy we want to have for the suggested functions, this idea might help formulate it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:06, 12 May 2026 (UTC)
+
+:[[User:Jdforrester (WMF)]] tells me the page has been changed to [[Special:CommunityConfiguration/AbstractWikiSuggestedWikifunctions]] on the telegram. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:25, 12 May 2026 (UTC)
+::@[[User:Feeglgeef|Feeglgeef]]: Yup, see the weekly update on [[f:Wikifunctions:Status_updates/2026-05-02|2026-05-02]]. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 16:35, 12 May 2026 (UTC)
+:I also believe Z33068 should be added to the list. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:25, 12 May 2026 (UTC)
+
+== Abstract Wikipedia statistics site source code ==
+
+https://abstract-data.toolforge.org/ is a very useful tool, but it doesn't seem to have anything pointing to the location of its source code. Is it closed-source or unfree?
+
+While I'm at it I feel I should suggest having language pages' paths formatted differently from how they are currently—at the moment it's <code>/languages/Toki%20Pona</code> when something like <code>/languages/tok</code> would be more suitable. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt;
+: See [[:gitlab:toolforge-repos/abstract-data]]. Also pinging {{ping|DSantamaria-WMF|p=}} (thanks for the tool, by the way). [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 00:25, 13 May 2026 (UTC)
+::Thank you. I think a link to that repository should be put in a footer somewhere on the website as I wouldn't have found that if not for you. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 02:30, 13 May 2026 (UTC)
+:::{{ping|Theki}} For the record, I found that repo by searching for "abstract-data" on [[:toolhub:|Toolhub]]. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 03:34, 13 May 2026 (UTC)

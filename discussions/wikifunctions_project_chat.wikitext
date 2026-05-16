@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-13T06:38:13Z
+  Fetched:   2026-05-16T06:11:35Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -503,3 +503,14 @@ Currently, any collapsed Z89 literal appears as<blockquote>&lt;&gt; [[Z89|HTML f
 :It might work, but I doubt it. Those angled brackets suggest that the collapsed form is not simply defaulting to the type’s label. Looking at [[:phab:T410509]], I’ve concluded that enhancements to the collapsed form were never considered, rather than being actively rejected. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 12:12, 12 May 2026 (UTC)
 ::[[:Phab:T391985]] documents the original design. Note the fifth bullet point under “Acceptance criteria”. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 12:21, 12 May 2026 (UTC)
 :I'm not sure the byte-size is necessary, but the outer tag (or first outer tag, though generally I'd prefer most fragments use a wrapper tag if it needs multiple like JSX does, but that's a whole different topic) would be nice.  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:51, 12 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #248 is out: A higher meaning ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-15|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss functions creating language fragments, we present our latest news in Types, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:36, 15 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->

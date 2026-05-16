@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-15T06:46:13Z
+  Fetched:   2026-05-16T06:11:35Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -655,3 +655,15 @@ My hope is that this can be made less barebones in the near future. Infoboxes ar
 ::Working on that at the moment, I think I've got it working but I'm hitting a ratelimit in the orchestrator so I don't know for sure. The main issue with it now is that the actual [[f:Z35175|infobox template (Z35175)]] wrapper was programmed in JS so as to not be a pain in the ass, so this means that it can only take in strings, HTML fragments, etc. so the retrieval of Wikidata stuff still needs to be done by the caller and is rather verbose (see [[f:Z35168|the main implementation]]). The niceties will come soon later once I know that it all works at a lower level, though. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 05:04, 15 May 2026 (UTC)
 ::So the problem now seems to be that when [[f:Z29825|label of Wikidata property in language (Z29825)]] isn't being faulty, it's being incredibly slow. Considering retrieving Wikidata items from their references seems to take, like, four to five seconds, and we'll have tens of statements in these infoboxes, I don't see how the property names could be retrieved in a way that doesn't cause the orchestrator to time out or hit a ratelimit. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 06:01, 15 May 2026 (UTC)
 :::I think I figured something out? I'm just going to try calling [[f:Z35036|fetch Wikidata property or parts (Z35036)]], it seems to be much faster for whatever reason. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 06:05, 15 May 2026 (UTC)
+:::It works now, a little rough around the edges, also very slow, but I think I'm mostly happy with it. Of course it would be great if all you needed to provide to the template function to get a label-statement row was the property reference itself, but I'm too sleep-deprived to figure that out at the moment. I made five bespoke functions specifically for this infobox, more than I would like, but it's probably not ''that'' bad. I'm just hoping I didn't duplicate any functionality in trying to make the composition less verbose and repetitive. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 07:15, 15 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #248 is out: A higher meaning ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-15|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss functions creating language fragments, we present our latest news in Types, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:36, 15 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->

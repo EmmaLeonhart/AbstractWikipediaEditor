@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-16T06:11:35Z
+  Fetched:   2026-05-17T06:35:49Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -40,25 +40,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
-
-== No place to ask to activate a function? ==
-
-I just discovered the {{Z|Z11390}} function and decided to make an overarching language-selecting function for it. After some fiddling around and studying how {{Z|Z32321}} and its set works, I now have {{Z|Z33439}} which has a config object ({{Z|Z33441}}) that selects between the two preexisting language-specific versions I found (English and Malayalam) and the new one I created for my other native language, {{Z|Z33440}}.
-
-Except I can't get these to work, because, from what I understand, only [[Wikifunctions:Functioneers|functioneers]] can activate newly created functions and implementations?
-
-So where do I apply for the {{Z|Z33439}} and {{Z|Z33440}} functions to be activated? Perhaps we should have a place to ask for it, a la [[w:WP:NPP]] — call it [[Project:New Functions Patrol|New Functions Patrol]] if you will. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] ([[User talk:UndueMarmot|talk]]) 08:58, 14 April 2026 (UTC)
-
-:There's [[Wikifunctions:Community portal]] for this. By the way, {{Z|Z33445}} doesn't work because all the code must be inside the main function in Python code. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 09:19, 14 April 2026 (UTC)
-::Huh. How could I have missed that?
-::But anyway, I've moved the code in {{Z|Z33445}} into inside the main function block.
-::Is there any reason why WF decided not to simply allow anyone to write functions? After all, that's how it works with wikitext templates, and these functions are fundamentally serving the same purposes as templates, just written in a different way. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] <small>([[User talk:UndueMarmot|talk]])</small> 11:25, 14 April 2026 (UTC)
-:::I've fixed a couple of technical issues, but tests still fail. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 11:28, 14 April 2026 (UTC)
-::::The tests pass now after some more changes to the code: [[Special:Diff/265232/cur]]. —[[User:UndueMarmot|<span style="color:#705ccb;">Undue</span><span style="color:#cfdfa3;background-color:#705ccb;">Marmot</span>]] <small>([[User talk:UndueMarmot|talk]])</small> 12:01, 14 April 2026 (UTC)
-:::::{{D|Connected}} [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:02, 14 April 2026 (UTC)
-:::I think it's a security issue, since Wikifunctions implementations could teoretically be malicious. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 11:29, 14 April 2026 (UTC)
-::::This ^^^. We're very lenient, though, once you've created a few working functions you can apply for the right, per [[WF:Functioneer]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 12:26, 14 April 2026 (UTC)
-::::That explanation [[phab:T343559#11421293|doesn't add up]]. A reason to limit ''connection powers'' to Functioneers might be to prevent vandalism, considering Functions can be used across wikis. But user-provided code is already being executed even without a Functioneer connecting it. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 20:01, 16 April 2026 (UTC)
 
 == Actual difference between {{Z|Z26039}} and {{Z|Z26095}} ==
 
@@ -514,3 +495,27 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:36, 15 May 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->
+
+== [[Z34510]] ==
+
+This function, which determines if a Wikidata item for a {{q|5}} has an undeprecated {{p|21}} statement of {{q|6581097}}, returns false for {{q|173399}}, a transgender man. This is because his item assigns his P21 statement to {{q|2449503}}, not {{q|6581097}}. I'm not sure how to account for this discrepancy. Should {{z|34510}}:
+# Include {{q|2449503}} as a value that can lead to a true result,
+# Not include {{q|2449503}} as a value that can lead to a true result, while another function (e.g., "Q5 is a man?") could return true for either "male" or "trans man",
+# Not include {{q|2449503}} as a value that can lead to a true result, while another function (e.g., "Q5 is a trans man?") could return true for "trans man",
+# Not exist at all?
+[[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 16:48, 16 May 2026 (UTC)
+:I can't think of a single use case where you would need to determine if a person is a cisgender man and nothing else. Functions are good for generalizing across multiple possibilities when they exist, so I think it would be best if trans men were considered a part of the criteria for returning a true value. If asking for specifically {{q|6581097}}s and ''nothing'' else was desired then the function name would be a misnomer as Elliot Page is inarguably a male (at least in the view of most reasonable and intelligent people). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:03, 16 May 2026 (UTC)
+:You made the function in the first place; what were you planning on using it for? AW? Maybe it should return a {{Z|25501}} which can then be passed on to other NLG functions. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 20:01, 16 May 2026 (UTC)
+
+== Lexeme from wikidata label, or "best" lexeme from wikidata item ==
+
+I was looking into fixing [[Z28028]]. I found that I could add "requires grammatical feature: definite article" to "United Kingdom" (L8558). Now I'm stuck on how to get to that lexeme from {{Q|145}}. There's [[Z23471]], but that for very good reason gives you multiple lexemes with the same sense, and I just want the best one like how the label is always the best string. Is there a function that can do this?
+
+There's definitely the case of a Wikidata label that isn't a lexeme (most commonly multiple lexemes) but I'm only considering the case where it is one lexeme here. [[User:Aaron Liu|Aaron Liu]] ([[User talk:Aaron Liu|talk]]) 20:02, 16 May 2026 (UTC)
+
+:There is {{Z|Z27327}}, that tries to give the best lexeme through various heuristics. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 22:22, 16 May 2026 (UTC)
+:: Wonderful! I did stumble upon [[Z33818]] but this is perfect. [[User:Aaron Liu|Aaron Liu]] ([[User talk:Aaron Liu|talk]]) 00:25, 17 May 2026 (UTC)
+
+== [[Z29591]] isn't working for me ==
+
+For instance, trying to manually put in the exact inputs for one of the test cases just returns an empty Monolingual text. See [https://www.wikifunctions.org/wiki/Z29591?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z29591%22%2C%22Z29591K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q3257809%22%7D%2C%22Z29591K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q21264361%22%7D%2C%22Z29591K3%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q22006653%22%7D%2C%22Z29591K4%22%3A%22Z1002%22%7D]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 01:17, 17 May 2026 (UTC)

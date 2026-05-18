@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-17T06:35:49Z
+  Fetched:   2026-05-18T07:10:28Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -410,6 +410,8 @@ but in {{Z|28579}} it's
 [ sign * numerator, denominator ]
 </syntaxhighlight> '''<span style="font-family:Iosevka,monospace">[[User:沈澄心|<span style="color:#9f3526">dring</span>]][[User talk:沈澄心|<span style="color:#534fa3">sim</span>]]</span>''' 05:15, 4 May 2026 (UTC)
 
+:I'm guessing this is why [[Z34743]] fails all the tests. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 01:00, 18 May 2026 (UTC)
+
 == Nested functions in compositions ==
 
 I wish it will be easier to a add another function about a specific existing function in a function implementation based on a composition. When I write long functions in spreadsheets I usually stat with a small part and then I try to go further and after important steps I test if the output is as expected. I created [[Z34826]] to get the German gender specific occupation lexeme for a specific person based on their gender. I wanted to add a function around the existing one and it was not successful. It is not very easy to implement as it requires the possibily to move a part to another section but I think it can be helpful if it will be implemented. So far I spend more time as expected on the function. Describing it with words what the function needs to do is much easier than implementing it here in Wikifunctions. So I think there needs to be improvement to make Wikifunctions more accessible. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 21:10, 5 May 2026 (UTC)
@@ -519,3 +521,5 @@ There's definitely the case of a Wikidata label that isn't a lexeme (most common
 == [[Z29591]] isn't working for me ==
 
 For instance, trying to manually put in the exact inputs for one of the test cases just returns an empty Monolingual text. See [https://www.wikifunctions.org/wiki/Z29591?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z29591%22%2C%22Z29591K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q3257809%22%7D%2C%22Z29591K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q21264361%22%7D%2C%22Z29591K3%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q22006653%22%7D%2C%22Z29591K4%22%3A%22Z1002%22%7D]. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 01:17, 17 May 2026 (UTC)
+
+:You used [[:d:Q22006653]] rather than [[:d:Q1075]]. It looks like the [https://www.wikifunctions.org/wiki/Special:RunFunction?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z30784%22%2C%22Z30784K1%22%3A%7B%22Z1K1%22%3A%22Z11%22%2C%22Z11K1%22%3A%22Z1002%22%2C%22Z11K2%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z21394%22%2C%22Z21394K1%22%3A%5B%22Z6%22%2C%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z22664%22%2C%22Z22664K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q22006653%22%7D%2C%22Z22664K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q21264361%22%7D%2C%22Z22664K3%22%3A%22Z1002%22%7D%5D%7D%7D%7D explanatory error] is suppressed by the [https://www.wikifunctions.org/view/en/Z30009?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z30009%22%2C%22Z30009K1%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z30784%22%2C%22Z30784K1%22%3A%7B%22Z1K1%22%3A%22Z11%22%2C%22Z11K1%22%3A%22Z1002%22%2C%22Z11K2%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z21394%22%2C%22Z21394K1%22%3A%5B%22Z6%22%2C%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z22664%22%2C%22Z22664K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q22006653%22%7D%2C%22Z22664K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q21264361%22%7D%2C%22Z22664K3%22%3A%22Z1002%22%7D%5D%7D%7D%7D%2C%22Z30009K2%22%3A%22Z801%22%7D final transformation]. The returned result is not actually empty; if you expand it, you can see that it is an unresolved function call. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 09:59, 17 May 2026 (UTC)

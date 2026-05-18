@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-05-02T05:53:45Z
+  Fetched:   2026-05-18T07:10:28Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -112,3 +112,7 @@ Without a language selector, it is not at all clear how people can even read the
 
 The only way I see to change language is to add <code>uselang=[xx]</code> at the end of a URL with a language code like [https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Main_page?uselang=de <code>uselang=[de]]</code> for German. But that is not easy for many users to discover.
 [[User:Lovelano|Lovelano]] ([[User talk:Lovelano|talk]]) 00:45, 2 May 2026 (UTC)
+
+== [[Q189125]] renders completely wrong ==
+
+[[Q189125]] renders as the sentence "Transgender persons change gender identities." three times, even though that is very much not the structure of the page. Could anyone look at what's going on here? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:21, 17 May 2026 (UTC)

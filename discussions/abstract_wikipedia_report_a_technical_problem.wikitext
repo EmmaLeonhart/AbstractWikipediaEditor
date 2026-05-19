@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-05-18T07:10:28Z
+  Fetched:   2026-05-19T07:01:19Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -116,3 +116,5 @@ The only way I see to change language is to add <code>uselang=[xx]</code> at the
 == [[Q189125]] renders completely wrong ==
 
 [[Q189125]] renders as the sentence "Transgender persons change gender identities." three times, even though that is very much not the structure of the page. Could anyone look at what's going on here? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:21, 17 May 2026 (UTC)
+
+:Using [[f:Z33068]] seems to have fixed this. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:30, 18 May 2026 (UTC)

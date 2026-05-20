@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-19T07:01:19Z
+  Fetched:   2026-05-20T07:01:21Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -529,3 +529,5 @@ For instance, trying to manually put in the exact inputs for one of the test cas
 Does anyone know what the problem with this implementation is? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[wikt:she|she]]/[[wikt:they|they]]) 21:14, 18 May 2026 (UTC)
 
 :There is a bug that doesn't allow Python implementation to return nested lists. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 05:31, 19 May 2026 (UTC)
+::Is there a Phabricator task for this? Searching through them is hell. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 03:22, 20 May 2026 (UTC)
+:::A bit of time ago I opened [[phab:T392750]], which is very similar to this issue. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 05:26, 20 May 2026 (UTC)

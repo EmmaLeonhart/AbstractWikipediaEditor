@@ -1,10 +1,10 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-05-19T07:01:19Z
+  Fetched:   2026-05-21T07:05:51Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
-This is a page where to report technical problems and bugs you might encounter on the website. Please, add your report below this line.
+This is a page for the reporting of technical problems and bugs encountered by others on Abstract Wikipedia. If you are experiencing any issues and would like to report it, please add your report below this line.
 __NEWSECTIONLINK__
 [[Category:Abstract Wikipedia administration|Report A Technical Problem]]
 ----

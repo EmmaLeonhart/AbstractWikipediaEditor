@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-21T07:05:51Z
+  Fetched:   2026-05-22T07:01:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -430,3 +430,11 @@ At any rate, I want to convert some of the un-translated pages, namely Feeglgeef
 ::::Off-topic, but interestingly, the sysop toolset allows you to grant yourself translation adminship. I'm not sure if sysops are expected not to grant themselves the permissions (kind of like how on enwiki 'crats are expected not grant themselves any rights without discussion despite having the technical rights), but I did it to myself on WF because [https://www.wikifunctions.org/w/index.php?title=Special:Log&logid=84940 another sysop had]. Additionally, the functioneer right [[Special:ListGroupRights#functioneer|exists on this wiki]], with the same rights on WF, despite all of them not doing anything on this wiki. I believe this is because, on the technical side, both AW and WF are powered by the same MediaWiki extension (Wikilambda), with one wiki set to a mode for abstract articles and another set to a mode for ZObjects. [https://dag.wikipedia.org/wiki/Di%C5%8B%27gahim:ListGroupRights#functioneer Checking the Dagbani Wikipedia] supports this theory. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:00, 20 May 2026 (UTC)
 :::::It always depends on the local policy. For Wikifunctions it is: ''Administrators do not need to undergo another discussion to become translation administrators; they can self-grant the rights to their account if necessary. Temporary administrators are not allowed to self-grant permanent translation administrator rights.''
 :::::The availability of the functioneer right is a bug, see [[phab:T407066]]. --[[User:Ameisenigel|Ameisenigel]] ([[User talk:Ameisenigel|talk]]) 19:36, 20 May 2026 (UTC)
+
+== Policy drafts ==
+
+Hi all! I've written some draft policies and guidelines over the last few days. We're not a bureaucracy, so the point is not to set some rules but to kick off some discussions as to how our wiki will work. 
+So far, I've created:
+* [[Abstract Wikipedia:Notability|a notability guideline]]
+* [[Abstract Wikipedia:Deletion policy|a deletion policy]]
+I've written them as my opinion on what should happen, but I'm hoping to align them with community consensus as we discuss them more. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:44, 21 May 2026 (UTC)

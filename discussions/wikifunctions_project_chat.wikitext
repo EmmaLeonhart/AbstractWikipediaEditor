@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-21T07:05:51Z
+  Fetched:   2026-05-22T07:01:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -40,22 +40,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
-
-== Equivalent of Z6830 for lexemes ==
-
-Is there an equivalent of {{Z|Z6830}} that enables retrieving all lexemes pointing to a particular lexeme using a specific property? [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 21:06, 20 April 2026 (UTC)
-
-:There's {{Z|6831}} but I think that's slightly different again to what you're after. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 12:31, 21 April 2026 (UTC)
-::Thanks for sharing that one, I did not know it existed. But you are right, it’s not quite what I am looking for. I want a function that would take a Wikidata property reference (like P5191, which is ‘derived from lexeme’) and a Wikidata lexeme reference, and return a list of lexemes that reference that lexeme using that property. [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 13:23, 21 April 2026 (UTC)
-
-== Storing huge datasets ==
-
-It is not a necessity I suppose, but an idea came to me earlier to write a function that would give the corresponding [[en:Shavian alphabet|Shavian alphabet representation]] of an English word written with the Latin alphabet, or perhaps apply that operation to an entire sentence. However, just trying to guess as to what the IPA pronunciation of each word passed into it could be is is both not ideal (pronunciations obviously can and will vary widely between accents) and infeasible <s>(Wikidata lexemes don't really seem to account for pronunciation)</s>. It happens, though, that a comprehensive Shavian dictionary exists named the [https://readlex.pythonanywhere.com/ ''Read Lexicon''], which uses pronunciation and spelling similar to that used by the creator of the alphabet himself. This would be a good dataset to use in performing this translation in the function, but it appears that, all in all, the total size of the dictionary is [https://github.com/Shavian-info/readlex/blob/main/readlex.json ''nearly 26MB''] when formatted as JSON, which would certainly be larger when converted into a typed list.
-
-I am wondering if this will ever be feasible or admissible, or if there is really a way around this if importing such a large set of data is deemed impractical. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 22:30, 20 April 2026 (UTC)
-:{{re|Theki}} "Wikidata lexemes don't really seem to account for pronunciation"" is patently untrue; not only does every Bokmål lexeme form have IPA attached to it (thanks to Jon Harald Søby), but there are lots of languages--including English--that have pronunciation information, whether through IPA or otherwise, indicated on their forms. The big issue of course is that adding this data is not always possible to perform efficiently--for instance, I'd love to have Yiddish pronunciation respellings from Paul Abelson's dictionary on as many English forms as possible, but this dictionary not being previously processed makes this difficult. The data set you have brought up, if a suitable reading of [[:m:Wikilegal/Lexicographical_Data]] allows it, could be added as {{P|7243}} statements on various English forms. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 23:20, 20 April 2026 (UTC)
-::Well, sorry... I haven't witnessed these pronunciation statements before, I wasn't aware of their existence until you pointed it out. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 15:02, 21 April 2026 (UTC)
-:I got 1,900,000 characters into [[Z33875]] before the UI gave up on me. I'm not sure what the limit is. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 15:21, 21 April 2026 (UTC)
 
 == Could not serialize input JS object: Number <small><small>[insert tested number here]</small></small> ==
 
@@ -521,3 +505,18 @@ Does anyone know what the problem with this implementation is? [[User:JJPMaster|
 :There is a bug that doesn't allow Python implementation to return nested lists. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 05:31, 19 May 2026 (UTC)
 ::Is there a Phabricator task for this? Searching through them is hell. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 03:22, 20 May 2026 (UTC)
 :::A bit of time ago I opened [[phab:T392750]], which is very similar to this issue. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 05:26, 20 May 2026 (UTC)
+
+== May 2026 Wikimedia Café meetups regarding the Wikimedia Foundation Annual Plan ==
+<div class="border-box" style="background-color: var(--background-color-warning-subtle, #f8eaba); max-width: 875px; padding: 5px; border: 1px solid black; margin: 5px; color: var(--clr-dark)">
+<div class="box" style="float:left; padding-top: 15px; padding-right: 15px;">[[File:Wikimedia Café logo in plain SVG format.svg|75px|alt=The logo for the Wikimedia Café]]</div>
+Hello! There will be two '''[https://meta.wikimedia.org/wiki/Wikimedia_Caf%C3%A9 Wikimedia Café]''' discussion opportunities during the last weekend of May. Both sessions will focus on the [https://meta.wikimedia.org/wiki/Wikimedia_Foundation_Annual_Plan/2026-2027 the 2026-2027 Wikimedia Foundation Annual Plan]. Participants may attend either or both sessions.
+
+#'''Saturday, 30 May 2026 at 15:00 UTC''' ([https://zonestamp.toolforge.org/1780153200 timestamp converter]), at a time friendly to the Americas, Africa, and Europe
+#'''Sunday, 31 May 2026 at 05:00 UTC''' ([https://zonestamp.toolforge.org/1780203600 timestamp converter]), at a time friendly to Asia and the Pacific
+
+Café participants are highly encouraged to read in advance [https://en.wikipedia.org/wiki/User:Sohom_Datta/annual_plan_guide at least this summary of the plan]. Optionally,  Café participants are encouraged to read portions of the plan that interest them and [https://meta.wikimedia.org/wiki/Talk:Wikimedia_Foundation_Annual_Plan/2026-2027 ask questions or provide feedback on the Annual Plan talk page]. 
+
+Please see the Café page for more information, including [https://meta.wikimedia.org/wiki/Wikimedia_Caf%C3%A9#May_2026_meetings_with_a_focus_on_Wikimedia_Foundation_Annual_Plan/2026-2027 tables of timestamp conversions for both sessions], [https://meta.wikimedia.org/wiki/Wikimedia_Caf%C3%A9#Agenda._This_will_be_an_approximately_1_hour_Caf%C3%A9_session,_and_is_extendible_for_an_additional_30_minutes_if_needed. the agenda], and [https://meta.wikimedia.org/wiki/Wikimedia_Caf%C3%A9#How_to_attend_the_session how to register]!
+<br />
+[[File:Buntstifte Eberhard Faber crop 64h.jpg|860px|alt=cropped image of colored pencils]]</div>
+<span style="white-space:nowrap;">[[User:Pine|<span style="color:#01796f; text-shadow:#00BFFF 0 0 1.0em">↠Pine</span>]] [[User talk:Pine|<span style="color:DeepSkyBlue">(<b style="color:#FFDF00;text-shadow:#FFDF00 0 0 1.0em">✉</b>)</span>]]</span> 19:56, 21 May 2026 (UTC)

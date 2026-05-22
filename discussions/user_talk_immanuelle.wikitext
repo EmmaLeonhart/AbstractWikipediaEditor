@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-05-07T06:22:53Z
+  Fetched:   2026-05-22T07:01:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -38,7 +38,7 @@ Hello!
 
 I seemed to notice you use citations on AWE, but it places them on separate paragraphs.
 
-I suggest you just append them to the corresponding paragraph like so: {{Q|Q7243}}. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:06, 26 April 2026 (UTC)
+I suggest you just append them to the corresponding paragraph like so: {{Q|Q7243}}. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF; color:#FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:06, 26 April 2026 (UTC)
 
 :@[[User:QuickQuokka|QuickQuokka]] I fixed that. Paragraphs should be restored too but gotta do some testing for it. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 01:28, 28 April 2026 (UTC)
 

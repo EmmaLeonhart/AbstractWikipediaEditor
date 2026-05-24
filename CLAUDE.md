@@ -146,3 +146,17 @@ When in emergency stop mode:
 - **It is local and in-session — use the `CronCreate` tool.** A generic "cron" request is NOT an OS crontab, NOT a GitHub Actions / CI `schedule:` trigger, and NOT a cloud scheduler. (Repos may *also* contain their own GitHub Actions cron schedules — those are a separate thing and are not what the user means when they ask *you* to set up a cron.) The user leaves the computer on and this session running so the scheduled prompt can execute.
 - **The user is deliberately away from the keyboard.** They schedule work precisely so it runs while they are out of the house and not physically present. Their absence is the normal, expected condition for these jobs — it is NEVER a reason to delay the work, ask "are you sure?", wait for them to return, or refuse to proceed.
 - **Standing consent — just set it up.** Cron / `CronCreate` requests are pre-authorized. Create the job immediately and locally, then report what was scheduled. Do not block on confirmation or follow-up questions. Treating a routine cron request as something that needs hand-holding is itself the obstacle this section exists to remove.
+
+## Hourly status-report cron for extensive work
+
+**For any session involving relatively extensive work — above all, any large-scale population of `queue.md` with created tasks — run a local hourly status-report cron.** Use the `CronCreate` tool to schedule a prompt that fires **every hour, on the hour**, giving a status report on the work being done. This is the default way of working on big jobs, and it exists to prevent the most common autonomous-agent failure: doing a large amount of work and silently losing the thread of what it is doing.
+
+**Sequencing around a large-scale queue fill:**
+
+- **The FIRST queue item is always: kill the hourly update cron job.**
+- **... then all the created work items, worked top to bottom ...**
+- **The LAST TWO queue items, always kept pinned at the tail, are:**
+  1. **Restart the hourly updates cron job.**
+  2. **Independently run the status-report action once more — an end-of-session summary of everything that happened this session.**
+
+**Planning mode disables this cron.** Entering planning mode kills the hourly cron; restarting it therefore belongs at the **end of the queue** (it is the second-to-last item above). A session that plans → fills the queue → executes will drop the cron when planning begins and bring it back as the queue drains.

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-24T01:04:50Z
+  Fetched:   2026-05-24T06:50:23Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -41,13 +41,6 @@ Hello. I am relatively new to Wikifunctions. Recently, I tried to create functio
 ::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
 :I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
 
-== Could not serialize input JS object: Number <small><small>[insert tested number here]</small></small> ==
-
-I'm not one to throw my problems at others, but I have no idea how to fix this. Am implementing {{Z|Z24602}} in JavaScript, which requires returning a typed map. It now works for every type of value except numbers. Tried explicitly converting the numbers to float64, but either way it throws the error above. Would appreciate it if anyone could diagnose or fix the problem, as my knowledge of Wikifunctions is amateur at best. Thank you. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 00:32, 23 April 2026 (UTC)
-
-:The quick answer is that like some list-related functions, code implementations returning typed maps are not possible unless the type of the objects in the map is specified in the function signature (e.g. if it was a map from Strings to Natural numbers only). So unfortunately, I think you've chosen a function that is not really possible at the moment. There are a few ideas of how we might address this, but for the moment, work on something else. Sorry! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 13:21, 23 April 2026 (UTC)
-:Maybe explicitly using [[Z13518|natural numbers]] would work? I would try using <code>{ "Z1K1": "Z13518", "Z13518K1": "[number]" }</code> to represent numbers, perhaps, and seeing if that works. Of course, you would also probably have to adapt this for other types that cannot be serialized, and I'm not sure how easy that would be to generalize (assuming [[w:Don't repeat yourself|DRYness]] is desired). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:39, 23 April 2026 (UTC)
-
 == Help with creating a function for Abstract Wikipedia ==
 
 Hello! I was inspired by {{Z|Z26570}} to create {{Z|Z33975}}, however I'm not sure how I add specific language implementations here. Can anybody help me? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 10:41, 23 April 2026 (UTC)
@@ -65,25 +58,6 @@ Hello! I was inspired by {{Z|Z26570}} to create {{Z|Z33975}}, however I'm not su
 ::::::: {{re|Theki|Feeglgeef}} Can only functioneers test implementations? For me I can't test it at all... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:32, 23 April 2026 (UTC)
 ::::::::AFAIK, test cases are only immediately testable during editing of a function if they are connected. This is one of my personal pain points with Wikifunctions, iterating on functions without exhaustive connected test cases makes debugging practically impossible for non-functioneers working on newly-created functions... I (or Feeglgeef) can quickly connect the tests you need for you if you want, although if they are not well-formed they may need to be disconnected again afterwards. Additionally, I could temporarily connect the implementation you are writing so that you can test it on the sidebar as you work, but I'm not sure if this is advisable. That functionality is also something that unfortunately only works when not disconnected. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:43, 23 April 2026 (UTC)
 :::::::::Yup, agree with you on all points, thanks. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:48, 23 April 2026 (UTC)
-
-== Please disconnect implementation ==
-
-I think I've fixed my issue with {{Z|Z33986}}, but I can't edit an actively connected implementations with my rights. I must admit it is an AI-aided fix, I feel very strongly about disclosing that.
-
-Courtesy pinging [[User:Theki]] and [[User:Feeglgeef]]. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:51, 23 April 2026 (UTC)
-: Additionally, I think the JS might be working. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:52, 23 April 2026 (UTC)
-: Just to clarify, I mean disconnect the Python implementation please. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 18:53, 23 April 2026 (UTC)
-:{{Done}} I've disconnected the Python implementation.
-:I've also added a couple of tests. The rule is a bit more complicated than adding a maqaf before every character that is not a Hebrew letter. Unfortunately, I don't think I'll have time to fix the implementations any time soon. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:03, 23 April 2026 (UTC)
-:: Thank you! 
-:: Also, for some reason I thought you put a maqaf before all gershayim, so thanks for correcting me. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:09, 23 April 2026 (UTC)
-:::No, that's not the rule.
-:::The rest of this reply is an [[:wikt:info-dump|infodump]], feel free to ignore it :)
-:::In [https://hebrew-academy.org.il/topic/hahlatot/punctuation/ the Academy's punctuation rules], the rule for adding a maqaf is written kind of badly: שמים מקף ברצף שיש בו שני סוגי גופנים, כגון אותיות ומספרים ("maqaf is added in a sequence in which there are two types of fonts, such as letters and numerals"). These are not different types of "fonts", but different types of characters, and I should email them about it. It gives the examples <span lang="he" dir="rtl">ה־12</span> and <span lang="he" dir="rtl">ב־DNA</span>. It doesn't say anything explicitly about quotation marks, but in other places on the same page, you have stuff like <span lang="he" dir="rtl">ב"הארץ"</span>, and from that I deduce that a maqaf is not needed before double quotes if there are Hebrew letters inside the double quotes.
-:::That said, a few people do think that there must be a maqaf before double quotes. I have a somewhat surprising example of somebody who always does it: translators of Scientology materials into Hebrew. At least that's what they did last time I looked at them, about ten years ago. Those people are certainly prolific, and they get points from me for consistency, but this not the prevalent standard. (And if I recall correctly, they use the minus and not the proper Hebrew maqaf, and they don't get any points from me for that!)
-:::Also, the name of the character is just "double quotes" and not "gershayim". Gershayim are mostly for abbreviations, although most people use the same character for them. I use ״ for gershayim, as do a few other nerds, but we're the minority. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 19:35, 23 April 2026 (UTC)
-:::: {{re|Amire80}} Yeah, "font" is a weird choice of wording here by the Academy...<br> I think I'll follow your guidance and not use a maqaf for quotes beginning with Hebrew letters. <br> I should also add more tests for different types of quotes, like straight (", '), curly (“, ”, ‘, ’), gershayim (״, ׳), including single quotes.<br> P.S. gotta deduct points from Scientology for being a cult but that's neither here nor there [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:49, 23 April 2026 (UTC)
-:::: {{re|Amire80}} Courtesy ping because I mistyped your username on the last message. Anyways I'm also gonna do that tomorrow because I'm tired now... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:50, 23 April 2026 (UTC)
 
 == Connect implementations ==
 

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-24T06:50:23Z
+  Fetched:   2026-05-24T21:32:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -505,3 +505,14 @@ NLG functions relay heavily on the presence of lexemes associated to items on Wi
 My doubt is: what should we do with this fourth category? For many languages, just using the Wikidata item label is not possible, since it is necessary to conjugate the words or to retrieve grammatical information like the gender. What should we do? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 16:09, 23 May 2026 (UTC)
 
 :In that particular example, I think the thing to do is read its {{P|279}}: {{Q|21191270}}, then have some kind of heuristic based on that which says to take its {{P|8345}} and attach that Item's label to a Form of the word for "episode". In general, synthesising Lexemes for proper nouns is one of the problems that [[abstract:User:Dv103/Abstract_articles_architectures|proposals in your list here]] will have to address. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 22:59, 23 May 2026 (UTC)
+[[File:Wikidata content 2024.svg|thumb|Content of Wikidata by type]]
+::{{ping|Dv103}} very good point.
+::For your point 2, it depends of the place but I think that quite often a lexeme can be created (most "Administrative territorial entity", most geographical entity, etc.). And with 3, your can add a lot of types (see pie chart) : Scholarly article, Human (with a very few exception), Wikimedia Category, Disambig, etc. which is (rough estimation) 2/3 of Wikidata items.
+::A common rule (in dictionaries since forever and in Lexemes) is to not create an entry which is the "sum of its part". In this case, "Star Trek episode" is just episode + Star Trek, nothing more than its part. So logically, as {{U|YoshiRulz}} said, when no corresponding lexeme is found, the item should be decomposed the same way, the hard part is to know how to decompose it as the property will vary ; P31 and P279 are an obvious start but beyond that, I'm not sure we could find a general solution.
+::PS: it's beyond you question but there is also the reverse problem, how to select one lexeme when multiple are linked to the same item...
+::Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 10:43, 24 May 2026 (UTC)
+
+:::For the point 2, I think humans will be used way more than scholarly articles and disambiguations in NLG functions (outside references), that's why humans concern me more (still a cool pie chart, though).
+:::For the reverse problem, there is already {{Z|Z27327}}: it's far from perfect, but usually makes a decent choice. Obviously it is not "complete", and probably it will never be complete, but it will have to be progressively improved by the community. And probably in the future we will need to create similar functions to select the best lexeme in more specific cases.
+:::For my fourth point, I didn't think about the decomposition, but it is something that could be done with another never-complete community-mantained function, that progressively keeps being improved. If [[Wikifunctions:Type proposals/Semantic unit|semantic units]] will be implemented, through them it could actually be possible to do this operation in a laguage-independent way. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:10, 24 May 2026 (UTC)
+::{{re|YoshiRulz}} Proper noun synthesis, along with other fallbacks for realizing the names of concepts that don't have lexemes, is merely a step within the overall abstract content rendering process and is not inherently tied to the process itself; having the ability to [https://gitlab.com/mahir256/ninai/-/blob/main/ninai/graph/client.py#L327 run any number of fallback mechanisms], instead of a raw call to (the equivalent of) Z27327, should be possible with any of the methods listed on the architectures page. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 16:41, 24 May 2026 (UTC)

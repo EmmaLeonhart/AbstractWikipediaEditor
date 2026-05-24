@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-22T07:01:26Z
+  Fetched:   2026-05-24T01:04:50Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -520,3 +520,14 @@ Please see the Café page for more information, including [https://meta.wikimedi
 <br />
 [[File:Buntstifte Eberhard Faber crop 64h.jpg|860px|alt=cropped image of colored pencils]]</div>
 <span style="white-space:nowrap;">[[User:Pine|<span style="color:#01796f; text-shadow:#00BFFF 0 0 1.0em">↠Pine</span>]] [[User talk:Pine|<span style="color:DeepSkyBlue">(<b style="color:#FFDF00;text-shadow:#FFDF00 0 0 1.0em">✉</b>)</span>]]</span> 19:56, 21 May 2026 (UTC)
+
+== How to handle items without lexemes ==
+
+NLG functions relay heavily on the presence of lexemes associated to items on Wikidata. But we know that not all the Wikidata items have an associated lexeme. There are multiple reasons why an item does not have an associated lexeme, like:
+# The lexeme has not been created yet
+# The item represents a place
+# The item represents a person
+# The item represents a specific concept that can only be expressed by a specific combination of words that cannot be [[Wikidata:Wikidata:Lexicographical data/Notability|notable]] (like {{Q|Q61220733}}).
+My doubt is: what should we do with this fourth category? For many languages, just using the Wikidata item label is not possible, since it is necessary to conjugate the words or to retrieve grammatical information like the gender. What should we do? [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 16:09, 23 May 2026 (UTC)
+
+:In that particular example, I think the thing to do is read its {{P|279}}: {{Q|21191270}}, then have some kind of heuristic based on that which says to take its {{P|8345}} and attach that Item's label to a Form of the word for "episode". In general, synthesising Lexemes for proper nouns is one of the problems that [[abstract:User:Dv103/Abstract_articles_architectures|proposals in your list here]] will have to address. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 22:59, 23 May 2026 (UTC)

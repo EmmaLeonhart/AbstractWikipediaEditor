@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-24T21:32:01Z
+  Fetched:   2026-05-25T04:26:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -23,87 +23,6 @@ Other places to find help:
 |class=mw-collapsible-content|style=font-size:92%;}}|class="mw-collapsible mw-collapsible-toggle mw-collapsed"}}
 |prefix=WF:Project chat/Archive/
 }}
-
-== "language" argument for certain functions ==
-
-Hello. I am relatively new to Wikifunctions. Recently, I tried to create functions for Chinese translation of {{Z|Z26570}} and {{Z|Z26095}} (which became [[Z32788]] and [[Z32900]]). During the creation of these functions, I was trying to take {{Z|Z32212}} as reference. And I realized that the defining role sentence function is taking <code>language</code> as an argument (and the test case of the Chinese-language function already contains two varieties of Chinese). This makes it possible to output monolingual text in <code>zh-hant</code>, <code>zh-hans</code>, <code>zh-tw</code>, or any varieties of the language. I think for this reason, it is better to have <code>language</code> as arguments for the implementation of Z26570 and Z26095, and potentially more functions that require {{Z|Z14294}}, since it would output the varieties code instead of just saying <code>zh</code> for <code>zh-hant</code>, <code>zh-hans</code>, <code>zh-tw</code> in the output of type {{Z|Z11}}. I am not sure how the fallback mechanism works if one of the language (varieties) do not have a labels/lexemes, but to me, it is reasonable to have a <code>language</code> argument. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 09:38, 31 March 2026 (UTC)
-
-:The functions you mention do have a language argument. For Wikifunctions, the {{Z|Z60}} can be at a higher or lower level; whether a {{Z|Z11}} is for a language or a variant is determined by the function that constructs it. Please see {{Z|Z26565}} for an example and feel free to add test cases in Chinese. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 17:54, 11 April 2026 (UTC)
-::Hello @[[User:GrounderUK|GrounderUK]], thanks for the answer. I understand that whether {{Z|Z11}} is for a language or a variant depends on the function. But that is exactly what I am asking for. It is true that [[Z26570]] and [[Z26095]] takes [[Z60]] as argument, but the language-specific functions in {{Z|Z29843}} and {{Z|Z26096}} don't.
-::Let me give you an example: INPUT to [[Z26570]]: <code>entity</code>: Tokyo, <code>class</code>: city, <code>location</code>: Japan, <code>language</code>: zh-cn, the config would select [[Z33030]] (created after my previous comment by elseone) as the implementation, and it would RETURN 东京是日本的一个城市。(zh-hans), which is not zh-cn as requested in the INPUT. It would also be using the term not for the variant (when it is different) because it is hardcoded to use the term in zh-hans. However, if we have the implementation like [[Z32790]] (which was created by me but a natural language argument was added by elseone) or [[Z32213]] (that works in the defining role sentence function because of the extra argument), it could cater for different variant.
-::If we don't have the language argument in the language-specific function, the desire for article creation on Abstract Wikipedia would be to create a function for every variant. Is it then better to create functions for every variant? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:18, 11 April 2026 (UTC)
-:::I forgot to mention that there are some hardcoding in {{Z|Z32790}} as well, but I cannot fix it because it is a connected function and I am not a functioneer. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:31, 11 April 2026 (UTC)
-::::Okay, I think it’s safe to disconnect this one as the function is not yet configured for use on Abstract Wikipedia. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:04, 11 April 2026 (UTC)
-:::Ah, sorry… I misunderstood you. I agree that the called function should be able to accept the original language argument. That is simpler in theory than in practice, because the configured functions all have to have the same argument types, as I understand it. I’m not sure which the best approach is, really, but we probably want to avoid two levels of configuration. That suggests that all language-specific functions would need to accept the additional argument, which is unrewarding work for someone. @[[User:99of9|99of9]], @[[User:Jdforrester (WMF)|Jdforrester (WMF)]], @[[User:DVrandecic (WMF)|DVrandecic (WMF)]] Any thoughts? [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 18:57, 11 April 2026 (UTC)
-::::I mean, we would need to modify all the functions in each language, which could take some time. But we are still in an early stage. If we don't fix it now and we want to fix it later, it would be a disaster. [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 19:25, 11 April 2026 (UTC)
-:::::Agreed. And we probably want them converted to HTML too, with separate language spans for text in different languages. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 19:35, 11 April 2026 (UTC)
-::::@[[User:GrounderUK|GrounderUK]]: This sounds like a reasonable change to make. Note that (given these Functions are primarily for use on Abstract Wikipedia), altering/replacing them to return Z89/HTML fragments is already a desired but breaking change, so making a second breaking change at the same time is probably easiest for fixing things swiftly. That said, that's of course a decision for the Abstract Wikipedia and Wikifunctions communities, not me! [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 19:43, 12 April 2026 (UTC)
-::::@[[User:GrounderUK|GrounderUK]]@[[User:Sun8908|Sun8908]] to make it a non-breaking change, I've created {{Z|Z34039}} which allows a composition {{Z|Z34043}}. This way you can make functions which either need the specified variant or don't! --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:52, 24 April 2026 (UTC)
-:I have now created {{Z|Z33465}}, which is an implementation of [[Z26570]]. Maybe we can migrate to use that function when more (language-specific) functions for it are ready? [[User:Sun8908|Sun8908]] ([[User talk:Sun8908|talk]]) 18:19, 14 April 2026 (UTC)
-
-== Help with creating a function for Abstract Wikipedia ==
-
-Hello! I was inspired by {{Z|Z26570}} to create {{Z|Z33975}}, however I'm not sure how I add specific language implementations here. Can anybody help me? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 10:41, 23 April 2026 (UTC)
-: I think I figured it out, I created a new object with the language config type, added {{Z|Z14310}} to my implementation, and added a new function for English... At least I think that's how it works... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 13:16, 23 April 2026 (UTC)
-::You have the right idea, as far as I know. I went ahead and connected the implementations you created as they appear to work fine for English, and added a test for {{Z|Z33975}} (which passes [[File:Twemoji 1f601.svg|24px]]). I also corrected an error you made on the config object where you appear to have accidentally connected English to {{Z|Z33975}} instead of {{Z|Z33977}}. Thank you for contributing! &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 13:45, 23 April 2026 (UTC)
-::: {{re|Theki}} Thank you so much for you help! Could you please kindly also connect the implementations for {{Z|Z33986}} which I just made, which is going to be used for the Hebrew implementation of {{Z|Z33975}}. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:11, 23 April 2026 (UTC)
-::::You seem to be returning the wrong type in both implementations. Functioneers should not connect implementations that don't work for non-functioneers. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:13, 23 April 2026 (UTC)
-::::: {{re|Feeglgeef}} Oh thank you for pointing that out! I am still a bit new to this project and confused, so I need to read up some more about this. How do I return a monolingual text object? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:17, 23 April 2026 (UTC)
-::::::I'm trying to fix it for you, the construction of ZObjects in code implementations is a bit difficult right now. Since the State origin using entity and class function will (presumably) be composition, perhaps {{Z|33975}} can be adjusted to return a string, using {{Z|26107}} and {{Z|26107}}? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:21, 23 April 2026 (UTC)
-:::::I did not notice any discrepancies from looking at the functions by themselves, and it seemed to work fine on my end. Is it bad practice for NLG functions to return the monolingual text type? I had assumed it was logical. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:24, 23 April 2026 (UTC)
-::::::Both implementations are failing all three tests on my end. No consensus has been established as to whether monolingual texts or strings should be used, so it's like the [[w:War of the currents|war of the currents]] but for Wikifunctions. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:27, 23 April 2026 (UTC)
-:::::::Oh, you were referring to {{Z|Z33986}}. I assumed you were stating that something was wrong in the earlier English functions that I missed; I apologize for the misunderstanding. Has there been any centralized discussion on this string vs. monolingual text issue? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:31, 23 April 2026 (UTC)
-::::::::Not that I'm aware of, I've brought it up on the telegram twice before, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:49, 23 April 2026 (UTC)
-::::::::The centralised discussion is at [[WT:Abstract Wikipedia/2025 fragment experiments#Proposed recommendation: Fragments should return Z11/monolingual strings]]. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 07:19, 24 April 2026 (UTC)
-::::::: {{re|Theki|Feeglgeef}} Can only functioneers test implementations? For me I can't test it at all... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 14:32, 23 April 2026 (UTC)
-::::::::AFAIK, test cases are only immediately testable during editing of a function if they are connected. This is one of my personal pain points with Wikifunctions, iterating on functions without exhaustive connected test cases makes debugging practically impossible for non-functioneers working on newly-created functions... I (or Feeglgeef) can quickly connect the tests you need for you if you want, although if they are not well-formed they may need to be disconnected again afterwards. Additionally, I could temporarily connect the implementation you are writing so that you can test it on the sidebar as you work, but I'm not sure if this is advisable. That functionality is also something that unfortunately only works when not disconnected. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:43, 23 April 2026 (UTC)
-:::::::::Yup, agree with you on all points, thanks. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:48, 23 April 2026 (UTC)
-
-== Connect implementations ==
-
-Hello! 
-
-I'm done with the implementations of {{Z|Z33986}} both in JS and Python, and all tests pass. 
-
-Pinging @[[User:Amire80|Amire80]] to check if all the tests I've added are alright. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 15:24, 24 April 2026 (UTC)
-
-:Connected. It's possible that some more changes will be needed, but it looks OK now.
-:Another little comment: It should be called "clitic" and not "prefix". [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:56, 24 April 2026 (UTC)
-: {{re|Amire80}} Thanks for your comment! Luckily labels are easy to edit, so I'll get to it.
-: Currently I'm working on Bulgarian {{z|Z34072}} and {{z|Z34084}}, along with other Bulgarian functions. After I'm finished with those I'll take your advice. [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 16:01, 24 April 2026 (UTC)
-
-== Please connect my Bulgarian implementations ==
-
-I recently created the following Bulgarian functions:
-* {{Z|Z34070}} (currently broken, I think because another function I built it upon is unimplemented)
-* {{Z|Z34088}}
-* {{Z|Z34105}}
-* {{Z|Z34072}}
-* {{Z|Z34084}}
-
-Can somebody please connect these functions, and perhaps suggest other functions I could localize? [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:03, 24 April 2026 (UTC)
-: Specifically, [[Z34070]] is based on [[Z34072]] [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 19:05, 24 April 2026 (UTC)
-:{{done}} for everything that passes, [[Z34070]] still does not work after purging WF's cache, though. For future reference, please request on the [[WF:Community portal|community portal]] instead of the project chat. Thank you for your work! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:03, 24 April 2026 (UTC)
-:: {{re|Feeglgeef}} Thank you for your help! I will keep in mind to go to the [[project: community portal| community portal]] in future instead for this.
-:: I still don't understand why {{Z|Z34070}} fails... It's implementation is almost completely identical to [[Z30399]] from {{Z|Z30397}}, unless I messed something up... [[User:QuickQuokka|QuickQuokka]] ([[User talk:QuickQuokka|talk]]) 20:11, 24 April 2026 (UTC)
-:::{{done}} No, it was mostly just timing out. It is better to use selective fetches where possible. One case is failing to match the expected results, but at least it is returning something. For all I know, it might even be acceptable! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 20:35, 24 April 2026 (UTC)
-:::: {{re|GrounderUK}} Thank you so much for your help! The one failed case is with a definite article, so I feel like that might be fixed in the future... <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:43, 24 April 2026 (UTC)
-
-== Editor experience suggestions ==
-
-I'm a bit frustrated with the editing experience on Wikifunctions, and I have suggestions based on pain points I've had contributing to this project: 
-* Adding a wizard to create functions, implementations, and tests in one flow, somewhat like Wikimedia Commons' upload wizard
-* A sandbox for experimenting without changing mainspace functions, and maybe letting non-functioneers connect implementations ([[Project: Sandbox]] doesn't seem to fit this) 
-* We could have functions for creation based on the sandbox, like how Wikipedia has articles for creation and edit requests,
-* Maybe even another test instance of Wikifunctions, like how Wikidata has [[testwikidata:|Test Wikidata]]
-
-I really like this project and I don't mean to whine, but it certainly has a lot of pain points both for technical and non-technical people. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:41, 24 April 2026 (UTC)
-: It's also really complicated to localize functions, so maybe we should add another wizard for that, where you can choose a language, and then create the new function with the aforementioned function wizard, and it just automatically adds it to the related language configuration object of the related function. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 20:48, 24 April 2026 (UTC)
-:# Sounds good to me.
-:# A sandbox available is [[Z10119]], though an extension-provided sandbox that allows you to manipulate the types, code, and tests easily without interfering with the mainspace would be nice. 
-:# [[WF:Suggest a function|This page]] works to some extent, though it's too messy in my opinion.
-:# We used to have a "beta cluster" but it [[phab:rOMWC5f625c5846b5f779473fa32c9a02d87e59215dfa|got shut down]] just over a year ago because it was broken. 
-:[[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:07, 24 April 2026 (UTC)
 
 == Language parameters in language-specific functions ==
 

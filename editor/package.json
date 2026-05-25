@@ -2,7 +2,7 @@
   "name": "abstract-wiki-editor",
   "version": "1.0.0",
   "description": "Desktop editor for Abstract Wikipedia articles with live preview",
-  "author": "Immanuelle <immanuelleleonhart@gmail.com>",
+  "author": "Immanuelle <contact@emmaleonhart.com>",
   "main": "dist/main.js",
   "scripts": {
     "setup": "node scripts/setup.js",

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-22T07:01:26Z
+  Fetched:   2026-05-26T07:00:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -438,3 +438,14 @@ So far, I've created:
 * [[Abstract Wikipedia:Notability|a notability guideline]]
 * [[Abstract Wikipedia:Deletion policy|a deletion policy]]
 I've written them as my opinion on what should happen, but I'm hoping to align them with community consensus as we discuss them more. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:44, 21 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #249 is out: Annual plan 2026-2027 ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-23|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present you the current draft of objectives for Wikifunctions and Abstract Wikipedia in the WMF Annual Plan 2026-2027, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:48, 25 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->

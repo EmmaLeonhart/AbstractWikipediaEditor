@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-25T04:26:02Z
+  Fetched:   2026-05-26T07:00:26Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -24,76 +24,12 @@ Other places to find help:
 |prefix=WF:Project chat/Archive/
 }}
 
-== Language parameters in language-specific functions ==
-
-I think that an effort should be made to give the different natural language options corresponding to different English dialects, Chinese scripts, etc. more of a use 
-(I added the test {{Z|Z34119}} to {{Z|Z26095}} and unsurprisingly it fails). There are two main problems with this approach that I can identify:
-* If you ask the majority of these functions to make a sentence in British English, much of the time it will give you an output with missing words, because it does not fallback to English labels in the case of a British English label for that item missing. The same applies for every other English dialect, British English is just an example here.
-* Uninformed editors will probably see the presence of a language parameter on these functions, consider it redundant, and remove it. [[Special:Diff/268074|I have made this mistake before]].
-In my opinion, in a perfect world, all of these language generation functions would output monolingual text, and if the user asks for American English text, then American English text is what they'll get. If the user asks for Japanese text in hiragana specifically, then that's what they'll get in return. This is not as high-priority as just rendering text in the language plainly in the first place, but it's something that I feel is still worth devoting some effort to.
-
-Right now switching functions to use this paradigm is difficult because, on the one hand, I don't know if consensus tends towards this direction being ideal or advisable, and I don't want to make changes like this without at least notifying the wider community. In addition, all tests break once a parameter is added or removed, and the function editor does not recognize the change in number of parameters and therefore you have to remove the function call, re-add it along with all of its parameters it had previously (which is a tedious cut-and-paste job), and then it will work again. This is something that you can do in five seconds by just adding a few lines of JSON to the test source, but this is not directly editable from the Web browser. This tedium is largely what's preventing me from doing this on a larger scale, besides asking for comments first.
-
-If anyone has any insights or comments on this, then that would be appreciated. If a reference of functions with and without the support for language variants is needed, of course [[WF:NLG]] can be perused, but I've also my own list cataloged at [[User:Theki/functions#language]]...
-
-Of course, this thread has many similarities to [[#"language" argument for certain functions|the one above]], but this concerns me going out and making this consistent across these NLG functions. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:09, 24 April 2026 (UTC)
-:I've created {{Z|Z34122}} as an extension to {{Z|Z34039}} for larger functions. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:34, 24 April 2026 (UTC)
-:Just to confirm that I, for one, support a Natural language parameter for all natural-language functions. The concern about getting them all aligned is just that we haven’t finally settled on {{Z|Z11}} being preferred to {{Z|Z89}} or some other type that conserves the text’s provenance, so we risk having to change them all again. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 10:07, 25 April 2026 (UTC)
-
 == “Key not found ()”? ==
 
 What am I doing wrong in {{Z|Z34137}}? [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 00:39, 25 April 2026 (UTC)
 
 :You were passing a [[Z6091]] to {{Z|32290}}, but it takes a [[Z6001]]. Fixed. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 07:10, 26 April 2026 (UTC)
 ::{{done|Thank you}}! [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 14:13, 26 April 2026 (UTC)
-
-== Why is my test failing? ==
-
-Hello! I recently made {{Z|Z34139}} based on [[wikt:Module:bg-translit]], and the test case {{Z|Z34141}} is failing on both implementations, despite the expected output and actual output being the same as far as I can tell.
-
-I tried looking at the Unicode codepoints of the output, but those are also identical. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 06:21, 25 April 2026 (UTC)
-
-:Yes, it’s a tricky one. I’ve added a normalize step to the result validation in {{Z|Z34141}}, which confirms it is a normalization issue. It looks like it is in the code but I don’t know whether simply normalizing the result is the way to go. Logically, you would normalize both the input and the result. The implementations of {{Z|Z10384}} show you how to do this. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 09:41, 25 April 2026 (UTC)
-
-== Edit request ==
-
-Hello! I have an edit request for {{Z|Z23752}} and {{Z|Z23414}}.
-
-Please replace all the "an/a" logic with <code>Z21739(Argument reference)</code>, both for readability and for more accuracy ("a university is an institution") <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 09:50, 25 April 2026 (UTC)
-
-:{{D}} [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:24, 25 April 2026 (UTC)
-
-== Wikifunctions & Abstract Wikipedia Newsletter #245 is out: The Foundation's search for the perfect language ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-25|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we present an academic paper about Abstract Wikipedia, we discuss our latest Type created, and we take a look at the newest created functions.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:54, 25 April 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-:@[[User:Sannita (WMF)|Sannita (WMF)]], @[[User:DVrandecic (WMF)|DVrandecic (WMF)]], technical meta-question: the newsletter quotes the article:
-::the only way to contest its algorithm is to click 👍 or 👎 (Crawford and Gillespie 2016)
-:This quotation sounds sensible, but the article's [https://link.springer.com/article/10.1007/s00146-026-02899-w web version], and the PDF that is downloadable from the same page doesn't actually show the emojis. It rather shows text that looks lacking:
-::the only way to contest its algorithm is to click  or  (Crawford and Gillespie [https://link.springer.com/article/10.1007/s00146-026-02899-w#ref-CR14 2016])
-:Where did you get the emojis? Is it your (probably correct) guess or is there a version somewhere that actually shows the emojis? [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:16, 25 April 2026 (UTC)
-::Scratch that. I've found a version with correct emojis: https://wikihistories.github.io/wikilambda-the-ultimate/ [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 15:37, 25 April 2026 (UTC)
-
-== Requested deletion of test ==
-
-Please delete {{Z|Z34143}}. this was never valid Bulgarian, I messed up. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:19, 25 April 2026 (UTC)
-
-:[[WF:RFD]] please. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:40, 25 April 2026 (UTC)
-
-== Request for comment (global AI policy) ==
-
-<bdi lang="en" dir="ltr" class="mw-content-ltr">
-
-A [[:m:Requests for comment/Artificial intelligence policy|request for comment]] is currently being held to decide on a global AI policy. {{int:Feedback-thanks-title}}
-[[User:MediaWiki message delivery|MediaWiki message delivery]] ([[User talk:MediaWiki message delivery|talk]]) 00:57, 26 April 2026 (UTC)
-</bdi>
-<!-- Message sent by User:Codename Noreste@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Distribution_list/Global_message_delivery&oldid=30424282 -->
 
 == Is it OK to connect the implementation? ==
 
@@ -435,3 +371,14 @@ My doubt is: what should we do with this fourth category? For many languages, ju
 :::For the reverse problem, there is already {{Z|Z27327}}: it's far from perfect, but usually makes a decent choice. Obviously it is not "complete", and probably it will never be complete, but it will have to be progressively improved by the community. And probably in the future we will need to create similar functions to select the best lexeme in more specific cases.
 :::For my fourth point, I didn't think about the decomposition, but it is something that could be done with another never-complete community-mantained function, that progressively keeps being improved. If [[Wikifunctions:Type proposals/Semantic unit|semantic units]] will be implemented, through them it could actually be possible to do this operation in a laguage-independent way. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:10, 24 May 2026 (UTC)
 ::{{re|YoshiRulz}} Proper noun synthesis, along with other fallbacks for realizing the names of concepts that don't have lexemes, is merely a step within the overall abstract content rendering process and is not inherently tied to the process itself; having the ability to [https://gitlab.com/mahir256/ninai/-/blob/main/ninai/graph/client.py#L327 run any number of fallback mechanisms], instead of a raw call to (the equivalent of) Z27327, should be possible with any of the methods listed on the architectures page. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 16:41, 24 May 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #249 is out: Annual plan 2026-2027 ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-23|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present you the current draft of objectives for Wikifunctions and Abstract Wikipedia in the WMF Annual Plan 2026-2027, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:48, 25 May 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->

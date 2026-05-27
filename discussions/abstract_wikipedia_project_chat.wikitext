@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-27T00:14:01Z
+  Fetched:   2026-05-27T07:48:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -450,3 +450,9 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:48, 25 May 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->
+
+== To abstract Wikipedia or be the Abstract Wikipedia ==
+
+There is a discussion happening about what the [[Abstract Wikipedia:Notability|notability criteria]] for Abstract Wikipedia should be, and in trying to participate I've found my idea of Abstract Wikipedia is awfully abstract. Is Abstract Wikipedia supposed to abstract Wikipedia, as in abstracting information from existing articles on the language Wikipedias (barring new contributions), or is it supposed to become the Abstract Wikipedia, supporting collaboration across all languages like it's the language Wikipedia to end all language Wikipedias (allowing new contributions)? I thought the answer would be obvious, but the name Abstract Wikipedia is a bit ambiguous. Am I missing something? [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 02:16, 27 May 2026 (UTC)
+
+:I think ({{ping|DVrandecic (WMF)|p=?}}) the idea is (and I personally prefer) the latter. I believe that, given the fact that it's much easier to write a concrete article than an abstract article, and the fact that the community of potential future contributors on enwiki is skeptical ''at best'', we ultimately will never expand beyond the size of other wikis, but I see no problem with allowing volunteers to add information not on other wikis (it's probably not the most effective, but they're volunteers, beggars can't be choosers), as long as it's not vandalism, useless, or promotional slop. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:31, 27 May 2026 (UTC)

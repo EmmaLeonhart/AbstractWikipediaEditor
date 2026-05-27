@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-27T00:14:01Z
+  Fetched:   2026-05-27T07:48:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -23,51 +23,6 @@ Other places to find help:
 |class=mw-collapsible-content|style=font-size:92%;}}|class="mw-collapsible mw-collapsible-toggle mw-collapsed"}}
 |prefix=WF:Project chat/Archive/
 }}
-
-== “Key not found ()”? ==
-
-What am I doing wrong in {{Z|Z34137}}? [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 00:39, 25 April 2026 (UTC)
-
-:You were passing a [[Z6091]] to {{Z|32290}}, but it takes a [[Z6001]]. Fixed. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 07:10, 26 April 2026 (UTC)
-::{{done|Thank you}}! [[User:Redmin|Redmin]] ([[User talk:Redmin|talk]]) 14:13, 26 April 2026 (UTC)
-
-== Is it OK to connect the implementation? ==
-
-Hello! 
-
-I recently applied for functioneer on [[WF:RFG]], and I was wondering whether I could connect the implementation for {{Z|Z34165}} despite its dependency {{Z|Z34149}} being currently unimplemented. That is <em>if</em> I get accepted.
-
-I am planning on implementing it based on [[wikt:module:bg-nominal]], but am still having trouble figuring it out for now. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 09:04, 26 April 2026 (UTC)
-
-== Past tense function ==
-
-Is there a function like {{Z|Z26039}}, but for the past tense (e.g. "Leo Tolstoy <em>was</em> a writer.")?
-
-If not, I will create it myself, I just want to make sure there's not a duplicate. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:10, 26 April 2026 (UTC)
-: {{Done}} with {{Z|Z34224}}, but I have a few kinks to work out with it. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:35, 26 April 2026 (UTC)
-:: I need to create some other similar functions for the past tense, I have some ideas:
-::* {{Z|Z26095}}
-::* {{Z|Z32643}}
-::* {{Z|Z28016}}
-::* {{Z|Z26570}}
-::* {{Z|Z33975}}
-::* {{Z|Z27243}}
-::* <ins>{{Z|Z26627}}</ins>
-::* <ins>{{Z|Z27627}}</ins>
-::* <ins>{{Z|Z27173}}</ins>
-::* <ins>{{Z|Z29591}}</ins>
-:: 
-:: Are there any I have missed? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 10:57, 26 April 2026 (UTC)
-:I think that here we are starting to walk on dangerous waters: what does past mean? Is it a recent o a far past? Does it have ripercussions on the present or not? Is it just a thing that happened once, many times or for a continuative period of time?
-:Consider that various languages distinguish between many different types of past. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 12:38, 26 April 2026 (UTC)
-:: {{re|Dv103}} That is a fair point...
-:: How do we go about solving this problem though? I don't think having every sentence on Abstract Wikipedia be "X is a Y" is a very good idea.
-:: Maybe we have different functions for all these variations of past you mentioned that just map into "X was a Y." in English? <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 13:31, 26 April 2026 (UTC)
-:::To properly solve this problem, we should use a more complete abstract content representation model, like for example the proposal of [[Wikifunctions:Type proposals/Semantic unit|Semantic units]] (look at [[Wikifunctions:Type proposals/Semantic unit/Douglas Adams|the example]] to see how times could be handled). For now, since we're still stuck with single fragment generation functions (that I hope will be slowly replaced with the complete represenation model, when available), we could just restrict your function to a very specific meaning, like "subject was an instance of, for most of its existence" (which means for example that it could be used to say "Douglas Adams was a writer", but not "Abraham Lincoln was a president", since he only was a president for 4 years). Probably my definition is still too vague, and this is why we need to go beyond these fragment generating functions. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 19:47, 26 April 2026 (UTC)
-::Nitpick... I don't like that it outputs a string instead of monolingual text. With {{Z|Z26039}} it's used so much that I think it's unfixable in that case beyond deprecating it if people care that much, but {{Z|Z34224}} doesn't even have any connected implementations yet. Consider it, maybe?
-::Nitpick 2... {{Z|Z34227}} is missing a language parameter. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:08, 26 April 2026 (UTC)
-::: I will consider that!
-::: I just did that because that's what {{Z|Z26039}} does, so I assumed I should follow suit with it. <span style="border-radius:99q;padding:0 7q;background:#103;border:3q solid #FBF">[[User:QuickQuokka|<span style="color:#FBF">'''QuickQuokka'''</span>]]</span> <sup>[⁠[[User talk:QuickQuokka|talk]] • [[Special:Contribs/QuickQuokka|contribs]]]</sup> 16:48, 26 April 2026 (UTC)
 
 == Legacy functions ==
 

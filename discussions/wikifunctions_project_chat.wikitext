@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-26T07:00:26Z
+  Fetched:   2026-05-27T00:14:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -382,3 +382,21 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:48, 25 May 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->
+:The new <code>return_type</code> param to [[Special:ListObjectsByType]] will show Functions returning e.g. {{Z|27951}} and {{Z|882}} if those are typed in manually, but the dropdown menu doesn't offer them, probably because it's a copy of the dropdown above (and there are no Persistent objects of those Types). [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 10:12, 26 May 2026 (UTC)
+
+== Type documentation template ==
+
+Over the past couple of weeks, I've been developing and rolling out {{t|type documentation}}: a standardised layout for Type metadata, de/constructors, conversions, etc. on each Type's talk page. (The layout is loosely based on [[d:Template:Property documentation|Wikidata's]].) See [[Talk:Z16683|Integer]] for an example that uses most of its features, and [[Talk:Z99|Quote]] for one that doesn't.<br>At this point I can't think of anything more to add besides [[Help:Comparison_function_table/float64|filling out]] a couple more [[Help:Type_conversion_table/Codepoint|tables]]. But if any of you have ideas or feedback, please click through to the relevant talk page and leave me a message. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 12:29, 26 May 2026 (UTC)
+
+:I really like what you're doing here. Thank you. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 13:26, 26 May 2026 (UTC)
+:Yeah, nice work! I don’t think “Function declarations” is the best header for the collapsed table of searches by function signature, however. Now that it’s finally landed, we should probably include https://www.wikifunctions.org/wiki/Special:ListObjectsByType?type=Z8&return_type=Z16683 as well (outside the table). [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 16:23, 26 May 2026 (UTC)
+
+== Apparent error in implementations of {{Z|20616}} ==
+Please can I request help in how to understand a bug?  Sorry if this is not the best place to ask.
+
+I created lexemes [[d:Lexeme:L1566135|langue morte L1566135]] in French and [[d:Lexeme:L1566139|lengua muerta L1566139]] in Spanish, with property {{P|5185}} set to {{Q|Q1775415}} in each case.  {{Z|20616}} should return a list of the grammatical genders of a given lexeme.  It has two implementations, {{Z|Z20641}} and {{Z|Z21127}}, each of which works perfectly in the French case, returning a list containing Q1775415.  But in the Spanish case, each of the two implementations wrongly returns an empty list.  I cannot understand what is going wrong.  How can I find out what is happening here?  I would be grateful for any help or advice. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 13:56, 26 May 2026 (UTC)
+
+:Both implementations return [https://www.wikifunctions.org/wiki/Z20616?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z20616%22%2C%22Z20616K1%22%3A%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z6825%22%2C%22Z6825K1%22%3A%7B%22Z1K1%22%3A%22Z6095%22%2C%22Z6095K1%22%3A%22L1566139%22%7D%7D%7D the same result]. As you added the gender only yesterday, I suppose it must have still been looking at a cached version of the lexeme from before that edit. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 16:06, 26 May 2026 (UTC)
+
+::Thank you for answering.  Yes, it works now.  I thought it might have been something like that, but I waited more than 12 hours before testing it again today.  I think that whenever SPARQL is in use, there will be caching issues, and it is a very bad problem.  Is there any way of clearing the cache, or knowing when the cache will next be cleared, or how long it is necessary to wait before the changes come through? [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:59, 26 May 2026 (UTC)
+:::Well, it depends on the cache. “Wikidata entities in the orchestrator cache timeout after 24 hours” [https://t.me/Wikifunctions/28369 according to] @[[User:DMartin (WMF)|DMartin (WMF)]]. There is currently no way to clear that. I don’t think we have a handy guide to the different caches in operation, but the “general” function-call cache should be reset for a particular function when that function is edited. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:05, 26 May 2026 (UTC)

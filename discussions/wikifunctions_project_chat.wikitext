@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://www.wikifunctions.org/wiki/Wikifunctions:Project_chat
-  Fetched:   2026-05-27T07:48:01Z
+  Fetched:   2026-05-28T07:07:43Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -355,3 +355,20 @@ I created lexemes [[d:Lexeme:L1566135|langue morte L1566135]] in French and [[d:
 
 ::Thank you for answering.  Yes, it works now.  I thought it might have been something like that, but I waited more than 12 hours before testing it again today.  I think that whenever SPARQL is in use, there will be caching issues, and it is a very bad problem.  Is there any way of clearing the cache, or knowing when the cache will next be cleared, or how long it is necessary to wait before the changes come through? [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:59, 26 May 2026 (UTC)
 :::Well, it depends on the cache. “Wikidata entities in the orchestrator cache timeout after 24 hours” [https://t.me/Wikifunctions/28369 according to] @[[User:DMartin (WMF)|DMartin (WMF)]]. There is currently no way to clear that. I don’t think we have a handy guide to the different caches in operation, but the “general” function-call cache should be reset for a particular function when that function is edited. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 22:05, 26 May 2026 (UTC)
+::::I think this is very unfortunate for anyone doing tests in Wikifunctions.  So there is a 24-hour delay even applying to changes in Wikidata due to the Wikifunctions orchestrator cache, apart from any other caches such as the SPARQL one.  I notice that an intermediate-level call using the [[d:Lexeme:L1566139|lengua muerta L1566139]] lexeme change, {{Z|33725}}, now works on "latín es una lengua muerta.", but the top-level call {{Z|26039}} still does not find the correct gender.  If I test the function every 12 hours, does that mean that the erroneous result will be produced for ever, because it will always take the bad  value less than 24 hours old from the cache?  [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 13:45, 27 May 2026 (UTC)
+:::::I can only sympathize.
+:::::It seems to me that [https://www.wikifunctions.org/wiki/Z26039?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z26039%22%2C%22Z26039K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q397%22%7D%2C%22Z26039K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q45762%22%7D%2C%22Z26039K3%22%3A%22Z1003%22%7D this has been correct] for a couple of days. But in the general case, no, repeated use of cached results does not re-start the clock. That would indeed be most unfortunate! [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 13:59, 27 May 2026 (UTC)
+::::::It still doesn't work for me, it says "latín es un lengua muerta."  But the test on the top-level implementation page, {{Z|33725}}, does work now.  By the way, really it should say "el latín es una lengua muerta.", but that is another issue.  Anyway, thanks a lot for your help.  [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 14:06, 27 May 2026 (UTC)
+:::::::Ah, yes… my mistake, sorry.
+:::::::It should be [https://www.wikifunctions.org/view/en/Z26039?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z26039%22%2C%22Z26039K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q397%22%7D%2C%22Z26039K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q45762%22%7D%2C%22Z26039K3%22%3A%22Z1003%22%7D consistent now]. The “couple of days” is the clue here; we were getting a result from the function-call cache and this has now been refreshed by my edit. [[User:GrounderUK|GrounderUK]] ([[User talk:GrounderUK|talk]]) 14:25, 27 May 2026 (UTC)
+::::::::Yes, it all works now.  Thanks. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 14:54, 27 May 2026 (UTC)
+
+== Vote now in the 2026 U4C election ==
+
+<section begin="announcement-content" />
+Eligible voters are asked to participate in the 2026 [[m:Special:MyLanguage/Universal_Code_of_Conduct/Coordinating_Committee|Universal Code of Conduct Coordinating Committee]] election. More information–including an eligibility check, voting process information, candidate information, and a link to the vote–are available on Meta at the [[m:Special:MyLanguage/Universal_Code_of_Conduct/Coordinating_Committee/Election/2026|2026 Election information page]]. The vote closes on 2 June 2026 at [https://zonestamp.toolforge.org/1780358400 00:00 UTC].
+
+Please vote if your account is eligible. Results will be available by 14 June 2026. -- In cooperation with the U4C,<section end="announcement-content" />
+
+[[m:User:Keegan (WMF)|Keegan (WMF)]] ([[m:User talk:Keegan (WMF)|talk]]) 17:14, 27 May 2026 (UTC)
+<!-- Message sent by User:Keegan (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Distribution_list/Global_message_delivery&oldid=30513860 -->

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-27T07:48:01Z
+  Fetched:   2026-05-28T07:07:43Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -272,6 +272,8 @@ I hope that the definition of the problem is clear.
 ::::::What? Could you elaborate? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:00, 3 May 2026 (UTC)
 ::::::{{ping|Immanuelle}} I checked. Your issue is that your editor is not providing the article language to Z33068K2; that is, the ''paragraph from sentences'' function has a second argument, and your editor was omitting it. If you properly specify it, it will work. Please, next time, actually tell me what went wrong instead of going quiet and forcing me to look after it myself. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:06, 4 May 2026 (UTC)
 
+:I avoid [[f:Z33068]] for now, because executing a whole paragraph in a single call would often time out. So my current alternative is inserting [[f:Z35672]] between sentences. Fairly clunky, but it works... --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:08, 28 May 2026 (UTC)
+
 == Most used fragments ==
 
 [[:f:Wikifunctions:Status updates/2026-05-02|The latest status update]] lists the most used fragments: "[[:f:Z32123]] with 1452, followed by [[:f:Z27868]] with 736 and [[:f:Z29749]] with 650)".
@@ -456,3 +458,17 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 There is a discussion happening about what the [[Abstract Wikipedia:Notability|notability criteria]] for Abstract Wikipedia should be, and in trying to participate I've found my idea of Abstract Wikipedia is awfully abstract. Is Abstract Wikipedia supposed to abstract Wikipedia, as in abstracting information from existing articles on the language Wikipedias (barring new contributions), or is it supposed to become the Abstract Wikipedia, supporting collaboration across all languages like it's the language Wikipedia to end all language Wikipedias (allowing new contributions)? I thought the answer would be obvious, but the name Abstract Wikipedia is a bit ambiguous. Am I missing something? [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 02:16, 27 May 2026 (UTC)
 
 :I think ({{ping|DVrandecic (WMF)|p=?}}) the idea is (and I personally prefer) the latter. I believe that, given the fact that it's much easier to write a concrete article than an abstract article, and the fact that the community of potential future contributors on enwiki is skeptical ''at best'', we ultimately will never expand beyond the size of other wikis, but I see no problem with allowing volunteers to add information not on other wikis (it's probably not the most effective, but they're volunteers, beggars can't be choosers), as long as it's not vandalism, useless, or promotional slop. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:31, 27 May 2026 (UTC)
+:@[[User:Some helpful person|Some helpful person]] Abstract Wikipedia is a Wikipedia, where people can collaborate across languages on articles, which can then be used to fill gaps in the existing Wikipedias. Whereas I expect that current Wikipedia articles might be used as a convenient starting point for many of the articles in Abstract Wikipedia, this is more a consequence of Wikipedia being one of the best places to go to to find reliable knowledge, but that is not part of how it is supposed to work. So, this is not to abstract the existing Wikipedias, but to collaborate on an Abstract Wikipedia. At no point is this meant to replace existing Wikipedias. (Thanks to @[[User:Feeglgeef|Feeglgeef]] for the ping!) --[[User:DVrandecic (WMF)|DVrandecic (WMF)]] ([[User talk:DVrandecic (WMF)|talk]]) 17:01, 27 May 2026 (UTC)
+::Thank you, this makes a lot more sense now. [[User:Some helpful person|Some helpful person]] ([[User talk:Some helpful person|talk]]) 21:52, 27 May 2026 (UTC)
+
+== template suggestion ==
+
+Some way to mock abstract syntax on talk and project pages, analogous to those in [[d:category:format Template]]. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 15:21, 27 May 2026 (UTC)
+
+:Hmm. I agree.
+:Workshopping ideas for how it works:
+:* Invokation: <nowiki>{{Call|Z26039|{"Z1K1": "Z18", "Z18K1": "Z825K1"}|{"Z1K1": "Z6091", "Z6091K1": "Q634"}|{"Z1K1": "Z18", "Z18K1": "Z825K1"}|lang=en}}</nowiki>
+:** This could then be suplemented by helper templates: <nowiki>{{Call|Z26039|{{Wikidata item argument reference}}|{{Wikidata item reference|Q634}}|{{Language argument reference}}}}</nowiki>
+:* This would result in "[[f:Z26039|subject is instance of (string)]] (wikidata item reference, [[d:Q634|planet]], language)"
+:** Icons are missing in this example, I'm not sure if we can actually add them
+:Thoughts? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:04, 27 May 2026 (UTC)

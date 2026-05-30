@@ -1,10 +1,10 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-29T07:08:19Z
+  Fetched:   2026-05-30T06:36:09Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
-{{/Header}}
+{{#ifexist:Abstract Wikipedia:Project chat/Header/{{USERLANGUAGE}}|{{/Header/{{USERLANGUAGE}}}}|{{/Header}}}}
 {{/Archives}}
 <!-- Add your discussion below this line -->
 
@@ -16,119 +16,6 @@ I feel like the project could be done a lot better by using templates kind of li
 ::How do you do parsoid rendering? And why wouldn't it make sense? With aliases and everything could work great. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:12, 29 March 2026 (UTC)
 :::I believe it is enabled by default. If you do have it on: {{#function:Z10000|you'll s|ee this}} [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:54, 30 March 2026 (UTC)
 :you may be interested in reading this old [[m:Abstract_Wikipedia/Google.org_Fellows_evaluation|Google report]].  [[User:BrokenSegue|BrokenSegue]] ([[User talk:BrokenSegue|talk]]) 14:32, 9 May 2026 (UTC)
-
-== Logo ==
-{{Tracked|T424781}}
-In vector2009 and monobook, the logo shows as the standard enwiki logo. Which is confusing as this is technically a whole other sisterproject. I suggest [[:File:Wikipedia-logo-blank.svg|this]] be used as a temporary logo for these skins. [[User:Kinopiko|Kinopiko]] ([[User talk:Kinopiko|talk]]) 06:00, 31 March 2026 (UTC)
-
-:There's also the scalable favicon, [[commons:File:Abstract-Wikipedia-favicon.svg|Abstract-Wikipedia-favicon.svg]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:54, 3 April 2026 (UTC)
-
-:This still appears to be as of yet unfixed. I understand this wiki is still very early in its lifespan so I'm not particularly miffed about it, it looking identical due to the logo is rather confusing at first but with separation with tab groups in my browser it becomes manageable. I am personally excited to see what logo(s) will be devised for this project; seeing the same thing happen for the other sister projects has been very fun to watch in the past. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:49, 20 April 2026 (UTC)
-
-== Wikiprojects ==
-
-Are there wiki projects here? Can I just make some in this namespace? [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 15:12, 10 April 2026 (UTC)
-
-:I don't see why not. It's a wiki, after all :). Please just don't flood the talkspace with templates that don't exist. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:51, 10 April 2026 (UTC)
-::I've created a first Wikiproject ([[Abstract Wikipedia:WikiProject Core articles]]) and an explainer page ([[Abstract Wikipedia:WikiProject]]). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:11, 10 April 2026 (UTC)
-:::I made this one too [[Abstract Wikipedia:WikiProject Quality Prose]] [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 18:39, 10 April 2026 (UTC)
-::{{ping|Feeglgeef}} Are WikiProjects for specific languages OK? Responsibility seems to be stretched between maintaining Wikidata labels and lexemes alongside creating and maintaining functions on Wikifunctions, so I'm unsure if Abstract Wikipedia would be considered a good place to coordinate these things. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:56, 20 April 2026 (UTC)
-:::There's no community consensus for or against, so, since this is a wiki, I don't see any reason why anyone would stop you :). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:46, 20 April 2026 (UTC)
-
-== Representing "part of" ==
-
-How do I represent that something is part of another thing? I used to use the spo sentence without understanding that it did not work. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 16:30, 16 April 2026 (UTC)
-
-:I think [[f:Z32982]] can be used, with the role as [[d:Q1310239]]. [[User:ChaoticVermillion|<span style="color: orangered">Chaotic</span><span style="color: crimson">Vermillion</span>]] ([[User talk:ChaoticVermillion|converse]], [[Special:Contributions/ChaoticVermillion|contribs]]) 18:55, 16 April 2026 (UTC)
-:See Q307, perhaps
-:https://abstract.wikipedia.org/view/en/Q307
-:Middle finger of Galileo's right hand is the part of of Galileo Galilei. [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 03:07, 25 April 2026 (UTC)
-
-== AceWiki: Abstract Wikipedia before Abstract Wikipedia? ==
-
-For those of you not in the know, ACE is [[w:Attempto Controlled English|Attempto Controlled English]]. This is a special subset of English that, unlike regular English, is entirely grammatically unambiguous and is machine-readable. For example, the sentence "Every person has a cat" is ACE, as a computer could easily parse that into a logical structure of the form "for any person P, P has a cat." Well, I found a semantic wiki software called AceWiki, whose articles are written entirely in Attempto Controlled English (see [https://acewiki.petapico.org/acewikigeo/ AceWikiGEO]). The sentence structures seen in AceWiki articles (while I can't link directly to any article, the article on the United States of America, which can be found in the Index in the sidebar, is a good example) are quite similar to those in our existing abstract articles. Using a tool called [https://github.com/Attempto/ACE-in-GF ACE-in-GF], ACE text could be translated into any language. 
-
-I've been thinking about the idea of a tool that allows an editor to write Attempto Controlled English text, and have that text turned into an abstract article. As an example:
-
-'''ACE''' -- "Every antelope is a mammal." &rarr; '''Abstract content''' -- [[f:Z26627|Classifying a class of nouns (Z26627)]]: [[d:Q25894|antelope (Q25894)]], [[d:Q7377|mammal (Q7377)]]
-
-This tool would not be optimized for mass article creation, since it would not include an option to generate articles directly from Wikidata, but I think it could be interesting to see how being able to write abstract articles in natural language might lower the barrier to contributing to this project. Thoughts? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:59, 20 April 2026 (UTC)
-
-:I'm not sure how we'd actually do the conversion step. If you'd be willing to attempt to make a prototype I'd love to look at it, but I'm skeptical. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:12, 21 April 2026 (UTC)
-
-== Help with the news section on main page ==
-
-Hi all, I would like to have some help in importing [[:f:Template:Main page/News]] here and inserting it in the main page's module. Can someone help me to do it? [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:26, 20 April 2026 (UTC)
-:I believe [[Template:Main page/News]] is already set up and visible on the main page, unless you mean importing the history of the WF template over. [[User: Tenshi Hinanawi|Tenshi!]] ([[User talk: Tenshi Hinanawi|Talk page]]) 11:12, 20 April 2026 (UTC)
-::Ah, that's great, thanks! [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:53, 20 April 2026 (UTC)
-
-== Layout guidelines? ==
-
-One thing I'm noticing is that there are a ''lot'' of ways to do the same thing. I'd like to know which is preferred in the simple case of making single-sentence articles that just say what they are.
-
-Take [[Q503]] for example. If you look at the edit history of the article, you'll see it went through a few changes:
-* Initially, it was a [[f:Z14396|''string of monolingual text'']] call wrapped inside of a [[f:Z27868|''string to HTML fragment'']] call. The innermost function got the monolingual text returned from [[f:Z26095|''subject is kind of'']], converted it to a string, and then to a HTML fragment.
-* Afterwards the two topmost functions were removed until only the ''subject is kind of'' function call remained, and this was wrapped in a call to [[f:Z29749|''monolingual text as HTML with visible language tag'']].
-* Finally the ''subject is kind of'' call was placed into a typed list provided as an argument to the [[f:Z32234|''join text-like objects into HTML fragment'']] call, which in turn was made into a proper paragraph rather than a standalone <code>&lt;div&gt;</code> as it was previously.
-
-None of these seem like a particularly bad way to approach things, and I have seem all of them in the wild; the first thing I tried I did so as it was the way the first article I stumbled upon chose to render its text.
-
-Since [[Abstract Wikipedia:Useful functions for article composition]] only goes over linguistic functions, and doesn't seem to provide any guidance on ''composition'' functions (i.e. building the HTML contents itself, as you have to do in the plain visual editor online), I thought I'd ask here if there is a preferred way to do things, and if it could perhaps be made clearer on the website if so. It is rather bothersome wanting to build e.g. a wikitable, and needing to peruse the available functions on Wikifunctions instead of having an easily-accessible way to see what is generally recommended for the particular circumstance. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 21:36, 20 April 2026 (UTC)
-
-:I'm partial to paragraph(join text-like objects into HTML fragment(your sentences)), as not using a paragraph tag is bad for those who use screen readers, and I designed join text-like objects to reduce function calls and therefore speed up the article processing step. The long-term problem with this method is that Japanese and Chinese both do not have spaces between sentences, so I plan to soon create a function that takes a list of text-like objects and then converts it into a paragraph under the correct style of each language. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:51, 20 April 2026 (UTC)
-::That sounds good, I have grown more fond of that method as well. What you described would be great to have, I have been adding [[f:Z13128]] references inbetween each sentence to counteract the lack of spacing but something that would do this automatically for English while also obeying the sentence rules of other languages it renders in would be very ideal. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:33, 21 April 2026 (UTC)
-::{{ping|Feeglgeef}} I noticed [[f:Z33068]]. I decided to hack up an implementation of it that aligns with what you said, I don't know if this is what your original intention for the function was and I apologize if I misconstrued it. At the moment, it just runs the ''join text-like objects'' function I mentioned earlier wrapped in a call to ''paragraph'', but adds spaces if the language is not Japanese or Chinese. I'm not sure if, in this scope, a lack of spaces is the only difference between how certain languages arrange their sentences. This also only accounts for the ZObjects for Chinese and Japanese specifically, I think some sort of switch statement or separate configuration object would be better suited for this—not to mention that there are separate natural language objects for the different scripts of Japanese, so those would have to be blanketed under Japanese when considering the language passed in (which I don't want to chain a bunch of ORs to do at the moment). For now, though, it seems to work fine. I added two different test cases and they both pass, and I have also utilized the function on [[Q241691]]. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 03:31, 23 April 2026 (UTC)
-:::Ah, thank you for implementing that, it looks good to me. I've created a persistent object for storing the languages that don't use spaces, [[f:Z33984]]. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:47, 23 April 2026 (UTC)
-
-== Wikidata problems ==
-
-Sorry for posting two questions here in a row. I'll try to make this brief.
-
-On the bottom of [[Q247237]] is what ''should'' be a list of albums, but on my end it appears as just "''PLUS''" repeated fourteen times. This seems to occur any time I use [[f:Z13464]] on a list of Wikidata item references... is anyone else seeing this? I'm not sure what I could be doing wrong.
-
-Related to this, I wonder if I can avoid needing to explicitly state each of these items? I moved the list to a separately-defined object on Wikifunctions to avoid having to constantly transfer it between websites since I don't think the clipboard works cross-site. Ordinarily, if I were trying to get all Autechre studio albums, I would use Wikidata's SPARQL query feature to do this, by finding every entity whose [[wikidata:P31|P31]] is [[wikidata:Q482994|Q482994]] and whose [[wikidata:P50|P50]] is [[wikidata:Q247237|Q247237]]. This doesn't seem to be doable with Wikifunctions, though, or at least I'm not seeing it... so I don't know how I would do this automatically. We are making articles out of functions here, so I think it would be worthwhile if I tried to future-proof the list using this paradigm. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:30, 21 April 2026 (UTC)
-
-:On your first question, I've [[f:Z33903|tried to replicate this on WF]] and I cannot, which makes it difficult to solve.
-:We cannot currently reverse most WD statements, so your use case is not ''currently'' possible, but we are able to access the statements that are ''on'' an item. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:10, 21 April 2026 (UTC)
-
-::I'm experiencing the issue again on [[f:Z33997]], it seems. Check the test results of the three-item test, "''programmer''" should not appear twice. I ran into a similar problem earlier in working on the implementation. For the two-item case, using a call to ''[[f:Z13397|get the nth element of a list]]'' on both items (index 1 and 2 respectively) returned the first item twice. I had to use a call to ''[[f:Z811|first element]]'' to fix it.
-::Could this be a caching issue, perhaps? That seems likely, because I don't know why else this would be happening. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:16, 23 April 2026 (UTC)
-:::I am considering raising this issue on Phabricator if it hasn't been brought up already, this doesn't seem intentional. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:48, 24 April 2026 (UTC)
-
-== What are we called? ==
-
-If editors of Wikipedia are Wikipedians, editors of Wiktionary are Wiktionarians, editors of Wikivoyage are Wikivoyagers, and editors of Wikiversity are Wikiversitarians, what are we? Abstract Wikipedians? Abstracters? Abstractions? AWians? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 11:54, 24 April 2026 (UTC)
-
-:I don't like Abstractions and AWians. Abstracters sounds cool, it could be our "informal" term, while Abstract Wikipedians is our "formal" one. We could also apply it based on context (in the mainspace you're an abstracter, in the projectspace you're an abstract wikipedian), I'm not sure, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:12, 24 April 2026 (UTC)
-:I think an -or ending for 'abstractor' sounds cooler, personally. Abstract Wikipedians is boring but is the most straightforward option. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 14:50, 24 April 2026 (UTC)
-::I did mean to spell it as "Abstractors." Sorry about the typo. [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 18:55, 24 April 2026 (UTC)
-
-== Indexed by Google - deliberate? ==
-
-https://www.google.com/search?q=site%3Aabstract.wikipedia.org%2Fwiki%2F
-
-Exposing Qid to Google looks like a mistake. Not likely to attract the public. Might adversely affect Wikipedia's Page rank or whatever?
-
-[[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:20, 25 April 2026 (UTC)
-
-:Indexing may already have stopped, after the 7th April - no recent pages found. [[Special:Contributions/&#126;2026-25174-74|&#126;2026-25174-74]] ([[User talk:&#126;2026-25174-74|talk]]) 04:26, 25 April 2026 (UTC)
-
-== I can't edit generated text on pages for some reason? ==
-
-why is this? Thank you. [[User:BigKrow|BigKrow]] ([[User talk:BigKrow|talk]]) 07:58, 25 April 2026 (UTC)
-
-:You're not supposed to be able to edit generated text. You can edit the code that makes it, though. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:58, 25 April 2026 (UTC)
-
-== Wikifunctions & Abstract Wikipedia Newsletter #245 is out: The Foundation's search for the perfect language ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-04-25|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we present an academic paper about Abstract Wikipedia, we discuss our latest Type created, and we take a look at the newest created functions.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:54, 25 April 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
 
 == Why the editing API doesn't work ==
 {{tracked|T423542}}
@@ -477,3 +364,16 @@ Some way to mock abstract syntax on talk and project pages, analogous to those i
 :* This would result in "[[f:Z26039|subject is instance of (string)]] (wikidata item reference, [[d:Q634|planet]], language)"
 :** Icons are missing in this example, I'm not sure if we can actually add them
 :Thoughts? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:04, 27 May 2026 (UTC)
+
+== Marking NLG Default text ==
+
+Some NLG functions give default texts, like [[f:Z33420|Z33420]] will give text like "Paris ∈ {city}". sometimes in other languages the English text is show. Currently there is no visual clue that these texts are not normal text in the requested language. I propose we mark these text with color <span style="color:magenta;">Paris ∈ {city}</span> with something like <nowiki><span style="color:magenta;">Paris ∈ {city}</span></nowiki>. To have this configurable/maintainable this could be included in a function, called NLG default text or so, with a text as input an a text in color as output. The exact formatting like magenta color or gray background or something else can be discussed/decided later. To have it even more configurable on personal stylesheets it could use a class like <nowiki><span class="NLG Default text">Paris ∈ {city}</span></nowiki>. What do you think? Could somebody make such a function already? [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 12:00, 29 May 2026 (UTC)
+
+:The are technically just monolingual texts in a language called "multiple languages". I threw a prototype together really quickly, [[f:Z35839]]. It will accept strings, monolingual texts, and html fragments as input, so you have to select which type you want. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:59, 29 May 2026 (UTC)
+::OK, thanks, I added it to [[f:Z26039]] and works as expected, see [https://www.wikifunctions.org/wiki/Z26039?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z26039%22%2C%22Z26039K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q64%22%7D%2C%22Z26039K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q515%22%7D%2C%22Z26039K3%22%3A%22Z1555%22%7D here]. The test for the function with default text now fails because it now is in magenta color. That was to be expected. I will leave the tests unchanged if that is OK with you, as we might need to change the exact formatting.
+::Is it OK to add this to other NLG functions that produce default output? [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 15:59, 29 May 2026 (UTC)
+:::Sure, [[w:en:WP:Be bold|be bold]]! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:50, 29 May 2026 (UTC)
+
+== Ratification of the deletion policy proposal? ==
+
+I haven't seen any unresolved objections to my proposal for a [[Abstract Wikipedia:Deletion policy|policy for deletion]]. Does anybody have any issues, and, if not, is it ok to ratify as an actual policy? I intend to remove the draft template and replace it with a policy template unless anyone voices any objection within a week. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:55, 29 May 2026 (UTC)

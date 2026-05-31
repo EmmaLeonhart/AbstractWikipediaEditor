@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-30T06:36:09Z
+  Fetched:   2026-05-31T00:25:23Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -373,7 +373,19 @@ Some NLG functions give default texts, like [[f:Z33420|Z33420]] will give text l
 ::OK, thanks, I added it to [[f:Z26039]] and works as expected, see [https://www.wikifunctions.org/wiki/Z26039?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z26039%22%2C%22Z26039K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q64%22%7D%2C%22Z26039K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q515%22%7D%2C%22Z26039K3%22%3A%22Z1555%22%7D here]. The test for the function with default text now fails because it now is in magenta color. That was to be expected. I will leave the tests unchanged if that is OK with you, as we might need to change the exact formatting.
 ::Is it OK to add this to other NLG functions that produce default output? [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 15:59, 29 May 2026 (UTC)
 :::Sure, [[w:en:WP:Be bold|be bold]]! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:50, 29 May 2026 (UTC)
+::::Feeglgeef, I am struggling with the output. Can you have a look? [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 17:02, 30 May 2026 (UTC)
+:::::Can you link me to where? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:08, 30 May 2026 (UTC)
+::::::{{Q|90}} in a language vls should give a magenta text. Instead it gives "Wikifunctions returned a failed response: Unspecified error". [[f:Z33422]] results "<span style="color: magenta;">Parys ∈ {stad}</span>" (as a string). [[f:Z26039]] also gives "<span style="color: magenta;">Parys ∈ {stad}</span>", but it's test [[f:Z33726]] gives an HTML equivalent, not a string. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 17:59, 30 May 2026 (UTC)
+:::::::You shouldn't be returning HTML in string-typed functions. I'm not sure, then, how we implement your proposal, actually. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:54, 30 May 2026 (UTC)
 
 == Ratification of the deletion policy proposal? ==
 
 I haven't seen any unresolved objections to my proposal for a [[Abstract Wikipedia:Deletion policy|policy for deletion]]. Does anybody have any issues, and, if not, is it ok to ratify as an actual policy? I intend to remove the draft template and replace it with a policy template unless anyone voices any objection within a week. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:55, 29 May 2026 (UTC)
+
+:Is it just me or does [[Abstract Wikipedia:Deletion policy#Reasons for deletion]] render blank with only number bullets without the actual text after ''1.'' or ''2.''? [[User:Bunnypranav|Bunnypranav]] ([[User talk:Bunnypranav|talk]]) 07:13, 30 May 2026 (UTC)
+::I see text. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 07:49, 30 May 2026 (UTC)
+:::I can see on my phone, but it goes blank on my laptop. What is the role of ''<nowiki><span class="anchor" id="1"></nowiki>''? [[User:Bunnypranav|Bunnypranav]] ([[User talk:Bunnypranav|talk]]) 12:15, 30 May 2026 (UTC)
+::::{{ping|Bunnypranav}} I can see the text everywhere (I tested connected and not connected, on my phone, laptop, with Chrome or Firefox ; what system do you use?). As the name suggest, the span anchor is here to create an HTML anchor, so you can do link like [[Abstract_Wikipedia:Deletion_policy#7]]. Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 13:49, 30 May 2026 (UTC)
+:::::I'm on Brave browser. Nevertheless, forget it. The culprit might be some random customization I did to my system which I cannot recollect. The reason is the span tag only though, tried a preview kicking out a text to just outside the tag and it worked. [[User:Bunnypranav|Bunnypranav]] ([[User talk:Bunnypranav|talk]]) 14:23, 30 May 2026 (UTC)
+:Globally, it looks fine. I think that reasons 7 and 8 may need some examples/clarifications. There is no global consensus when it comes to creating categories. For example, categories for building interiors and exteriors. Personally, I feel that they are useful for easier discoverability. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 15:39, 30 May 2026 (UTC)
+::I've copied them over from enwiki. They're probably included in "content otherwise not suited for an encyclopedia." Since sysops can't speedy them, it'd be up to commenters on [[Abstract:RFD]] to determine. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:48, 30 May 2026 (UTC)

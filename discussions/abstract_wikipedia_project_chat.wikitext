@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-05-31T00:25:23Z
+  Fetched:   2026-06-01T09:00:53Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -377,6 +377,9 @@ Some NLG functions give default texts, like [[f:Z33420|Z33420]] will give text l
 :::::Can you link me to where? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:08, 30 May 2026 (UTC)
 ::::::{{Q|90}} in a language vls should give a magenta text. Instead it gives "Wikifunctions returned a failed response: Unspecified error". [[f:Z33422]] results "<span style="color: magenta;">Parys ∈ {stad}</span>" (as a string). [[f:Z26039]] also gives "<span style="color: magenta;">Parys ∈ {stad}</span>", but it's test [[f:Z33726]] gives an HTML equivalent, not a string. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 17:59, 30 May 2026 (UTC)
 :::::::You shouldn't be returning HTML in string-typed functions. I'm not sure, then, how we implement your proposal, actually. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:54, 30 May 2026 (UTC)
+::::::::I tried  with [[f:Z35921]] but now the output is the literal text, and not HTML. Does anybody have an idea how to implement the text in a color?
+::::::::Alternatively we could use texts like // Parys ∈ {stad} //. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 16:51, 31 May 2026 (UTC)
+::::::::: You need to output [[f:Z89|HTML fragment]], not String. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:16, 31 May 2026 (UTC)
 
 == Ratification of the deletion policy proposal? ==
 

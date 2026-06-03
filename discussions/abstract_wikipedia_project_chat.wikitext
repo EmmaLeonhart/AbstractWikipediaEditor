@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-02T08:13:20Z
+  Fetched:   2026-06-03T08:33:45Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -340,6 +340,9 @@ Some NLG functions give default texts, like [[f:Z33420|Z33420]] will give text l
 ::::::::I tried  with [[f:Z35921]] but now the output is the literal text, and not HTML. Does anybody have an idea how to implement the text in a color?
 ::::::::Alternatively we could use texts like // Parys ∈ {stad} //. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 16:51, 31 May 2026 (UTC)
 ::::::::: You need to output [[f:Z89|HTML fragment]], not String. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:16, 31 May 2026 (UTC)
+:I agree with the above that this should not be applied to functions which return strings or monolingual text. If anything, it might work to insert it into functions returning HTML. The most egregious problems I've seen are when I tried to render into an RTL language (e.g. Hebrew 0 try on [[Q408]]), and it spilled all the formatting all over the article. I will revert the change to the string default at [[:f:Z33421]], but suggest it is tested carefully if implemented elsewhere. In general I prefer just marking with spans rather than colours at this stage. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 04:49, 3 June 2026 (UTC)
+:: Perhaps mark with spans given a specific ID and then allow users to use a userscript/gadget to paint them magenta? That seems like the most considerate approach. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 05:12, 3 June 2026 (UTC)
+:::[[:f:Z32234]] suggests something like <code>span lang="mul"</code> or similar. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 05:20, 3 June 2026 (UTC)
 
 == Ratification of the deletion policy proposal? ==
 

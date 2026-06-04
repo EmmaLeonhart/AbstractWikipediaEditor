@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-03T08:33:45Z
+  Fetched:   2026-06-04T08:06:33Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -50,17 +50,6 @@ An even more relevant, but much harder to measure thing is how many of those art
 :Perhaps this should have been on the talk page of that status update instead of the project chat? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:25, 2 May 2026 (UTC)
 ::The status update is about two projects and so I can understand if there are comments here. What do you think about creating a status update overview page with links to the status updates in Abstract Wikipedia to offer the possibility to discuss the status updates and especially things related to Abstract Wikipedia there. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 18:57, 4 May 2026 (UTC)
 :::I don't think that's necessary. You can just include your abstractwiki (as in, the live wiki, not the project) related comments on the page on [[f:]], or, if for some reason that's not possible, as a reply to the newsletter announcement here. The point is, the project chat is crowded enough with topics as it is, ideally it should be more focussed on general matters of discussion than close-ended enquiries about topics that have their own talk page. I find Amire80's use of a new == heading here to be improper. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 19:32, 4 May 2026 (UTC)
-
-== Wikifunctions & Abstract Wikipedia Newsletter #246 is out: Request for input: what should we count for Abstract Wikipedia ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-02|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we ask you what would be the relevant metrics for Abstract Wikipedia, we discuss our latest news on Composition Language v2, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:21, 2 May 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
 
 == Spaces between sentences, another attempt ==
 
@@ -125,6 +114,9 @@ I hope that the definition of the problem is clear.
 ::::There's more than one way to not use spaces correctly and more than one way to use spaces correctly, this wouldn't catch all of them. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:13, 28 May 2026 (UTC)
 :::::I'm not totally sure what you want to track, but I'm confident that this will find all my uses. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 02:10, 29 May 2026 (UTC)
 ::::I think it slipped past everyone's notice, but I made a template for linking to that sort of information @ [[Template:Zd|<nowiki>{{</nowiki>zd<nowiki>}}</nowiki>]]. {{zd|Z35672|sentence separator}} <span style="font-size:smaller;opacity:0.8">(I don't think the database dumps have noticed the function you're using yet, so it's a 404 at the moment.)</span> &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:09, 29 May 2026 (UTC)
+
+===Easier solution?===
+Maybe a much easier solution would be to replace the "." after each sentence with ". " (a full stop and a space).  The paragraghs might add an extra space, but that is displayed as one by the browser. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]])
 
 == Most used fragments ==
 

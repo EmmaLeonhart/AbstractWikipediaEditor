@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-05-29T07:08:19Z
+  Fetched:   2026-06-06T06:42:20Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -119,11 +119,6 @@ The only way I see to change language is to add <code>uselang=[xx]</code> at the
 
 :Using [[f:Z33068]] seems to have fixed this. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:30, 18 May 2026 (UTC)
 
-<bdi lang="en" dir="ltr" class="mw-content-ltr">
-
 == Survey (proposed direction for Wishlist) ==
-
-
 You are invited to voice your opinion on a new [[m:Talk:Community Wishlist#Proposed direction for Wishlist|community-proposed direction]] for the [[m:Community Wishlist|Community Wishlist]]. {{Int:Feedback-thanks-title}} [[User:MediaWiki message delivery|MediaWiki message delivery]] ([[User talk:MediaWiki message delivery|talk]]) 03:07, 29 May 2026 (UTC)
-</bdi>
 <!-- Message sent by User:기나ㅏㄴ@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=User:%EA%B8%B0%EB%82%98%E3%85%8F%E3%84%B4/MassMessage&oldid=30604233 -->

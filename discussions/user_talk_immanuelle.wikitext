@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-05-22T07:01:26Z
+  Fetched:   2026-06-06T06:42:20Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -55,3 +55,7 @@ Apologies if this sounds condescending, but I believe it is important to clarify
 I am working on creating a page for [[Q117812747]]. I am trying to use the function [[f:Z26039]] recommended by the frequently used functions page. Could you fix this? [[User:Script7921|Script7921]] ([[User talk:Script7921|talk]]) 16:29, 6 May 2026 (UTC)
 
 :@[[User:Script7921|Script7921]] thank you for your message. I am in full crunch mode for the {{q|Q1961016}}, but I will look at it tomorrow after my paper is submitted. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:59, 6 May 2026 (UTC)
+
+== is part of of ==
+
+Immmanuelle, you created a lot of sentences with [[f:Z32982]] with "part of". That is not the proper way to use this function. It results in (English) sentences containing "is part of of". Please remove these sentences. Example is [[Q12796]] [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:08, 5 June 2026 (UTC)

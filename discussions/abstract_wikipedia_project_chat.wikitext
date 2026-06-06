@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-05T07:51:58Z
+  Fetched:   2026-06-06T06:42:20Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -305,6 +305,8 @@ Some NLG functions give default texts, like [[f:Z33420|Z33420]] will give text l
 ::::::: try adding this to [[Special:MyPage/common.css]]:
 ::::::: [lang="mul"] {<br> color: magenta;<br> } [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:48, 4 June 2026 (UTC)
 
+: I created a new implementation for [[f:Z35921]] using emoji text, resulting in texts like "❌≪Paris ∈ {city}≫❌". It works on [[Q90]] for not yet specified languages like Zeelandic. I will be bold in adding this other functions that use default texts. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 11:26, 5 June 2026 (UTC)
+
 == Ratification of the deletion policy proposal? ==
 
 I haven't seen any unresolved objections to my proposal for a [[Abstract Wikipedia:Deletion policy|policy for deletion]]. Does anybody have any issues, and, if not, is it ok to ratify as an actual policy? I intend to remove the draft template and replace it with a policy template unless anyone voices any objection within a week. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:55, 29 May 2026 (UTC)
@@ -316,6 +318,7 @@ I haven't seen any unresolved objections to my proposal for a [[Abstract Wikiped
 :::::I'm on Brave browser. Nevertheless, forget it. The culprit might be some random customization I did to my system which I cannot recollect. The reason is the span tag only though, tried a preview kicking out a text to just outside the tag and it worked. [[User:Bunnypranav|Bunnypranav]] ([[User talk:Bunnypranav|talk]]) 14:23, 30 May 2026 (UTC)
 :Globally, it looks fine. I think that reasons 7 and 8 may need some examples/clarifications. There is no global consensus when it comes to creating categories. For example, categories for building interiors and exteriors. Personally, I feel that they are useful for easier discoverability. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 15:39, 30 May 2026 (UTC)
 ::I've copied them over from enwiki. They're probably included in "content otherwise not suited for an encyclopedia." Since sysops can't speedy them, it'd be up to commenters on [[Abstract:RFD]] to determine. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:48, 30 May 2026 (UTC)
+: Done! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:33, 5 June 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #250 is out: Looking back and forward ==
 
@@ -332,3 +335,16 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 
 Perhaps it's a bit early, but can [[f:Z36049]] be added to [[MediaWiki:AbstractWikiSuggestedWikifunctions.json]]? See [[Q38726]] for an example use. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:54, 4 June 2026 (UTC)
 : Meh. Consider this withdrawn until we know more about what we want image creation to look like. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 05:06, 5 June 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #251 is out: The illustrated encyclopaedia ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-06-05|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we introduce our first function to import images on Abstract Wikipedia, we present our Functions of the Week, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1780939800 June 8, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:14, 5 June 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30606821 -->

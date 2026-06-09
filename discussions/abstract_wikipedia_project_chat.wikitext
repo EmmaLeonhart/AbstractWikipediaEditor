@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-06T06:42:20Z
+  Fetched:   2026-06-09T07:02:27Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -332,7 +332,6 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30606821 -->
 
 == Yet another suggested function proposal ==
-
 Perhaps it's a bit early, but can [[f:Z36049]] be added to [[MediaWiki:AbstractWikiSuggestedWikifunctions.json]]? See [[Q38726]] for an example use. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:54, 4 June 2026 (UTC)
 : Meh. Consider this withdrawn until we know more about what we want image creation to look like. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 05:06, 5 June 2026 (UTC)
 
@@ -348,3 +347,36 @@ Also, we remind you that if you have questions or ideas to discuss, the next '''
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:14, 5 June 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30606821 -->
+
+== Questions on a simple fragment example "The Eiffel Tower is a monument" ==
+Moved from [[f:Wikifunctions:Project chat]]
+
+Hello.  I would like to be able to use the function [[f:Z26039]] to generate sentences like "the Eiffel Tower is a monument" or "la torre Eiffel es un monumento" in Spanish.  It already raises a lot of questions.  
+
+Question 1: I should be able to set the first input "entity" to {{Q|Q243}} and the second input "class" to {{Q|Q4989906}} and get the correct sentence, shouldn't I?  Just checking.
+
+Question 2: [[f:Z26039]] calls a language-specific function like "Spanish article-less instantiating sentence" [[f:Z26337]], which uses the label of the Wikidata item to get the text for "Eiffel Tower", which is similar to the lemma of the lexeme.  But this would not be acceptable in production, would it?  The item label "belongs" to all Wikidata users, not to Abstract Wikipedia users, and there is no guarantee what it might contain, such as a parenthesis for disambiguation.  Or am I wrong?
+
+Question 3a: We need to have a lexeme for the combination "Eiffel Tower" in each language, don't we?  For instance in languages with gender, the lexeme is the only place to find the gender.  It is true that if we know that the equivalent of "Tower" is the head word, syntactical information can be found under the lexeme for "tower", and it would be good to use a system like that.  But the only place that the syntactic dependency information could be located is under the lexeme.  
+
+Question 3b: At present for [[f:Z26039]] etc. to work, we have to add any forms or syntax information to the lexeme of the whole phrase, such as "Eiffel Tower".  But property {{Q|P5238}} with attributes {{Q|P9763}} and {{Q|P9764}} can be used to define the structure and avoid duplicating the syntax information.  What lexeme would be used for "Eiffel" in this case?  Would it be the same as a lexeme for {{Q|Q20882}}?  That makes no sense to me.  I propose that there should be a dummy lexeme in each language which could be added to {{Q|P5238}} instead of a real lexeme to mean "invariant element".
+
+Question 4: As has already been pointed out elsewhere, the fragment functions do not work well with the initial definite article in languages like English, Spanish and German.  Examples:
+
+* "'''The Eiffel Tower is a monument.'''"  The item label "Eiffel Tower" omits the article and so the result omits the initial "The" in English.  French, Spanish and German are similar.  
+* "'''The Sun is a star.'''"  Similarly the article is wrongly omitted, also in French, Spanish and German.
+* "'''Westminster Abbey is a monument.'''"  This is OK in English and German as no article is needed, but not in French or Spanish where it is, for instance "La Abadía de Westminster es un monumento". 
+* "'''Latin is a dead language.'''"  Also this is OK in English and German but not in French or Spanish, where an article is needed.
+* "'''Jupiter is a planet.'''".  This does not need an article and is OK in all the languages; I include this to show that you cannot assume that there is an article in all cases in French and Spanish.
+
+How should the language functions find out whether an article is needed?  In some cases, where the lemma is a phrase like "Abadía de Westminster" in Spanish, I think that it could be deduced, but in general there is no rule to give the answer.  Using different rendering functions according to the case is '''not''' a solution, although it might work for a few specific languages like these four.  It would not be acceptable because there will be many, many other cases of syntactical choices to be made for all the different languages, and we cannot expect the person writing the abstract code to take them all into account.  So I suppose that a declaration in the lexeme is needed to solve this problem.  I suppose that there must already be linguistic terminology for this problem, but I don't know it.
+
+I would be grateful for any comments on any of these questions. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:02, 5 June 2026 (UTC)
+
+:@[[User:Strobilomyces|Strobilomyces]] I will try to answer a few of your questions, although I am not linguist. 
+:1. Yes I agree the correct inputs for "entity" is {{Q|243}} and the second input "class" is {{Q|4989906}}.
+:2. In case no lexeme information is needed (for gender or so) the Wikidata label of {{Q|243}} should be OK. Labels in Wikidata don't contain parentheses for disambiguation. For instance there are many cities called Amsterdam like {{Q|478456}}. {{Q|959016}} and {{Q|727}}
+:3a. In case gender is needed, for example for gender for La Abadía de Westminster I think we need lexemes
+:3b. I don't know what you mean, so I can't answer that.
+:4. You are right some examples like Sun is a star" are incorrect and need an article for some languages/some lemmma. I don't know if there is a linguistic terminology or Lexeme property that would indicate it needs an initial definite article.
+:Even for western languages there are a lot of different rules; What about the many other languages in the world. All this makes it a real challenge. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:04, 8 June 2026 (UTC)

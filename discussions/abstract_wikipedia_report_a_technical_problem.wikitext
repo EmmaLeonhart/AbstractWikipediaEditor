@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-06-06T06:42:20Z
+  Fetched:   2026-06-09T07:02:27Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -122,3 +122,5 @@ The only way I see to change language is to add <code>uselang=[xx]</code> at the
 == Survey (proposed direction for Wishlist) ==
 You are invited to voice your opinion on a new [[m:Talk:Community Wishlist#Proposed direction for Wishlist|community-proposed direction]] for the [[m:Community Wishlist|Community Wishlist]]. {{Int:Feedback-thanks-title}} [[User:MediaWiki message delivery|MediaWiki message delivery]] ([[User talk:MediaWiki message delivery|talk]]) 03:07, 29 May 2026 (UTC)
 <!-- Message sent by User:기나ㅏㄴ@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=User:%EA%B8%B0%EB%82%98%E3%85%8F%E3%84%B4/MassMessage&oldid=30604233 -->
+== Unable to add Z29591 ==
+I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to HTML fragment" before each function. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 00:37, 9 June 2026 (UTC)

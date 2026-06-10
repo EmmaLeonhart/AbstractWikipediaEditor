@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-09T07:02:27Z
+  Fetched:   2026-06-10T07:52:24Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -374,9 +374,18 @@ How should the language functions find out whether an article is needed?  In som
 I would be grateful for any comments on any of these questions. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:02, 5 June 2026 (UTC)
 
 :@[[User:Strobilomyces|Strobilomyces]] I will try to answer a few of your questions, although I am not linguist. 
+::@[[User:HenkvD|HenkvD]] Thanks for your answer.  I will add my comments in your answers below. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:42, 9 June 2026 (UTC)
 :1. Yes I agree the correct inputs for "entity" is {{Q|243}} and the second input "class" is {{Q|4989906}}.
 :2. In case no lexeme information is needed (for gender or so) the Wikidata label of {{Q|243}} should be OK. Labels in Wikidata don't contain parentheses for disambiguation. For instance there are many cities called Amsterdam like {{Q|478456}}. {{Q|959016}} and {{Q|727}}
+:: Well I sometimes add disambiguation parentheses in the case of taxonomic items, for instance I use the label "Sphaerodes (fungus)" because the genus name ''Sphaerodes'' is both a fungus and an insect. As far as I know, it is allowed to add a parenthesis like this to the label.  When selecting the item this is not needed, since the description is also visible, but when looking at the genus name on the page, one would not be able to tell whether the link goes to the fungus or the insect, and sometimes such links get muddled up.  If there should be a rule that the label must be the same as the lemma text, then I think that needs to be agreed and publicized.
 :3a. In case gender is needed, for example for gender for La Abadía de Westminster I think we need lexemes
+:: Yes, so it seems to me that this means that for languages like French and German, every single item needs a lexeme.  On the other hand, in a separate conversation it was suggested to me that genders might be established programmatically, and the lexeme would only be needed in exceptional cases.  This seems to require an architecture which is different from what I was expecting, and certainly not available at present for the fragment examples (surely the logic will be too complicated for composition code alone).  Even in English, many items may need to be used in the plural; the rendering function will need to find the plural of the given item.  It can execute a heuristic function (add "s", change "y" to "ies", etc.), and a lexeme is only needed if the label word is "irregular".  But note that it has to query the lexeme every single time to see if one exists, in which case it must take precedence.
 :3b. I don't know what you mean, so I can't answer that.
+::It is a detailed question about how to fill in the attributes of {{Q|P5238}}.
 :4. You are right some examples like Sun is a star" are incorrect and need an article for some languages/some lemmma. I don't know if there is a linguistic terminology or Lexeme property that would indicate it needs an initial definite article.
+:::Yes.  In fact, the strange thing for me is rather that in encyclopedia entries, the article is omitted in the article heading.  For instance, in the examples above if the English labels were given as "The Eiffel Tower" and "The Sun", and similarly in the other languages, the fragment examples would work and where would be the problem?  In paper encyclopedias, this would mean that many entries would come together under "The".  Anyway, I don't think this can be changed and so a property is needed.  I would have thought that the property would have to be on a lexeme object.
+:: On {{Q|727}} in English the noun Netherlands has an additional "the" in English. This is added by [[f:Z32645]] item indicates definite article, English. Functions should be created for each language, and added to the appropriate sentences. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 11:58, 9 June 2026 (UTC)
+:::Oh, Z32645 is interesting.  The two implementations are very different, aren't they?  The function doesn't work for "Eiffel Tower", but the first implementation could do if "the Eiffel Tower" were an alias.  That could be instead of the lexeme property(?)  But if we are imposing conventions like that, I suppose we need to talk to other Wikidata users.
+
 :Even for western languages there are a lot of different rules; What about the many other languages in the world. All this makes it a real challenge. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:04, 8 June 2026 (UTC)
+::Yes, I think it is an extreme challenge, especially withou being able to call external functions in Python etc.  Surely this is too complicated for composition?  Thanks again for your answers. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:42, 9 June 2026 (UTC)

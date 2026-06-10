@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-06-09T07:02:27Z
+  Fetched:   2026-06-10T07:52:24Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -124,3 +124,6 @@ You are invited to voice your opinion on a new [[m:Talk:Community Wishlist#Propo
 <!-- Message sent by User:기나ㅏㄴ@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=User:%EA%B8%B0%EB%82%98%E3%85%8F%E3%84%B4/MassMessage&oldid=30604233 -->
 == Unable to add Z29591 ==
 I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to HTML fragment" before each function. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 00:37, 9 June 2026 (UTC)
+: {{reply to|VidanaliK}} [[f:Z29591|Z29591]] has an output type of [[f:Z11|monolingual text]], so string to HTML fragment won't work. I personally recommend you use [[f:Z33068|paragraph from sentences]] (available in the drop-down), which handles this distinction for you without needing to use a function each time and handles spacing between sentences. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:03, 10 June 2026 (UTC)
+::@[[User:Feeglgeef|Feeglgeef]] As in, paragraph from sentences instead of string to HTML fragment? [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 02:21, 10 June 2026 (UTC)
+::: Yes. When you select it there will be a list input. Click plus to add a sentence, then either click the three dots, then "function call", or type in "function call" and click enter. Then type in whatever function you want, it should accept anything. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:31, 10 June 2026 (UTC)

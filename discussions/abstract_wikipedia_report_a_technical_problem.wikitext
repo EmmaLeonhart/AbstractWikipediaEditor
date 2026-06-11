@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-06-10T07:52:24Z
+  Fetched:   2026-06-11T08:20:54Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -127,3 +127,7 @@ I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to 
 : {{reply to|VidanaliK}} [[f:Z29591|Z29591]] has an output type of [[f:Z11|monolingual text]], so string to HTML fragment won't work. I personally recommend you use [[f:Z33068|paragraph from sentences]] (available in the drop-down), which handles this distinction for you without needing to use a function each time and handles spacing between sentences. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:03, 10 June 2026 (UTC)
 ::@[[User:Feeglgeef|Feeglgeef]] As in, paragraph from sentences instead of string to HTML fragment? [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 02:21, 10 June 2026 (UTC)
 ::: Yes. When you select it there will be a list input. Click plus to add a sentence, then either click the three dots, then "function call", or type in "function call" and click enter. Then type in whatever function you want, it should accept anything. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:31, 10 June 2026 (UTC)
+::::@[[User:Feeglgeef|Feeglgeef]] Well now it just gives errors: see the page Los Angeles. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 17:30, 10 June 2026 (UTC)
+::::: Oh, yeah, sometimes you'll run into technical issues. You can use [[f:Z29749]] for directly converting monolingual text outputs to HTML fragments. Sorry if this is confusing. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:34, 10 June 2026 (UTC)
+::::::@[[User:Feeglgeef|Feeglgeef]] Where? Can you edit the page "Los angeles" with what I have so far to fix the bug so I know where to put it? It is a bit confusing but might be easier if I see it firsthand. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 21:25, 10 June 2026 (UTC)
+::::::: Looks like the issue was the superlative definition function not working right now. It should look good now. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:37, 10 June 2026 (UTC)

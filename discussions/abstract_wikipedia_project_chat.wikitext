@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-10T07:52:24Z
+  Fetched:   2026-06-13T07:10:01Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -389,3 +389,16 @@ I would be grateful for any comments on any of these questions. [[User:Strobilom
 
 :Even for western languages there are a lot of different rules; What about the many other languages in the world. All this makes it a real challenge. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:04, 8 June 2026 (UTC)
 ::Yes, I think it is an extreme challenge, especially withou being able to call external functions in Python etc.  Surely this is too complicated for composition?  Thanks again for your answers. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:42, 9 June 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #252 is out: Improved loading and display of Test results ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-06-12|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present you an improvement in loading and display of Test results, we talk about our next events, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that Denny will lead a discussion on the [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-15#News in Types: way forward for natural language generation types|new NLG types]] in the next '''Natural Language Generation Special Interest Group meeting''', that will be held on '''[https://zonestamp.toolforge.org/1781625600 June 16, at 16:00 UTC]''' ([https://meet.google.com/xzn-kqer-mah link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:29, 12 June 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30606821 -->

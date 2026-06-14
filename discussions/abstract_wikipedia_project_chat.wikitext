@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-13T07:10:01Z
+  Fetched:   2026-06-14T08:02:46Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -389,6 +389,7 @@ I would be grateful for any comments on any of these questions. [[User:Strobilom
 
 :Even for western languages there are a lot of different rules; What about the many other languages in the world. All this makes it a real challenge. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:04, 8 June 2026 (UTC)
 ::Yes, I think it is an extreme challenge, especially withou being able to call external functions in Python etc.  Surely this is too complicated for composition?  Thanks again for your answers. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:42, 9 June 2026 (UTC)
+:::This was discussed at [[:commons:File:Abstract_Wikipedia_Volunteer_Corner_2026-06.webm|Monday’s volunteers’ corner meeting (8 June 2026)]]. It was also discussed to find a place where to discuss this in detail. Please mention that place here if that place is known. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 11:26, 13 June 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #252 is out: Improved loading and display of Test results ==
 

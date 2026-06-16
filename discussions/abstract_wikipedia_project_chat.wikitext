@@ -1,21 +1,12 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-15T09:44:07Z
+  Fetched:   2026-06-16T09:09:17Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
 {{#ifexist:Abstract Wikipedia:Project chat/Header/{{USERLANGUAGE}}|{{/Header/{{USERLANGUAGE}}}}|{{/Header}}}}
 {{/Archives}}
 <!-- Add your discussion below this line -->
-
-== Why don't we just structure this with wikitemplates? ==
-
-I feel like the project could be done a lot better by using templates kind of like how wikipedia does them. Just the entire thing is templates that can be rendered in many languages. So like [[Q106289265]] would have the content <nowiki>{{Z26039|Q7257}}</nowiki> and could even have some aliasing done across languages so it could be <nowiki>{{subject is|Q7257}}</nowiki>. Code would be editable with a regular visual editor or code editor. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 04:34, 29 March 2026 (UTC)
-
-:This is available in pages when Parsoid rendering is enabled. We don't use this becuase it doesn't make sense for constructing and editing massive articles. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 21:37, 29 March 2026 (UTC)
-::How do you do parsoid rendering? And why wouldn't it make sense? With aliases and everything could work great. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 23:12, 29 March 2026 (UTC)
-:::I believe it is enabled by default. If you do have it on: {{#function:Z10000|you'll s|ee this}} [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:54, 30 March 2026 (UTC)
-:you may be interested in reading this old [[m:Abstract_Wikipedia/Google.org_Fellows_evaluation|Google report]].  [[User:BrokenSegue|BrokenSegue]] ([[User talk:BrokenSegue|talk]]) 14:32, 9 May 2026 (UTC)
 
 == Why the editing API doesn't work ==
 {{tracked|T423542}}
@@ -418,3 +409,4 @@ English Wikipedia usually displays native labels whenever applicable. Should we 
 It occurred to me that an abstract page that works well enough for one language output might be broken for another, so it would be good to have some sort of indicator in the UI of which languages might be ready for transwiki and which still need preliminaries. I'm not sure if it would be better to do this as part of the testing and error-handling, or manually (like patrolling versions, but language-specific). [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 07:12, 15 June 2026 (UTC)
 
 :: The function [[f:Z35921|NLG default text]] will be able to indicate on the target Wikipedia that the text in this language is not ready yet. Maybe sentences with this indicator, or even lemma's with this indicator could be excluded from the target Wikipedia. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 08:52, 15 June 2026 (UTC)
+:::I see that in the [[#Marking NLG Default text]] section, but I am thinking more at the whole-article level; dropping a problematic fragment from the final render could change the overall meaning. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 17:20, 15 June 2026 (UTC)

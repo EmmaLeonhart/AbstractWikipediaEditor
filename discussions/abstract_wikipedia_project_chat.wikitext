@@ -1,23 +1,12 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-16T09:09:17Z
+  Fetched:   2026-06-17T08:41:03Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
 {{#ifexist:Abstract Wikipedia:Project chat/Header/{{USERLANGUAGE}}|{{/Header/{{USERLANGUAGE}}}}|{{/Header}}}}
 {{/Archives}}
 <!-- Add your discussion below this line -->
-
-== Why the editing API doesn't work ==
-{{tracked|T423542}}
-Immanuelle wrongly stated that there is no REST API for editing. [[#REST API for editing?|There is]]. However, it does not work when called from software outside Abstract Wikipedia. That is because there is no way to grant a bot password or OAuth customer the permission to edit abstract articles (<code>wikilambda-abstract-edit</code>) and create them (<code>wikilambda-abstract-create</code>), since no grant on [[Special:ListGrants]] includes either. Should this be fixed? [[User:JJPMaster|JJP]]<sub>[[User talk:JJPMaster|Mas]]<sub>[[Special:Contributions/JJPMaster|ter]]</sub></sub> ([[Q1270787|she]]/[[Q3437264|they]]) 01:57, 26 April 2026 (UTC)
-
-:Yes I think the rights should be added. I think the number of automated edits should be low at the moment as Abstract Wikipedia is still in an early phase and so far there is not much support for small languages and so many functions will maybe change to cover more languages. As automatic editing using a Bot Account requires an formal request it is no problem if the option exists. [[User:Hogü-456|Hogü-456]] ([[User talk:Hogü-456|talk]]) 18:17, 26 April 2026 (UTC)
-:Sounds good to me. Could we add a bot section to [[Abstract Wikipedia:Requests for permissions]]? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:35, 5 May 2026 (UTC)
-::[[Abstract_Wikipedia:Requests_for_permissions#Bot]] ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 23:56, 5 May 2026 (UTC)
-
-:not currently possible :((((( [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:46, 30 April 2026 (UTC)
-:Feeglgeef is correct, past tense sentence generation is something we are sorely lacking at the moment. If you look at [[f:WF:Type proposals#Representing abstract content|Wikifunctions' type proposals]] you can see some initiatives that could hopefully mitigate this. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 13:49, 1 May 2026 (UTC)
 
 == Spaces between sentences, another attempt ==
 
@@ -86,76 +75,6 @@ I hope that the definition of the problem is clear.
 ===Easier solution?===
 Maybe a much easier solution would be to replace the "." after each sentence with ". " (a full stop and a space).  The paragraghs might add an extra space, but that is displayed as one by the browser. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]])
 
-==Wiktionary integration==
-I was trying out a few functions recently, such as [https://www.wikifunctions.org/view/en/Z27243 the new superlative function], and I noticed that ''every adjective'' has to be a Wikidata item.  For example, I couldn't type in the inputs "Bugatti Veyron", "fast", "Earth" because "fast" as an adjective is not a Wikidata item.  This doesn't really make sense, given that Wiktionary already has the word for "fast" and its superlative form in many different languages.  Would it be possible to integrate Wiktionary into the function, so the user can type an adjective or verb from Wiktionary instead of having to deal with Wikidata (which consists almost entirely of nouns)?  [[User:Somepinkdude|Somepinkdude]] ([[User talk:Somepinkdude|talk]]) 16:49, 6 May 2026 (UTC)
-
-:No, sadly. I would try "speed" as the adjective, though, you have to use abstract qualities instead of concrete English terms. [[File:Wikifunctions Superlative speed example.png|thumb|Here's an example of the word being used.]]  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:02, 6 May 2026 (UTC)
-:Wikidata has standard items as well as lexeme data, so if anything, we should try to integrate those. E.g. [[:d:Lexeme:L1029]]. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 19:48, 6 May 2026 (UTC)
-::I tried this, and it gave "Bugatti Veyron is the speedest car on Earth", which is laughably bad.  The problem is that Wikidata does not "know" what the superlative form is, while Wiktionary does.  Speed is a fairly common descriptor, but what about less common adjectives which aren't on Wikidata?  Will there need to be a bot to copy all of this information from Wiktionary?  [[User:Somepinkdude|Somepinkdude]] ([[User talk:Somepinkdude|talk]]) 22:14, 6 May 2026 (UTC)
-:::I'm not suggesting that the functionality works <em>now</em>, but that we need to integrate the funcationality. ―[[User:Koavf|Justin (<span style="color:grey">ko'''a'''<span style="color:black">v</span>f</span>)]]<span style="color:red">❤[[User talk:Koavf|T]]☮[[Special:Contributions/Koavf|C]]☺[[Special:Emailuser/Koavf|M]]☯</span> 22:17, 6 May 2026 (UTC)
-:::Well, no, the superlative form is chosen by [[f:Z12203]]. I think there's a bug with the English implementation that calls that function wrong.  [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:19, 6 May 2026 (UTC)
-:@[[User:Somepinkdude|Somepinkdude]] I did find the item {{Q|Q19807466}} which was linked to a concept database's entry for "fast"; I have at least linked it to the English lexeme "fast" and will try to add more links at a better hour. [[User:Mahir256|Mahir256]] ([[User talk:Mahir256|talk]]) 04:18, 7 May 2026 (UTC)
-
-== Showcase ==
-
-I was wondering if there's a curated list of decent articles to learn by example here on Abstract Wikipedia? [[User:Fgnievinski|Fgnievinski]] ([[User talk:Fgnievinski|talk]]) 02:02, 8 May 2026 (UTC)
-
-:Unfortunately not, and, honestly, I wouldn't recommend article creation at the moment, it's likely to need significant refactoring as the way we represent abstract content changes, but, I can point you to [[Q668]] as a reasonably good example at the moment. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 02:39, 8 May 2026 (UTC)
-::Thank you. "308 languages" blew my mind – well done! [[User:Fgnievinski|Fgnievinski]] ([[User talk:Fgnievinski|talk]]) 02:54, 8 May 2026 (UTC)
-:::308 is the number of ''concrete'' Wikipedias in which a manually-written article about India is available.
-:::The abstract article renders for me in English as "India is a country in Asia. India is a republic. New Delhi is the capital of India. India is the most populous country in world." Switching to another language to get rendered as an abstract article is done by typing the language's name in the box above the rendered text. I tried French, German, and Dutch, and got errors in all of them. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 03:12, 8 May 2026 (UTC)
-::::So it goes. The paragraph has quite a lot of distinct sentence generation functions, all of which of course have to be implemented in the target language. This will be rounded out once we're able to more effectively generalize linguistic content. I view these functions as sort of patchy temporary solutions to the sentence generation problem while we figure out something more robust, which I hope is soon to come. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 04:15, 8 May 2026 (UTC)
-
-== Wikifunctions & Abstract Wikipedia Newsletter #247 is out: References from Wikidata now available ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-08|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we announce that is now possible to pass references in Wikidata statements, we introduce the [https://abstract-data.toolforge.org/ Abstract Data dashboard], we report you on the presentation about Abstract Wikipedia at WikiCon Australia, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1778520600 May 11, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 11:16, 8 May 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30325620 -->
-
-== about the usage of Z33068 ==
-
-The use of [[f:Z33068]] (en: paragraph from sentences) <s>always</s> most of the time results in the error "Reached time limit in orchestrator." So should it be used at all for now, temporarily? Or maybe there are already some tickets about this that I am not aware of? -- [[User:Asked42|Asked42]] ([[User talk:Asked42|talk]]) 18:23, 10 May 2026 (UTC)
-
-:It previously worked, so I'm hoping whatever the issue is will be fixed soon. The current state of the wiki makes [[m:Immediatism|immediatism]] an illogical philosophy to have at the moment, in my opinion. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 20:16, 10 May 2026 (UTC)
-::This issue seems to no longer exist, you might need to clear the cache by making a dummy edit on affected articles. I implemented the function in Python (instead of composition), which has increased the speed by about 2000 ms. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 04:31, 11 May 2026 (UTC)
-:::Seems like working. Thank you. -- [[User:Asked42|Asked42]] ([[User talk:Asked42|talk]]) 19:06, 11 May 2026 (UTC)
-
-== Manual of Style ==
-
-I've created a [[Abstract Wikipedia:Manual of Style|draft for a Manual of Style]]. Please feel free to comment on or make bold edits to the page. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 03:29, 11 May 2026 (UTC)
-
-:Thank you! That’s great and I’ll look at it more soon. I’m still taking a bit of a wikibreak.  [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 22:32, 14 May 2026 (UTC)
-:Is there anything I've written [[f:User:Theki/best_practices#Abstract_Wikipedia|here]] that you think would make for a good technical section of the page? &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 00:04, 15 May 2026 (UTC)
-::I've added some of them. Thank you for your list of best practices by the way, I generally agree with them (I can't endorse connecting WD items currently in hope of a better technical solution, but otherwise I do). [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 00:58, 15 May 2026 (UTC)
-
-== Proposals on the architecture of Abstract Content rendering ==
-
-Starting from a discussion born on the Wikifunctions Telegram chat, I've explained two different proposals on how the NLG on Abstract Wikipedia should be organized in the page [[User:Dv103/Abstract articles architectures]]. Please come to contribute to the discussion, or to propose alternatives. [[User:Dv103|Dv103]] ([[User talk:Dv103|talk]]) 14:32, 11 May 2026 (UTC)
-
-== [[MediaWiki:Wikimedia-copyright-footer]] ==
-
-The copyright message has a few issues, mainly that it does not address abstract content (which is not "text"), nor object labels (which are under CC0). Proposed text:
-
-"<nowiki>
-Text and abstract content are available under the [https://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike License]; the labels of objects from [[f:|Wikifunctions]] are available under the [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 License]; additional terms may apply. See [https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use Terms of Use] for details.
-</nowiki>"
-
-Which, when rendered, looks like: 
-
-Text and abstract content are available under the [https://creativecommons.org/licenses/by-sa/4.0/ Creative Commons Attribution-ShareAlike License]; the labels of objects from [[f:|Wikifunctions]] are available under the [https://creativecommons.org/publicdomain/zero/1.0/ Creative Commons CC0 License]; additional terms may apply. See [https://foundation.wikimedia.org/wiki/Special:MyLanguage/Policy:Terms_of_Use Terms of Use] for details.
-
-The message is somewhat inspired by the current one and WF's. Thoughts? Thank you! [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 13:30, 12 May 2026 (UTC)
-
-:@[[User:Feeglgeef|Feeglgeef]]: As you probably imagine, this text is very tightly controlled by the Wikimedia Foundation's Legal department. I think the first port of call should be a discussion about why you might want to change things, rather than a rush to specific re-wordings, before approaching them for sign-off. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 14:28, 12 May 2026 (UTC)
-::Well I briefly summarized my justification, my proposed text was just an idea for a starting point. Basically, the abstract content is not really "text", so the footer doesn't actually tell the reader what they're allowed to do with it, and I argue that the current wording implies that the labels are licensed under CC-BY-SA 4, when they aren't. I think a change is critical as otherwise we're not showing the reader a license, or, arguably, in the case of labels, showing users a license that ''does not apply'', which is a pretty bad thing. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 14:51, 12 May 2026 (UTC)
-
 == [[MediaWiki:AbstractWikiSuggestedWikifunctions.json]] ==
 
 I'd think we should add [[f:Z33068]] here. The function allows you to form a paragraph out of sentences and handles languages having different standards of whether to add a space between them, and adding it here would make finding it easier. I'm not sure what policy we want to have for the suggested functions, this idea might help formulate it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:06, 12 May 2026 (UTC)
@@ -165,51 +84,6 @@ I'd think we should add [[f:Z33068]] here. The function allows you to form a par
 :I also believe Z33068 should be added to the list. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:25, 12 May 2026 (UTC)
 
 {{done}} see [[Special:Diff/7692]]. Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 09:08, 20 May 2026 (UTC)
-
-== Abstract Wikipedia statistics site source code ==
-
-https://abstract-data.toolforge.org/ is a very useful tool, but it doesn't seem to have anything pointing to the location of its source code. Is it closed-source or unfree?
-
-While I'm at it I feel I should suggest having language pages' paths formatted differently from how they are currently—at the moment it's <code>/languages/Toki%20Pona</code> when something like <code>/languages/tok</code> would be more suitable. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt;
-: See [[:gitlab:toolforge-repos/abstract-data]]. Also pinging {{ping|DSantamaria-WMF|p=}} (thanks for the tool, by the way). [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 00:25, 13 May 2026 (UTC)
-::Thank you. I think a link to that repository should be put in a footer somewhere on the website as I wouldn't have found that if not for you. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 02:30, 13 May 2026 (UTC)
-:::{{ping|Theki}} For the record, I found that repo by searching for "abstract-data" on [[:toolhub:|Toolhub]]. [[User:NguoiDungKhongDinhDanh|<span class="skin-invert" style="color:black;font-family:Monotype Corsiva;font-size:110%;font-weight:normal;line-height:normal">NguoiDungKhongDinhDanh</span>]] 03:34, 13 May 2026 (UTC)
-:::Thanks for the feedback and the report, fixed both things, we have now the link to the repo in the side bar footer, and also the language codes are used in the URLs. Thanks! [[User:DSantamaria-WMF|DSantamaria-WMF]] ([[User talk:DSantamaria-WMF|talk]]) 11:46, 13 May 2026 (UTC)
-::::Are you particularly attached to keeping country flag emojis next to the language names? Some consider it an [https://flagsarenotlanguages.com/blog anti-pattern]. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 16:17, 14 May 2026 (UTC)
-:::::I think the use of flags is not really harmful since this is not a ''language selector'', it is just a list of languages. Of course not every language has an associated flag, for example Latin, which does look a bit awkward, but it can't be helped. Maybe give languages without a flag a unique icon from Wikimedia Commons? e.g. <div style="display:inline-flex;align-items:center;border:1px solid #0002;border-radius:4px;gap:4px;padding:4px;">[[File:Toki pona.svg|16px]] Toki Pona</div> instead of <div style="display:inline-flex;align-items:center;border:1px solid #0002;border-radius:4px;gap:4px;padding:4px;"><span>🌐</span>Toki Pona</div>. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 16:37, 14 May 2026 (UTC)
-::::::I thought I saw 🏛️ being used for Latin earlier. But of course, as far as the Unicode Consortium is concerned, [[Q65300415|🇬🇧]] doesn't mean '[[Q1680|English]]', no more than [[Q100587670|🏳️‍🌈]] means '[[Q1359130|Polari]]'; technically, it doesn't even mean '[[Q145|United Kingdom]]', just the letters 🇺 and 🇰 next to each other (which linguistically would indicate [[Q8798|Ukrainian]] in ISO 639, but these are 'regional indicator symbols'). [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 17:21, 14 May 2026 (UTC)
-:::::::As seems (from this comment and also [[f:User_talk:DSantamaria-WMF#c-%E9%AD%94%E7%90%B4-20260513063700-Country_flags_in_abstract-data|others' comments]]) that flags are a little bit controversial, I just removed them, IMHO it was just an aesthetic concept, I like the look and feel that flags bring to the language labels, but happy to remove them if make some people feel uncomfortable with the concept.  [[User:DSantamaria-WMF|DSantamaria-WMF]] ([[User talk:DSantamaria-WMF|talk]]) 05:54, 15 May 2026 (UTC)
-
-== Make it more user Friendly ==
-
-Make it more user-friendly by adding drag-and-drop compenots and one click additions, and make it similar to a visual macro buidler. [[User:ChippyTechGH|ChippyTechGH]] ([[User talk:ChippyTechGH|talk]]) 01:00, 15 May 2026 (UTC)
-
-:Could you file something like this on [[phab:|phabricator]]? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 01:01, 15 May 2026 (UTC)
-
-== Person infoboxes ==
-
-Hi all, I've just created [[f:Z35167|infobox for person (Z35167)]]. All it can really do presently is display the name of the person in the chosen language and in the person's native language, but it's a good start. I started writing it as a composition but chose to switch to writing it in JavaScript instead, which ended up being less headache-inducing (managing a large list of strings to concatenate together is not fun, plus compositions bring lots of additional overhead). Unfortunately, this means that the actual ''useful'' parts of the infobox—the information about the person themself—is not really doable. I'd need to dereference the Wikidata property references to get their label in the requested language, but since they're references and I'm working with code, not compositions, I can't just call [[f:Z6822|fetch Wikidata property (Z6822)]] and be done with it. If there's a WikiLambda API to do this inside of the JS itself that would be great and would solve everything, but at the moment that alone is what's holding it back, or so it seems. I can get the actual ''values'' of statements just fine, though. If I am missing some amazing WikiLambda API function that will solve this problem for me by letting me dereference the PID, then please let me know because that would be great.
-
-If you want to look at an example of the infobox right meow, you can view [https://abstract.wikipedia.org/view/tok/Q317521 Q317521 in Toki Pona] and see how it states Musk's name in both Toki Pona ''and'' his native English name. COOL!
-
-My hope is that this can be made less barebones in the near future. Infoboxes are a great way to get quick information on a subject and can fill in the informational gaps in the presently sparse articles we have at the moment, all while staying in the user's requested language. Feedback is appreciated! &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 02:58, 15 May 2026 (UTC)
-
-:Thank you for this! I wonder if perhaps it would be better to create one "infobox" function and then have compositions call that, making wd retrival possible? [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 03:38, 15 May 2026 (UTC)
-::Working on that at the moment, I think I've got it working but I'm hitting a ratelimit in the orchestrator so I don't know for sure. The main issue with it now is that the actual [[f:Z35175|infobox template (Z35175)]] wrapper was programmed in JS so as to not be a pain in the ass, so this means that it can only take in strings, HTML fragments, etc. so the retrieval of Wikidata stuff still needs to be done by the caller and is rather verbose (see [[f:Z35168|the main implementation]]). The niceties will come soon later once I know that it all works at a lower level, though. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 05:04, 15 May 2026 (UTC)
-::So the problem now seems to be that when [[f:Z29825|label of Wikidata property in language (Z29825)]] isn't being faulty, it's being incredibly slow. Considering retrieving Wikidata items from their references seems to take, like, four to five seconds, and we'll have tens of statements in these infoboxes, I don't see how the property names could be retrieved in a way that doesn't cause the orchestrator to time out or hit a ratelimit. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 06:01, 15 May 2026 (UTC)
-:::I think I figured something out? I'm just going to try calling [[f:Z35036|fetch Wikidata property or parts (Z35036)]], it seems to be much faster for whatever reason. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 06:05, 15 May 2026 (UTC)
-:::It works now, a little rough around the edges, also very slow, but I think I'm mostly happy with it. Of course it would be great if all you needed to provide to the template function to get a label-statement row was the property reference itself, but I'm too sleep-deprived to figure that out at the moment. I made five bespoke functions specifically for this infobox, more than I would like, but it's probably not ''that'' bad. I'm just hoping I didn't duplicate any functionality in trying to make the composition less verbose and repetitive. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 07:15, 15 May 2026 (UTC)
-
-== Wikifunctions & Abstract Wikipedia Newsletter #248 is out: A higher meaning ==
-
-There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-05-15|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
-
-In this issue, we discuss functions creating language fragments, we present our latest news in Types, and we take a look at the latest software developments.
-
-Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
-
-Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 14:36, 15 May 2026 (UTC)
-<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30536976 -->
 
 == Translations ==
 
@@ -410,3 +284,8 @@ It occurred to me that an abstract page that works well enough for one language 
 
 :: The function [[f:Z35921|NLG default text]] will be able to indicate on the target Wikipedia that the text in this language is not ready yet. Maybe sentences with this indicator, or even lemma's with this indicator could be excluded from the target Wikipedia. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 08:52, 15 June 2026 (UTC)
 :::I see that in the [[#Marking NLG Default text]] section, but I am thinking more at the whole-article level; dropping a problematic fragment from the final render could change the overall meaning. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 17:20, 15 June 2026 (UTC)
+
+== Add an LLM generator, where you can generate the schema ==
+
+Hi.
+Please add an LLM generator, where you can ask AI to generate a schema for Abstract wikipedia. [[User:ChippyTimeCom|ChippyTimeCom]] ([[User talk:ChippyTimeCom|talk]]) 01:18, 17 June 2026 (UTC)

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-17T08:41:03Z
+  Fetched:   2026-06-19T08:52:37Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -10,7 +10,7 @@
 
 == Spaces between sentences, another attempt ==
 
-[[Abstract Wikipedia:Project chat#Extra spaces between sentences|A month ago]], @[[User:内存溢出的猫|内存溢出的猫]]<ref group="spaces3>According to Google Translate, it's pronounced "Nèicún yìchū de māo". Please correct me if it's wrong. When I write, I want to know how are things that I write pronounced aloud, and very unfortunately, I never learned to read Chinese characters, and even if I did, most English speakers probably didn't. Come to think of it, is there a function that ''reliably'' transliterates Chinese characters?</ref> That discussion doesn't seem to have yielded any fixes or meaningful discussions, at least not that I can see.
+[[Abstract Wikipedia:Project chat#Extra spaces between sentences|A month ago]], @[[User:内存溢出的猫|内存溢出的猫]]<ref group="spaces3>According to Google Translate, it's pronounced "Nèicún yìchū de māo". Please correct me if it's wrong. When I write, I want to know how are things that I write pronounced aloud, and very unfortunately, I never learned to read Chinese characters, and even if I did, most English speakers probably didn't. Come to think of it, is there a function that ''reliably'' transliterates Chinese characters?<br>@[[User User:Amire80|Amir E. Aharoni]] Yes, it is correct. For pinyin transliterations, the only way is lemma-based. I'll also encourage you to read in underrepresented [https://en.wikipedia.org/wiki/Varieties_of_Chinese Varieties of Chinese] :-) I am working on them on English Wiktionary. ——[[User:内存溢出的猫|内存溢出的猫]] ([[User talk:内存溢出的猫|talk]]) 11:21, 18 June 2026 (UTC)</ref> That discussion doesn't seem to have yielded any fixes or meaningful discussions, at least not that I can see.
 
 [[Abstract Wikipedia:Project chat#Spaces between sentences|Two weeks ago]], I tried to bring up a similar topic, but that discussion somehow got derailed and also didn't yield anything useful.
 
@@ -74,16 +74,13 @@ I hope that the definition of the problem is clear.
 
 ===Easier solution?===
 Maybe a much easier solution would be to replace the "." after each sentence with ". " (a full stop and a space).  The paragraghs might add an extra space, but that is displayed as one by the browser. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]])
-
-== [[MediaWiki:AbstractWikiSuggestedWikifunctions.json]] ==
-
-I'd think we should add [[f:Z33068]] here. The function allows you to form a paragraph out of sentences and handles languages having different standards of whether to add a space between them, and adding it here would make finding it easier. I'm not sure what policy we want to have for the suggested functions, this idea might help formulate it. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:06, 12 May 2026 (UTC)
-
-:[[User:Jdforrester (WMF)]] tells me the page has been changed to [[Special:CommunityConfiguration/AbstractWikiSuggestedWikifunctions]] on the telegram. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 16:25, 12 May 2026 (UTC)
-::@[[User:Feeglgeef|Feeglgeef]]: Yup, see the weekly update on [[f:Wikifunctions:Status_updates/2026-05-02|2026-05-02]]. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 16:35, 12 May 2026 (UTC)
-:I also believe Z33068 should be added to the list. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:25, 12 May 2026 (UTC)
-
-{{done}} see [[Special:Diff/7692]]. Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 09:08, 20 May 2026 (UTC)
+:@[[User:HenkvD|HenkvD]]: I originally thought this was a bit hacky, but it actually makes sense -- the spacing is determined by punctuation. For example, English [https://en.wikipedia.org/wiki/Sentence_spacing#cite_ref-Bringhurst_2004._p.28_4-0 used to have] the convention of using two spaces, Chinese uses no spaces, and in Tibetan, ། marks the end of a short phrase or sentence (still needs a space after it), while ༎ marks the end of a paragraph. (Yes, there's a dedicated paragraph-ending punctuation mark!) This at least matches our current abstraction model well. Also, I don't think this will lead to extra spaces. ——[[User:内存溢出的猫|内存溢出的猫]] ([[User talk:内存溢出的猫|talk]]) 11:21, 18 June 2026 (UTC)
+::<nowiki><tangent></nowiki> <em>「Yes, there's a dedicated paragraph-ending punctuation mark!」</em> We English folk have used ¶ for that before, so I don't suppose a paragraph mark in Tibetan is all that unusual... <nowiki></tangent></nowiki> &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:25, 18 June 2026 (UTC)
+:An unnecessary space in the end of a text, though invisible, cannot be a good idea. [[User:Amire80|Amir E. Aharoni]] ([[User talk:Amire80|talk]]) 11:43, 18 June 2026 (UTC)
+::I agree. We should not change functions which correctly return sentences into functions which return sentences with spaces stuck to them. {{zd|Z35672}} works well until the performance is good enough for {{zd|Z33068}}.  --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 12:34, 18 June 2026 (UTC)
+:::I think if the current WL system allowed for ''starting'' tags and then ending them at a later indeterminate point, Z33068's performance issues could be perhaps mitigated slightly. One could use a ''start paragraph'' call, followed by some sentences in some well-established form, and then close the paragraph with an ''end paragraph'' call. An issue I've had with paragraphs is that you can't see the paragraph build itself up sentence-by-sentence, and the failure of a ''single'' function call means the inability of the ''entire'' paragraph to render at all—something that would, of course, be fixed by making paragraphs more granular in this way. Something to think about, although I am sure it's not possible presently (since the abstract HTML renderer doesn't build up the document gradually, and instead expects the HTML to be well-formed from the outset). &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:28, 18 June 2026 (UTC)
+:::: Each fragment is its own div, and you can't do <nowiki><div><p></div><div>[text]</div><div></p></div></nowiki>, it will break the browser's tag grouping. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:55, 18 June 2026 (UTC)
+:::::Hence why I mentioned that I don't suspect it will be possible. The concept is just something to think about. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:34, 18 June 2026 (UTC)
 
 == Translations ==
 
@@ -289,3 +286,6 @@ It occurred to me that an abstract page that works well enough for one language 
 
 Hi.
 Please add an LLM generator, where you can ask AI to generate a schema for Abstract wikipedia. [[User:ChippyTimeCom|ChippyTimeCom]] ([[User talk:ChippyTimeCom|talk]]) 01:18, 17 June 2026 (UTC)
+:Do you mean an AI model to translate natural language input to abstract output? This was tinkered with before, I believe, last year—see [[f:Wikifunctions:Status updates/2025-05-09]] if you would like to read about it. This idea remained a mockup and not much more from what I can tell, but they may revisit the idea someday. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:40, 18 June 2026 (UTC)
+:: The main thing stoping one from pulling up a chatbot is that it has no knowledge of what wikifunctions are available, meaning it will probably just hallucinate them. I know Gemini has an ability to upload files, but all of Wikifunctions would be too large. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:58, 18 June 2026 (UTC)
+:::We have no obligation to use an LLM, that's just the main thing associated with the buzzword that is AI now. We can really come up with any AI model—''in a general sense''—that will fit our needs. You can do a ''lot'' with simple neural networks. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:33, 18 June 2026 (UTC)

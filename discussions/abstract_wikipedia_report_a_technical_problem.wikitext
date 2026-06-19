@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-06-11T08:20:54Z
+  Fetched:   2026-06-19T08:52:37Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -131,3 +131,9 @@ I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to 
 ::::: Oh, yeah, sometimes you'll run into technical issues. You can use [[f:Z29749]] for directly converting monolingual text outputs to HTML fragments. Sorry if this is confusing. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 17:34, 10 June 2026 (UTC)
 ::::::@[[User:Feeglgeef|Feeglgeef]] Where? Can you edit the page "Los angeles" with what I have so far to fix the bug so I know where to put it? It is a bit confusing but might be easier if I see it firsthand. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 21:25, 10 June 2026 (UTC)
 ::::::: Looks like the issue was the superlative definition function not working right now. It should look good now. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:37, 10 June 2026 (UTC)
+
+== [[AW:]] and [[AT:]] pseudonamespaces ==
+
+Requesting [[mw:pseudo-namespace|pseudo-]] or [[mw:manual:using custom namespaces|custom]] namespaces to be used for shortcut redirects for project and talk pages.
+
+Right now you have to use the full [[Abstract Wikipedia:foo]] or [[Abstract Wikipedia talk:bar]] syntax for links to get to the right place (which is to say, somewhere not in mainspace a.k.a. abstractspace). Piped links can make it look shorter in the meantime while actually being longer. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:02, 19 June 2026 (UTC)

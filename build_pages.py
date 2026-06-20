@@ -206,7 +206,8 @@ NAMING_ROLE_QIDS = {
 # Minor / non-defining roles — render via Z32982 instead of Z28016.
 # See convert_article.py for the rationale.
 MINOR_ROLE_QIDS = {
-    "Q66305721",  # part of
+    "Q13196193",  # part (current)
+    "Q66305721",  # part of (legacy, pre-2026-06 articles)
 }
 
 

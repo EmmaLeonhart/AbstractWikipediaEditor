@@ -324,13 +324,13 @@ class TestInfixForm:
     role-sentence function based on the predicate word."""
 
     def test_infix_part_of_maps_to_z32982(self):
-        """{{infix|X|part of|Y}} -> {{Z32982|X|Q66305721|Y}}."""
+        """{{infix|X|part of|Y}} -> {{Z32982|X|Q13196193|Y}}."""
         template = "{{infix|Q4830453|part of|Q50831573}}"
         result = compile_template(template, {"subject": "Q4830453"})
         inner = result[0]["value"]["Z33068K1"][1]
         assert inner["Z7K1"]["Z9K1"] == "Z32982"
         assert inner["Z32982K1"]["Z6091K1"]["Z6K1"] == "Q4830453"
-        assert inner["Z32982K2"]["Z6091K1"]["Z6K1"] == "Q66305721"
+        assert inner["Z32982K2"]["Z6091K1"]["Z6K1"] == "Q13196193"
         assert inner["Z32982K3"]["Z6091K1"]["Z6K1"] == "Q50831573"
 
     def test_infix_predicate_case_insensitive(self):

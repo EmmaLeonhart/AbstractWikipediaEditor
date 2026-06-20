@@ -1,5 +1,10 @@
 # Abstract Wikipedia Editor Roadmap
 
+## Completed (2026-06-20 batch)
+
+- [x] Fixed the "is part of of" bug HenkvD reported twice (User_talk:Immanuelle, 2026-06-05 and again 2026-06-18). P361/P527/P2670 mapped the `Z32982` role slot to **Q66305721 ("part of")**, but `Z32982` ("non-defining role sentence") supplies its own "of" — template "X is a Y **of** Z" — so the role must be the noun **Q13196193 ("part")**. With "part of" it doubled into "is part of of". Swapped the role QID in `data/property_function_mapping.json`, `wikitext_parser.py` (INFIX_PREDICATES), `editor/src/renderer.ts`, `site/renderer.js`, and the infix test. Verified Q13196193's label against the Wikidata API before use. Kept Q66305721 in `MINOR_ROLE_QIDS` (convert_article.py / build_pages.py) so pre-fix legacy articles still round-trip.
+- [x] Fixed the local preview renderer, which rendered `Z32982` as "X is a Y **in** Z" — wrong, and it masked the on-wiki "is part of of" because the preview never showed the real "of". Now renders "X is a Y **of** Z" to match the actual function, in both `editor/src/renderer.ts` and `site/renderer.js`.
+
 ## Completed (2026-05-08 batch)
 
 - [x] Built distributable `.exe` installer via electron-builder (`editor/dist/Abstract Wikipedia Editor Setup 1.0.0.exe`). Required moving `electron` from `dependencies` to `devDependencies` and adding an `author` field to `editor/package.json`.

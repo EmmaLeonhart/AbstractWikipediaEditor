@@ -61,12 +61,15 @@ NAMING_ROLE_QIDS = {
 }
 
 # Roles that should be rendered through Z32982 (non-defining / "minor" role)
-# instead of Z28016 (defining role). "Part of" does not define the subject
+# instead of Z28016 (defining role). Part-of does not define the subject
 # — Honshu is a part of Japan, but being part of Japan isn't what makes
-# Honshu *Honshu*. Z32982's template reads "X is a Y in Z" which matches
-# the informal usage better than Z28016's "X is the Y of Z".
+# Honshu *Honshu*. Z32982's template reads "X is a Y of Z".
+# Q13196193 ("part") is the current role; Q66305721 ("part of") is kept
+# for round-tripping legacy articles created before the 2026-06 fix that
+# replaced it (it doubled the "of" into "is part of of").
 MINOR_ROLE_QIDS = {
-    "Q66305721",  # part of
+    "Q13196193",  # part (current)
+    "Q66305721",  # part of (legacy)
 }
 
 

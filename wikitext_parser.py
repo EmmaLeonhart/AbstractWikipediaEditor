@@ -557,12 +557,14 @@ def resolve_function_name(name):
 # (a role Z-ID) and the role QID that fills the middle slot.
 #
 # Example: {{infix|Q4830453|part of|Q50831573}} rewrites to
-# {{Z32982|Q4830453|Q66305721|Q50831573}} — "Coca Cola is a part of in S&P 500".
+# {{Z32982|Q4830453|Q13196193|Q50831573}} — "Coca Cola is a part of S&P 500".
+# The role is the noun Q13196193 "part", not Q66305721 "part of": Z32982
+# supplies its own "of", so "part of" doubled it into "is part of of".
 #
 # Predicate lookup is case-insensitive. Add entries here as new
 # natural-language relations get wired up.
 INFIX_PREDICATES = {
-    "part of": ("Z32982", "Q66305721"),
+    "part of": ("Z32982", "Q13196193"),
 }
 
 

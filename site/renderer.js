@@ -29,7 +29,7 @@ for (const [alias, zid] of Object.entries(ALIASES)) {
 // and editor/src/renderer.ts. {{infix|X|predicate|Y}} rewrites to
 // {{target_zid|X|role_qid|Y}}.
 const INFIX_PREDICATES = {
-  'part of': ['Z32982', 'Q66305721'],
+  'part of': ['Z32982', 'Q13196193'],
 };
 
 function applyInfixRewrite(parts) {
@@ -104,7 +104,7 @@ function renderSentence(frag, subjectQid) {
     case 'Z26039': return `${a[0]} is ${articleFor(r[1])} ${a[1]}.`;
     case 'Z26095': return `${cap(articleFor(r[0]))} ${a[0]} is ${articleFor(r[1])} ${a[1]}.`;
     case 'Z28016': return `${a[0]} is the ${a[1]} of ${a[2]}.`;
-    case 'Z32982': return `${a[0]} is ${articleFor(r[1])} ${a[1]} in ${a[2]}.`;
+    case 'Z32982': return `${a[0]} is ${articleFor(r[1])} ${a[1]} of ${a[2]}.`;
     case 'Z29591': return `${a[0]} is ${articleFor(r[1])} ${a[1]} ${a[2]}.`;
     case 'Z26627': return `${a[0]} are ${a[1]}.`;
     case 'Z27243': return `${a[0]} is the ${a[1]} ${a[2]} in ${a[3]}.`;

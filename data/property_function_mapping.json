@@ -101,24 +101,24 @@
       "function": "Z32982",
       "function_name": "non-defining role sentence",
       "example": "Honshu is a part of Japan.",
-      "template": "{{Z32982|SUBJECT|Q66305721|$value}}",
-      "notes": "Role=Q66305721 (part of). SUBJECT (part) is K1, $value (whole) is K3. Uses Z32982 (minor role) because 'part of' does not define the subject — unlike 'capital of' which does."
+      "template": "{{Z32982|SUBJECT|Q13196193|$value}}",
+      "notes": "Role=Q13196193 (part, the noun). SUBJECT (part) is K1, $value (whole) is K3. Z32982 supplies its own 'of' (template: 'X is a Y of Z'), so the role must be the noun 'part', NOT Q66305721 'part of' — that produced 'is part of of' (HenkvD, User_talk 2026-06-05). Uses Z32982 (minor role) because part-of does not define the subject — unlike 'capital of' which does."
     },
     "P527": {
       "label": "has part(s)",
       "function": "Z32982",
       "function_name": "non-defining role sentence",
       "example": "Honshu is a part of Japan.",
-      "template": "{{Z32982|$value|Q66305721|SUBJECT}}",
-      "notes": "Inverse of P361. Role=Q66305721 (part of). $value (part) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
+      "template": "{{Z32982|$value|Q13196193|SUBJECT}}",
+      "notes": "Inverse of P361. Role=Q13196193 (part, the noun — not Q66305721 'part of', which doubled the 'of'). $value (part) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
     },
     "P2670": {
       "label": "has part(s) of the class",
       "function": "Z32982",
       "function_name": "non-defining role sentence",
       "example": "An arm is a part of a human body.",
-      "template": "{{Z32982|$value|Q66305721|SUBJECT}}",
-      "notes": "Role=Q66305721 (part of). $value (class of parts) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
+      "template": "{{Z32982|$value|Q13196193|SUBJECT}}",
+      "notes": "Role=Q13196193 (part, the noun — not Q66305721 'part of', which doubled the 'of'). $value (class of parts) is K1, SUBJECT (whole) is K3. Uses Z32982 (minor role)."
     },
     "P106": {
       "label": "occupation",

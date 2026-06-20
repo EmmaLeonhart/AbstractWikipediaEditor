@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-19T08:52:37Z
+  Fetched:   2026-06-20T07:12:09Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -252,6 +252,32 @@ I would be grateful for any comments on any of these questions. [[User:Strobilom
 :Even for western languages there are a lot of different rules; What about the many other languages in the world. All this makes it a real challenge. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:04, 8 June 2026 (UTC)
 ::Yes, I think it is an extreme challenge, especially withou being able to call external functions in Python etc.  Surely this is too complicated for composition?  Thanks again for your answers. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:42, 9 June 2026 (UTC)
 :::This was discussed at [[:commons:File:Abstract_Wikipedia_Volunteer_Corner_2026-06.webm|Monday’s volunteers’ corner meeting (8 June 2026)]]. It was also discussed to find a place where to discuss this in detail. Please mention that place here if that place is known. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 11:26, 13 June 2026 (UTC)
+::::See also [[f:Wikifunctions:Status updates/2026-06-19#The or not the, this is (the?) question]]. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 11:39, 19 June 2026 (UTC)
+:::::@[[User:HenkvD|HenkvD]] Thanks for the links which you have just made here and also thanks to whoever is involved in covering the question in the status update.  I don't think that the status update talk page is used for such comments, is it?  Until there is another suggestion, I don't know a better place to discuss than here, and so I will carry on here.
+:::::I am guilty of not getting around to commenting on the status update discussion - there is always more that I want to say before publishing.  Now I will try to keep my edits small.
+:::::My view was that a lexeme would be necessary almost for every item in every language, but in the meeting it was argued that often syntactic information could be found through programmatic "rules of thumb", and that in that way, lexemes would be needed only in cases of irregularity.  Note that it is still necessary to search for the lexeme properties in every case; the programmatic rules would only apply if the lexeme property is missing.  
+:::::My main comment now is that a programmatic approach is too complicated for doing everything by composition and so we urgently need to be able to call functions from Python/Javascript.  I hope that that will come soon. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:28, 19 June 2026 (UTC)
+
+:At the volunteers' meeting it was even suggested that grammatical genders could be determined programmatically sometimes.  For instance in Spanish most rivers are masculine and in French trees are generally masculine.  This type of rule depends on having a rigorous system to determine the type of item.  Example: I believe that an oak tree is {{Q|Q12004}}.  For some reason the label for English is "Quercus" (whereas other languages use the common name) - this highlights a problem with using item labels.  Q12004 has subclass {{Q|Q148993}}, which has subclass {{Q|Q10884}}, so it is possible to determine that it is a tree, but surely this is too complicated to be worthwhile.  Perhaps there are languages where the type of item gives a sort of gender, but I think they would need a property "linguistic item type" rather than trying to maintain the information in the existing item properties.
+:Sometimes the form of the word indicates the gender, for instance in Spanish words ending in -a are often feminine.  But there are many exceptions (el optimista, el tema), for which lexemes would be needed, I suppose. If there are very few exceptions, they could be listed explicitly.  
+:In the case of French, Spanish and German genders, I think that the simplicity of just putting the gender on the lexeme outweighs the possible savings in quantity of data through using "rules of thumb". [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:54, 19 June 2026 (UTC)
+::As mentioned in the Status Update, it is difficult to decide how to determine whether an item needs a definite article in the simple examples.
+::I have a comment: it is strange that we want to leave out the article in the label and the lemma.  In normal use, I think the article is only left out in "headline-speak" (for instance "Man falls from Eiffel Tower") or if you are talking to the thing ("Eiffel Tower, I love you").  I don't know where else we want to omit the article in actual text.  
+::So one proposal for a solution is that the lemma on the lexeme should include the article in these cases.  It should be defined as the string which should be the value of ''x'' in the sentence: "''x'' is a thing".  That might solve the problem, but we would always need to have a lexeme in these cases and it would be necessary to explain this to all lexeme users.  A second proposal is to have a new property on the lexeme which gives the string which we need (or to have an indicator that an article is required, but that would be more complicated as code would be needed to render the article).
+::Another possibility, supported in the meeting, would be somehow to work out from the construction of the name whether an article is needed.  For instance if the name is constructed as a phrase, it often wants an article ("the Bridge of Sighs", "the Isle of Man").  In English a phrase with "of" is a good indication that the article is needed.  Phrases of the form <qualifier> <noun> often want an article (for instance "Eiffel tower", "Irish Sea", "United States"), but they often don't (for example "Beachy Head", "Lake Ontario", "London Bridge", "Westminster Cathedral", "Fair Isle", "Land's End").   So that is no use if we don't know what type of qualifier and noun it is.  
+::There are rules for specific types of item (for instance in English, I think lakes don't need an article and seas do need an article).  If we are going to use rules like that, it will be necessary to maintain the correct categorization in Wikidata.  P31 and P279 might be relevant, but since these properties were created in another context, the management of them would be difficult.  Lists of exceptions are possible.  The solution could vary from one language to another. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 16:26, 19 June 2026 (UTC)
+:I would like to suggest the following possibilities for holding the definite article requirement information and also other syntactical information such as genders and other language options.  They are in order from "more data-driven" to "more programmatic".
+#Hold the information as a property of a lexeme attached to the item.
+#Hold the information in the label or description of the item.
+#Hold the information in a list (per language) in a property of the item.
+#Use a programmatic rule, based possibly on item properties, with a list of exceptions.  The exceptions could be:
+#*in the lexemes (or the labels/descriptions),
+#*in Wikidata item properties per language, perhaps using the "tabular data" type,
+#*as a Wikifunctions list item, similar to the configuration tables used in the fragment examples, or
+#*hard-coded in the Abstract Wikipedia wikifunctions.
+:For instance in order to find a French gender, the programmatic rule could be "Assume it is masculine", but exceptions could be flagged in the lexemes.  In all cases, the function would have to search for a lexeme for the item, and if found would have to search for a gender property with value "feminine".  The advantage of the programmatic rule would be that for a masculine lexeme no gender property, and perhaps no lexeme, would be needed.
+:From a theoretical modelling point of view, I think that much the best place to put this information is in the lexeme objects.  Well, the item label and description are also per language, but I think they do not "belong" to Abstract Wikipedia.  In the meeting there was much more sympathy for a programmatic approach, which I would say is more pragmatic.  There is a balance between on one hand trying to reduce the number of database elements and properties, and on the other reducing the complexity of the programming and the rules which have to be known by users.
+  [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 18:47, 19 June 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #252 is out: Improved loading and display of Test results ==
 
@@ -289,3 +315,14 @@ Please add an LLM generator, where you can ask AI to generate a schema for Abstr
 :Do you mean an AI model to translate natural language input to abstract output? This was tinkered with before, I believe, last year—see [[f:Wikifunctions:Status updates/2025-05-09]] if you would like to read about it. This idea remained a mockup and not much more from what I can tell, but they may revisit the idea someday. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 17:40, 18 June 2026 (UTC)
 :: The main thing stoping one from pulling up a chatbot is that it has no knowledge of what wikifunctions are available, meaning it will probably just hallucinate them. I know Gemini has an ability to upload files, but all of Wikifunctions would be too large. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 18:58, 18 June 2026 (UTC)
 :::We have no obligation to use an LLM, that's just the main thing associated with the buzzword that is AI now. We can really come up with any AI model—''in a general sense''—that will fit our needs. You can do a ''lot'' with simple neural networks. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 19:33, 18 June 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #253 is out: The or not the, this is (the?) question ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-06-19|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we present you a delicate question regarding grammatical framework, we talk about our next events and about the results of our latest online meetings, we discuss news about Types, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:34, 19 June 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30701693 -->

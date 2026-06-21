@@ -41,16 +41,46 @@
 - [x] Track Wikifunctions Project chat in `discussions/` so feedback there flows into this repo.
 - [x] Local preview "a" vs "an" article selection (mirrors Z21739 on Wikifunctions; raised by QuickQuokka on the WF Project chat).
 
-## Known Issues
+## On hold — open items
 
-- [ ] Edit all previously published articles to fix errors from old wrong QIDs (in progress; tracked alongside the Z26955→Z28016 and "it"→SUBJECT cleanups already done on-wiki).
+The project is paused (see README "Project status: on hold"). The editor is
+stable; these are the things that would need attention before or during a
+restart. Grouped by why they're blocked.
 
-## In Progress
+### Blockers — gated on community direction (can't resolve solo)
 
-(none)
+- [ ] **Paragraph model: Z33068 vs Z35672 separators.** 99of9 reports Z33068
+  times out on full paragraphs and uses a Z35672 sentence separator instead
+  (AW Project chat, 2026-05-28). Feeglgeef and the May consensus favor Z33068,
+  which the editor emits. No settled answer. Decide whether the editor should
+  optionally emit the Z35672-separator shape as a fallback — only worth doing
+  once the community converges.
+- [ ] **Property→function mapping tracks shifting consensus.** Each on-wiki
+  decision (Z26095 vs Z26039 for P279; Z26955 → Z28016; the Z32982 "part of"
+  role just fixed) forces a mapping re-check + release. Keep watching
+  `discussions/` but expect churn until conventions stabilize.
+- [ ] **Project scope unsettled.** Notability / deletion / "what AW is for"
+  are open community debates. Don't over-invest in content tooling until the
+  content rules settle.
 
-## Next Steps
+### Verification needed — requires the live editor (can't be done headless)
 
-- [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts)
-- [ ] Bundle P570 (date of death) + P20 (place of death) into a death sentence the same way P569 + P19 now bundle into Z32473 — needs a corresponding Wikifunction (no Z32473 equivalent exists yet for "died on X in Y")
-- [ ] Re-watch `Z29822` ("ArticlePlaceholder render article") for an implementation; it has the right input shape (`language, item, include_no_best_statements`) for a one-click article shortcut, but has no implementations connected as of 2026-05-08
+- [ ] **Confirm Q189125 renders cleanly.** JJP reported it rendering
+  "Transgender persons change gender identities." three times (Report a
+  technical problem, 2026-05-17); Feeglgeef said Z33068 fixed it (2026-05-18).
+  The editor already emits Z33068, so it's likely fine — but pull Q189125 in
+  the editor and confirm. If still tripled, it's a real generator bug.
+- [ ] **Edit previously published articles to fix old-wrong-QID errors.**
+  In progress on-wiki alongside the Z26955→Z28016 and "it"→SUBJECT cleanups.
+  Now also includes re-checking any surviving "is part of of" articles (most
+  removed by HenkvD 2026-06-18) — regenerate them with the v4.8.2 fix.
+
+### Deferred features (nice-to-have, not blocking)
+
+- [ ] Test pipeline on diverse Wikidata items (people, places, organizations, concepts).
+- [ ] Bundle P570 (date of death) + P20 (place of death) into a death sentence
+  the way P569 + P19 bundle into Z32473 — blocked: no Z32473 equivalent exists
+  yet for "died on X in Y".
+- [ ] Re-watch `Z29822` ("ArticlePlaceholder render article") for a connected
+  implementation; it has the right input shape for a one-click article
+  shortcut but had zero implementations as of 2026-05-08.

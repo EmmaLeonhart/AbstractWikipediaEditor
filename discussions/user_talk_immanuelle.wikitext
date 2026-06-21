@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/User_talk:Immanuelle
-  Fetched:   2026-06-19T08:52:37Z
+  Fetched:   2026-06-21T20:01:08Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -61,3 +61,4 @@ I am working on creating a page for [[Q117812747]]. I am trying to use the funct
 Immmanuelle, you created a lot of sentences with [[f:Z32982]] with "part of". That is not the proper way to use this function. It results in (English) sentences containing "is part of of". Please remove these sentences. Example is [[Q12796]] [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 22:08, 5 June 2026 (UTC)
 
 :For your information: I just removed these sentenes with is part of of". [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 21:44, 18 June 2026 (UTC)
+::@[[User:HenkvD|HenkvD]] I fixed the glitch in the latest release. In the future I am unsure how active I am going to be on Abstract Wikipedia so updates are not likely to continue much unless I get more interest in improving the tool. [[User:Immanuelle|Immanuelle]] ([[User talk:Immanuelle|talk]]) 19:50, 21 June 2026 (UTC)

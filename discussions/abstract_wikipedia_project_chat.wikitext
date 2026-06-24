@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-20T07:12:09Z
+  Fetched:   2026-06-24T07:00:31Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -326,3 +326,9 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:34, 19 June 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30701693 -->
+
+== This needs to be fixed ==
+
+On tennis [[Q847]], it says "Tennis is the country of origin of England." [[Special:Contributions/&#126;2026-36465-63|&#126;2026-36465-63]] ([[User talk:&#126;2026-36465-63|talk]]) 07:31, 23 June 2026 (UTC)
+
+:Thanks, I've switched it around. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 09:51, 23 June 2026 (UTC)

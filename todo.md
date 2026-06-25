@@ -1,5 +1,27 @@
 # Abstract Wikipedia Editor Roadmap
 
+## 🏁 Retired — final release v5.0.0 (2026-06-24)
+
+The project is **retired** as of v5.0.0. Development has ended (other life priorities +
+not enough users to make maintenance tenable). The items under "On hold — open items"
+below are left for any future fork, not as a personal backlog.
+
+## Completed (2026-06-24 — final batch, v5.0.0)
+
+- [x] Fixed the reversed **country of origin (P495)** sentence. A user reported on the
+  AW Project chat (2026-06-23) that tennis [Q847] rendered "Tennis is the country of
+  origin of England."; 99of9 switched it on-wiki. Cause: P495's template put `SUBJECT`
+  first in `{{Z28016|SUBJECT|Q3373417|$value}}`, and Z28016 renders "K1 is the [role]
+  of K3" — so the subject became the country of origin. P495 was the lone outlier; every
+  sibling property where the *value* bears the role (P37/P38/P50/P57/P112) already puts
+  `$value` first. Swapped P495 to `{{Z28016|$value|Q3373417|SUBJECT}}` →
+  "Japan is the country of origin of Toyota." Added `tests/test_property_mapping.py` to
+  guard the arg order across all value-bears-role properties. The role QID (Q3373417) is
+  unchanged, so no renderer or round-trip change was needed.
+- [n/a] The other on-wiki ask ("chemical element [Q11173] too", ~2026-36465-63,
+  2026-06-23) was not actionable — the request was unclear; I asked for specifics and
+  the 24-hour window closed without a clearer description. Left for a future fork.
+
 ## Completed (2026-06-20 batch)
 
 - [x] Fixed the "is part of of" bug HenkvD reported twice (User_talk:Immanuelle, 2026-06-05 and again 2026-06-18). P361/P527/P2670 mapped the `Z32982` role slot to **Q66305721 ("part of")**, but `Z32982` ("non-defining role sentence") supplies its own "of" — template "X is a Y **of** Z" — so the role must be the noun **Q13196193 ("part")**. With "part of" it doubled into "is part of of". Swapped the role QID in `data/property_function_mapping.json`, `wikitext_parser.py` (INFIX_PREDICATES), `editor/src/renderer.ts`, `site/renderer.js`, and the infix test. Verified Q13196193's label against the Wikidata API before use. Kept Q66305721 in `MINOR_ROLE_QIDS` (convert_article.py / build_pages.py) so pre-fix legacy articles still round-trip.

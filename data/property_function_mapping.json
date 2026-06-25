@@ -140,9 +140,9 @@
       "label": "country of origin",
       "function": "Z28016",
       "function_name": "defining role sentence",
-      "example": "Toyota originates from Japan.",
-      "template": "{{Z28016|SUBJECT|Q3373417|$value}}",
-      "notes": "Role=Q3373417 (country of origin). SUBJECT (product) is K1, $value (country) is K3. Reads 'SUBJECT originates from $value'."
+      "example": "Japan is the country of origin of Toyota.",
+      "template": "{{Z28016|$value|Q3373417|SUBJECT}}",
+      "notes": "Value (country) is K1, role=Q3373417 (country of origin), SUBJECT (product) is K3. Reads '$value is the country of origin of SUBJECT' — value-first, like P37/P38/P50/P57/P112 (the value bears the role). Fixed 2026-06-24: was SUBJECT-first, which rendered the reversed 'Tennis is the country of origin of England' (reported on AW Project chat re Q847; 99of9 switched it on-wiki)."
     },
     "P1376": {
       "label": "capital of",

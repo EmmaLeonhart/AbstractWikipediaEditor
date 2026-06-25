@@ -6,16 +6,25 @@ Abstract Wikipedia stores articles as language-neutral function calls (Z-objects
 
 **[Project website](https://emmaleonhart.github.io/AbstractEditing/)** | **[Download latest release](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/releases/latest)**
 
-## ⏸️ Project status: on hold (as of 2026-06)
+## 🏁 Project status: retired — final release v5.0.0 (2026-06-24)
 
-The editor works and the latest release ([v4.8.2](https://github.com/EmmaLeonhart/AbstractWikipediaEditor/releases/latest)) is stable. Active development is **paused**, not abandoned — the blockers are about the surrounding community and project direction rather than the code:
+**This project is done.** v5.0.0 is the **final release**. The editor works and is
+stable, but active development has ended — I have other life priorities that need my
+time, and there isn't enough user interest in the tool to make continued maintenance
+tenable. v5.0.0 ships one last fix (the reversed "country of origin" sentence reported
+on the Project chat for tennis, [Q847](https://abstract.wikipedia.org/wiki/Q847)) and
+closes out the open requests.
+
+The code remains available and the tooling is in a good state for anyone who wants to
+fork or pick it up; I just won't be the one maintaining it. The original on-hold
+blockers below are left for context — they're why a solo maintainer couldn't keep pace:
 
 - **Auto-generation depends on community consensus that keeps shifting.** Which Wikifunction is "correct" for a given relationship (e.g. Z26095 vs Z26039 for P279, Z26955 → Z28016 migrations, the Z32982 "part of" role) is decided on the Wikifunctions/Abstract Wikipedia talk pages, and those decisions change. Each shift means the property mapping has to be re-checked and re-released, and bugs surface from on-wiki feedback faster than one maintainer can keep up with.
 - **The paragraph model is contested.** The editor emits `Z33068` ("paragraph from sentences"), but established contributors report it times out on full paragraphs and prefer inserting a `Z35672` separator between standalone sentences instead. There is no settled answer, so the editor's default output may be the wrong shape depending on whose convention wins.
 - **The project's scope is still being defined.** Notability, deletion, and what Abstract Wikipedia is even *for* are open community discussions ([Abstract Wikipedia:Project chat](https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat)). It is hard to invest in tooling for content workflows while the rules for that content are unsettled.
 - **Publishing is fragile by design.** The MediaWiki API rejects bot-password edits to the article namespace, so all writes go through Playwright browser automation, and VPN use triggers email verification — which is why CI-based publishing stays disabled and every publish is a manual, local, supervised step.
 
-Open follow-up work is tracked in [todo.md](todo.md) under **"On hold — open items"**. The tooling is in a good enough state to pick back up whenever the community direction settles.
+Open follow-up work is tracked in [todo.md](todo.md) under **"On hold — open items"** for any future fork. The tooling is in a good enough state to pick back up whenever the community direction settles — but that won't be me.
 
 ## How it works
 

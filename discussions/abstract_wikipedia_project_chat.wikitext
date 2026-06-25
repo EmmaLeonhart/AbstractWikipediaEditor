@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-25T02:43:57Z
+  Fetched:   2026-06-25T07:00:20Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -342,3 +342,22 @@ If so I think we should change ALL languages functions to output type HTML as so
 :Currently, I am exploring this function for converting all of these to HTML fragment [[f:Z36303]]. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 16:46, 24 June 2026 (UTC)
 ::OK, thanks. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 21:17, 24 June 2026 (UTC)
 :I agree that new sentence functions should be HTML. For now the old ones should be wrapped by a converter (which is best done on WF). Then all calls from AW can be to HTML producing functions. When we need bold we could either try to inject it, or write equivalent functions that will eventually replace the usage of the string ones. The string ones may still be valuable for processing some of the new NLG types, so we shouldn't actually flip the original functions. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 23:30, 24 June 2026 (UTC)
+
+::I think wrapping the functions to HTML is delaying the solution. We either need to flip all (NLG) functions or all functions should be copied to HTML versions (and the all functions shoule not be used therafter)
+::{| class=wikitable
+! Option !! Pro !! Con
+|-
+| A. Wrap all fuctions to HTML || Easy to perform || This is delaying the solution
+|-
+| B. Flip all functions to HTML || Keeps tracebility || Huge impact/dusturbance, especialy when chached
+|-
+| C. Copy all functions to HTML || No disturbance || Looses tracability
+|}
+:: The most practical soulution would be option C. I woluld perfer that as soon as possbile. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 05:05, 25 June 2026 (UTC)
+:::I like your suggestions. Based on my personal experience with different result types from Wikifunctions, I would suggest that AW support all three and convert the results to HTML using built-in functions. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 05:19, 25 June 2026 (UTC)
+::::The reason why function need to change is because the current string functions don't allow HLTM features like bold text, wikilinks etc. AW supporting all 3 type pf output could easily be avoiding by option A. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 05:29, 25 June 2026 (UTC)
+:::C is fine by me. The easiest first-implementation of a copied function C is a wrapper of the monolingual/string, so A is sort of the first step of C. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:20, 25 June 2026 (UTC)
+:No. I really don't see why we should. These are functions that generate text fragments in a single language—the monolingual text type is the most appropriate return type for them. It is just text. They can be coerced to HTML extremely easily and doing that step ahead of time, hardcoded, for the sole purpose of making abstract articles ''marginally'' easier to write, is just not worth the effort and foregoes what makes the functions' return types suitable in the first place. If there is some argument that can be made for hard pivoting to HTML fragments then I am all ears, but I really don't see a reason for it. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 05:53, 25 June 2026 (UTC)
+::I like to contradict. These functions create complete sentences, nd those should be able to use HLTM features like bold text, wikilinks etc. My current interest is to add HTML texts like </nowiki><span lang="mul ">NLG Default text</span></nowiki>. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 06:05, 25 June 2026 (UTC)
+:::These additional features (bold/links etc) would benefit from additional parameters to control them. I still don't know how to do this best. I tried once at [[:f:Z32496]] and [[:f:Z32410]], but it may not be right, and may not be a complete solution anyway. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:26, 25 June 2026 (UTC)
+::Simple wrapping is just to benefit the AW editor. IMO it's worth it because it's pretty easy to make a new function, so is very low cost, and for the new editors on AW, they don't have to understand composing or our WF Types. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:30, 25 June 2026 (UTC)

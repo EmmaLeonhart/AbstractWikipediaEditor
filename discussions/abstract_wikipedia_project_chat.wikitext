@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-24T07:00:31Z
+  Fetched:   2026-06-25T02:43:57Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -10,7 +10,7 @@
 
 == Spaces between sentences, another attempt ==
 
-[[Abstract Wikipedia:Project chat#Extra spaces between sentences|A month ago]], @[[User:内存溢出的猫|内存溢出的猫]]<ref group="spaces3>According to Google Translate, it's pronounced "Nèicún yìchū de māo". Please correct me if it's wrong. When I write, I want to know how are things that I write pronounced aloud, and very unfortunately, I never learned to read Chinese characters, and even if I did, most English speakers probably didn't. Come to think of it, is there a function that ''reliably'' transliterates Chinese characters?<br>@[[User User:Amire80|Amir E. Aharoni]] Yes, it is correct. For pinyin transliterations, the only way is lemma-based. I'll also encourage you to read in underrepresented [https://en.wikipedia.org/wiki/Varieties_of_Chinese Varieties of Chinese] :-) I am working on them on English Wiktionary. ——[[User:内存溢出的猫|内存溢出的猫]] ([[User talk:内存溢出的猫|talk]]) 11:21, 18 June 2026 (UTC)</ref> That discussion doesn't seem to have yielded any fixes or meaningful discussions, at least not that I can see.
+[[Abstract Wikipedia:Project chat#Extra spaces between sentences|A month ago]], @[[User:内存溢出的猫|内存溢出的猫]]<ref group="spaces3">According to Google Translate, it's pronounced "Nèicún yìchū de māo". Please correct me if it's wrong. When I write, I want to know how are things that I write pronounced aloud, and very unfortunately, I never learned to read Chinese characters, and even if I did, most English speakers probably didn't. Come to think of it, is there a function that ''reliably'' transliterates Chinese characters?<br>@[[User User:Amire80|Amir E. Aharoni]] Yes, it is correct. For pinyin transliterations, the only way is lemma-based. I'll also encourage you to read in underrepresented [https://en.wikipedia.org/wiki/Varieties_of_Chinese Varieties of Chinese] :-) I am working on them on English Wiktionary. ——[[User:内存溢出的猫|内存溢出的猫]] ([[User talk:内存溢出的猫|talk]]) 11:21, 18 June 2026 (UTC)</ref> That discussion doesn't seem to have yielded any fixes or meaningful discussions, at least not that I can see.
 
 [[Abstract Wikipedia:Project chat#Spaces between sentences|Two weeks ago]], I tried to bring up a similar topic, but that discussion somehow got derailed and also didn't yield anything useful.
 
@@ -332,3 +332,13 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 On tennis [[Q847]], it says "Tennis is the country of origin of England." [[Special:Contributions/&#126;2026-36465-63|&#126;2026-36465-63]] ([[User talk:&#126;2026-36465-63|talk]]) 07:31, 23 June 2026 (UTC)
 
 :Thanks, I've switched it around. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 09:51, 23 June 2026 (UTC)
+
+== HTML, monolingual text or String for fragments ==
+
+I think there is an important issue on the Output type of parts for text segments. Currently some sentences produce String output (like  [[f:Z26039]] ) or monolingual text output ( like [[:f:Z26570]] ) pr HTML output ( like [[f:Z36200]] ). Apart from not being consistent I think there is even a bigger issue: these types don't allow text to be set in bold (in the introduction sentence for instance), or wikilinks to other AW articles. Am I correct that is only allowed in HTML text? 
+
+If so I think we should change ALL languages functions to output type HTML as soon as possible. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 15:51, 24 June 2026 (UTC)
+
+:Currently, I am exploring this function for converting all of these to HTML fragment [[f:Z36303]]. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 16:46, 24 June 2026 (UTC)
+::OK, thanks. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 21:17, 24 June 2026 (UTC)
+:I agree that new sentence functions should be HTML. For now the old ones should be wrapped by a converter (which is best done on WF). Then all calls from AW can be to HTML producing functions. When we need bold we could either try to inject it, or write equivalent functions that will eventually replace the usage of the string ones. The string ones may still be valuable for processing some of the new NLG types, so we shouldn't actually flip the original functions. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 23:30, 24 June 2026 (UTC)

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-25T07:00:20Z
+  Fetched:   2026-06-26T07:07:54Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -349,7 +349,7 @@ If so I think we should change ALL languages functions to output type HTML as so
 |-
 | A. Wrap all fuctions to HTML || Easy to perform || This is delaying the solution
 |-
-| B. Flip all functions to HTML || Keeps tracebility || Huge impact/dusturbance, especialy when chached
+| B. Flip all functions to HTML || Keeps tracebility || Huge impact/disturbance, especialy when cached
 |-
 | C. Copy all functions to HTML || No disturbance || Looses tracability
 |}
@@ -357,7 +357,10 @@ If so I think we should change ALL languages functions to output type HTML as so
 :::I like your suggestions. Based on my personal experience with different result types from Wikifunctions, I would suggest that AW support all three and convert the results to HTML using built-in functions. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 05:19, 25 June 2026 (UTC)
 ::::The reason why function need to change is because the current string functions don't allow HLTM features like bold text, wikilinks etc. AW supporting all 3 type pf output could easily be avoiding by option A. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 05:29, 25 June 2026 (UTC)
 :::C is fine by me. The easiest first-implementation of a copied function C is a wrapper of the monolingual/string, so A is sort of the first step of C. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:20, 25 June 2026 (UTC)
+::::OK, good suggestion. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 07:13, 25 June 2026 (UTC)
 :No. I really don't see why we should. These are functions that generate text fragments in a single language—the monolingual text type is the most appropriate return type for them. It is just text. They can be coerced to HTML extremely easily and doing that step ahead of time, hardcoded, for the sole purpose of making abstract articles ''marginally'' easier to write, is just not worth the effort and foregoes what makes the functions' return types suitable in the first place. If there is some argument that can be made for hard pivoting to HTML fragments then I am all ears, but I really don't see a reason for it. &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 05:53, 25 June 2026 (UTC)
-::I like to contradict. These functions create complete sentences, nd those should be able to use HLTM features like bold text, wikilinks etc. My current interest is to add HTML texts like </nowiki><span lang="mul ">NLG Default text</span></nowiki>. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 06:05, 25 June 2026 (UTC)
+::I like to contradict. These functions create complete sentences, nd those should be able to use HLTM features like bold text, wikilinks etc. My current interest is to add HTML texts like <nowiki><span lang="mul ">NLG Default text</span></nowiki>. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 06:05, 25 June 2026 (UTC)
 :::These additional features (bold/links etc) would benefit from additional parameters to control them. I still don't know how to do this best. I tried once at [[:f:Z32496]] and [[:f:Z32410]], but it may not be right, and may not be a complete solution anyway. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:26, 25 June 2026 (UTC)
+::::A newer idea I had is to add all the links in the language-configured function, then call link-removing functions like [[:f:Z36853]] or [[:f:Z36831]] when composing them into AW. This could extend to swapping links for bold. Instead of an initial link, the QIDs could be wrapped with HTML spans with a QID ID, which could then be selectively converted into links or bolded etc. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 07:16, 25 June 2026 (UTC)
 ::Simple wrapping is just to benefit the AW editor. IMO it's worth it because it's pretty easy to make a new function, so is very low cost, and for the new editors on AW, they don't have to understand composing or our WF Types. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:30, 25 June 2026 (UTC)
+:::OK, let's start with option A, as a first step for option C. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 07:16, 25 June 2026 (UTC)

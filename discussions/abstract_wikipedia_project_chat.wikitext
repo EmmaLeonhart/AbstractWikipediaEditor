@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-28T07:37:17Z
+  Fetched:   2026-06-29T08:32:36Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -365,6 +365,8 @@ If so I think we should change ALL languages functions to output type HTML as so
 ::Simple wrapping is just to benefit the AW editor. IMO it's worth it because it's pretty easy to make a new function, so is very low cost, and for the new editors on AW, they don't have to understand composing or our WF Types. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:30, 25 June 2026 (UTC)
 :::OK, let's start with option A, as a first step for option C. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 07:16, 25 June 2026 (UTC)
 ::::I have made wrappers (option A) for some general functions like [[f:Z36983]], [[f:Z36983]]. [[f:Z36987]], [[f:Z36993]] and [[f:Z37011]]. [[f:Z32965]] already existed, but as well as the monolingual [[f:Z26095]] both have an error: Error in evaluation. Can somebody fix this? On the AW articles I have updated a few lemmas by replacing the old functions to HTML functions, but find this quite cumbersome. A few hundred lemmas should be updated, but I have no time and/or no desire to do so. In the coming weeks (or so) I will start on Option C for these functions. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 17:51, 27 June 2026 (UTC)
+:::::Thanks. I'll try to help replace some of the usage. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 07:12, 29 June 2026 (UTC)
+:::::I think I've sorted out [[:f:Z32965]]. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 07:45, 29 June 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #254: Working on Functions, together ==
 

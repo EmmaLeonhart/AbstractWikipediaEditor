@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-06-29T08:32:36Z
+  Fetched:   2026-07-03T06:47:52Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -380,3 +380,16 @@ Also, we remind you that if you have questions or ideas to discuss, the next '''
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:58, 27 June 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30724999 -->
+
+== Wikifunctions & Abstract Wikipedia Newsletter #255: Integration on test wiki and annual plan ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-07-01|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss integration of Abstract Wikipedia in Test Wiki and our objectives for the new Wikimedia Foundation Fiscal Year, we remind you of the Wikifunctions and Abstract Wikipedia events at Wikimania 2026, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Also, we remind you that if you have questions or ideas to discuss, the next '''Volunteers' Corner''' will be held on '''[https://zonestamp.toolforge.org/1783359000 July 6, at 17:30 UTC]''' ([https://meet.google.com/xuy-njxh-rkw link to the meeting]).
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 08:22, 2 July 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30755600 -->

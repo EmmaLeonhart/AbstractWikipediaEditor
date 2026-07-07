@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-03T06:47:52Z
+  Fetched:   2026-07-07T07:01:24Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -393,3 +393,11 @@ Also, we remind you that if you have questions or ideas to discuss, the next '''
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 08:22, 2 July 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30755600 -->
+
+== Response to English Wikipedia criticism ==
+
+Hi all, you might be aware of [[:w:en:Wikipedia:Village pump (WMF)#Abstract Wikipedia goes somewhat live and already hosts unattributed enwiki copies...|this discussion on English Wikipedia]], that raised several criticisms about the project. As a team, we [[Abstract Wikipedia:Response to English Wikipedia criticism|drafted an initial response]], that we want to run through you.
+
+If you want to suggest changes or edits, please [[Abstract Wikipedia talk:Response to English Wikipedia criticism|use the talk page]]. Please, keep a polite and constructive tone.
+
+The editing period will be '''open until July 17'''. The final result of this editing will be published on Meta, and will be linked to the English Wikipedia community. [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:18, 6 July 2026 (UTC)

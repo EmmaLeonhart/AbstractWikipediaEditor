@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-09T07:02:00Z
+  Fetched:   2026-07-10T07:01:21Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -371,7 +371,11 @@ If so I think we should change ALL languages functions to output type HTML as so
 ::::Then please try to have [https://www.wikifunctions.org/wiki/Z37011?call=%7B%22Z1K1%22%3A%22Z7%22%2C%22Z7K1%22%3A%22Z37011%22%2C%22Z37011K1%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q90%22%7D%2C%22Z37011K2%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q5119%22%7D%2C%22Z37011K3%22%3A%7B%22Z1K1%22%3A%22Z6091%22%2C%22Z6091K1%22%3A%22Q142%22%7D%2C%22Z37011K4%22%3A%22Z1216%22%7D this] error in HTML. Currently it is ❌≪Parys (is the) haadstêd (of) Frankryk .≫❌ Please have it changed to <span style="color:magenta;">Parys (is the) haadstêd (of) Frankryk .</span> [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 09:02, 7 July 2026 (UTC)
 :::::Thinking about this. One way we could do this particular markup would be for default monolingual functions to return a result with special language code (perhaps mul, zxx, ...). This would require wider discussion. Then the HTML function could detect that and wrap accordingly. But it doesn't solve the general problem of injections IMO. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 02:13, 8 July 2026 (UTC)
 ::::::This is now working (using [mul]) at [[:f:Z37462]]. This should work for all monolingual base functions, but not for those starting with strings. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:49, 9 July 2026 (UTC)
+:::::::I updated [[f:Z36911]] and [[f:Z36909]]. I am not sure if this works as a lot is cached. The string version will probably not work yet, so I left that one using ❌≪ ≫❌. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 08:09, 9 July 2026 (UTC)
+::::::::After my post I actually made that function and test even more complicated to include a call to action (CTA): a link to the function that is not configured in the requested language. I am starting to like where this is going, and think I can even get it done with strings by recognising your ❌≪ pattern, stripping it, and replacing it with a span (and a CTA link) when it turns to HTML. Unfortunately the linking requires passing in a ZID, so might need a new general conversion function with an extra parameter. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 08:40, 9 July 2026 (UTC)
+:::::::::Here's what I did with a string function: [[:f:Z37497]]. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 11:31, 9 July 2026 (UTC)
 ::::For me, injections are not so easy. A simple one is trying to inject a link to Sydney into en:"Sydney Harbour Bridge is the closest to the ocean in Sydney." (In all languages, so sometimes the subject-object order will be reversed.) But even still, I'd really like to have good injection functions, so if you're up for making them, I'll definitely use them. If they work reliably on all NLG monolingual strings, then we can use them in the wrappers (even if you think the wrappers are frivolous), and the configurations can remain deeper on the monolingual strings. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 01:56, 8 July 2026 (UTC)
+:::::I've added this test at [[:f:Z37479]]. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 10:29, 9 July 2026 (UTC)
 
 == Wikifunctions & Abstract Wikipedia Newsletter #254: Working on Functions, together ==
 
@@ -406,3 +410,14 @@ Hi all, you might be aware of [[:w:en:Wikipedia:Village pump (WMF)#Abstract Wiki
 If you want to suggest changes or edits, please [[Abstract Wikipedia talk:Response to English Wikipedia criticism|use the talk page]]. Please, keep a polite and constructive tone.
 
 The editing period will be '''open until July 17'''. The final result of this editing will be published on Meta, and will be linked to the English Wikipedia community. [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:18, 6 July 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #256: Moving toward our first Abstract Wikipedia integration milestone ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-07-08|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss further our objectives for the new Wikimedia Foundation Fiscal Year, we show the latest community tool, we remind you of the Wikifunctions and Abstract Wikipedia events at Wikimania 2026, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 09:43, 9 July 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30755600 -->

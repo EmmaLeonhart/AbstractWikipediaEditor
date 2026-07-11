@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-10T07:01:21Z
+  Fetched:   2026-07-11T05:57:27Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -71,6 +71,7 @@ I hope that the definition of the problem is clear.
 ::::There's more than one way to not use spaces correctly and more than one way to use spaces correctly, this wouldn't catch all of them. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 23:13, 28 May 2026 (UTC)
 :::::I'm not totally sure what you want to track, but I'm confident that this will find all my uses. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 02:10, 29 May 2026 (UTC)
 ::::I think it slipped past everyone's notice, but I made a template for linking to that sort of information @ [[Template:Zd|<nowiki>{{</nowiki>zd<nowiki>}}</nowiki>]]. {{zd|Z35672|sentence separator}} <span style="font-size:smaller;opacity:0.8">(I don't think the database dumps have noticed the function you're using yet, so it's a 404 at the moment.)</span> &mdash; [[User:Theki|rae<sup>5e</sup>]] &lt;[[User talk:Theki|talk]]&gt; 01:09, 29 May 2026 (UTC)
+:::::@[[User:Rae|rae]] Great! Would you be willing to add it to https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Useful_functions_for_article_composition ? [[User:So9q|So9q]] ([[User talk:So9q|talk]]) 12:47, 10 July 2026 (UTC)
 
 ===Easier solution?===
 Maybe a much easier solution would be to replace the "." after each sentence with ". " (a full stop and a space).  The paragraghs might add an extra space, but that is displayed as one by the browser. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]])

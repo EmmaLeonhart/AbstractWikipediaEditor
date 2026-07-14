@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-13T06:37:46Z
+  Fetched:   2026-07-14T05:52:42Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -428,7 +428,25 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 I changed layout of the infoboxes, to be more in line with Wikipedia's infoboxes. See for example [[f:Z36678|Z36678]] "infobox for city" used in [[Q90]] "Paris". I would like [[f:Z37625|Z37625]] "infobox row" to check if a claim exists in Wikidata, but I have difficulties with he parameters for [[f:Z27299|Z27299]] "Wikidata item has claim?". With with literal input it works but with argument references it gives an error. Who can fix this?<br>
 Furthermore I think it would be nice it we could add a pen-icon next to the values to be able to edit the claim on Wikidata, and pen-icon at the property to edit the label. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 12:04, 12 July 2026 (UTC)
 
+:I was able to fix my error. Infobox rows will now only be shown when a claim exists. That will prevent errors a particular claim is missing for a particular city. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 13:56, 13 July 2026 (UTC)
+::Looks awesome. Though I was trying it with other cities (such as Chicago and Moscow) in English, and it was throwing orchestrator rate limit errors. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 02:41, 14 July 2026 (UTC)
+
 == Lexemes of property names ==
 
 {{ping|HenkvD|feeglgeef|GrounderUK}} Hello.  Please could anybody tell me their opinion on this question?  It may be necessary to find a lexeme corresponding to the name of a property.  For instance, [[f:Z28445|Z28445]] "most recent year-specific sentence about item" has a property reference as argument and needs the name of the property to be rendered in the output; the particular property could be {{Q|P1082}}.  In the English implementation, the name of the property "population" is found from the WikiData property attributes, but for other languages other syntactical information such as gender may be needed, so I suppose that a link to the lexeme is required.  How should the rendering function find a link to the lexeme?  Is there a way to find the item corresponding to the property?  Or should the syntactical information be found some other way? [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:14, 12 July 2026 (UTC)
 :Ah.  Now I've found {{Q|P1629}}, so i suppose that that provides a solution.  Sorry to disturb you. [[User:Strobilomyces|Strobilomyces]] ([[User talk:Strobilomyces|talk]]) 15:44, 12 July 2026 (UTC)
+
+== Feedback needed on constructing a new abstract article ==
+
+Hi all, I wanted to ask a couple of questions to the community regarding how easy or difficult is to construct a new abstract article.
+
+Consider I'm a newbie that wants to create a new abstract article about my home city. What would you suggest I do first? Is there a sufficiently good example I can copy and adapt? Can I add already almost everything that I would like to add (say, number of inhabitants, region where my city is, mayor of the city, stuff like that) or is there something I ''cannot'' add still? What is there and what is missing at the moment?
+
+Thanks in advance for your answers! [[User:Sannita (WMF)|Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 12:51, 13 July 2026 (UTC)
+
+:Sannita, in general it is very difficult (even for me) to construct a new abstract article from scratch. Copying from an existing article is easier, as also mentioned in [[Help:How to create an article]]. That example is also a city, so we better make that article a good example. The information you mention could be in the infobox, which is also available to use and extend (if performance permits). Creating a article by copy/paste should be done for each sentence or paragraph. Add additional sentences is still very difficult. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 14:08, 13 July 2026 (UTC)
+:The biggest challenge for me would be finding the right functions to do the job. It's kinda to the point where the help article, mentioned by HenkvD, is just saying to copy other articles. The issue is with trying to add more "unique" sentence structures that may not be in every article. For example, take this:
+:<code>New York is known for being the financial hub for the United States</code>
+:More abstractly: <code>X is known for being Y for the Z</code>
+:If a function that does something like that doesn't exist, that pushes the user into a weird space where they may have to use a different function that may sound more robotic or be grammatically incorrect.
+:It's not hard to create a stub abstract article, but anything beyond that takes a lot of time and effort to find the right functions for the job. Additionally, dealing with different data types (ex: Wikidata item reference vs Wikidata item) may turn off people who aren't familiar with computer science principles. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 02:21, 14 July 2026 (UTC)

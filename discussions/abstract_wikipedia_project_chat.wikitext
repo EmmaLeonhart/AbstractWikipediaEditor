@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-14T05:52:42Z
+  Fetched:   2026-07-15T05:53:32Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -450,3 +450,6 @@ Thanks in advance for your answers! [[User:Sannita (WMF)|Sannita (WMF)]] ([[User
 :More abstractly: <code>X is known for being Y for the Z</code>
 :If a function that does something like that doesn't exist, that pushes the user into a weird space where they may have to use a different function that may sound more robotic or be grammatically incorrect.
 :It's not hard to create a stub abstract article, but anything beyond that takes a lot of time and effort to find the right functions for the job. Additionally, dealing with different data types (ex: Wikidata item reference vs Wikidata item) may turn off people who aren't familiar with computer science principles. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 02:21, 14 July 2026 (UTC)
+
+==Discussion at [[Meta:Requests_for_comment/The_future_of_Abstract_Wikipedia|Meta Requests for comment: The future of Abstract Wikipedia]]==
+[[File:Symbol watching blue lashes high contrast.svg|20px|link=|alt=]]&nbsp;You are invited to join the discussion at [[Meta:Requests_for_comment/The_future_of_Abstract_Wikipedia|Meta Requests for comment: The future of Abstract Wikipedia]]. <!-- Template:Please see --> [[User:Qcne|Qcne]] ([[User talk:Qcne|talk]]) 11:34, 14 July 2026 (UTC)

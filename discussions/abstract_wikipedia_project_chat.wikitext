@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-16T05:59:27Z
+  Fetched:   2026-07-18T05:45:12Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -430,6 +430,7 @@ Furthermore I think it would be nice it we could add a pen-icon next to the valu
 
 :I was able to fix my error. Infobox rows will now only be shown when a claim exists. That will prevent errors a particular claim is missing for a particular city. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 13:56, 13 July 2026 (UTC)
 ::Looks awesome. Though I was trying it with other cities (such as Chicago and Moscow) in English, and it was throwing orchestrator rate limit errors. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 02:41, 14 July 2026 (UTC)
+:I am struggling to find a function that indicates a Wikidata property type, like Property:P569 (date of birth) is a date type (Point in time?). Can anybody help? [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 09:25, 17 July 2026 (UTC)
 
 == Lexemes of property names ==
 
@@ -452,6 +453,63 @@ Thanks in advance for your answers! [[User:Sannita (WMF)|Sannita (WMF)]] ([[User
 :It's not hard to create a stub abstract article, but anything beyond that takes a lot of time and effort to find the right functions for the job. Additionally, dealing with different data types (ex: Wikidata item reference vs Wikidata item) may turn off people who aren't familiar with computer science principles. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 02:21, 14 July 2026 (UTC)
 ::The problem with copying other articles is that you need to somehow know that the article you're copying from is correct. If I wanted, for example, to make an article about some root vegetable like [[Q188614]] and copied [[Q81]] I'd be doing a very bad job because the second paragraph is written in a way that is completely untranslatable in its structure (by that I mean it is not fixable by changing [[f:Z18845]] to a function that work for all languages, the fragment itself integrates features of English grammar, such as SVO word order, and therefore needs a rewrite).
 ::What you probably need is a collection of Featured Articles that are written in accordance with best practices and are safe to copy from. This would make it so novice users don't start picking up anti-patterns and propagating them all over abstract Wikipedia, making them harder to fix. [[User:Warudo|Warudo]] ([[User talk:Warudo|talk]]) 15:32, 15 July 2026 (UTC)
+:::Absolutely correct. I've deleted that paragraph with an explanation that that kind of work is better done on Wikifunctions to construct an English renderer. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 12:20, 17 July 2026 (UTC)
+:I'm throwing together some thoughts at [[User:99of9/ArticleWriting]]. It's still very much a draft, but I hope the ideas help. Asking questions about it may help me focus on what you want. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 11:53, 17 July 2026 (UTC)
+:To be honest I don't think we are ready to start adding new articles at full speed. Only a few functions can be used properly, and not many functions can be used in enough other languages. Furthermore the performance is so bad that most of the functions will time-out. Personally i consider the AW articles as sandboxes to experiment on, not yet articles that are well constructed. [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) [[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 12:33, 17 July 2026 (UTC)
+{{tracked|T430898}} 
+::Single fragments usually don't time out when you first put them in. So you can usually edit productively in your first session. But then 24 hours later, the whole thing gets re-cached in a single go, none of them complete, and the errors all get cached.  --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 12:42, 17 July 2026 (UTC)
 
 ==Discussion at [[Meta:Requests_for_comment/The_future_of_Abstract_Wikipedia|Meta Requests for comment: The future of Abstract Wikipedia]]==
 [[File:Symbol watching blue lashes high contrast.svg|20px|link=|alt=]]&nbsp;You are invited to join the discussion at [[Meta:Requests_for_comment/The_future_of_Abstract_Wikipedia|Meta Requests for comment: The future of Abstract Wikipedia]]. <!-- Template:Please see --> [[User:Qcne|Qcne]] ([[User talk:Qcne|talk]]) 11:34, 14 July 2026 (UTC)
+
+== Feedback on function I created ==
+
+I would ask this in the Telegram channel, but this is a longwinded question that I would like to get more detailed feedback on.
+
+First and foremost, it is seriously important that we get the ability to call functions with python/JS implementations. It would make creating these types of functions ten times faster, with the additional benefit of being easier to read.
+
+I'm relatively close to completion on a function that will create a brief introductory paragraph for species articles: '''[[wikifunctions:Z37793|Intro for species in English composition]]'''. It contains the following:
+* Intro (e.g. "'''''Homo sapiens''''', also known as the '''Human''', is a species of primate in the family [[Q635162|Hominidae]].")
+**The word "primate" in this case is a string supplied by the user and is optional - it could be anything they want (ex: humanoid, animal, bipedal creature, etc)
+* Year of description (e.g. "The species was described in 1758 by Carl Linnaeus.")
+* IUCN conservation status (e.g. "''C. lupus'' has been assessed as Least Concern by the [[Q48268|International Union for Conservation of Nature]] (IUCN).")
+
+So all together:
+<blockquote>
+'''''Dionaea muscipula''''', also known as the '''Venus flytrap''', is a species of carnivorous plant in the family [[Q156185|Droseraceae]]. The species was described in 1768 by John Ellis. ''D. muscipula'' has been assessed as Vulnerable by the [[Q48268|International Union for Conservation of Nature]] (IUCN).
+</blockquote>
+It also works when there is a lot of taxon authors:<blockquote>
+The species was described in 2026 by Anh Van Pham, Chung Van Hoang, Nguyen Quang Truong, Thuy Thu Thi Nguyen, Ky Danh Nguyen, Toan Canh Thai and Thomas Ziegler.</blockquote>
+
+The composition itself is basically stringing together a lot of html fragments - if you want to find a specific bit, you just scroll down to around the section of the paragraph you want. Each HTML fragment is roughly a sentence.
+
+I originally intended to add a sentence about distribution, but I didn't know how nicely that would play when [[wikidata:Property:P9714|P9714]] has a million values attached to it. Eventually I plan to integrate this translation into a system like the [[wikifunctions:Z20898|one that exists for year articles]]. 
+
+I have a couple questions:
+* Is there any other additions to this function that I should make? Ideally, this should be data I can fetch from Wikidata.
+* What are the best practices to make the function easier to translate? I've tried to rely on other functions which can work with different languages (and making my own, including [[wikifunctions:Z37833|Z37833]])
+* I'm still relatively new to Wikifunctions. If someone could take a look and see if there is any glaring errors or functions that exist and do what I am already doing, that'd be awesome.
+
+I am aware of a couple bugs:
+* The error handling is not great, and the sentence about description date has a hardcoded true value in the if function. I'm looking for a better way to deal with the errors - the main idea for this is to stop the function from generating sentences if the necessary values don't exist in Wikidata. 
+* A function I made ([[wikifunctions:Z37808|Z37808]]) that fetches the describing authority crashes if the person does not have a label in the given language.
+
+Feel free to edit/fix anything if you want to.
+Thanks a ton! [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 08:32, 17 July 2026 (UTC)
+
+:Nice one. I'll take a look. My general comment is that the extra supplied string (e.g. for the family) should not be a string, it should be a different QID. This is because in Abstract Wikipedia we can't pass in single-language strings. The function needs to somehow get from the QIDs all the way to the HTML by itself. Once you've got the structure ready, the next thing you can do is include your examples as Tests. The easiest way to make an HTML test for a function which already has a configuration is to make one with an empty validation comparison, run it, then copy the stuff it failed with into the validation. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 10:21, 17 July 2026 (UTC)
+::Oh, one more structural change. Even though this is for "English", it's usually best to accept an extra parameter for the "language variant", because there are a bunch of variants of English (which, for example, may have different common names). You may not use it for now, but it's a pain to change the arguments after the function has a lot of use. [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 10:24, 17 July 2026 (UTC)
+::And if you need the "of primate" hypernym to be optional, you could include a boolean parameter to say whether or not to print whatever QID is supplied. Or another idea, (this may be controversial) you could decide that if both QIDs were the same, that was when to drop the "of human". This second method would work particularly well in AW IMHO, because it would autofill both to be the same as the page QID, so it would work from the start without even clicking a boolean (and editors could then pick another QID if they wanted a hypernym). --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) [[User:99of9|99of9]] ([[User talk:99of9|talk]]) 10:31, 17 July 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #257: Beyond syntactic tables ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-07-16|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss syntactic tables and news in Types, we show some community blogposts and tools, we remind you of the Wikifunctions and Abstract Wikipedia events at Wikimania 2026, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+We also remind you that in the next weeks these newsletter reminders will be paused, and that they will resume in mid-August.
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:55, 17 July 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30755600 -->

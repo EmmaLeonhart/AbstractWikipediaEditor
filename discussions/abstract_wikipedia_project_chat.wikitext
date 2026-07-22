@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-18T05:45:12Z
+  Fetched:   2026-07-22T06:10:24Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -513,3 +513,9 @@ We also remind you that in the next weeks these newsletter reminders will be pau
 
 Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 10:55, 17 July 2026 (UTC)
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30755600 -->
+
+== Wikifunctions Reached rate limit ==
+
+When I open [[Q408]], the article is full of "Wikifunctions returned a failed response: Reached rate limit in evaluator" except for some titles and images. This happens on many other pages. [[User:Steven Sun|Steven Sun]] ([[User talk:Steven Sun|talk]]) 12:11, 21 July 2026 (UTC)
+
+:This issue is tracked in https://phabricator.wikimedia.org/T430898 . The error codes sometimes get recategorised, but it ultimately seems to be some kind of rate issue. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 13:46, 21 July 2026 (UTC)

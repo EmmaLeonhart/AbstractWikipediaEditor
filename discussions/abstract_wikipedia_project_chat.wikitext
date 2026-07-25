@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-22T06:10:24Z
+  Fetched:   2026-07-25T06:01:47Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -519,3 +519,17 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 When I open [[Q408]], the article is full of "Wikifunctions returned a failed response: Reached rate limit in evaluator" except for some titles and images. This happens on many other pages. [[User:Steven Sun|Steven Sun]] ([[User talk:Steven Sun|talk]]) 12:11, 21 July 2026 (UTC)
 
 :This issue is tracked in https://phabricator.wikimedia.org/T430898 . The error codes sometimes get recategorised, but it ultimately seems to be some kind of rate issue. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 13:46, 21 July 2026 (UTC)
+
+== The problem of categories ==
+
+As it stands, categories require you to physically type the link into the source editor (e.g. <code><nowiki>[[Category:Living people]]</nowiki></code>), which would require a page to be made, thereby nullifying the abstract page.
+
+I predict many wikis would like to be able to categorize Abstract articles, as in my opinion, any page that has substantial content (even if it doesn't exist yet) is worth categorizing. They may not populated in normal categorizes, but it could be something like this: 
+* [[:Category:Abstract articles about living people]]
+* [[:Category:Abstract articles about STEM]]
+* [[:Category:Abstract articles about health]]
+* [[:Category:Abstract articles about geographic places]]
+* [[:Category:Abstract articles about extant species]]
+* and more, at the choice of the language's community
+<small>(similar to that of draft categories)</small><br />
+Additionally, regarding only Abstract Wikipedia, it would be nice to be able to add (and see) local categories to abstract pages. We have over 2000 pages already, and the only way to find any of them is to go to [[Special:AllPages]], [[Special:LongPages]], or to click the random page button. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 00:09, 25 July 2026 (UTC)

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-25T06:01:47Z
+  Fetched:   2026-07-26T06:21:18Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -533,3 +533,16 @@ I predict many wikis would like to be able to categorize Abstract articles, as i
 * and more, at the choice of the language's community
 <small>(similar to that of draft categories)</small><br />
 Additionally, regarding only Abstract Wikipedia, it would be nice to be able to add (and see) local categories to abstract pages. We have over 2000 pages already, and the only way to find any of them is to go to [[Special:AllPages]], [[Special:LongPages]], or to click the random page button. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 00:09, 25 July 2026 (UTC)
+
+:Good suggestion. Can you put in a Phabricator feature request to figure out how to categorise? --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:40, 25 July 2026 (UTC)
+::Sure! [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 06:56, 25 July 2026 (UTC)
+
+== Suggested functions changed ==
+
+I've swapped the suggested functions per the discussion on the talk page at [[MediaWiki talk:AbstractWikiSuggestedWikifunctions.json]]. Please let me know if this causes any trouble editing. In particular @[[User:Denny]], [[User:DVrandecic (WMF)]], [[User:Sannita (WMF)]], [[User:Jdforrester_(WMF)]] if will hinder your presentation, I'm happy to revert for a while if you are relying on the old list. If you're not relying on it, I'm confident that the new list is better for newcomers. Too many of them have been misled by the previous list. --[[User:99of9|99of9]] ([[User talk:99of9|talk]]) 06:36, 25 July 2026 (UTC)
+
+:@[[User:99of9|99of9]]: Thanks! That looks great. [[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 07:12, 25 July 2026 (UTC)
+
+== "replace Abstract Wikipedia link to QID with bold" doesn't work if the label of QiD is the same of the dependency ==
+
+HI, I'm creating some stubs about the capitals of the world. In case like [[Q1842|Luxembourg]] or [[Q55115|Monaco-Ville]] the funcion above doesn't work, probably because it reads twice the words Luxembourg and Monaco [[User:Mastrocom|Mastrocom]] ([[User talk:Mastrocom|talk]]) 14:54, 25 July 2026 (UTC)

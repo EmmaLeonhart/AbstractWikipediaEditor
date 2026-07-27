@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-26T06:21:18Z
+  Fetched:   2026-07-27T06:49:04Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -546,3 +546,5 @@ I've swapped the suggested functions per the discussion on the talk page at [[Me
 == "replace Abstract Wikipedia link to QID with bold" doesn't work if the label of QiD is the same of the dependency ==
 
 HI, I'm creating some stubs about the capitals of the world. In case like [[Q1842|Luxembourg]] or [[Q55115|Monaco-Ville]] the funcion above doesn't work, probably because it reads twice the words Luxembourg and Monaco [[User:Mastrocom|Mastrocom]] ([[User talk:Mastrocom|talk]]) 14:54, 25 July 2026 (UTC)
+
+:I've fixed by replacing the literal value with the QID [[User:Mastrocom|Mastrocom]] ([[User talk:Mastrocom|talk]]) 16:31, 26 July 2026 (UTC)

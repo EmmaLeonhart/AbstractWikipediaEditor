@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-27T06:49:04Z
+  Fetched:   2026-07-28T06:09:06Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -548,3 +548,7 @@ I've swapped the suggested functions per the discussion on the talk page at [[Me
 HI, I'm creating some stubs about the capitals of the world. In case like [[Q1842|Luxembourg]] or [[Q55115|Monaco-Ville]] the funcion above doesn't work, probably because it reads twice the words Luxembourg and Monaco [[User:Mastrocom|Mastrocom]] ([[User talk:Mastrocom|talk]]) 14:54, 25 July 2026 (UTC)
 
 :I've fixed by replacing the literal value with the QID [[User:Mastrocom|Mastrocom]] ([[User talk:Mastrocom|talk]]) 16:31, 26 July 2026 (UTC)
+
+== Expanding FAQ to correct common misconceptions ==
+
+re: The ongoing closure RfC on Meta, I thought it might help to make a {{Q|4345841}} for AW. I didn't feel it was my place to do so, so I gathered [[Project_talk:Frequently_Asked_Questions#Correcting_common_misconceptions,_possibly_needs_a_separate_page_AW:NOT|a list of misconceptions on the FAQ's talk page]] which can be used as a starting point. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 02:52, 28 July 2026 (UTC)

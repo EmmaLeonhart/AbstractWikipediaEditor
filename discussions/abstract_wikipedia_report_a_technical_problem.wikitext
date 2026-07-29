@@ -1,9 +1,10 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-06-19T08:52:37Z
+  Fetched:   2026-07-29T06:14:09Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
+:''See also [[f:WF:BUG]]''<br>
 This is a page for the reporting of technical problems and bugs encountered by others on Abstract Wikipedia. If you are experiencing any issues and would like to report it, please add your report below this line.
 __NEWSECTIONLINK__
 [[Category:Abstract Wikipedia administration|Report A Technical Problem]]
@@ -137,3 +138,14 @@ I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to 
 Requesting [[mw:pseudo-namespace|pseudo-]] or [[mw:manual:using custom namespaces|custom]] namespaces to be used for shortcut redirects for project and talk pages.
 
 Right now you have to use the full [[Abstract Wikipedia:foo]] or [[Abstract Wikipedia talk:bar]] syntax for links to get to the right place (which is to say, somewhere not in mainspace a.k.a. abstractspace). Piped links can make it look shorter in the meantime while actually being longer. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:02, 19 June 2026 (UTC)
+
+:FYI you can use <code>Project:</code> on any MediaWiki instance in any language. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 21:57, 28 July 2026 (UTC)
+::Thanks, I think I did know that but forgot. It's a big improvement. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:07, 28 July 2026 (UTC)
+
+== I seem to have found an error when trying to reveal system message identifiers in testwiki ==
+
+&rarr; https://test.wikipedia.org/wiki/Paris,_France?uselang=qqx c.f. https://test.wikipedia.org/wiki/Paris,_France [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 21:59, 28 July 2026 (UTC)
+
+== Image bug ==
+
+See [[talk:Q90#image]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:14, 28 July 2026 (UTC)

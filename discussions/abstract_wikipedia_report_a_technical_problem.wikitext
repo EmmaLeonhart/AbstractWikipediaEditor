@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-07-29T06:14:09Z
+  Fetched:   2026-07-30T06:07:45Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -149,3 +149,5 @@ Right now you have to use the full [[Abstract Wikipedia:foo]] or [[Abstract Wiki
 == Image bug ==
 
 See [[talk:Q90#image]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:14, 28 July 2026 (UTC)
+
+:This is being tracked on Phabricator [https://phabricator.wikimedia.org/T433448 (T433448)] [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 07:10, 29 July 2026 (UTC)

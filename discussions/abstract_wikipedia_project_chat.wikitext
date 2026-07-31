@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-28T06:09:06Z
+  Fetched:   2026-07-31T06:30:02Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -552,3 +552,14 @@ HI, I'm creating some stubs about the capitals of the world. In case like [[Q184
 == Expanding FAQ to correct common misconceptions ==
 
 re: The ongoing closure RfC on Meta, I thought it might help to make a {{Q|4345841}} for AW. I didn't feel it was my place to do so, so I gathered [[Project_talk:Frequently_Asked_Questions#Correcting_common_misconceptions,_possibly_needs_a_separate_page_AW:NOT|a list of misconceptions on the FAQ's talk page]] which can be used as a starting point. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 02:52, 28 July 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #258: Abstract Wikipedia at Wikimania ==
+
+<div lang="en" dir="ltr" class="mw-content-ltr">There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-07-29|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we discuss the presentations and workshops at Wikimania, including a features feedback request based on what we heard there, and highlight new features shipped this week including diffs for Wikifunctions. 
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! [[m:user:Quiddity (WMF)|Quiddity (WMF)]] 19:05, 30 July 2026 (UTC) </div>
+<!-- Message sent by User:Quiddity (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30870212 -->

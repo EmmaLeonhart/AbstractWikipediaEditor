@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-07-31T06:30:02Z
+  Fetched:   2026-08-06T06:10:57Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -563,3 +563,22 @@ Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifu
 
 Enjoy the reading! [[m:user:Quiddity (WMF)|Quiddity (WMF)]] 19:05, 30 July 2026 (UTC) </div>
 <!-- Message sent by User:Quiddity (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30870212 -->
+
+== Suggestions wanted for early pilot articles to make available cross-wiki ==
+
+Hey all,
+
+We're building up to the first pilot release of cross-wiki abstract articles, where one community's sysops will be able to pick some (or none) of certain abstract articles onto their wiki for their readers to see. To demonstrate the system at all, we picked five general topics: Paris and London, Wikipedia, and our commonly-used "example" topics of Douglas Adams and Jupiter. (You can see the available list at [https://abstract.wikipedia.org/wiki/Special:PreviewAbstract?uselang=en Special:PreviewAbstract].) 
+
+However, these are probably not the best or only topics to get started with. We're going to be only making a small selection available to start with, but we'd love your ideas of what articles are the best early demonstrators of the work you're all doing. (I appreciate that this may be influenced by which pilot wiki or wikis are using them, so happy for you to have further ideas later, of course!)
+
+What 3–5 articles do you collectively think we should add to this list?
+
+[[User:Jdforrester (WMF)|Jdforrester (WMF)]] ([[User talk:Jdforrester (WMF)|talk]]) 21:16, 5 August 2026 (UTC)
+
+: I think the proposed articles are already available on the target pilot communities/pilot Wikipedia's. I therefore propose other type or articles 
+:* an Italian politician, only available in Italian language  
+:* small towns in the smaller target Wikipedia's 
+:* a species only available in one language
+: Furthermore I don't think the larger wikipedia's (en/de/fr/es) are open for this kind of experiments, but I could be wrong.
+:[[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 05:34, 6 August 2026 (UTC)

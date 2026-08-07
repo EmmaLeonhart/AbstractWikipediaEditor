@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-08-06T06:10:57Z
+  Fetched:   2026-08-07T05:15:15Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -582,3 +582,8 @@ What 3–5 articles do you collectively think we should add to this list?
 :* a species only available in one language
 : Furthermore I don't think the larger wikipedia's (en/de/fr/es) are open for this kind of experiments, but I could be wrong.
 :[[User:HenkvD|HenkvD]] ([[User talk:HenkvD|talk]]) 05:34, 6 August 2026 (UTC)
+::Yeah, I heavily doubt enwiki will be open to Abstract Wikipedia integration given the fiasco that has been happening. [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 21:54, 6 August 2026 (UTC)
+:I really like the diverse range of these five selected articles ([https://abstract.wikipedia.org/wiki/Special:PreviewAbstract?uselang=en Special:PreviewAbstract].). I feel that we can further expand the list. We currently have [[f:User:Jsamwrites/Infoboxes|infoboxes]] covering topics such as astronomy, chemistry, media, GLAM, history, computer science, and Wikimedia movements (including Wikimania). We also have infoboxes for languages alongside inflection tables, which should particularly interest Wiktionary communities. For example, article on [https://abstract.wikipedia.org/view/en/Q11923 French grammar].  
+:Additionally, some of the recent articles on AW are multilingual, while others are bilingual (English and French, showcasing how we can handle tenses and pronoun usage). A more detailed selection of articles is a great way to demonstrate that Wikifunctions and Abstract Wikipedia can effectively support both simple and complex articles. [[User:Jsamwrites|John Samuel]] ([[User:Jsamwrites|talk]]) 18:55, 6 August 2026 (UTC)
+:
+:

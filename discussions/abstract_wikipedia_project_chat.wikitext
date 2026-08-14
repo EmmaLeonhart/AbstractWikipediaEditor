@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Project_chat
-  Fetched:   2026-08-11T04:49:23Z
+  Fetched:   2026-08-14T05:15:25Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -628,3 +628,15 @@ Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:San
 <!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30870212 -->
 : While I understand the point this little apple story is trying to make, I am afraid this whole thing falls flat for a very simple reason: we are not in 2002 anymore. Wikipedia is not a wild new idealistic thing, that only years of work by passionate volunteers will prove can succeed. Even worse, this is actually showing that this new start of the road in 2026 is even rougher and less promising than how it was in 2002: indeed, at that time, absolutely anyone could come in any newly set up Wikipedia in their own language and type the equivalent of "an apple is a fruit" and be done in a matter of fifteen seconds. That is why all these apples grew: because it was as simple as adding more words in your own language, and correcting the words of others, and that was (and still is) the magic of it. Instead, Abstract is starting from scratch again, with an impossibly high technical complexity to add even the most basic sentence or correct the simplest typo, making the growth of any article an exponentially more complex endeavor. I am not blind to the charm of the idea behind Abstract, but it is hard to look at what it involves in practice and see how it makes sense in 2026. [[User:Choucas|Choucas]] ([[User talk:Choucas|talk]]) 15:33, 10 August 2026 (UTC)
 ::I see you've come here from the RfC.<br>The method of producing articles by translating individual sentences [[Special:Permalink/14399|is possible on AW]], but is of course antithetical to the "improve every language at once" nature of the project.<br>It's always going to be more work to add to an abstract article than just writing text, and that's acceptable because that work has a greater impact too. It will be the choice of each editor whether they want to contribute here or to a local wikitext article. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 03:03, 11 August 2026 (UTC)
+:::{{ping|Choucas|YoshiRulz}} you make a good point, looked at in isolation: writing one sentence is easier than writing one Wikifunction. But on Abstract Wikipédia you don't write sentence (nor translate), you set up pattern (a Wikifunction) that can be used on many articles (potentially all of them, we can imagine a point not so far away where all abstract Wikipedia pages would simply call one big general function "make an article", you can have a look at [[Q18498]]). The difference is like making an addition 1+1+1+1+... (Wikipedia method) and making a multiplication 5000*1 (Wikifunctions method). So at the start, it may seems to be more work but very quickly it's better and faster with much less work. And yes, Wikifunctions are not for everyone (just like Wiktionary, Wikimedia Commons, Wikidata are not for everyone) and won't replace Wikipedia (it goes without saying, but since it reuse the "Wikipedia" name, it should probably be said). Cheers, [[User:VIGNERON|VIGNERON]] ([[User talk:VIGNERON|talk]]) 07:03, 13 August 2026 (UTC)
+
+== Wikifunctions & Abstract Wikipedia Newsletter #260: Shoutout to User:99of9 ==
+
+There is [[:f:Special:MyLanguage/Wikifunctions:Status updates/2026-08-13|a new update]] for Abstract Wikipedia and Wikifunctions. Please, come and read it!
+
+In this issue, we congratulate our own User:99of9 for his extensive work with the Wikifunctions & Abstract Wikipedia communities, we discuss what happened at Wikimania, we introduce a document for interested communities to join Abstract Wikipedia, and we take a look at the latest software developments.
+
+Want to catch up with the previous updates? Check [[:f:Special:MyLanguage/Wikifunctions:Status updates|our archive]]!
+
+Enjoy the reading! -- [[User:Sannita (WMF)|User:Sannita (WMF)]] ([[User talk:Sannita (WMF)|talk]]) 15:55, 13 August 2026 (UTC)
+<!-- Message sent by User:Sannita (WMF)@metawiki using the list at https://meta.wikimedia.org/w/index.php?title=Global_message_delivery/Targets/Wikifunctions_%26_Abstract_Wikipedia&oldid=30870212 -->

@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-07-30T06:07:45Z
+  Fetched:   2026-09-15T08:54:13Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -133,14 +133,19 @@ I'm trying to create Q2409 with Z29591 but it doesn't show up. I use "string to 
 ::::::@[[User:Feeglgeef|Feeglgeef]] Where? Can you edit the page "Los angeles" with what I have so far to fix the bug so I know where to put it? It is a bit confusing but might be easier if I see it firsthand. [[User:VidanaliK|VidanaliK]] ([[User talk:VidanaliK|talk]]) 21:25, 10 June 2026 (UTC)
 ::::::: Looks like the issue was the superlative definition function not working right now. It should look good now. [[User:Feeglgeef|Feeglgeef]] ([[User talk:Feeglgeef|talk]]) 22:37, 10 June 2026 (UTC)
 
-== [[AW:]] and [[AT:]] pseudonamespaces ==
+== [[AW:]] and [[AWT:]] pseudonamespaces ==
 
 Requesting [[mw:pseudo-namespace|pseudo-]] or [[mw:manual:using custom namespaces|custom]] namespaces to be used for shortcut redirects for project and talk pages.
 
 Right now you have to use the full [[Abstract Wikipedia:foo]] or [[Abstract Wikipedia talk:bar]] syntax for links to get to the right place (which is to say, somewhere not in mainspace a.k.a. abstractspace). Piped links can make it look shorter in the meantime while actually being longer. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 01:02, 19 June 2026 (UTC)
 
-:FYI you can use <code>Project:</code> on any MediaWiki instance in any language. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 21:57, 28 July 2026 (UTC)
-::Thanks, I think I did know that but forgot. It's a big improvement. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:07, 28 July 2026 (UTC)
+: FYI you can use <code>Project:</code> on any MediaWiki instance in any language. [[User:YoshiRulz|YoshiRulz]] ([[User talk:YoshiRulz|talk]]) 21:57, 28 July 2026 (UTC)
+
+:: Thanks, I think I did know that but forgot. It's a big improvement. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:07, 28 July 2026 (UTC)
+
+: [[AW:]] and [[AWT:]] are now shortcuts for the project and project talk namespaces respectively. This was per [[phab:T437772]] <span style="font-family:monospace;font-weight:bold">[[User:Bunnypranav|<span style="color:#63b3ed">~/Bunny</span><span style="color:#2c5282">pranav</span>]]:&lt;[[User talk:Bunnypranav|<span style="color:#63b3ed">ping</span>]]&gt;</span> 16:00, 14 September 2026 (UTC)
+
+:: Excellent, thank you. [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 17:48, 14 September 2026 (UTC)
 
 == I seem to have found an error when trying to reveal system message identifiers in testwiki ==
 

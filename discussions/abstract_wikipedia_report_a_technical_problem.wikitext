@@ -1,6 +1,6 @@
 <!--
   Snapshot of https://abstract.wikipedia.org/wiki/Abstract_Wikipedia:Report_a_technical_problem
-  Fetched:   2026-09-15T08:54:13Z
+  Fetched:   2026-10-14T08:57:41Z
   Source:    fetch_discussions.py (auto-updated via GitHub Actions)
   DO NOT EDIT — any local changes will be overwritten on the next run.
 -->
@@ -156,3 +156,10 @@ Right now you have to use the full [[Abstract Wikipedia:foo]] or [[Abstract Wiki
 See [[talk:Q90#image]] [[User:Arlo Barnes|Arlo Barnes]] ([[User talk:Arlo Barnes|talk]]) 22:14, 28 July 2026 (UTC)
 
 :This is being tracked on Phabricator [https://phabricator.wikimedia.org/T433448 (T433448)] [[User:EatingCarBatteries|EatingCarBatteries]] ([[User talk:EatingCarBatteries|talk]]) 07:10, 29 July 2026 (UTC)
+
+== "Reply" Link ==
+I have a message on my talk page from a user, but when I try to reply it shows me this.  [[File:Abstract Wikipedia Error.png]] [[User:Skyeteam|Skyeteam]] ([[User talk:Skyeteam|talk]]) 19:46, 13 October 2026 (UTC)
+
+:Hi @[[User:Skyeteam|Skyeteam]], I fixed that!
+:@[[User:BigKrow|BigKrow]]: thanks for welcoming Skyeteam, I would suggest to use <nowiki>{{subst:welcome}}</nowiki> and not just <nowiki>{{welcome}}</nowiki> so it does not break replies :) [[User:Ornithorynque liminaire|Ornithorynque liminaire]] ([[User talk:Ornithorynque liminaire|talk]]) 20:27, 13 October 2026 (UTC)
+::Thanks! [[User:Skyeteam|Skyeteam]] ([[User talk:Skyeteam|talk]]) 22:42, 13 October 2026 (UTC)
